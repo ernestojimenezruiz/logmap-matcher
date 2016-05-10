@@ -33,6 +33,11 @@ LogMap can also be used as a mapping debugging system from the command line or i
 Ernesto Jiménez-Ruiz (ernesto [.] jimenez [.] ruiz [at] gmail.com)
 
 
+## License
+
+LogMap is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License (LGPL) version 3.
+
+
 ## Main Publications
 
 - Daniel Faria, Ernesto Jiménez-Ruiz, Catia Pesquita, Emanuel Santos and Francisco M. Couto. **Towards annotating potential incoherences in BioPortal mappings**. 13th International Semantic Web Confernece (ISWC 2014). ([PDF](https://www.cs.ox.ac.uk/files/6655/paper_ISWC_BioPortal.pdf))
