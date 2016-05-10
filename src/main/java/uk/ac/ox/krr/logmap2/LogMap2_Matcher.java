@@ -151,6 +151,28 @@ public class LogMap2_Matcher {
 	}
 	
 	
+	/**
+	 * LogMap access from java application.
+	 * Input mappings are accepted (e.g. composed mappings when using a MO or )
+	 * See uk.ac.ox.krr.logmap2.Parameters.java to adapt LogMap 2
+	 * If are_input_mappings_validated = true, then the input mappings are added to the anchor set as they are  
+	 */
+	public LogMap2_Matcher(OWLOntology onto1, OWLOntology onto2, Set<MappingObjectStr> input_mappings, boolean are_input_mappings_validated){
+		
+		//LogOutput.showOutpuLog(true);
+		Parameters.readParameters();
+		
+		try {
+			logmap2 = new LogMap2Core(onto1, onto2, input_mappings, are_input_mappings_validated);
+			createObjectMappings();
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	
 	
 	/**

@@ -75,6 +75,7 @@ public class CandidateMappingManager extends MappingManager {
 	
 	private Set<MappingObjectIdentifiers> input_mappings = new HashSet<MappingObjectIdentifiers>();
 	
+	private int IF_VALIDATED=0;
 	private int IF_EXACT=1;
 	private int IF_STEMMING=2;
 	private int IF_WEAK=3;
@@ -306,16 +307,19 @@ public class CandidateMappingManager extends MappingManager {
 	
 	
 
+	public void createAnchors() {
+		createAnchors(false);
+	}
 	
 	
 	
 	@Override
-	public void createAnchors() {
+	public void createAnchors(boolean are_input_mapping_validated) {
 		
 		try {
 			
 			//From input mappings (e.g. composed mappings given as input)
-			createCandidatesFromInputMappings();
+			createCandidatesFromInputMappings(are_input_mapping_validated);
 			
 			//Inverted file intersection
 			createCandidatesFromExactIF();
@@ -477,7 +481,7 @@ public class CandidateMappingManager extends MappingManager {
 	/**
 	 * Create candidates from input mappings (e.g. )
 	 */
-	private void createCandidatesFromInputMappings() throws Exception {
+	private void createCandidatesFromInputMappings(boolean are_input_mapping_validated) throws Exception {
 	
 		//int candidates=0;
 		
@@ -487,7 +491,10 @@ public class CandidateMappingManager extends MappingManager {
 				onto_process2.getDangerousClasses().contains(mapping.getIdentifierOnto2()))
 				continue;
 		
-			evaluateCandidateMapping(mapping.getIdentifierOnto1(), mapping.getIdentifierOnto2(), IF_EXACT);
+			if (are_input_mapping_validated)
+				evaluateCandidateMapping(mapping.getIdentifierOnto1(), mapping.getIdentifierOnto2(), IF_VALIDATED);
+			else
+				evaluateCandidateMapping(mapping.getIdentifierOnto1(), mapping.getIdentifierOnto2(), IF_EXACT);
 			
 		}
 		
@@ -560,7 +567,10 @@ public class CandidateMappingManager extends MappingManager {
 	private void evaluateCandidateMapping(int ide1, int ide2, int origin){
 		
 		
-		if (origin==IF_EXACT){
+		if (origin==IF_VALIDATED){
+			evaluateCandidateMappingIFValidated(ide1, ide2);
+		}		
+		else if (origin==IF_EXACT){
 			evaluateCandidateMappingIFExact(ide1, ide2);
 		}
 		else if (origin==IF_STEMMING){
@@ -573,7 +583,37 @@ public class CandidateMappingManager extends MappingManager {
 	}
 	
 	
-	
+	/**
+	 * Evaluation of mappings coming from a validated input
+	 * @param ide1
+	 * @param ide2
+	 */
+	private void evaluateCandidateMappingIFValidated(int ide1, int ide2){
+		
+		
+		//Already considered
+		if (isMappingAlreadyConsidered(ide1, ide2))
+			return;
+		
+		//Statistics All
+		StatisticsManager.addStatisticsMappingsAll(ide1, ide2);
+		
+		//We extract and store
+		extractISUB4Mapping(ide1, ide2);
+		extractISUBAverage4Mapping(ide1, ide2);
+						
+		extractScopeAll4Mapping(ide1, ide2);
+		
+		getConfidence4Mapping(ide1, ide2); //isub+scope
+
+		
+		//We do not need to filter by isub in exact cases
+		//With scope, no ambiguous or best confidence
+		addSubMapping2ListOfAnchors(ide1, ide2);
+		addSubMapping2ListOfAnchors(ide2, ide1);
+		
+		
+	}
 	
 	
 	/**

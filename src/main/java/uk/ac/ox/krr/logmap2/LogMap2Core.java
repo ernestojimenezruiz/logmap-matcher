@@ -244,6 +244,9 @@ public class LogMap2Core {
 		
 	}
 	
+	/**
+	 * Constructor from a java application with input mapping (e.g. composed mappings)
+	 */
 	public LogMap2Core(
 			OWLOntology onto1,
 			OWLOntology onto2,
@@ -253,14 +256,22 @@ public class LogMap2Core {
 	}
 	
 	/**
-	 * Constructor from a java application with input mapping (e.g. composed mappings)
+	 * Constructor from a java application with input mapping (e.g. composed mappings). If validated_input_mappings = true, 
+	 * then the input mappings are added to the anchor set as they are  
+	 * @param onto1
+	 * @param onto2
+	 * @param input_mappings
+	 * @param are_input_mappings_validated
+	 * @throws Exception
 	 */
 	public LogMap2Core(
 			OWLOntology onto1,
 			OWLOntology onto2,
 			Set<MappingObjectStr> input_mappings,
-			boolean only_anchors) throws Exception{
+			boolean are_input_mappings_validated) throws Exception{
 		
+		
+		boolean only_anchors=false;
 		
 		//we keep true in order to not to delete modules overlappings
 		//See IndexLexiconAndStructure
@@ -293,7 +304,7 @@ public class LogMap2Core {
 							
 		
 		//EXTRACT, CLEAN ANCHORS and INDEX INTLABELLING
-		createAndCleanAnchors();
+		createAndCleanAnchors(are_input_mappings_validated);
 		
 		if (!only_anchors){
 			//Extract new candidates (Level 1), clean them and index labelling
@@ -980,8 +991,13 @@ public class LogMap2Core {
 	}
 	
 	
-	
 	private void createAndCleanAnchors() throws Exception{
+		createAndCleanAnchors(false);
+	}
+	
+	
+	
+	private void createAndCleanAnchors(boolean are_input_mapping_validated) throws Exception{
 		
 		LogOutput.printAlways("\nANCHOR DIAGNOSIS ");
 		
@@ -993,7 +1009,7 @@ public class LogMap2Core {
 		
 		
 		init = StatisticsTimeMappings.getCurrentTimeInMillis();
-		mapping_extractor.createAnchors();
+		mapping_extractor.createAnchors(are_input_mapping_validated);
 		
 		//Create different groups: "exact", ambiguity and no_scope (different sets...). We will add them later (almost done)
 		

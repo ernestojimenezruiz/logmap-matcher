@@ -2927,5 +2927,11 @@ public abstract class MappingManager {
 		
 	}
 
+
+	public void createAnchors(boolean are_input_mapping_validated) {
+		// TODO Auto-generated method stub
+		
+	}
+
 		
 }
