@@ -18,13 +18,13 @@ Please refer to the [OAIE campaign](http://oaei.ontologymatching.org/) for offic
 
 LogMap accepts the same ontology formats as the OWL API: e.g., RDF/XML, OWL/XML, OWL Functional, OBO, KRSS, and Turtle (n3).
 
-### As an Ontology Matching System
+**As an Ontology Matching System**
 
 LogMap can be used from the command line with the standalone distribution or the SEALS-OAEI package, or directly from its Web interface
 
 LogMap can also be easily integrated in other Java applications.
 
-### As a Mapping Debugging System
+**As a Mapping Debugging System**
 
 LogMap can also be used as a mapping debugging system from the command line or integrated in a Java application.
 
