@@ -2,9 +2,12 @@
 
 LogMap is a highly scalable ontology matching system with ‘built-in’ reasoning and inconsistency repair capabilities. LogMap extract mappings between classes, properties and instances.
 
-To the best of our knowledge, LogMap is one of the few matching systems that: 
-1. can efficiently match semantically rich ontologies containing tens (and even hundreds) of thousands of classes, 
+To the best of our knowledge, LogMap is one of the few matching systems that:
+
+1. can efficiently match semantically rich ontologies containing tens (and even hundreds) of thousands of classes,
+
 2. incorporates sophisticated reasoning and repair techniques to minimise the number of logical inconsistencies, and 
+
 3. provides support for user intervention during the matching process (see [Web interface](http://csu6325.cs.ox.ac.uk/)). 
 
 Please refer to the [OAIE campaign](http://oaei.ontologymatching.org/) for official results about LogMap.
@@ -27,18 +30,20 @@ LogMap can also be used as a mapping debugging system from the command line or i
 
 
 ## Contact
-Ernesto Jimenez-Ruiz (ernesto [.] jimenez [.] ruiz [at] gmail.com)
+Ernesto Jiménez-Ruiz (ernesto [.] jimenez [.] ruiz [at] gmail.com)
 
 
 ## Main Publications
 
-- Daniel Faria, Ernesto Jimenez-Ruiz, Catia Pesquita, Emanuel Santos and Francisco M. Couto. **Towards annotating potential incoherences in BioPortal mappings**. 13th International Semantic Web Confernece (ISWC 2014). ([PDF]())
+- Daniel Faria, Ernesto Jiménez-Ruiz, Catia Pesquita, Emanuel Santos and Francisco M. Couto. **Towards annotating potential incoherences in BioPortal mappings**. 13th International Semantic Web Confernece (ISWC 2014). ([PDF](https://www.cs.ox.ac.uk/files/6655/paper_ISWC_BioPortal.pdf))
 
-- Ernesto Jiménez Ruiz‚ Bernardo Cuenca Grau‚ Yujiao Zhou and Ian Horrocks. **Large−scale Interactive Ontology Matching: Algorithms and Implementation**. In the 20th European Conference on Artificial Intelligence (ECAI 2012). ([PDF]())
+- Ernesto Jiménez Ruiz‚ Bernardo Cuenca Grau‚ Yujiao Zhou and Ian Horrocks. **Large−scale Interactive Ontology Matching: Algorithms and Implementation**. In the 20th European Conference on Artificial Intelligence (ECAI 2012). ([PDF](http://www.cs.ox.ac.uk/files/4801/LogMap_ecai2012.pdf))
 
-- Ernesto Jiménez-Ruiz, Bernardo Cuenca Grau. **LogMap: Logic-based and Scalable Ontology Matching**. In the 10th International Semantic Web Confernece (ISWC 2011). ([PDF]())
+- Ernesto Jiménez-Ruiz, Bernardo Cuenca Grau. **LogMap: Logic-based and Scalable Ontology Matching**. In the 10th International Semantic Web Confernece (ISWC 2011). ([PDF](http://www.cs.ox.ac.uk/isg/projects/LogMap/papers/paper_ISWC2011.pdf))
 
-- Ernesto Jiménez-Ruiz, Christian Meilicke, Bernardo Cuenca Grau and Ian Horrocks. **Evaluating Mapping Repair Systems with Large Biomedical Ontologies**. In 26th International Workshop on Description Logics (DL 2013). ([PDF]())
+- Ernesto Jiménez-Ruiz, Christian Meilicke, Bernardo Cuenca Grau and Ian Horrocks. **Evaluating Mapping Repair Systems with Large Biomedical Ontologies**. In 26th International Workshop on Description Logics (DL 2013). ([PDF](http://ceur-ws.org/Vol-1014/paper_63.pdf))
+
+Complete list of [LogMap-related publications](http://www.cs.ox.ac.uk/projects/publications/date/LogMap.html).
 
 
 ## Acknowledgements
