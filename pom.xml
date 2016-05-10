@@ -1,0 +1,114 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>logmap-matcher</groupId>
+  <artifactId>logmap-matcher</artifactId>
+  <version>3.0.0-SNAPSHOT</version>
+  <name>LogMap</name>
+  <description>LogMap Ontology Alignment and Alignment Repair System</description>
+  <url>https://github.com/ernestojimenezruiz/logmap-matcher</url>
+  <organization>
+  	<name>University of Oxford</name>
+  </organization>
+  <issueManagement>
+  	<url>https://github.com/ernestojimenezruiz/logmap-matcher/issues</url>
+  </issueManagement>
+  <dependencies>
+  <dependency>
+	<groupId>net.sourceforge.owlapi</groupId>
+	<artifactId>owlapi-api</artifactId>
+	<version>3.4.8</version>
+  </dependency>
+  <dependency>
+	<groupId>com.hermit-reasoner</groupId>
+	<artifactId>org.semanticweb.hermit</artifactId>
+	<version>1.3.8.4</version>
+  </dependency>
+  <dependency>
+	<groupId>commons-io</groupId>
+	<artifactId>commons-io</artifactId>
+	<version>2.1</version>
+  </dependency>
+  <dependency>
+	<groupId>commons-logging</groupId>
+	<artifactId>commons-logging</artifactId>
+	<version>1.1</version>
+  </dependency>
+  <dependency>		
+	<groupId>commons-lang</groupId>
+	<artifactId>commons-lang</artifactId>
+	<version>2.4</version>
+  </dependency>
+  <dependency>
+	<groupId>org.json</groupId>
+	<artifactId>json</artifactId>
+	<version>20090211</version>
+</dependency>
+<dependency>
+	<groupId>com.memetix</groupId>
+	<artifactId>microsoft-translator-java-api</artifactId>
+	<version>0.6.2</version>
+</dependency>
+<dependency>
+        <groupId>com.googlecode.json-simple</groupId>
+        <artifactId>json-simple</artifactId>
+        <version>1.1</version>
+        <type>jar</type>
+</dependency>
+<dependency>
+	<groupId>org.semanticweb.elk</groupId>
+	<artifactId>elk-owlapi</artifactId>
+	<version>0.4.3</version>
+</dependency>
+<dependency>
+	<groupId>log4j</groupId>
+	<artifactId>log4j</artifactId>
+	<version>1.2.17</version>
+</dependency>
+<dependency>
+	<groupId>com.fasterxml.jackson.core</groupId>
+	<artifactId>jackson-annotations</artifactId>
+	<version>2.7.4</version>
+</dependency>
+<dependency>
+	<groupId>com.fasterxml.jackson.core</groupId>
+	<artifactId>jackson-core</artifactId>
+	<version>2.7.4</version>
+</dependency>
+<dependency>
+	<groupId>com.fasterxml.jackson.core</groupId>
+	<artifactId>jackson-databind</artifactId>
+	<version>2.7.4</version>
+</dependency>
+<dependency>
+	<groupId>com.googlecode.ictclas4j</groupId>
+	<artifactId>ictclas4j</artifactId>
+	<version>1.0.1</version>
+</dependency>
+<dependency>
+	<groupId>dom4j</groupId>
+	<artifactId>dom4j</artifactId>
+	<version>1.6.1</version>
+</dependency>
+<!--dependency>
+	<groupId>com.googlecode</groupId>
+	<artifactId>google-api-translate-java</artifactId>
+	<version>0.92</version>
+</dependency-->
+<dependency>
+    <groupId>com.googlecode</groupId>
+    <artifactId>google-api-translate-java</artifactId>
+    <version>0.97</version>
+    <scope>system</scope>
+    <systemPath>${basedir}/lib/google-api-translate-java-0.97.jar</systemPath>
+</dependency>
+<dependency>
+	<groupId>eu.sealsproject.omt</groupId>
+	<artifactId>omt-client</artifactId>
+	<version>6.0.0</version>
+    <scope>system</scope>
+    <systemPath>${basedir}/lib/seals-omt-client.jar</systemPath>
+</dependency>
+
+</dependencies>
+
+</project>
