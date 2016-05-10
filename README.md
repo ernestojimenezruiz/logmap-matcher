@@ -1,4 +1,4 @@
-# LogMap: Logic-based and Scalable Ontology Matching
+# LogMap: An Ontology Alignment and Alignment Repair System
 
 LogMap is a highly scalable ontology matching system with ‘built-in’ reasoning and inconsistency repair capabilities. LogMap extract mappings between classes, properties and instances.
 
