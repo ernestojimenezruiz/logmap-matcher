@@ -13,6 +13,13 @@ To the best of our knowledge, LogMap is one of the few matching systems that:
 Please refer to the [OAIE campaign](http://oaei.ontologymatching.org/) for official results about LogMap.
 
 
+## Downloading and Development
+
+LogMap standalone distributions and OAEI packages can be downloaded from [SourceForge](https://sourceforge.net/projects/logmap-matcher/).  
+
+Development requires a clone of this git repository. You can use the pre-configured Eclipse (Maven) project (dependencies are automatically downloaded). 
+To generate a JAR file fro LogMap from the command line using Maven, run: `mvn package`
+
 
 ## Using LogMap
 
@@ -20,9 +27,12 @@ LogMap accepts the same ontology formats as the OWL API: e.g., RDF/XML, OWL/XML,
 
 **As an Ontology Matching System**
 
-LogMap can be used from the command line with the standalone distribution or the SEALS-OAEI package, or directly from its Web interface
+LogMap can be used from the command line with the [standalone distribution](https://sourceforge.net/projects/logmap-matcher/files/Standalone%20distribution/) or 
+the [OAEI packages](https://sourceforge.net/projects/logmap-matcher/files/OAEI%20packages/), or directly from its [Web interface](http://csu6325.cs.ox.ac.uk/)
 
 LogMap can also be easily integrated in other Java applications.
+
+matcher
 
 **As a Mapping Debugging System**
 
@@ -39,6 +49,8 @@ LogMap is free software: you can redistribute it and/or modify it under the term
 
 
 ## Main Publications
+
+- Ernesto Jiménez-Ruiz et al. **LogMap family results for OAEI 2014**. 9th International Workshop on Ontology Matching (OM 2014). ([PDF](http://disi.unitn.it/~p2p/OM-2014/oaei14_paper4.pdf))
 
 - Daniel Faria, Ernesto Jiménez-Ruiz, Catia Pesquita, Emanuel Santos and Francisco M. Couto. **Towards annotating potential incoherences in BioPortal mappings**. 13th International Semantic Web Confernece (ISWC 2014). ([PDF](https://www.cs.ox.ac.uk/files/6655/paper_ISWC_BioPortal.pdf))
 
