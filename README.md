@@ -18,7 +18,7 @@ Please refer to the [OAIE campaign](http://oaei.ontologymatching.org/) for offic
 LogMap standalone distributions and OAEI packages can be downloaded from [SourceForge](https://sourceforge.net/projects/logmap-matcher/).  
 
 Development requires a clone of this git repository. You can use the pre-configured Eclipse (Maven) project (dependencies are automatically downloaded). 
-To generate a JAR file fro LogMap from the command line using Maven, run: `mvn package`
+To generate a JAR file for LogMap from the command line using Maven, run: `mvn package`
 
 
 ## Using LogMap
@@ -32,7 +32,6 @@ the [OAEI packages](https://sourceforge.net/projects/logmap-matcher/files/OAEI%2
 
 LogMap can also be easily integrated in other Java applications.
 
-matcher
 
 **As a Mapping Debugging System**
 
@@ -45,7 +44,7 @@ Ernesto Jiménez-Ruiz (ernesto [.] jimenez [.] ruiz [at] gmail.com)
 
 ## License
 
-LogMap is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License (LGPL) version 3.
+LogMap is free software: you can redistribute it and/or modify it under the terms of the [GNU Lesser General Public License (LGPL) version 3](http://www.gnu.org/licenses/lgpl-3.0.en.html).
 
 
 ## Main Publications
