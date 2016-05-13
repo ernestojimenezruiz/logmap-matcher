@@ -41,6 +41,9 @@ LogMap can also be used as a mapping debugging system from the command line or i
 ## Contact
 Ernesto Jiménez-Ruiz (ernesto [.] jimenez [.] ruiz [at] gmail.com)
 
+Please report any issue related to LogMap in our <a href="https://groups.google.com/forum/#!forum/logmap-matcher-discussion" target="_blank">Discussion group</a> 
+or in our <a href="" target="_blank">issue tracker</a>.
+
 
 ## License
 
@@ -64,7 +67,9 @@ Complete list of [LogMap-related publications](http://www.cs.ox.ac.uk/projects/p
 
 ## Acknowledgements
 
-LogMap has been created in the [Knowledge Representation and Reasoning group](http://www.cs.ox.ac.uk/isg/krr/) at the [Department of Computer Science](http://www.cs.ox.ac.uk/) of the [University of Oxford](http://www.ox.ac.uk/). 
+LogMap has been created in the [Knowledge Representation and Reasoning group](http://www.cs.ox.ac.uk/isg/krr/) at the [Department of Computer Science](http://www.cs.ox.ac.uk/) of 
+the [University of Oxford](http://www.ox.ac.uk/) by Ernesto Jiménez-Ruiz, Bernardo Cuenca Grau and Ian Horrocks. 
 Development has been supported by The Royal Society, the EPSRC project LogMap and EU FP7 projects SEALS and Optique.
+We would like to thank Alessandro SOlimando, Valerie Cross, Anton Morant, Yujiao Zhou, Weiguo Xia, Xi Chen, Yuan Gong and Shuo Zhang, who have contributed to the LogMap project in the past.
 We also thank the organisers of the [OAEI evaluation campaigns](http://oaei.ontologymatching.org/) for providing test data and infrastructure.
 
