@@ -41,8 +41,8 @@ LogMap can also be used as a mapping debugging system from the command line or i
 ## Contact
 Ernesto Jiménez-Ruiz (ernesto [.] jimenez [.] ruiz [at] gmail.com)
 
-Please report any issue related to LogMap in our <a href="https://groups.google.com/forum/#!forum/logmap-matcher-discussion" target="_blank">Discussion group</a> 
-or in our <a href="" target="_blank">issue tracker</a>.
+Please report any issue related to LogMap in our <a href="https://groups.google.com/forum/#!forum/logmap-matcher-discussion" target="_blank">discussion group</a> 
+or in our <a href="https://github.com/ernestojimenezruiz/logmap-matcher/issues" target="_blank">issue tracker</a>.
 
 
 ## License

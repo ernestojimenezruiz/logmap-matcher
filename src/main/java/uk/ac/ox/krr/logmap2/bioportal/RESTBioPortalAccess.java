@@ -83,7 +83,11 @@ public class RESTBioPortalAccess implements BioPortalAccess {
 	private final String CUI = "cui";	//exact_match
 	private final String NULL = "null";  //error?	(filter)
 	private final String SAMEURIS = "same_uris";	//(filter)
+	private final String SAMEURI = "same_uri";	//(filter)
 	private final String MRMAP = "mrmap";	//close_match
+	
+	//New 2016
+	private final String SOURCE = "source";
 	
 	
 	// Those sources providing synonyms
@@ -683,6 +687,9 @@ public class RESTBioPortalAccess implements BioPortalAccess {
 				source_list.add(source.get(NAME).asText());						
 		}
 		
+		//May 2016: Now it appears directly under "source" and in capitals
+		source_list.add(mapping.get(SOURCE).asText().toLowerCase());		
+		
 		//Detected a few cases without source
 		if (source_list.isEmpty()){
 			source_list.add(NOSOURCE);
@@ -704,7 +711,7 @@ public class RESTBioPortalAccess implements BioPortalAccess {
 		
 		//Ignore mappings to itself!
 		//Same URI appears in different ontologies, but there is no need to add a mapping since the URI is the same
-		if (sources.contains(SAMEURIS))
+		if (sources.contains(SAMEURIS) || sources.contains(SAMEURI))
 			return true;
 		
 		if (sources.contains(LOOM) || sources.contains(CUI) || sources.contains(MRMAP))
