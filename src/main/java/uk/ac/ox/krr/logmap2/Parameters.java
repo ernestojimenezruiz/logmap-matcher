@@ -149,8 +149,8 @@ public class Parameters {
 	public static int min_size_overlapping = 15000; //5000
 	
 	//set to false by default?
-	public static boolean perform_instance_matching = true; //true;
-	public static boolean output_instance_mappings = true; //true;
+	public static boolean perform_instance_matching = false; //true;
+	public static boolean output_instance_mappings = false; //true;
 	
 	public static boolean output_instance_mapping_files = false; //for statistics
 	
@@ -166,8 +166,8 @@ public class Parameters {
 	public static String elk = "ELK";
 	//public static String reasoner = hermit;
 	//public static String reasoner = more;
-	//public static String reasoner = structural;
-	public static String reasoner = elk;
+	public static String reasoner = structural;
+	//public static String reasoner = elk;
 	
 	//Timeout reasoner
 	public static int timeout = 25;
