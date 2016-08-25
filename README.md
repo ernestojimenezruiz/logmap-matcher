@@ -8,7 +8,7 @@ To the best of our knowledge, LogMap is one of the few matching systems that:
 
 2. incorporates sophisticated reasoning and repair techniques to minimise the number of logical inconsistencies, and 
 
-3. provides support for user intervention during the matching process (see [Web interface](http://csu6325.cs.ox.ac.uk/)). 
+3. provides support for user intervention during the matching process (see [Web interface](http://krrwebtools.cs.ox.ac.uk/logmap/)). 
 
 Please refer to the [OAIE campaign](http://oaei.ontologymatching.org/) for official results about LogMap.
 
@@ -28,7 +28,7 @@ LogMap accepts the same ontology formats as the OWL API: e.g., RDF/XML, OWL/XML,
 **As an Ontology Matching System**
 
 LogMap can be used from the command line with the [standalone distribution](https://sourceforge.net/projects/logmap-matcher/files/Standalone%20distribution/) or 
-the [OAEI packages](https://sourceforge.net/projects/logmap-matcher/files/OAEI%20packages/), or directly from its [Web interface](http://csu6325.cs.ox.ac.uk/)
+the [OAEI packages](https://sourceforge.net/projects/logmap-matcher/files/OAEI%20packages/), or directly from its [Web interface](http://krrwebtools.cs.ox.ac.uk/logmap/)
 
 LogMap can also be easily integrated in other Java applications.
 
