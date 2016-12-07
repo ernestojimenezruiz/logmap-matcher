@@ -116,8 +116,8 @@ public class StatisticsManager {
 	
 	
 	public static void extracStatisticsDiscardedMappings(){
-		for (int ide1 : mapping_manager.getDircardedAnchors().keySet()){
-			for (int ide2 : mapping_manager.getDircardedAnchors().get(ide1)){
+		for (int ide1 : mapping_manager.getDiscardedAnchors().keySet()){
+			for (int ide2 : mapping_manager.getDiscardedAnchors().get(ide1)){
 				
 				//check only one side
 				if (mapping_manager.isId1SmallerThanId2(ide1, ide2)){
@@ -134,8 +134,8 @@ public class StatisticsManager {
 	
 	public static void extracStatisticsHardDiscardedMappings(){
 	
-		for (int ide1 : mapping_manager.getHardDircardedAnchors().keySet()){
-			for (int ide2 : mapping_manager.getHardDircardedAnchors().get(ide1)){
+		for (int ide1 : mapping_manager.getHardDiscardedAnchors().keySet()){
+			for (int ide2 : mapping_manager.getHardDiscardedAnchors().get(ide1)){
 				
 				if (mapping_manager.isMappingInDiscardedSet(ide1, ide2) || 
 						mapping_manager.isMappingInDiscardedSet(ide2, ide1)){

@@ -306,8 +306,8 @@ public class InteractiveProcessThreshold extends InteractiveProcess
 		if (considerDiscarded){
 			MappingObjectInteractivity m;
 			
-			for (int ideA : m_manager.getDircardedAnchors().keySet()){
-				for (int ideB : m_manager.getDircardedAnchors().get(ideA)){
+			for (int ideA : m_manager.getDiscardedAnchors().keySet()){
+				for (int ideB : m_manager.getDiscardedAnchors().get(ideA)){
 					
 					if (ideA<ideB)
 					{

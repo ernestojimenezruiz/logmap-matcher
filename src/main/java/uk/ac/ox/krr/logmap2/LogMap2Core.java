@@ -1680,7 +1680,7 @@ public class LogMap2Core {
 		
 		createSignatureFromMappings(mapping_extractor.getAnchors());
 		if (use_discarded)
-			createSignatureFromMappings(mapping_extractor.getDircardedAnchors());
+			createSignatureFromMappings(mapping_extractor.getDiscardedAnchors());
 		
 		
 		
@@ -1937,6 +1937,14 @@ public class LogMap2Core {
 		
 		return mapping_extractor.getStringAnchors();
 	}
+	
+	
+	/*public Set<MappingObjectStr> getDiscardedLogMapMappings(){
+		
+		mapping_extractor.setDiscardedStringAnchors();
+		
+		return mapping_extractor.getDiscardedMappingsStr();
+	}*/
 	
 	
 	
@@ -2301,9 +2309,9 @@ public class LogMap2Core {
 				}
 			}*/
 			
-			for (int idea : mapping_extractor.getHardDircardedAnchors().keySet()){
+			for (int idea : mapping_extractor.getHardDiscardedAnchors().keySet()){
 				
-				for (int ideb : mapping_extractor.getHardDircardedAnchors().get(idea)){
+				for (int ideb : mapping_extractor.getHardDiscardedAnchors().get(idea)){
 					
 					if (idea<ideb){
 						
@@ -2373,6 +2381,22 @@ public class LogMap2Core {
 	
 	public Map<Integer, Set<Integer>> getClassMappings(){
 		return mapping_extractor.getAnchors();
+		
+	}
+	
+	
+	public Map<Integer, Set<Integer>> getDiscardedClassMappings(){
+		return mapping_extractor.getDiscardedAnchors();
+		
+	}
+	
+	public Map<Integer, Set<Integer>> getHardDiscardedClassMappings(){
+		return mapping_extractor.getHardDiscardedAnchors();
+		
+	}
+	
+	public Map<Integer, Set<Integer>> getConflictiveAnchors(){
+		return mapping_extractor.getConflictiveAnchors();
 		
 	}
 	

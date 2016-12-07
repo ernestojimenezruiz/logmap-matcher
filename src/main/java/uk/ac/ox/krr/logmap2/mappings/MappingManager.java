@@ -733,11 +733,11 @@ public abstract class MappingManager {
 	}
 	
 	
-	public Map<Integer, Set<Integer>> getDircardedAnchors(){
+	public Map<Integer, Set<Integer>> getDiscardedAnchors(){
 		return discardedMappings1N;
 	}
 	
-	public Map<Integer, Set<Integer>> getHardDircardedAnchors(){
+	public Map<Integer, Set<Integer>> getHardDiscardedAnchors(){
 		return hardDiscardedMappings1N;
 	}
 	
@@ -755,7 +755,7 @@ public abstract class MappingManager {
 		return weakenedDandG_Mappings1N;
 	}
 	
-	public Set<MappingObjectStr> getDircardedAnchorsStr(){
+	public Set<MappingObjectStr> getDiscardedMappingsStr(){
 		return discarded_candidates;
 	}
 	
@@ -1434,6 +1434,27 @@ public abstract class MappingManager {
 		
 	}
 	
+	
+	
+	/**
+	 * For Statistics
+	 */
+	public void setDiscardedStringAnchors(){
+	
+		discarded_candidates.clear();
+		
+		
+		for (int ide1 : getDiscardedAnchors().keySet()){
+				for (int ide2 : getDiscardedAnchors().get(ide1)){
+					addDiscardedStringMappingsAnchor(ide1, ide2);
+				}
+		}
+		
+		
+		
+		
+	}
+	
 	public void addStringAnchor(int ide1, int ide2){
 		
 		String iri1;
@@ -1455,6 +1476,32 @@ public abstract class MappingManager {
 		//TODO: also for gold standard
 		//MappingObjectStr obj;
 		mappings_candidates_Str.add(new MappingObjectStr(iri1, iri2, getConfidence4Mapping(ide1, ide2)));
+		
+		//getConfidence4Mapping(ide1, ide2);
+	}
+	
+	
+	public void addDiscardedStringMappingsAnchor(int ide1, int ide2){
+		
+		String iri1;
+		String iri2;
+		//To keep an order on the mappings
+		
+		if (isId1SmallerThanId2(ide1, ide2)){
+			iri1 = index.getIRIStr4ConceptIndex(ide1);
+			iri2 = index.getIRIStr4ConceptIndex(ide2);
+		}
+		else {
+			iri2 = index.getIRIStr4ConceptIndex(ide1);
+			iri1 = index.getIRIStr4ConceptIndex(ide2);
+		}
+		
+		
+		//We might be adding several times the same....
+		//TODO: we might be interested in storing the direction for the mappings...
+		//TODO: also for gold standard
+		//MappingObjectStr obj;
+		discarded_candidates.add(new MappingObjectStr(iri1, iri2, getConfidence4Mapping(ide1, ide2)));
 		
 		//getConfidence4Mapping(ide1, ide2);
 	}

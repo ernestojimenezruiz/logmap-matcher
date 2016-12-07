@@ -36,6 +36,7 @@ public class LogMap2_Matcher {
 	
 	LogMap2Core logmap2;	
 	Set<MappingObjectStr> logmap2_mappings = new HashSet<MappingObjectStr>();
+	Set<MappingObjectStr> logmap2_discarded_mappings = new HashSet<MappingObjectStr>();
 	Set<String> representative_labels = new HashSet<String>();
 	
 	
@@ -184,6 +185,11 @@ public class LogMap2_Matcher {
 	}
 	
 	
+	public Set<MappingObjectStr> getLogmap2_DiscardedMappings(){
+		return logmap2_discarded_mappings;
+	}
+	
+	
 	public Set<String> getRepresentativeLabelsForMappings(){
 		return representative_labels;
 	}
@@ -307,7 +313,166 @@ public class LogMap2_Matcher {
 				}
 				
 				
+				/*for (int ide1 : mapping_extractor.getInstanceMappings4OutputType().keySet()) {
+					
+					for (int ide2 : mapping_extractor.getInstanceMappings4OutputType().get(ide1).keySet()){
+					
+						
+						type = mapping_extractor.getInstanceMappings4OutputType().get(ide1).get(ide2);
+						
+						
+						if (type==0){
+						
+							good_file.addInstanceMapping2Output(
+									index.getIRIStr4IndividualIndex(ide1), 
+									index.getIRIStr4IndividualIndex(ide2),
+									"=", 
+									mapping_extractor.getISUB4InstanceMapping(ide1, ide2),
+									mapping_extractor.getCompFactor4InstanceMapping(ide1, ide2),
+									mapping_extractor.getScope4InstanceMapping(ide1, ide2));
+							
+						}
+						else if (type==1){
+						
+							disc1_file.addInstanceMapping2Output(
+									index.getIRIStr4IndividualIndex(ide1), 
+									index.getIRIStr4IndividualIndex(ide2),
+									"=", 
+									mapping_extractor.getISUB4InstanceMapping(ide1, ide2),
+									mapping_extractor.getCompFactor4InstanceMapping(ide1, ide2),
+									mapping_extractor.getScope4InstanceMapping(ide1, ide2));
+							
+						}
+						else if (type==2){
+						
+							disc2_file.addInstanceMapping2Output(
+									index.getIRIStr4IndividualIndex(ide1), 
+									index.getIRIStr4IndividualIndex(ide2),
+									"=", 
+									mapping_extractor.getISUB4InstanceMapping(ide1, ide2),
+									mapping_extractor.getCompFactor4InstanceMapping(ide1, ide2),
+									mapping_extractor.getScope4InstanceMapping(ide1, ide2));
+							
+						}
+						else if (type==3){
+						
+							incomp_file.addInstanceMapping2Output(
+									index.getIRIStr4IndividualIndex(ide1), 
+									index.getIRIStr4IndividualIndex(ide2),
+									"=", 
+									mapping_extractor.getISUB4InstanceMapping(ide1, ide2),
+									mapping_extractor.getCompFactor4InstanceMapping(ide1, ide2),
+									mapping_extractor.getScope4InstanceMapping(ide1, ide2));
+							
+						}
+						
+						
+						
+						
+					}
+					
+				}*/
+				
+				
+				
+				
+				
+				
 			}
+			
+			
+			//For statistics. They may also be reusable since sometimes are border-line cases
+			//We also create here discarded mappings
+			for (int ide1 : logmap2.getDiscardedClassMappings().keySet()){
+				for (int ide2 : logmap2.getDiscardedClassMappings().get(ide1)){
+					
+					
+					if (ide1<ide2){						
+						
+							logmap2_discarded_mappings.add(
+									new MappingObjectStr(
+											logmap2.getIRI4ConceptIdentifier(ide1), 
+											logmap2.getIRI4ConceptIdentifier(ide2), 
+											logmap2.getConfidence4ConceptMapping(ide1, ide2), 
+											Utilities.EQ,
+											Utilities.CLASSES));
+							
+					}
+					else{
+							
+						logmap2_discarded_mappings.add(
+									new MappingObjectStr(								
+									logmap2.getIRI4ConceptIdentifier(ide2),
+									logmap2.getIRI4ConceptIdentifier(ide1),										
+									logmap2.getConfidence4ConceptMapping(ide1, ide2),
+									Utilities.EQ,
+									Utilities.CLASSES));
+						
+					}
+				} //for ide2
+			}//for ide1
+			
+			
+			for (int ide1 : logmap2.getHardDiscardedClassMappings().keySet()){
+				for (int ide2 : logmap2.getHardDiscardedClassMappings().get(ide1)){
+					
+					
+					if (ide1<ide2){						
+						
+							logmap2_discarded_mappings.add(
+									new MappingObjectStr(
+											logmap2.getIRI4ConceptIdentifier(ide1), 
+											logmap2.getIRI4ConceptIdentifier(ide2), 
+											logmap2.getConfidence4ConceptMapping(ide1, ide2), 
+											Utilities.EQ,
+											Utilities.CLASSES));
+							
+					}
+					else{
+							
+						logmap2_discarded_mappings.add(
+									new MappingObjectStr(								
+									logmap2.getIRI4ConceptIdentifier(ide2),
+									logmap2.getIRI4ConceptIdentifier(ide1),										
+									logmap2.getConfidence4ConceptMapping(ide1, ide2),
+									Utilities.EQ,
+									Utilities.CLASSES));
+						
+					}
+				} //for ide2
+			}//for ide1
+			
+			
+			for (int ide1 : logmap2.getConflictiveAnchors().keySet()){
+				for (int ide2 : logmap2.getConflictiveAnchors().get(ide1)){
+					
+					
+					if (ide1<ide2){						
+						
+							logmap2_discarded_mappings.add(
+									new MappingObjectStr(
+											logmap2.getIRI4ConceptIdentifier(ide1), 
+											logmap2.getIRI4ConceptIdentifier(ide2), 
+											logmap2.getConfidence4ConceptMapping(ide1, ide2), 
+											Utilities.EQ,
+											Utilities.CLASSES));
+							
+					}
+					else{
+							
+						logmap2_discarded_mappings.add(
+									new MappingObjectStr(								
+									logmap2.getIRI4ConceptIdentifier(ide2),
+									logmap2.getIRI4ConceptIdentifier(ide1),										
+									logmap2.getConfidence4ConceptMapping(ide1, ide2),
+									Utilities.EQ,
+									Utilities.CLASSES));
+						
+					}
+				} //for ide2
+			}//for ide1
+			
+			
 			
 			logmap2.clearIndexStructures();
 			

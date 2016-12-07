@@ -1670,15 +1670,15 @@ public class CandidateMappingManager extends MappingManager {
 			//no effect for 2nd chance mappings)
 			setFilterWithHeuristicsSecondLevelMappings(false);
 			
-			for (int ide1 : getDircardedAnchors().keySet()){
-				for (int ide2 : getDircardedAnchors().get(ide1)){
+			for (int ide1 : getDiscardedAnchors().keySet()){
+				for (int ide2 : getDiscardedAnchors().get(ide1)){
 					//addEquivMapping2ListOfAnchors2AskUser(ide1, ide2);
 					addMapping2ListOfAnchors2AskLogMap(ide1, ide2);
 					
 				}
 			}
 			
-			getDircardedAnchors().clear();
+			getDiscardedAnchors().clear();
 		}
 		
 		
