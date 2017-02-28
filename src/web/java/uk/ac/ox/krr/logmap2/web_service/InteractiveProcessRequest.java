@@ -799,7 +799,13 @@ public class InteractiveProcessRequest  extends HttpServlet implements SingleThr
     		 String email = getServletContext().getInitParameter("email");
     		 String passwd_email = getServletContext().getInitParameter("passwd");
     		 
-    		 new SendMail(mail, subject, text, email, passwd_email);
+    		 
+    		 String smtp_host = getServletContext().getInitParameter("smtphost");
+    		 
+    		 
+    		 
+    		 
+    		 new SendMail(mail, subject, text, email, passwd_email, smtp_host);
     	 }
     	 
     	 

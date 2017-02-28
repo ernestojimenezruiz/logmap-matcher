@@ -37,12 +37,13 @@ public class SendMail {
 	
 	
 	
-	public SendMail(String tomail, String subject, String text_mail, String email, String passwd_email){
+	public SendMail(String tomail, String subject, String text_mail, String email, String passwd_email, String smtp_host){
 		
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
+		//props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.host", smtp_host);
 		props.put("mail.smtp.port", "587");
 		
 		this.username = email;
