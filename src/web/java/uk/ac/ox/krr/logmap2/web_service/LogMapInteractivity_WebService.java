@@ -400,8 +400,7 @@ public class LogMapInteractivity_WebService {
 		if (!Parameters.use_overlapping) {
 			overlappingExtractor = new NoOverlappingExtractor();
 		} else {
-			overlappingExtractor = new LexicalOverlappingExtractor(
-					lexicalUtilities);
+			overlappingExtractor = new LexicalOverlappingExtractor(lexicalUtilities, true);
 		}
 
 		overlappingExtractor.createOverlapping(iri1_str, iri2_str);

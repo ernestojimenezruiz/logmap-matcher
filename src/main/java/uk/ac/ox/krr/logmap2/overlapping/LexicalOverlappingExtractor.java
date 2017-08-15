@@ -40,6 +40,7 @@ import uk.ac.ox.krr.logmap2.io.ReadFile;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.lexicon.LexicalUtilities;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
+import uk.ac.ox.krr.logmap2.statistics.StatisticsTimeMappings;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
 
 //import uk.ac.manchester.syntactic_locality.*;
@@ -58,26 +59,6 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 	
 	long init, fin;
 	
-	String file_gs_mappings;
-	String file_logmap_mappings;
-	
-	Set<String> ent1_mappings_gs;
-	Set<String> ent2_mappings_gs;
-	
-	Set<String> ent1_mappings_logmap;
-	Set<String> ent2_mappings_logmap;
-	
-	Set<String> ent1_mappings_logmap_ok;
-	Set<String> ent2_mappings_logmap_ok;
-	
-	String iri_str1_out;
-	String iri_str2_out;
-	
-	
-	boolean test=false;
-	boolean store=false;
-	
-	
 	private String iri_str1;
 	private String iri_str2;	
 	private OWLOntology onto1;
@@ -85,6 +66,13 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 	
 	Set<OWLEntity> entities1 = new HashSet<OWLEntity>();
 	Set<OWLEntity> entities2 = new HashSet<OWLEntity>();
+	
+	
+	private long size_onto1;
+	private long size_onto2;
+	
+	boolean full_overlapping;
+	
 	
 	
 	//I_Sub isub = new I_Sub();
@@ -95,47 +83,36 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 	/**
 	 * Default constructor
 	 */
-	public LexicalOverlappingExtractor(LexicalUtilities lexicalUtilities){
+	public LexicalOverlappingExtractor(LexicalUtilities lexicalUtilities, boolean full_overlapping){
 		
 		this.lexicalUtilities=lexicalUtilities;
+		this.full_overlapping = full_overlapping;
+		
+	}
+	
+	/**
+	 * Default constructor
+	 */
+	public LexicalOverlappingExtractor(LexicalUtilities lexicalUtilities){
+		
+		this(lexicalUtilities, false);
 		
 		
 	}
 			
 	
-	
-	
-	/**
-	 * Compare with GS and LogMap 0.9	 
-	 */
-	public LexicalOverlappingExtractor(
-			String file_mappings, 
-			String logmap_mappings,
-			String iri_str1_out, 
-			String iri_str2_out,
-			LexicalUtilities lexicalUtilities) throws Exception{
-		
-		this.lexicalUtilities=lexicalUtilities;
-		
-		
-		this.file_gs_mappings=file_mappings;
-		this.file_logmap_mappings=logmap_mappings;
-
-		ent1_mappings_gs = new HashSet<String>();
-		ent2_mappings_gs = new HashSet<String>();
-		
-		ent1_mappings_logmap = new HashSet<String>();
-		ent2_mappings_logmap = new HashSet<String>();
-		
-		ent1_mappings_logmap_ok = new HashSet<String>();
-		ent2_mappings_logmap_ok = new HashSet<String>();
-		
-		this.iri_str1_out=iri_str1_out;
-		this.iri_str2_out=iri_str2_out;
-		
-		test=true;
-		store=true;
+	public long getSizeClassesOnto1(){
+		return size_onto1;
 	}
+	
+	
+	public long getSizeClassesOnto2(){
+		return size_onto2;
+	}
+	
+	
+	
+	
 	
 	
 	
@@ -165,6 +142,9 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 		boolean is_overlapping_onto2=true;
 		
 		double loading_time = 0.0;
+		double overlapping_time = 0.0;
+		
+		
 		
 		//try{
 		
@@ -176,17 +156,21 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 			onto_loader1 = new OntologyLoader(onto1);
 		
 		
+		size_onto1 = onto_loader1.getClassesInSignatureSize();
+		
 		if (onto_loader1.getSignatureSize()<Parameters.min_size_overlapping)
 			is_overlapping_onto1=false;
 		
-		fin = Calendar.getInstance().getTimeInMillis();
-		loading_time = (float)((double)fin-(double)init)/1000.0;
-		LogOutput.print("\tTime loading ontology 1 (s): " + (float)((double)fin-(double)init)/1000.0);
+		///fin = Calendar.getInstance().getTimeInMillis();
+		//loading_time = (float)((double)fin-(double)init)/1000.0;
+		loading_time = StatisticsTimeMappings.getRunningTime(init);
+		StatisticsTimeMappings.addParsing_time(loading_time);				
+		LogOutput.print("\tTime loading ontology 1 (s): " + loading_time);
 		LogOutput.print("\tOntology 1 Axioms (s): " + onto_loader1.getOWLOntology().getAxiomCount());
 		
 		
 		init = Calendar.getInstance().getTimeInMillis();
-		OntologyProcessing4Overlapping overlapping1 = new OntologyProcessing4Overlapping(onto_loader1.getOWLOntology(), lexicalUtilities);
+		OntologyProcessing4Overlapping overlapping1 = new OntologyProcessing4Overlapping(onto_loader1.getOWLOntology(), lexicalUtilities, full_overlapping);
 		overlapping1.processOntologyClassLabels();
 		overlapping1.setInvertedFile4Overlapping();
 		
@@ -196,8 +180,9 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 			overlapping1.clearOntoloy();
 		}
 		
-		fin = Calendar.getInstance().getTimeInMillis();
-		LogOutput.print("\tTime processing ontology 1 (s): " + (float)((double)fin-(double)init)/1000.0);
+		overlapping_time = StatisticsTimeMappings.getRunningTime(init);
+		StatisticsTimeMappings.addOverlapping_time(overlapping_time);
+		LogOutput.print("\tTime processing ontology 1 (s): " + overlapping_time);
 		
 		
 		
@@ -208,19 +193,22 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 		else
 			onto_loader2 = new OntologyLoader(onto2);
 		
+		size_onto2 = onto_loader2.getClassesInSignatureSize();
+		
 		if (onto_loader2.getSignatureSize()<Parameters.min_size_overlapping)
 			is_overlapping_onto2=false;
 		
-		fin = Calendar.getInstance().getTimeInMillis();
-		loading_time += (float)((double)fin-(double)init)/1000.0;
-		LogOutput.print("\tTime loading ontology 2 (s): " + (float)((double)fin-(double)init)/1000.0);
+		//fin = Calendar.getInstance().getTimeInMillis();
+		loading_time = StatisticsTimeMappings.getRunningTime(init);
+		StatisticsTimeMappings.addParsing_time(loading_time);
+		LogOutput.print("\tTime loading ontology 2 (s): " + loading_time);
 		LogOutput.print("\tOntology 2 Axioms (s): " + onto_loader2.getOWLOntology().getAxiomCount());
 		
 		
 		
 		
 		init = Calendar.getInstance().getTimeInMillis();
-		OntologyProcessing4Overlapping overlapping2 = new OntologyProcessing4Overlapping(onto_loader2.getOWLOntology(), lexicalUtilities);
+		OntologyProcessing4Overlapping overlapping2 = new OntologyProcessing4Overlapping(onto_loader2.getOWLOntology(), lexicalUtilities, full_overlapping);
 		overlapping2.processOntologyClassLabels();
 		overlapping2.setInvertedFile4Overlapping();
 		
@@ -230,9 +218,13 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 			overlapping2.clearOntoloy();
 		}
 		
-		fin = Calendar.getInstance().getTimeInMillis();
-		LogOutput.print("\tTime processing ontology 2 (s): " + (float)((double)fin-(double)init)/1000.0);
-		LogOutput.printAlways("LogMap 2 Loading Time (s): " + loading_time);
+		overlapping_time = StatisticsTimeMappings.getRunningTime(init);
+		StatisticsTimeMappings.addOverlapping_time(overlapping_time);
+		LogOutput.print("\tTime processing ontology 2 (s): " + overlapping_time);
+		
+		
+		//Total loading time
+		LogOutput.printAlways("LogMap 2 Total Loading Time (s): " + StatisticsTimeMappings.getParsing_time());
 		
 					
 		//Intersects IF
@@ -249,8 +241,9 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 
 		LogOutput.print("\tSize IF intersected: " + if_weak_intersect.size());
 		
-		fin = Calendar.getInstance().getTimeInMillis();
-		LogOutput.print("\tTime intersecting IF weak (s): " + (float)((double)fin-(double)init)/1000.0);
+		overlapping_time = StatisticsTimeMappings.getRunningTime(init);
+		StatisticsTimeMappings.addOverlapping_time(overlapping_time);
+		LogOutput.print("\tTime intersecting IF weak (s): " + overlapping_time);
 		
 		
 		
@@ -331,22 +324,9 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 		overlapping1.clearStructures();
 		overlapping2.clearStructures();
 		
-		fin = Calendar.getInstance().getTimeInMillis();
-		LogOutput.print("\tTime extracting entities4modules (s): " + (float)((double)fin-(double)init)/1000.0);
-		
-		
-		//Tests
-		if (store) { //we add gold standard mappings to entities
-			
-			//Tests
-			//Small overlapping  (only GS)
-			//entities1.clear();
-			//entities2.clear();
-			
-			//loadMappingsGS();			
-			//LogOutput.print("\tSize entities 1: " + entities1.size());
-			//LogOutput.print("\tSize entities 2: " + entities2.size());
-		}
+		overlapping_time = StatisticsTimeMappings.getRunningTime(init);
+		StatisticsTimeMappings.addOverlapping_time(overlapping_time);
+		LogOutput.print("\tTime extracting entities4modules (s): " + overlapping_time);
 		
 		
 		
@@ -373,13 +353,13 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 					IRI.create(onto_loader1.getOntologyIRIStr()));
 			
 			
-			if (store){
+			//if (store){
 				//module_extractor1.saveExtractedModule(iri_str1_out);
-				module_extractor1.saveExtractedModule(
-						SynchronizedOWLManager.createOWLOntologyManager(),
-						module1,
-						iri_str1_out);
-			}
+				//module_extractor1.saveExtractedModule(
+				//		SynchronizedOWLManager.createOWLOntologyManager(),
+				//		module1,
+				//		iri_str1_out);
+			//}
 			
 			module_extractor1.clearStrutures();
 			
@@ -411,13 +391,13 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 					IRI.create(onto_loader2.getOntologyIRIStr()));
 			
 			
-			if (store){
-				//module_extractor2.saveExtractedModule(iri_str2_out);
-				module_extractor2.saveExtractedModule(
-						SynchronizedOWLManager.createOWLOntologyManager(),
-						module2,
-						iri_str2_out);
-			}
+			//if (store){
+			//	//module_extractor2.saveExtractedModule(iri_str2_out);
+			//	module_extractor2.saveExtractedModule(
+			//			SynchronizedOWLManager.createOWLOntologyManager(),
+			//			module2,
+			//			iri_str2_out);
+			//}
 			
 			module_extractor2.clearStrutures();
 			
@@ -430,61 +410,15 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 		
 		entities2.clear(); //TODO Are we returning which entities have a weak anchor??
 		
-		fin = Calendar.getInstance().getTimeInMillis();
+		overlapping_time = StatisticsTimeMappings.getRunningTime(init);
+		StatisticsTimeMappings.addOverlapping_time(overlapping_time);
+		
 		LogOutput.print("\tSize module 1: " + module1.getAxiomCount());
 		LogOutput.print("\tSize module 2: " + module2.getAxiomCount());
 		LogOutput.print("\tSize classes module 1: " + module1.getClassesInSignature().size() + "  " + onto_loader1.getClassesInSignatureSize());
 		LogOutput.print("\tSize classes module 2: " + module2.getClassesInSignature().size() + "  " + onto_loader2.getClassesInSignatureSize());
-		LogOutput.print("\tTime extracting modules (s): " + (float)((double)fin-(double)init)/1000.0);
+		LogOutput.print("\tTime extracting modules (s): " + overlapping_time);
 		
-		
-		
-		
-		//Only for evaluation purposes
-		if (!test) return;
-		
-		
-		//Get P&R: extend IF with stemming if necessary
-		//Precission and Recall: compare labels from uris
-		loadMappingsGS();
-		loadMappingsLogmap(onto_loader1.getOntologyIRIStr(), onto_loader2.getOntologyIRIStr());
-		
-		Set<String> candidates_onto1 = new HashSet<String>();
-		Set<String> candidates_onto2 = new HashSet<String>();
-		
-		//for (OWLEntity cls : entities1){
-		for (OWLEntity cls : module1.getSignature()){
-			candidates_onto1.add(Utilities.getEntityLabelFromURI(cls.getIRI().toString()));
-		}
-		for (OWLEntity cls : module2.getSignature()){
-		//for (OWLEntity cls : entities2){
-			candidates_onto2.add(Utilities.getEntityLabelFromURI(cls.getIRI().toString()));
-		}
-		
-		LogOutput.print("ONTOLOGY 1");
-		LogOutput.print("Recall GS mappings");
-		getPrecisionAndRecallEntities(ent1_mappings_gs, candidates_onto1);
-		LogOutput.print("Recall LogMap mappings");
-		getPrecisionAndRecallEntities(ent1_mappings_logmap, candidates_onto1);
-		LogOutput.print("Recall Good LogMap mappings");
-		getPrecisionAndRecallEntities(ent1_mappings_logmap_ok, candidates_onto1);
-		LogOutput.print("\tOverlapping size wrt whole ontology: " + (double)((double)module1.getClassesInSignature().size()*100.0/(double)onto_loader1.getClassesInSignatureSize()));
-		
-		LogOutput.print("ONTOLOGY 2");
-		LogOutput.print("Recall GS mappings");
-		getPrecisionAndRecallEntities(ent2_mappings_gs, candidates_onto2);
-		LogOutput.print("Recall LogMap mappings");
-		getPrecisionAndRecallEntities(ent2_mappings_logmap, candidates_onto2);
-		LogOutput.print("Recall Good LogMap mappings");
-		getPrecisionAndRecallEntities(ent2_mappings_logmap_ok, candidates_onto2);
-		LogOutput.print("\tOverlapping size wrt whole ontology: " + (double)((double)module2.getClassesInSignature().size()*100.0/(double)onto_loader2.getClassesInSignatureSize()));
-		
-		
-		//}
-		//catch (Exception e){
-		//	System.err.println(e.getMessage() + "   " + e.getCause());
-		//	e.printStackTrace();
-		//}
 		
 
 		
@@ -493,139 +427,6 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 	}
 	
 	
-	/**
-	 * Compares candidate entities from ontologies with mapped entities through umls
-	 */
-	private void getPrecisionAndRecallEntities(Set<String> umls_entities, Set<String> candidate_entities){
-		
-		
-		/*for (String cand : candidate_entities){
-			if (!umls_entities.contains(cand)){
-				LogOutput.print(cand);
-			}
-		}*/
-		
-		Set <String> intersection;
-		double precision;
-		double recall;
-		
-		/*int i=0;
-		for (String e : umls_entities){
-			LogOutput.print(e);
-			i++;
-			if (i==20)
-				break;
-			
-		}
-		LogOutput.print("\n\n\n");
-		
-		i=0;
-		for (String e : candidate_entities){
-			LogOutput.print(e);
-			i++;
-			if (i==20)
-				break;
-			
-		}*/
-		
-		
-		
-		intersection=new HashSet<String>(umls_entities);
-		
-		intersection.retainAll(candidate_entities);
-		
-		
-		precision=((double)intersection.size())/((double)candidate_entities.size());
-		recall=((double)intersection.size())/((double)umls_entities.size());
-	
-		//LogOutput.print("\tPrecision: " + precision); Not important
-		LogOutput.print("\tRecall: " + recall);
-		
-		
-	}
-	
-	
-	/**
-	 * UMLS mappings will be our gold standard.
-	 * @throws Exception
-	 */
-	private void loadMappingsGS() throws Exception{
-	
-		ReadFile reader = new ReadFile(file_gs_mappings);
-		
-		
-		String line;
-		String[] elements;
-		
-		line=reader.readLine();
-		
-		
-		
-		
-		while (line!=null) {
-			
-			if (line.indexOf("|")<0){
-				line=reader.readLine();
-				continue;
-			}
-			
-			elements=line.split("\\|");
-			
-			ent1_mappings_gs.add(Utilities.getEntityLabelFromURI(elements[0]));			
-			ent2_mappings_gs.add(Utilities.getEntityLabelFromURI(elements[1]));
-			 
-			entities1.add(OWLManager.getOWLDataFactory().getOWLClass(IRI.create(elements[0])));
-			entities2.add(OWLManager.getOWLDataFactory().getOWLClass(IRI.create(elements[1])));
-			
-				
-			line=reader.readLine();
-		}		
-		
-		reader.closeBuffer();
-		
-		
-		LogOutput.print("GS Entities 1: " + ent1_mappings_gs.size());
-		LogOutput.print("GS Entities 2: " + ent2_mappings_gs.size());
-				
-		
-	}
-	
-	
-	/**
-	 * We loaf mappings extracted with logmap beta 0.9
-	 */
-	private void loadMappingsLogmap(String uri1, String uri2) throws Exception{
-		
-		OWLOntologyManager managerOnto;
-		OWLOntology moduleonto;
-		
-		
-		managerOnto = OWLManager.createOWLOntologyManager();
-		
-		moduleonto = managerOnto.loadOntology(IRI.create(file_logmap_mappings));
-		
-		for (OWLClass cls : moduleonto.getClassesInSignature()){
-			
-			if (Utilities.getNameSpaceFromURI(cls.getIRI().toString()).equals(uri1))
-				ent1_mappings_logmap.add(Utilities.getEntityLabelFromURI(cls.getIRI().toString()));	
-			else if (Utilities.getNameSpaceFromURI(cls.getIRI().toString()).equals(uri2))
-				ent2_mappings_logmap.add(Utilities.getEntityLabelFromURI(cls.getIRI().toString()));
-			
-		}
-		
-		LogOutput.print("LogMap Entities 1: " + ent1_mappings_logmap.size());
-		LogOutput.print("LogMap Entities 2: " + ent2_mappings_logmap.size());
-		
-		ent1_mappings_logmap_ok = new HashSet<String>(ent1_mappings_logmap);
-		ent2_mappings_logmap_ok = new HashSet<String>(ent2_mappings_logmap);
-		
-		ent1_mappings_logmap_ok.retainAll(ent1_mappings_gs);
-		ent2_mappings_logmap_ok.retainAll(ent2_mappings_gs);
-		
-		LogOutput.print("LogMap Entities 1 (Good): " + ent1_mappings_logmap_ok.size());
-		LogOutput.print("LogMap Entities 2 (Good): " + ent2_mappings_logmap_ok.size());
-		
-	}
 
 
 

@@ -293,7 +293,7 @@ public class LogMap_WebService {
 			overlappingExtractor = new NoOverlappingExtractor();
 		}
 		else{
-			overlappingExtractor = new LexicalOverlappingExtractor(lexicalUtilities);
+			overlappingExtractor = new LexicalOverlappingExtractor(lexicalUtilities, true);
 		}
 		
 

@@ -36,6 +36,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import uk.ac.ox.krr.logmap2.lexicon.LexicalUtilities;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
 import uk.ac.ox.krr.logmap2.utilities.PrecomputeIndexCombination;
+import uk.ac.ox.krr.logmap2.indexing.ExtractStringFromAnnotationAssertionAxiom;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 
 /**
@@ -69,21 +70,25 @@ public class OntologyProcessing4Overlapping {
 	
 	OWLOntology onto;
 	
-	
-	
-	int max_size_labels=6;
-	int max_size_words_missing=2;
+		
+	int max_size_labels=7; //6
+	int max_size_words_missing=2; //2
 
 	private PrecomputeIndexCombination precomputeIndexCombination = new PrecomputeIndexCombination();
 	
 	private LexicalUtilities lexicalUtilities;
 	
+	private boolean full_overlapping;
 	
-	public OntologyProcessing4Overlapping(OWLOntology ont, LexicalUtilities lexicalUtilities){
+	private ExtractStringFromAnnotationAssertionAxiom annotationExtractor = new ExtractStringFromAnnotationAssertionAxiom();
+	
+	
+	public OntologyProcessing4Overlapping(OWLOntology ont, LexicalUtilities lexicalUtilities, boolean full_overlapping){
 		
 		onto=ont;
 		
 		this.lexicalUtilities=lexicalUtilities;
+		this.full_overlapping=full_overlapping;
 				
 		//We precompute indexes
 		 //precomputeIndexCombination.clearCombinations(); //Old calls
@@ -131,7 +136,7 @@ public class OntologyProcessing4Overlapping {
 				
 				//We extract a fix number of labels... not all to be faster
 				//2-3 is already good extracting an overlapping with 98\% of recall
-				for (String label : extractLabels4OWLCls(cls, 3)){
+				for (String label : extractLabels4OWLCls(cls)){
 				
 					words.addAll(cleanLabel(label));
 				
@@ -238,10 +243,25 @@ public class OntologyProcessing4Overlapping {
 		//precomputedCombinations.clear();
 	}
 	
-
 	
-	//TODO: use new codes for label  extraction?
-	private Set<String> extractLabels4OWLCls(OWLClass cls, int max_size){
+	
+	private Set<String> extractLabels4OWLCls(OWLClass cls){
+		
+		if (full_overlapping)
+			return extractAllLabels4OWLCls(cls, 20);
+		else
+			return extractLimitedLabels4OWLCls(cls, 3);
+				
+	}
+
+		
+	/**
+	 * Extracts only a limited number of labels (in rdf_label) 
+	 * @param cls
+	 * @param max_size
+	 * @return
+	 */
+	private Set<String> extractLimitedLabels4OWLCls(OWLClass cls, int max_size){
 	
 		Set<String> labels = new HashSet<String>();
 		
@@ -273,6 +293,43 @@ public class OntologyProcessing4Overlapping {
 		return labels;
 		
 	}
+	
+	
+	
+	/**
+	 * Extracts all labels. It may be time consuming
+	 * @param cls
+	 * @param max_size
+	 * @return
+	 */
+	private Set<String> extractAllLabels4OWLCls(OWLClass cls, int max_size){
+		
+			Set<String> labels = new HashSet<String>();
+			
+			//All labels
+			for (OWLAnnotationAssertionAxiom annAx : cls.getAnnotationAssertionAxioms(onto)){
+				
+				
+				labels.addAll(annotationExtractor.getAnntotationString(annAx, onto, onto.getOWLOntologyManager().getOWLDataFactory()));				
+									
+				if (labels.size()>=max_size)
+						break;		
+				
+			}
+			
+			
+			//Check if concept name is meaningful (not an ID)
+			String name_class = Utilities.getEntityLabelFromURI(cls.getIRI().toString()); 
+			//If it doesn't exist any label then we use entity name
+			//TODO OJO with yujiao results
+			if (labels.isEmpty() || !name_class.matches(".+[0-9][0-9][0-9]+")){
+			//if (labels.isEmpty()){
+				labels.add(name_class);
+			}
+			
+			return labels;
+			
+		}
 	
 	
 	
@@ -453,6 +510,11 @@ public class OntologyProcessing4Overlapping {
 	
 	
 	private void setInvertedFileWeakLabels(){
+		
+		//TODO
+		//Extend with max size labels and max_size_missing_words: perform experiments and evaluate performance.
+		//Currently set to 2
+		
 		
 		//List<String> words;
 		

@@ -837,7 +837,7 @@ public class LogMap2Core {
 			overlappingExtractor = new NoOverlappingExtractor();
 		}
 		else{
-			overlappingExtractor = new LexicalOverlappingExtractor(lexicalUtilities);
+			overlappingExtractor = new LexicalOverlappingExtractor(lexicalUtilities, true);
 		}
 
 		
@@ -860,7 +860,7 @@ public class LogMap2Core {
 			overlappingExtractor = new NoOverlappingExtractor();
 		}
 		else{
-			overlappingExtractor = new LexicalOverlappingExtractor(lexicalUtilities);
+			overlappingExtractor = new LexicalOverlappingExtractor(lexicalUtilities, true);
 		}
 
 		

@@ -170,18 +170,11 @@ public class OntologyProcessing {
 	protected Set<Integer> TaxRootIdentifiers = new HashSet<Integer>(); //The real ones
 	
 	
-	//IRIS of alternative labels annotations 
+	//IRI labels annotations 
 	private String rdf_label_uri = "http://www.w3.org/2000/01/rdf-schema#label";
-	private String hasRelatedSynonym_uri = "http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym";
-	private String hasExactSynonym_uri   = "http://www.geneontology.org/formats/oboInOwl#hasExactSynonym";
-	private String nci_synonym_uri = "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#Synonym";
-	//private String nci_umls_cui_uri = "http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#UMLS_CUI";
-	private String fma_synonym_uri="http://bioontology.org/projects/ontologies/fma/fmaOwlDlComponent_2_0#Synonym";
-	private String fma_name_uri="http://bioontology.org/projects/ontologies/fma/fmaOwlDlComponent_2_0#name";
-
 	
-	//IRIS 2 Ignore 
-	private String oboinowl = "http://www.geneontology.org/formats/oboInOwl";
+	
+	
 	
 	private String iri_onto = "http://krono.act.uji.es/ontology.owl";
 	
@@ -551,6 +544,25 @@ public class OntologyProcessing {
 	
 	
 	
+	private String translateLabel(OWLAnnotationAssertionAxiom entityAnnAx, String label){
+		
+		//We only translate if lang is provided in a direct label
+		String lang = annotationExtractor.getAnntotationLanguage(entityAnnAx);
+			
+		if (!lang.equals(Parameters.target_lang) && !lang.equals("")){
+				
+			//Call the translation module
+			String translation = translator.getTranslation(label, lang);
+			//LogOutput.printAlways(label + ":  " + translation);
+			return translation;
+			//return translator.getTranslation(label, lang);
+				
+		}
+				
+		return label;
+	}
+	
+	
 	
 	
 	private void processLexiconClasses(OWLClass cls, boolean extractLabels) {
@@ -693,7 +705,12 @@ public class OntologyProcessing {
 				
 				LogOutput.print(name);
 				
-				for (String label_value : annotationExtractor.getAnntotationString(dPropAnnAx)){
+				for (String label_value : annotationExtractor.getAnntotationString(dPropAnnAx, onto, index.getFactory())){
+					
+					//TODO Perform translation if necessary
+					if (Parameters.allow_multilingual){			
+						label_value = translateLabel(dPropAnnAx, label_value);
+					}
 							
 					LogOutput.print("\t  " + label_value);
 					
@@ -867,7 +884,13 @@ public class OntologyProcessing {
 				
 				LogOutput.print(name);
 				
-				for (String label_value : annotationExtractor.getAnntotationString(oPropAnnAx)){
+				for (String label_value : annotationExtractor.getAnntotationString(oPropAnnAx, onto, index.getFactory())){
+					
+					//TODO Perform translation if necessary
+					if (Parameters.allow_multilingual){			
+						label_value = translateLabel(oPropAnnAx, label_value);
+					}
+					
 				
 					LogOutput.print("\t  " + label_value);
 					
@@ -1379,7 +1402,14 @@ public class OntologyProcessing {
 			//String uri_ann = indivAnnAx.getAnnotation().getProperty().getIRI().toString();
 			//System.out.println("\tIndiv label: '" + uri_ann + "'  " + label_value);
 			
-			for (String label_value : annotationExtractor.getAnntotationString(indivAnnAx)){
+			for (String label_value : annotationExtractor.getAnntotationString(indivAnnAx, onto, index.getFactory())){
+				
+				//TODO Perform translation if necessary
+				if (Parameters.allow_multilingual){			
+					label_value = translateLabel(indivAnnAx, label_value);
+				}
+				
+				
 				if (label_value.length()>2){
 					lexiconValues4individual.add(label_value);
 				}
@@ -1957,7 +1987,12 @@ public class OntologyProcessing {
 			
 			//LogOutput.printError(clsAnnAx.toString());
 			
-			for (String l_value : annotationExtractor.getAnntotationString(clsAnnAx)){
+			for (String l_value : annotationExtractor.getAnntotationString(clsAnnAx, onto, index.getFactory())){
+				
+				//TODO Perform translation if necessary
+				if (Parameters.allow_multilingual){			
+					l_value = translateLabel(clsAnnAx, l_value);
+				}
 				
 				//LogOutput.print("\t  " + l_value);
 				
@@ -1980,244 +2015,7 @@ public class OntologyProcessing {
 	
 	//int num_labels=0;
 	
-	/**
-	 * 
-	 * @deprecated
-	 * 
-	 */
-	private Set<String> extractAlternateLabels4OWLCls2(OWLClass cls, int ident){
-		
-		Set<String> labels_set = new HashSet<String>();
-		String label_value="";
-		OWLAnonymousIndividual geneid_value;
-		
-		OWLNamedIndividual namedIndiv=null;
-		IRI namedIndivIRI;
-		
-		//OWLNamedIndividual geneid_value;
-		//String[] words;
-		
-		//int shift=1;
-		
-		//Use concept name as well!! Some times it is different to label
-		//Avoid identifiers as concept names
-		label_value = index.getIdentifier2ClassIndexMap().get(ident).getEntityName().toLowerCase(); 
-		
-		if (!isLabelAnIdentifier(label_value)){
-		//if (!label_value.matches(".+[0-9][0-9][0-9]+")){
-			
-			labels_set.addAll(extendAlternativeLabel(label_value));
-			//LogOutput.print(label_value + " " + labels_set.size());
-			//LogOutput.print("\t" + labels_set);
-			
-			
-			//Expand with UMLS Lex Spelling variants
-			if (lexicalUtilities.hasSpellingVariants(label_value)){
-			//if (spelling_variants_map.containsKey(label_value)){
-				for (String variant : lexicalUtilities.getSpellingVariants(label_value)){
-				//for (String variant : spelling_variants_map.get(label_value)){
-					labels_set.addAll(extendAlternativeLabel(variant));
-				}
-			}
-			
-			//LogOutput.print("name2Label: " + labels_set);
-			
-		}
-		
-				
-		
-		//LogOutput.print("GENIEID");
-		
-		for (OWLAnnotationAssertionAxiom clsAnnAx : cls.getAnnotationAssertionAxioms(onto)){
-			
-			//listchanges.add(new RemoveAxiom(onto, clsAnnAx)); //We remove all annotations
-			
-			//num_labels++;
-					
-			if (clsAnnAx.getAnnotation().getProperty().getIRI().toString().equals(rdf_label_uri)){
-				
-								
-				//LogOutput.print(((OWLLiteral)annAx.getAnnotation().getValue()).getLiteral());
-				label_value=((OWLLiteral)clsAnnAx.getAnnotation().getValue()).getLiteral().toLowerCase();
-				
-				//LogOutput.print("Label: " + label_value);
-				
-				if (label_value.length()>2){
-					//labels_set.add(label_value);
-					labels_set.addAll(extendAlternativeLabel(label_value));
-					//LogOutput.print(label_value + " " + labels_set.size());
-					//LogOutput.print("\t" + labels_set);
-					
-					
-					//Expand with UMLS Lex Spelling variants
-					if (lexicalUtilities.hasSpellingVariants(label_value)){
-					//if (spelling_variants_map.containsKey(label_value)){
-						for (String variant : lexicalUtilities.getSpellingVariants(label_value)){
-						//for (String variant : spelling_variants_map.get(label_value)){
-							labels_set.addAll(extendAlternativeLabel(variant));
-						}
-					}
-					
-				}
-				
-			}
-			
-			
-			//Deal with these cases
-			//TODO Create a new class where can be easily extended the was annotations are extracted!!
-			//Currently in new class
-			//<oboInOwl:hasRelatedSynonym rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HGE</oboInOwl:hasRelatedSynonym>
-	        //<oboInOwl:hasExactSynonym rdf:datatype="http://www.w3.org/2001/XMLSchema#string">human granulocytic ehrlichiosis</oboInOwl:hasExactSynonym>
-		
-			
-			//Annotations in MOuse Anatomy and NCI Anatomy
-			if (clsAnnAx.getAnnotation().getProperty().getIRI().toString().equals(hasRelatedSynonym_uri)||
-				clsAnnAx.getAnnotation().getProperty().getIRI().toString().equals(hasExactSynonym_uri)){
-				
-				try {
-					//LogOutput.print("GENIEID");
-					//LogOutput.print(clsAnnAx.getAnnotation());
-					//LogOutput.print(clsAnnAx.getAnnotation().getValue());
-					//It is an individual
-					geneid_value=((OWLAnonymousIndividual)clsAnnAx.getAnnotation().getValue()).asOWLAnonymousIndividual();//.getID()
-					
-					for (OWLAnnotationAssertionAxiom annGeneidAx : onto.getAnnotationAssertionAxioms(geneid_value)){
-						
-						//listchanges.add(new RemoveAxiom(onto, annGeneidAx)); //We remove all annotations
-						
-						if (annGeneidAx.getAnnotation().getProperty().getIRI().toString().equals(rdf_label_uri)){
-							
-							label_value=((OWLLiteral)annGeneidAx.getAnnotation().getValue()).getLiteral().toLowerCase();
-						
-							if (label_value.length()>2){
-								
-								
-								//labels_set.add(label_value);
-								labels_set.addAll(extendAlternativeLabel(label_value));
-								//LogOutput.print(label_value + " " + labels_set.size());
-								//LogOutput.print("\t" + labels_set);
-								
-								//Expand with UMLS Lex Spelling variants
-								if (lexicalUtilities.hasSpellingVariants(label_value)){
-									for (String variant : lexicalUtilities.getSpellingVariants(label_value)){
-										labels_set.addAll(extendAlternativeLabel(variant));
-									}
-								}
-								
-							}
-							
-							
-						}
-					}
-				}
-				catch (Exception e){
-					LogOutput.printAlways("Error accessing annotation: hasRelatedSynonym_uri or hasExactSynonym_uri");
-				}
-				
-			}
-			
-			//Annotations in NCI Full
-			else if (clsAnnAx.getAnnotation().getProperty().getIRI().toString().equals(nci_synonym_uri)){
-				
-				label_value=((OWLLiteral)clsAnnAx.getAnnotation().getValue()).getLiteral().toLowerCase();
-				
-				if (label_value.length()>2){
-				
-					//LogOutput.print("\tSynonym nci: " + label_value);
-					
-					//LogOutput.print("\t" + label_value);
-					//labels_set.add(label_value);
-					labels_set.addAll(extendAlternativeLabel(label_value));
-					//LogOutput.print(label_value + " " + labels_set.size());
-					//LogOutput.print("\t" + labels_set);
-					
-					//Expand with UMLS Lex Spelling variants
-					if (lexicalUtilities.hasSpellingVariants(label_value)){
-						for (String variant : lexicalUtilities.getSpellingVariants(label_value)){
-							labels_set.addAll(extendAlternativeLabel(variant));
-						}
-					}
-					
-				}					
-				
-				
-			}
-			
-			//Annotations in FMA DL 2.0
-			else if (clsAnnAx.getAnnotation().getProperty().getIRI().toString().equals(fma_synonym_uri)){
-					
-					//It is an individual
-					namedIndivIRI=(IRI)clsAnnAx.getAnnotation().getValue();
-					
-					namedIndiv=index.getFactory().getOWLNamedIndividual(namedIndivIRI);
-					
-					
-					//Synonym name is in data property assertion, not in annotation!!
-					
-					
-					/*LogOutput.print("\tcls: " + cls.getIRI());
-					LogOutput.print("\tindiv: " + namedIndivIRI);
-					LogOutput.print("\tindiv: " + namedIndiv.getIRI());
-					LogOutput.print("\tann: " + namedIndiv.getAnnotations(onto));
-					LogOutput.print("\tdprop: " + namedIndiv.getDataPropertyValues(factory.getOWLDataProperty(IRI.create(fma_name_uri)), onto));
-					*/
-					if (namedIndiv==null)
-						continue;
-					
-					
-					
-					//for (OWLAnnotation indivAnn : namedIndiv.getAnnotations(onto)){
-					for (OWLLiteral literal_syn : namedIndiv.getDataPropertyValues(index.getFactory().getOWLDataProperty(IRI.create(fma_name_uri)), onto)){
-					
-						
-						//listchanges.add(new RemoveAxiom(onto, indivAnnAx)); //We remove all annotations
-						
-						
-						//LogOutput.print(literal_syn);
-						
-						label_value = literal_syn.getLiteral().toLowerCase();
-						
-						//if (indivAnn.getProperty().getIRI().toString().equals(fma_name_uri)){
-							//label_value=((OWLLiteral)indivAnn.getValue()).getLiteral().toLowerCase();
-						//}
-						
-						
-						//LogOutput.print("\tSynonym FMA: " + label_value);
-						
-						if (label_value.length()>2){
-						
-							
-							
-							//labels_set.add(label_value);
-							labels_set.addAll(extendAlternativeLabel(label_value));
-							//LogOutput.print(label_value + " " + labels_set.size());
-							//LogOutput.print("\t" + labels_set);
-							
-							//Expand with UMLS Lex Spelling variants
-							if (lexicalUtilities.hasSpellingVariants(label_value)){
-								for (String variant : lexicalUtilities.getSpellingVariants(label_value)){
-									labels_set.addAll(extendAlternativeLabel(variant));
-								}
-							}
-							
-						}
-						
-						
-						
-					}
-					
-				}
-		}//end class ann axioms
-		
-		//LogOutput.print("\t" + labels_set.size());
-		num_syn=num_syn+labels_set.size();
-		
-		return labels_set;
-		
-		
-		
-	}
-	
+
 	
 	
 	
@@ -4211,270 +4009,7 @@ public class OntologyProcessing {
 	
 	
 	
-	/**
-	 * 
-	 * This class manages the annotation that LogMap currently accepts.
-	 * These annotation may appear as direct strings, anonymous/named individulas or even as data assertions.
-	 * 
-	 * @author Ernesto
-	 *
-	 */
-	private class ExtractStringFromAnnotationAssertionAxiom {
-		
-		private OWLAnonymousIndividual geneid_value;
-		private OWLNamedIndividual namedIndiv;
-		private IRI namedIndivIRI;
-		
-		
-		ExtractStringFromAnnotationAssertionAxiom(){
-			
-		}
-		
-		
-		protected String getAnntotationLanguage(OWLAnnotationAssertionAxiom entityAnnAx){
-			
-			String lang;
-			
-			try{
-				lang = ((OWLLiteral)entityAnnAx.getAnnotation().getValue()).getLang();
-			}
-			catch (Exception e){
-				lang="";
-			}
-			
-			return lang;
-			
-			
-		}
-		
-		
-		
-		
-		
-		
-		protected Set<String> getAnntotationString(OWLAnnotationAssertionAxiom entityAnnAx){
-			
-			String label_value="";
-			
-			String uri_ann = entityAnnAx.getAnnotation().getProperty().getIRI().toString();
-						
-			//TODO Perform translation when direct annotation value
-			
-			//System.err.println(uri_ann);
-			
-			
-			//Accepted URIs
-			if (Parameters.accepted_annotation_URIs_for_classes.contains(uri_ann)){
-				
-				if (!(label_value=asDirectValue(entityAnnAx)).equals("")){
-					return processLongLabels(label_value);
-				}
-				if (!(label_value=asAnonymousIndividual(entityAnnAx)).equals("")){
-					return processLongLabels(label_value);
-				}
-				if (!(label_value=asNamedIndividual(entityAnnAx)).equals("")){
-					return processLongLabels(label_value);
-				}
-				if (!(label_value=asNamedIndividualFMA(entityAnnAx)).equals("")){
-					return processLongLabels(label_value);
-				}
-				
-			}
-			
-			
-			return new HashSet<String>(); //empty value
-			
-			
-			
-			
-			
-			
-			
-		}
-		
-		
-		private String asDirectValue(OWLAnnotationAssertionAxiom entityAnnAx){
-			try	{
-				//LogOutput.print(((OWLLiteral)annAx.getAnnotation().getValue()).getLiteral());
-				
-				String label = ((OWLLiteral)entityAnnAx.getAnnotation().getValue()).getLiteral().toLowerCase();
-				
-				//System.err.println(entityAnnAx + " " + label);
-				
-				if (label==null || label.equals("null") || label.equals("")){
-					//System.err.println("NULL LABEL: " + entityAnnAx);
-					return "";
-				}
-				
-				//TODO Perform translation if necessary
-				if (Parameters.allow_multilingual){
-										
-					String lang = ((OWLLiteral)entityAnnAx.getAnnotation().getValue()).getLang();
-					if (!lang.equals(Parameters.target_lang) && !lang.equals("")){
-						
-						//Call the translation module
-						String translation = translator.getTranslation(label, lang);
-						//LogOutput.printAlways(label + ":  " + translation);
-						return translation;
-						//return translator.getTranslation(label, lang);
-						
-					}
-				}
-				
-				return label;
-				
-				
-			}
-			catch (Exception e){
-				//In case of error. Accessing an object in an expected way				
-				return "";
-			}
-		}
-		
-		
-		/**
-		 * As in Mouse and NCI anatomy. Annotations al rdf:labels in anonymous individuals
-		 * It seems also GO ontology (to be checked)
-		 * @param entityAnnAx
-		 * @return
-		 */
-		private String asAnonymousIndividual(OWLAnnotationAssertionAxiom entityAnnAx){
-			try {
-				geneid_value=((OWLAnonymousIndividual)entityAnnAx.getAnnotation().getValue()).asOWLAnonymousIndividual();//.getID()
-				for (OWLAnnotationAssertionAxiom annGeneidAx : onto.getAnnotationAssertionAxioms(geneid_value)){
-					
-					if (annGeneidAx.getAnnotation().getProperty().getIRI().toString().equals(rdf_label_uri)){
-						
-						return ((OWLLiteral)annGeneidAx.getAnnotation().getValue()).getLiteral().toLowerCase();
-					}
-				}
-				return "";
-			}
-			catch (Exception e){
-				//In case of error. Accessing an object in an expected way
-				return "";
-			}
-		}
-		
-		
-		/**
-		 * In some OBO like ontologies
-		 * @param entityAnnAx
-		 * @return
-		 */
-		private String asNamedIndividual(OWLAnnotationAssertionAxiom entityAnnAx){
-			try {
-				//It is an individual
-				namedIndivIRI=(IRI)entityAnnAx.getAnnotation().getValue();				
-				namedIndiv=index.getFactory().getOWLNamedIndividual(namedIndivIRI);
-				
-				
-				for (OWLAnnotationAssertionAxiom annIdiv : namedIndiv.getAnnotationAssertionAxioms(onto)){
-					
-					
-					if (annIdiv.getAnnotation().getProperty().getIRI().toString().equals(rdf_label_uri)){
-						
-						return ((OWLLiteral)annIdiv.getAnnotation().getValue()).getLiteral().toLowerCase();
-					}
-				}
-				return "";
-				
-				
-			}
-			catch (Exception e){
-				//In case of error. Accessing an object in an expected way
-				return "";
-			}
-			
-		}
-		
-		/**
-		 * FMA originalannotations annotations appear as datatype assertions
-		 * @param entityAnnAx
-		 * @return
-		 */
-		private String asNamedIndividualFMA(OWLAnnotationAssertionAxiom entityAnnAx){
-			
-			try{
-				//It is an individual
-				namedIndivIRI=(IRI)entityAnnAx.getAnnotation().getValue();
-				
-				namedIndiv=index.getFactory().getOWLNamedIndividual(namedIndivIRI);
-				
-				//for (OWLAnnotation indivAnn : namedIndiv.getAnnotations(onto)){
-				for (OWLLiteral literal_syn : namedIndiv.getDataPropertyValues(index.getFactory().getOWLDataProperty(IRI.create(fma_name_uri)), onto)){
-				
-					return literal_syn.getLiteral().toLowerCase();
-				}
-				
-				return "";
-				
-			}
-			catch (Exception e){
-				//In case of error. Accessing an object in an expected way
-				return "";
-			}
-			
-		}
 
-		
-		/**
-		 * We deal with some definitions. Long ones are discarded.
-		 * We also process translated annotations
-		 * @param def
-		 * @return
-		 */
-		private Set<String> processLongLabels(String label){
-			
-			Set<String> annotation_labels = new HashSet<String>(); 
-			
-			String words[];
-			
-			if (label.length()<2){
-				return annotation_labels;
-			}
-			
-			//For translated labels
-			//Label is: trans1|trans2|...|transx
-			if (label.indexOf("|")>=0){
-				String[] elements = label.split("\\|");
-				for (String e : elements){
-					annotation_labels.add(e);
-				}
-				return annotation_labels;
-			}
-				
-			if (label.indexOf(".")<0 || label.length()<15){ //It is not a definition
-				annotation_labels.add(label);
-				return annotation_labels;
-			}
-			
-			//LogOutput.print("\nDEF 1: " + label);
-			
-			label = label.split("\\.")[0]; //we keep first sentence
-			
-			//LogOutput.print("\nDEF 2: " + label);
-			
-			words = label.split(" ");
-			
-			if (words.length>12){
-				return annotation_labels; //empty set
-			}
-			
-			//LogOutput.print("\nDEF 3: " + label);
-			
-			annotation_labels.add(label);
-			return annotation_labels;
-			
-		}
-		
-		
-		
-	
-		
-		
-		
-	}
 	
 	
 	OntologyProcessing(){
