@@ -41,7 +41,6 @@ import uk.ac.ox.krr.logmap2.io.LogOutput;
 
 /**
  * This class will process the class labels and create weak inverted files.
- * Note that only main class labels are considered (no alternative labels).
  * 
  *
  * @author Ernesto Jimenez-Ruiz
@@ -58,11 +57,14 @@ public class OntologyProcessing4Overlapping {
 	/** List of OWLClasses. Each position represents index*/
 	List<OWLClass> listofOWLClass = new ArrayList<OWLClass>();
 	
+	Map<OWLClass, Integer> class2identifier = new HashMap<OWLClass, Integer>();
+	
+	
 	//List<List<String>> listofClassLabels = new ArrayList<List<String>>(); //clean class labels (list-set)
 	
 	private Map<Integer, Set<List<String>>> identifier2stemmedlabels = new HashMap<Integer, Set<List<String>>>();
 	
-	Map<Integer, String> ident2label = new HashMap<Integer, String>(); //clean class str labels
+	//Map<Integer, String> ident2label = new HashMap<Integer, String>(); //clean class str labels
 	
 	
 	protected String rdf_label_uri = "http://www.w3.org/2000/01/rdf-schema#label";
@@ -79,17 +81,20 @@ public class OntologyProcessing4Overlapping {
 	private LexicalUtilities lexicalUtilities;
 	
 	private boolean full_overlapping;
+	private boolean use_class2identifier_index;
 	
 	private ExtractStringFromAnnotationAssertionAxiom annotationExtractor = new ExtractStringFromAnnotationAssertionAxiom();
 	
 	
-	public OntologyProcessing4Overlapping(OWLOntology ont, LexicalUtilities lexicalUtilities, boolean full_overlapping){
+	public OntologyProcessing4Overlapping(OWLOntology ont, LexicalUtilities lexicalUtilities, boolean full_overlapping, boolean use_class2identifier_index){
 		
 		onto=ont;
 		
 		this.lexicalUtilities=lexicalUtilities;
 		this.full_overlapping=full_overlapping;
-				
+		this.use_class2identifier_index=use_class2identifier_index;
+		
+		
 		//We precompute indexes
 		 //precomputeIndexCombination.clearCombinations(); //Old calls
 		 precomputeIndexCombination.preComputeIdentifierCombination();
@@ -121,7 +126,8 @@ public class OntologyProcessing4Overlapping {
 			if (!cls.isTopEntity() && !cls.isBottomEntity()){
 				
 				listofOWLClass.add(cls);
-				//class2identifier.put(cls, ident);
+				if (use_class2identifier_index)
+					class2identifier.put(cls, ident);
 				
 				//Extract labels
 				//listofClassLabels.add(extractCleanLabel4OWLCls(cls));
@@ -214,6 +220,12 @@ public class OntologyProcessing4Overlapping {
 		return listofOWLClass.get(ident);		
 	}
 	
+	public int getIdentifier4Class(OWLClass cls){
+		if (class2identifier.containsKey(cls))
+			return class2identifier.get(cls);
+		return -1;
+	}
+	
 	/*public String getLabel4identifier(int ident){
 		
 		if (ident2label.containsKey(ident))
@@ -233,13 +245,18 @@ public class OntologyProcessing4Overlapping {
 	}*/
 	
 	
+	public void clearClass2Identifier(){
+		class2identifier.clear();
+	}
+	
 	
 	public void clearStructures(){
 		invertedFileWeakLabels.clear();
 		listofOWLClass.clear();
+		class2identifier.clear();
 		//listofClassLabels.clear();
-		identifier2stemmedlabels.clear();
-		ident2label.clear();
+		identifier2stemmedlabels.clear(); //already removed before
+		//ident2label.clear();
 		//precomputedCombinations.clear();
 	}
 	

@@ -170,7 +170,7 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 		
 		
 		init = Calendar.getInstance().getTimeInMillis();
-		OntologyProcessing4Overlapping overlapping1 = new OntologyProcessing4Overlapping(onto_loader1.getOWLOntology(), lexicalUtilities, full_overlapping);
+		OntologyProcessing4Overlapping overlapping1 = new OntologyProcessing4Overlapping(onto_loader1.getOWLOntology(), lexicalUtilities, full_overlapping, false);
 		overlapping1.processOntologyClassLabels();
 		overlapping1.setInvertedFile4Overlapping();
 		
@@ -208,7 +208,7 @@ public class LexicalOverlappingExtractor extends OverlappingExtractor{
 		
 		
 		init = Calendar.getInstance().getTimeInMillis();
-		OntologyProcessing4Overlapping overlapping2 = new OntologyProcessing4Overlapping(onto_loader2.getOWLOntology(), lexicalUtilities, full_overlapping);
+		OntologyProcessing4Overlapping overlapping2 = new OntologyProcessing4Overlapping(onto_loader2.getOWLOntology(), lexicalUtilities, full_overlapping, false);
 		overlapping2.processOntologyClassLabels();
 		overlapping2.setInvertedFile4Overlapping();
 		
