@@ -38,6 +38,7 @@ public class OverlappingEstimation extends  OntologyAlignmentPartitioning{
 		task.setTargetOntology(overlappingExtractor.getOverlappingOnto2());
 		
 		Set<MatchingTask> tasks = new HashSet<MatchingTask>();
+		tasks.add(task);
 		
 		return tasks;
 	}
@@ -63,6 +64,7 @@ public class OverlappingEstimation extends  OntologyAlignmentPartitioning{
 		task.setTargetOntology(overlappingExtractor.getOverlappingOnto2());
 		
 		Set<MatchingTask> tasks = new HashSet<MatchingTask>();
+		tasks.add(task);
 		
 		return tasks;
 	}
