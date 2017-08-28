@@ -53,6 +53,9 @@ public class IndividualIndex  extends EntityIndex{
 	}
 	
 	
+	/**
+	@deprectaed
+	**/
 	public boolean showInOutput(){
 		return showInOutput;
 	}

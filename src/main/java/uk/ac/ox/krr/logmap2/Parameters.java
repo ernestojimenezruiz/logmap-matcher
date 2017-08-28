@@ -107,7 +107,7 @@ public class Parameters {
 	private static String name_dprop_im_uri_2015 = "http://islab.di.unimi.it/imoaei2015#name";
 	
 	
-	
+	private static boolean restrict_instance_types = false;
 	
 	
 	public static boolean print_output = false; //false;
@@ -261,6 +261,7 @@ public class Parameters {
 	private static final String object_assertion_URI_Indiv_str = "object_assertion_URI_Indiv";
 	
 	
+	private static final String restrict_individual_types_str = "restrict_individual_types";
 	private static final String allowed_individual_type_str = "allowed_individual_type";
 	private static final String filter_entity_str = "filter_entity";
 	
@@ -350,15 +351,15 @@ public class Parameters {
 		
 		
 		//OAEI IM 2015
-		accepted_data_assertion_URIs_for_individuals.add(name_dprop_im_uri_2015);
+		//accepted_data_assertion_URIs_for_individuals.add(name_dprop_im_uri_2015);
 		//accepted_data_assertion_URIs_for_individuals.add("http://islab.di.unimi.it/imoaei2015#title");
 		
 		
 		//Allowed class types IM 2015
-		allowed_instance_types.add("http://islab.di.unimi.it/imoaei2015#Person");
-		allowed_instance_types.add("http://www.bbc.co.uk/ontologies/creativework/BlogPost");
-		allowed_instance_types.add("http://www.bbc.co.uk/ontologies/creativework/NewsItem");
-		allowed_instance_types.add("http://www.bbc.co.uk/ontologies/creativework/Programme");
+		//allowed_instance_types.add("http://islab.di.unimi.it/imoaei2015#Person");
+		//allowed_instance_types.add("http://www.bbc.co.uk/ontologies/creativework/BlogPost");
+		//allowed_instance_types.add("http://www.bbc.co.uk/ontologies/creativework/NewsItem");
+		//allowed_instance_types.add("http://www.bbc.co.uk/ontologies/creativework/Programme");
 		
 		
 		//Entities to be filtered from there URIS. For example, in the Benchmark track they are not included in output
@@ -588,6 +589,10 @@ public class Parameters {
 				else if (elements[0].equals(allow_bioportal_str)){
 					allow_bioportal = Boolean.valueOf(elements[1]);
 				}
+				else if (elements[0].equals(restrict_individual_types_str)){
+					setRestrictInstanceTypes(Boolean.valueOf(elements[1]));
+				}				
+				
 				else if (elements[0].equals(confidence_composed_mappings_str1)){
 					confidence_composed_mappings1 = Double.valueOf(elements[1]);
 				}
@@ -638,6 +643,16 @@ public class Parameters {
 			//LogOutput.printAlways("Error reading LogMap 2 parameters file: " + e.getLocalizedMessage());
 		}
 		
+	}
+
+
+	public static boolean isRestrictInstanceTypesActive() {
+		return restrict_instance_types;
+	}
+
+
+	public static void setRestrictInstanceTypes(boolean restrict_individual_types) {
+		Parameters.restrict_instance_types = restrict_individual_types;
 	}
 	
 	

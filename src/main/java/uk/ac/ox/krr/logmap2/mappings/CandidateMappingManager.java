@@ -2364,7 +2364,7 @@ public class CandidateMappingManager extends MappingManager {
 		LogOutput.print("Instances not in output: " + instanceMappings1N_not_allowed_output.size());
 		
 		//-----------------------------------------------------------------
-		//REVISE instance  appings using referenced individuals
+		//REVISE instance mappings using referenced individuals
 		//------------------------------------------------------------------
 		double required_sim;
 		for (int index1 : instanceMappings1N_ambiguity.keySet()){

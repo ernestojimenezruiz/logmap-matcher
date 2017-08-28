@@ -323,6 +323,8 @@ public class LogMap2Core {
 			
 			//Optional (see parameters file)
 			if (Parameters.perform_instance_matching){
+				
+				
 				createAndAssessInstanceMappings();
 			}
 			
@@ -482,6 +484,9 @@ public class LogMap2Core {
 		
 		//Optional (see parameters file)
 		if (Parameters.perform_instance_matching){
+			
+			
+			
 			createAndAssessInstanceMappings();
 			
 			if (Parameters.output_instance_mapping_files && !logmap_mappings_path.equals("")){
@@ -1604,6 +1609,20 @@ public class LogMap2Core {
 	 * Discovery and assessment of Instance mappings
 	 */
 	private void createAndAssessInstanceMappings(){
+				
+		
+		//Check allowed class for instances
+		int type_id;
+		for (String uri: Parameters.allowed_instance_types){
+			type_id = onto_process1.getIdentifier4ConceptIRI(uri);
+			if (type_id>=0)				
+				index.addAllowedInstanceType(type_id);
+			
+			type_id = onto_process2.getIdentifier4ConceptIRI(uri);
+			if (type_id>=0)				
+				index.addAllowedInstanceType(type_id);
+		}
+		
 		
 		mapping_extractor.createInstanceAnchors();
 		

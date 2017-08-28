@@ -791,6 +791,36 @@ public abstract class MappingManager {
 	}
 	
 	
+	
+	/**
+	 * Check if the instance is an allowed type
+	 * @param types
+	 * @param allowed_types
+	 * @return
+	 */
+	private boolean hasAllowedType(Set<Integer> types){
+		
+		//No restrictions or empty set of allowed types
+		if (!Parameters.isRestrictInstanceTypesActive() || index.getAllowedInstanceTypes().isEmpty())
+			return true;
+		
+		
+		for (int itype : types){
+			//is class type listed as allowed
+			if (index.getAllowedInstanceTypes().contains(itype))
+				return true;
+			
+			for (int atype : index.getAllowedInstanceTypes()){
+				//Is class type as subclass of allowed types 
+				if (index.isSubClassOf(itype, atype))
+						return true;
+			}
+		}
+		
+		return false;
+		
+	}
+	
 	/**
 	 * We deal instance mappings as one side mappings. We only consider SameAs. 
 	 * If during cleaning they are deleted then we do not consider mapping
@@ -798,10 +828,15 @@ public abstract class MappingManager {
 	 * @param index2
 	 */
 	public void addInstanceMapping(int index1, int index2, boolean ambiguity){
+			
 		
-		//If any of them is of a type that is not allowed in the output
-		if (!index.getIdentifier2IndividualIndexMap().get(index1).showInOutput() ||
-			!index.getIdentifier2IndividualIndexMap().get(index2).showInOutput()){
+		//If type is not allowed in the output
+		//Old code
+		//if (!index.getIdentifier2IndividualIndexMap().get(index1).showInOutput() ||
+		//	!index.getIdentifier2IndividualIndexMap().get(index2).showInOutput()){
+		//New code: August 28, 2017
+		if (!hasAllowedType(index.getIdentifier2IndividualIndexMap().get(index1).getClassTypes()) ||
+			!hasAllowedType(index.getIdentifier2IndividualIndexMap().get(index2).getClassTypes())){			
 			
 			if (!instanceMappings1N_not_allowed_output.containsKey(index1)){
 				instanceMappings1N_not_allowed_output.put(index1, new HashSet<Integer>());

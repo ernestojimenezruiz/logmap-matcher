@@ -253,6 +253,11 @@ public abstract class IndexManager {
 	public Set<Integer> dangerousClasses = new HashSet<Integer>();//equivalnet to TOP
 	
 	
+	
+	private Set<Integer> allowedInstanceTypes = new HashSet<Integer>();
+	
+	
+	
 	private int class_indiv_ident=0; //shared by both 
 	
 	private int dprop_ident=0;
@@ -351,6 +356,20 @@ public abstract class IndexManager {
 	
 	public void addDangerousClasses(int ide){
 		dangerousClasses.add(ide);
+	}
+	
+	
+	public Set<Integer> getAllowedInstanceTypes() {
+		return allowedInstanceTypes;
+	}
+
+	public void setAllowedInstanceTypes(Set<Integer> allowedInstanceTypes) {
+		this.allowedInstanceTypes = allowedInstanceTypes;
+	}
+	
+	
+	public void addAllowedInstanceType(int type_id) {
+		this.allowedInstanceTypes.add(type_id);
 	}
 	
 	

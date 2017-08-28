@@ -305,6 +305,10 @@ public class OntologyProcessing {
 	
 	
 	
+
+	
+	
+	
 	
 	
 	/**
@@ -1171,16 +1175,25 @@ public class OntologyProcessing {
 			//altLabels.clear();
 			
 					
+			//*****
+			//Deprecated (August 28, 2017): check  LogMapCore.createAndAssessInstanceMappings and MappingManager.addInstanceMapping
+			//*****
+			
 			//Extract class types.
 			//We only extract direct types. Inferred types will be extracted later when setting up the taxonomic data.
+			//TODO: No ancestors considered at this stage
 			
-			boolean showIndividualInOutput=false;
+			
+			/*boolean showIndividualInOutput=false;
 			
 			for (OWLClassExpression clsexp : indiv.getTypes(onto)){
 				
 				if (!clsexp.isAnonymous()){
 					if (class2identifier.containsKey(clsexp.asOWLClass())){
 						index.addType4Individual(ident, class2identifier.get(clsexp.asOWLClass()));
+						
+						
+						
 						if (Parameters.allowed_instance_types.contains(clsexp.asOWLClass().getIRI().toString()))
 							showIndividualInOutput=true;
 					}
@@ -1202,6 +1215,8 @@ public class OntologyProcessing {
 			
 			//IN SOME INSTANCE MATCHING TASKS ONLY IT IS REQUIRED TO DISCOVER INDIVIDUAL OF CERTAIN CLASSES
 			index.setShowInOutput4Individual(ident, showIndividualInOutput);
+			*/
+			//Deprecated
 			
 			
 			
@@ -2621,12 +2636,12 @@ public class OntologyProcessing {
 		//We identified some logical errors when using ELK, it seems the classification that provides is less complete than the structural reasoner
 		//when the ontology is not EL!!!
 		if (!profileChecker.isInOWL2ELProfile(onto)){
-			System.out.println(onto.getOntologyID().getOntologyIRI() + " NOT in OWL 2 EL profile. Using structural reasoner.");
+			LogOutput.printAlways(onto.getOntologyID().getOntologyIRI() + " NOT in OWL 2 EL profile. Using structural reasoner.");
 			setUpStructuralReasoner();
 			return;
 		}
 		
-		System.out.println(onto.getOntologyID().getOntologyIRI() + " in OWL 2 EL profile. Using ELK reasoner.");
+		LogOutput.printAlways(onto.getOntologyID().getOntologyIRI() + " in OWL 2 EL profile. Using ELK reasoner.");
 		
 		ELKAccess elkAccess;
 				
@@ -4025,7 +4040,8 @@ public class OntologyProcessing {
 		System.out.println("Vicenza  ".trim()+"'");
 		System.out.println("Vicenza  , a city in north-eastern Italy, is the capital of the eponymous province in the Veneto region, at the northern base of the Monte Berico, straddling the Bacchiglione. Vicenza is approximately 60 km west of Venice and 200 km east of Milan. Vicenza is a thriving and cosmopolitan city, with a rich history and culture, and many museums, art galleries, piazzas, villas, churches and elegant Renaissance palazzi.".trim());
 	 }
-	
+
+		
 	
 
 }

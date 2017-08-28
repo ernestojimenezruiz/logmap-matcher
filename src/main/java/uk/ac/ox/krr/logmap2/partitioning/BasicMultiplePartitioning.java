@@ -96,15 +96,14 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 		//Evaluate recall now and get some statistics about the tasks!
 		//In principle recall should be as large as the overlapping overstimation
 		//Keep some URI to id to compare with Gold standards!
-		
-		
+
 		
 		//Check if extracted modules already include entities. Index, entity to entities
 		
 		//4. Merge modules (max size: 1000-2000 classes)
-		
-		//Check how many modules are the same!
-		
+		//USe a TreeSet and each entry module characterised by a boolean vector (occurrence or not of a class)
+		//Check how many modules/tasks are the same: what happens in this case, are the tasks merged? Since it is a set 
+		//I guess so as long the the hashCode and equal methods are properly defined
 		
 		
 		//Strategies: (merging should take into account both sides)
