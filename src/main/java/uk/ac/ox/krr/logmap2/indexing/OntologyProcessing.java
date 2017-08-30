@@ -406,6 +406,25 @@ public class OntologyProcessing {
 				
 		}//end For classes
 		
+		
+		//DETECT HIGH REDUNDANCY ON EXACT IF
+		//Added August 30
+		if (Parameters.avoid_redundant_labels){
+			Set<Integer> redundant_ids = new HashSet<Integer>();
+			for (Set<String> entry : invertedFileExact.keySet()){
+				if (invertedFileExact.get(entry).size()>Parameters.max_redundancy_labels){
+					//Keep only entries for which only 1 alternative label exists
+					for (int ident: invertedFileExact.get(entry)){
+						if (index.getAlternativeLabels4ConceptIndex(ident).size()>1){//has lower case
+							redundant_ids.add(ident);
+						}
+					}
+					invertedFileExact.get(entry).removeAll(redundant_ids);
+					redundant_ids.clear();
+				}
+			}
+		}
+		
 		//System.out.println("NUM RDF LABEL: "+num_labels);
 		
 		
@@ -425,6 +444,36 @@ public class OntologyProcessing {
 		//INDIVIDUALS
 		if (Parameters.perform_instance_matching){
 			processNamedIndividuals(extractLabels);
+			
+			//DETECT HIGH REDUNDANCY ON EXACT IF
+			//Added August 30
+			
+			if (Parameters.avoid_redundant_labels){
+				Set<Integer> redundant_ids = new HashSet<Integer>();
+				for (Set<String> entry : invertedFileIndividuals.keySet()){
+					if (invertedFileIndividuals.get(entry).size()>Parameters.max_redundancy_labels){
+						
+						//if (entry.contains("sonates")){
+						//	System.out.println("Redundancey: " + entry + "  " + invertedFileIndividuals.get(entry).size());
+						//}
+						
+						//Keep only entries for which only 1 alternative label exists
+						for (int ident: invertedFileIndividuals.get(entry)){
+							
+							//if (entry.contains("sonates")){
+							//	System.out.println("\t" + ident + "  " + index.getAlternativeLabels4IndividualIndex(ident).size() + "  " + index.getAlternativeLabels4IndividualIndex(ident) + "  " + index.getIRIStr4IndividualIndex(ident));
+							//}
+							
+							if (index.getAlternativeLabels4IndividualIndex(ident).size()>1){
+								redundant_ids.add(ident);
+							}
+						}
+						invertedFileIndividuals.get(entry).removeAll(redundant_ids);
+						redundant_ids.clear();
+					}
+				}
+			}
+			
 		}
 		
 		
@@ -1151,6 +1200,13 @@ public class OntologyProcessing {
 				
 			}//end for alabels
 			
+			
+			
+			
+			
+			
+			
+			
 			//Deprecated: seems to be wrong
 			//We add an alternative label including all alternative labels
 			//This will only be used to extract isub score
@@ -1242,6 +1298,7 @@ public class OntologyProcessing {
 			
 			
 		}//end for individuals
+		
 		
 		
 		
@@ -1744,9 +1801,7 @@ public class OntologyProcessing {
 		}//Alt labels
 		
 		
-	
-		
-		
+			
 		
 	}
 
@@ -1761,7 +1816,8 @@ public class OntologyProcessing {
 				|| label_value.matches("[0-9][0-9][0-9][0-9][0-9]+-[0-9]+") //library ontologies
 				//|| label_value.matches("[0-9]+\\.[0-9]+(\\.[0-9]+)+");//library ontologies
 				|| label_value.matches("[0-9]+(\\.[0-9]+)+")
-				|| label_value.matches(".+[0-9]+.+[0-9]+.+[0-9]+.+");//instance matching ontologies
+				|| label_value.matches(".+[0-9]+.+[0-9]+.+[0-9]+.+") //instance matching ontologies
+				|| label_value.matches("[a-zA-Z][0-9]+"); //PROCES MODEL MATCHING;
 		
 	}
 	
@@ -3535,6 +3591,9 @@ public class OntologyProcessing {
 					
 				}
 			}
+				
+			
+			
 			
 			//OBject property assertions deep 1  (level 1 references a dummy individual)
 			//-------------------------------------
@@ -3546,6 +3605,11 @@ public class OntologyProcessing {
 					//We only consider named individuals
 					if (assertion_value_indiv.isNamed()){
 						
+						////DBPedia references											 
+						//if (assertion_value_indiv.asOWLNamedIndividual().getIRI().toString().contains("dbpedia.org")){							
+						//	label_value = processLabel(Utilities.getEntityLabelFromURI(assertion_value_indiv.asOWLNamedIndividual().getIRI().toString()));							
+						//}
+						//else{
 						//Datatype assertion deep 2: has_value and others
 						//----------------------------------------
 						for (String uri_indiv_ann_deep2 : Parameters.accepted_data_assertion_URIs_for_individuals_deep2){
@@ -3605,6 +3669,7 @@ public class OntologyProcessing {
 							}
 							
 						}//end extraction of comments
+						//}//iff dbpedia
 						
 					}
 					
@@ -3730,6 +3795,9 @@ public class OntologyProcessing {
 							label_name = Utilities.getEntityLabelFromURI(objectprop2.asOWLObjectProperty().getIRI().toString());
 						
 							for (OWLIndividual indiv_deep3 : objProp2values_deep2.get(objectprop2)){
+								
+								if (indiv_deep3.isAnonymous())
+									continue;
 								
 								int ident2 = inidividual2identifier.get(indiv_deep3.asOWLNamedIndividual());
 								

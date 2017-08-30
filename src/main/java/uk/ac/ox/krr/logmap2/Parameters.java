@@ -135,6 +135,10 @@ public class Parameters {
 	
 	public static double good_sim_coocurrence = 0.08; //Tested one 0.09
 	
+	public static boolean avoid_redundant_labels = true;
+	
+	public static int max_redundancy_labels = 3;
+	
 	public static int max_ambiguity = 4;
 	
 	public static int good_ambiguity = 2;
@@ -242,6 +246,11 @@ public class Parameters {
 	
 	private static final String confidence_composed_mappings_str1 = "confidence_composed_mappings1";
 	private static final String confidence_composed_mappings_str2 = "confidence_composed_mappings2";
+	
+	private static final String avoid_redundant_labels_str = "avoid_redundant_labels";
+	
+	private static final String max_redundancy_labels_str = "max_redundancy_labels";
+	
 	
 	private static final String max_ambiguity_str = "max_ambiguity";
 	
@@ -488,6 +497,14 @@ public class Parameters {
 				else if (elements[0].equals(min_conf_pro_map_str)){
 					min_conf_pro_map = Double.valueOf(elements[1]);
 				}
+				
+				else if (elements[0].equals(max_redundancy_labels_str)){
+					max_redundancy_labels = Integer.valueOf(elements[1]);
+				}
+				else if (elements[0].equals(avoid_redundant_labels_str)){
+					avoid_redundant_labels = Boolean.valueOf(elements[1]);
+				}
+				
 				else if (elements[0].equals(max_ambiguity_str)){
 					max_ambiguity = Integer.valueOf(elements[1]);
 				}

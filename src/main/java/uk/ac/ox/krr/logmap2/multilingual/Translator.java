@@ -97,7 +97,7 @@ public abstract class Translator {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			//LogOutput.printError(e.getMessage());
-			System.out.println("\tError accessing on-the-fly dictionary");
+			LogOutput.printError("\tError accessing on-the-fly dictionary");
 		}
 		
 		
