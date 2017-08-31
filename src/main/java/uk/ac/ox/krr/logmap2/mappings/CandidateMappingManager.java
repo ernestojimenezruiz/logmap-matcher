@@ -2102,7 +2102,7 @@ public class CandidateMappingManager extends MappingManager {
 					
 					
 					//TODO Categories
-					if (!instanceMappingAssessment.haveInstancesSameCategories(ident1, ident2)){
+					if (!instanceMappingAssessment.haveInstancesCompatibleCategories(ident1, ident2)){
 						required_confidence=3.0;
 					}
 					
@@ -2203,7 +2203,7 @@ public class CandidateMappingManager extends MappingManager {
 					
 					
 					//TODO Categories
-					if (!instanceMappingAssessment.haveInstancesSameCategories(ident1, ident2)){
+					if (!instanceMappingAssessment.haveInstancesCompatibleCategories(ident1, ident2)){
 						required_confidence=3.0;
 					}
 					
@@ -2324,7 +2324,7 @@ public class CandidateMappingManager extends MappingManager {
 					compatibility_factor = instanceMappingAssessment.getCompatibilityFactor(ident1, ident2);
 					
 					//TODO Categories
-					if (!instanceMappingAssessment.haveInstancesSameCategories(ident1, ident2)){
+					if (!instanceMappingAssessment.haveInstancesCompatibleCategories(ident1, ident2)){
 						required_confidence=3.0;
 					}
 					

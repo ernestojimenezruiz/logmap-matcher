@@ -55,20 +55,20 @@ public class InstanceMatchingAssessment {
 	//However, they do contain information about a dbpedia category or other type of information that make 
 	//the instances incompatible
 	//Categories can come as an annotation, data role assertion or object role assertion
-	public boolean haveInstancesSameCategories(int ident1, int ident2){
+	public boolean haveInstancesCompatibleCategories(int ident1, int ident2){
 		
 		Set<String> categories1 = index.getIndividualCategory4Identifier(ident1);
 		Set<String> categories2 = index.getIndividualCategory4Identifier(ident2);
 	
 		
-		//If not defined
-		if (categories1.size()==0 && categories2.size()==0){
+		//If not defined one of them
+		if (categories1.size()==0 || categories2.size()==0){
 			return true;
 		}
 		
 		
 		//When categories are defined
-		return areSameCategories(categories1, categories2);
+		return areCompatibleCategories(categories1, categories2);
 		
 		
 		
@@ -183,13 +183,20 @@ public class InstanceMatchingAssessment {
 	}
 	
 	
-	protected boolean areSameCategories(Set<String> cat1, Set<String> cat2){
+	protected boolean areCompatibleCategories(Set<String> cat1, Set<String> cat2){
 		
-		if (cat1.size()>0 && cat2.size()>0){			
-			return cat1.equals(cat2);
-		}
+		//System.out.println(cat1 +  "\n" + cat2 + "\n\n");
 		
-		return false;	
+		//Non empty intersection
+		//if (cat1.size()>0 && cat2.size()>0){			
+			Set<String> intersection = new HashSet<String>(cat1);
+		
+			intersection.retainAll(cat2);
+			
+			return (intersection.size()>0);
+		//}
+		
+		//return false;	
 	}
 	
 	
