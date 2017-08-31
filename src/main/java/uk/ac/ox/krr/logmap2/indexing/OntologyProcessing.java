@@ -204,6 +204,7 @@ public class OntologyProcessing {
 	
 	public ExtractAcceptedLabelsFromRoleAssertions roleAssertionLabelsExtractor = new ExtractAcceptedLabelsFromRoleAssertions();
 	
+	private ExtractCategoriesForIndividual categoryExtractor = new ExtractCategoriesForIndividual();
 	
 	
 	//For multilingual module
@@ -1128,6 +1129,11 @@ public class OntologyProcessing {
 			
 			//We add accepted annotations associated to the individual
 			altLabels.addAll(extractAnnotations4Infividual(indiv));
+			
+			
+			//TODO EXTRACT CATEGORIES
+			//From annotations and (data and object) role assertions
+			categoryExtractor.extract(indiv, ident);
 			
 			
 			//add weak entries
@@ -3437,6 +3443,154 @@ public class OntologyProcessing {
 	
 	
 	
+	
+	/**
+	 * Manages the extraction of categories from annotations and role assetions
+	 * @author ernesto
+	 *
+	 */
+	private class ExtractCategoriesForIndividual{
+		
+		
+		//Set<String> categories4individual = new HashSet<String>();
+		
+		ExtractCategoriesForIndividual(){
+			
+		}
+		
+		
+		protected void extract(OWLNamedIndividual indiv, int ident){				
+			
+			//categories4individual.clear();
+		
+			
+			String category_value;
+			
+			for (OWLAnnotationAssertionAxiom entityAnnAx : indiv.getAnnotationAssertionAxioms(onto)){
+				
+				String uri_ann = entityAnnAx.getAnnotation().getProperty().getIRI().toString();
+				
+				if (Parameters.accepted_property_URIs_for_instance_categories.contains(uri_ann)){
+					
+					if (!(category_value=asDirectValue(entityAnnAx)).equals("")){
+						//categories4individual.add(category_value);
+						index.addCategory4Individual(ident, category_value);
+					}
+					else if (!(category_value=asNamedIndividual(entityAnnAx)).equals("")){
+						//categories4individual.add(category_value);
+						index.addCategory4Individual(ident, category_value);
+					}
+					
+					
+				}
+				
+				
+			}
+			
+			
+			for (String uri_for_categories : Parameters.accepted_property_URIs_for_instance_categories){
+				
+				try{
+					for (OWLLiteral assertion_value : indiv.getDataPropertyValues(
+							index.getFactory().getOWLDataProperty(IRI.create(uri_for_categories)), onto)){
+						
+						
+						category_value = assertion_value.getLiteral().toLowerCase();
+						if (category_value!=null && !category_value.equals("null") && !category_value.equals("")){
+							index.addCategory4Individual(ident, category_value);
+							continue;
+						}
+						//categories4individual.add(assertion_value.getLiteral().toLowerCase());
+						
+						
+					}
+				}
+				catch(Exception e){
+					//do nothing
+				}
+				
+				try{
+					for (OWLIndividual assertion_value_indiv : indiv.getObjectPropertyValues(
+							index.getFactory().getOWLObjectProperty(IRI.create(uri_for_categories)), onto)){
+						
+						if (assertion_value_indiv.isNamed()){
+							
+							category_value = assertion_value_indiv.asOWLNamedIndividual().getIRI().toString();
+							if (category_value!=null && !category_value.equals("null") && !category_value.equals("")){
+								index.addCategory4Individual(ident, category_value);
+								continue;
+							}
+							
+							//categories4individual.add(assertion_value_indiv.asOWLNamedIndividual().getIRI().toString());
+						}
+						
+					}
+				}
+				catch(Exception e){
+					//do nothing
+				}
+				
+			}
+			
+			
+		}
+		
+		
+		private String asDirectValue(OWLAnnotationAssertionAxiom entityAnnAx){
+			try	{
+				//LogOutput.print(((OWLLiteral)annAx.getAnnotation().getValue()).getLiteral());
+				
+				String label = ((OWLLiteral)entityAnnAx.getAnnotation().getValue()).getLiteral().toLowerCase();
+				
+				//System.err.println(entityAnnAx + " " + label);
+				
+				if (label==null || label.equals("null") || label.equals("")){
+					//System.err.println("NULL LABEL: " + entityAnnAx);
+					return "";
+				}
+				
+						
+				return label;
+				
+				
+			}
+			catch (Exception e){
+				//In case of error. Accessing an object in an expected way				
+				return "";
+			}
+		}
+		
+		
+		/**
+		 * 
+		 * @param entityAnnAx
+		 * @return
+		 */
+		private String asNamedIndividual(OWLAnnotationAssertionAxiom entityAnnAx){
+			try {
+				//It is an individual
+				String namedIndivIRI=((IRI)entityAnnAx.getAnnotation().getValue()).toString();				
+				
+				if (namedIndivIRI==null || namedIndivIRI.equals("null") || namedIndivIRI.equals("")){
+					//System.err.println("NULL LABEL: " + entityAnnAx);
+					return "";
+				}
+				
+				
+				return namedIndivIRI;
+				
+				
+			}
+			catch (Exception e){
+				//In case of error. Accessing an object in an unexpected way
+				return "";
+			}
+			
+		}
+		
+		
+		
+	}
 	
 	
 	

@@ -2101,6 +2101,11 @@ public class CandidateMappingManager extends MappingManager {
 					compatibility_factor = instanceMappingAssessment.getCompatibilityFactor(ident1, ident2);
 					
 					
+					//TODO Categories
+					if (!instanceMappingAssessment.haveInstancesSameCategories(ident1, ident2)){
+						required_confidence=3.0;
+					}
+					
 					
 					if (required_confidence>1.0){
 						//LogOutput.print("Incompatible individuals: " + if_entry + " " + ident1 + " " + ident2);
@@ -2195,6 +2200,13 @@ public class CandidateMappingManager extends MappingManager {
 					
 					required_confidence = instanceMappingAssessment.getConfidence4Compatibility(ident1, ident2);
 					compatibility_factor = instanceMappingAssessment.getCompatibilityFactor(ident1, ident2);
+					
+					
+					//TODO Categories
+					if (!instanceMappingAssessment.haveInstancesSameCategories(ident1, ident2)){
+						required_confidence=3.0;
+					}
+					
 					
 					if (required_confidence>1.0){
 						//LogOutput.print("Incompatible individuals: " + if_entry + " " + ident1 + " " + ident2);
@@ -2310,6 +2322,12 @@ public class CandidateMappingManager extends MappingManager {
 					
 					required_confidence = instanceMappingAssessment.getConfidence4Compatibility(ident1, ident2);
 					compatibility_factor = instanceMappingAssessment.getCompatibilityFactor(ident1, ident2);
+					
+					//TODO Categories
+					if (!instanceMappingAssessment.haveInstancesSameCategories(ident1, ident2)){
+						required_confidence=3.0;
+					}
+					
 					
 					if (required_confidence>1.0){
 						//LogOutput.print("Incompatible individuals: " + if_entry + " " + ident1 + " " + ident2);
@@ -2537,6 +2555,8 @@ public class CandidateMappingManager extends MappingManager {
 			for (int ident2 : getInstanceMappings().get(ident1)){
 				
 				required_confidence = instanceMappingAssessment.getConfidence4Compatibility(ident1, ident2);
+				
+				//TODO in this repair we do not remove according to categories
 				
 				if (required_confidence>1.0){
 					LogOutput.print("Incompatible individuals: " + ident1 + " " + ident2);

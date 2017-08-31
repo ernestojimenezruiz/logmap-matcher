@@ -28,6 +28,8 @@ public class IndividualIndex  extends EntityIndex{
 	
 	protected Set<Integer> class_types = new HashSet<Integer>();
 	
+	protected Set<String> categories = new HashSet<String>();
+	
 	private Set<String> alternativeLabels;
 	
 	private boolean showInOutput=true;
@@ -50,6 +52,15 @@ public class IndividualIndex  extends EntityIndex{
 	
 	public void addClassTypeIndex(int icls){
 		class_types.add(icls);
+	}
+	
+	
+	public Set<String> getCategories(){
+		return categories;
+	}
+	
+	public void addCategory(String cat){
+		categories.add(cat);
 	}
 	
 	

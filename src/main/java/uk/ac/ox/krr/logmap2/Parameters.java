@@ -222,6 +222,12 @@ public class Parameters {
 	public static Set<String> accepted_object_assertion_URIs_for_individuals = new HashSet<String>();
 	
 	
+	//Some individuals contain links to dbpedia categories or other sort of categories which are very important for desambiguation
+	public static Set<String> accepted_property_URIs_for_instance_categories = new HashSet<String>();
+	
+	
+	
+	
 	//Some IM tracks require to match specific type of individuals: i.e. Persons
 	public static Set<String> allowed_instance_types = new HashSet<String>();
 	//The benchmark tracks does not consider in the output alignemnts
@@ -263,6 +269,9 @@ public class Parameters {
 	private static final String instance_matching_str = "instance_matching";
 	
 	private static final String annotation_URI_str = "annotation_URI";
+	
+	private static final String category_URI_str = "category_URI";
+	
 	
 	private static final String data_assertion_URI_Indiv_str = "data_assertion_URI_Indiv";
 	private static final String data_assertion_URI_Indiv_deep2_str = "data_assertion_URI_Indiv_deep2";
@@ -540,6 +549,11 @@ public class Parameters {
 				else if (elements[0].equals(annotation_URI_str)){
 					accepted_annotation_URIs_for_classes.add(elements[1]);
 				}
+				
+				else if (elements[0].equals(category_URI_str)){
+					accepted_property_URIs_for_instance_categories.add(elements[1]);
+				}
+				
 				else if (elements[0].equals(data_assertion_URI_Indiv_str)){
 					accepted_data_assertion_URIs_for_individuals.add(elements[1]);
 				}

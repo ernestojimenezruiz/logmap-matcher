@@ -51,6 +51,31 @@ public class InstanceMatchingAssessment {
 	}
 	
 	
+	//In some cases the instances are of the same class_type (and the ontology TBox is not very rich)
+	//However, they do contain information about a dbpedia category or other type of information that make 
+	//the instances incompatible
+	//Categories can come as an annotation, data role assertion or object role assertion
+	public boolean haveInstancesSameCategories(int ident1, int ident2){
+		
+		Set<String> categories1 = index.getIndividualCategory4Identifier(ident1);
+		Set<String> categories2 = index.getIndividualCategory4Identifier(ident2);
+	
+		
+		//If not defined
+		if (categories1.size()==0 && categories2.size()==0){
+			return true;
+		}
+		
+		
+		//When categories are defined
+		return areSameCategories(categories1, categories2);
+		
+		
+		
+		
+	}
+	
+	
 	
 	protected int areInstancesCompatible(int ident1, int ident2){
 	
@@ -74,7 +99,7 @@ public class InstanceMatchingAssessment {
 			}
 		}
 		
-		if (haveSameClassTypes(mapped_types1, types2)){
+		if (areSameClassTypes(mapped_types1, types2)){
 			return SAME_TYPES;
 		}
 		
@@ -148,10 +173,20 @@ public class InstanceMatchingAssessment {
 	}
 	
 	
-	protected boolean haveSameClassTypes(Set<Integer> types1, Set<Integer> types2){
+	protected boolean areSameClassTypes(Set<Integer> types1, Set<Integer> types2){
 		
 		if (types1.size()>0 && types2.size()>0){			
 			return types1.equals(types2);
+		}
+		
+		return false;	
+	}
+	
+	
+	protected boolean areSameCategories(Set<String> cat1, Set<String> cat2){
+		
+		if (cat1.size()>0 && cat2.size()>0){			
+			return cat1.equals(cat2);
 		}
 		
 		return false;	

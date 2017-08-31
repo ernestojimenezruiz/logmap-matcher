@@ -582,6 +582,11 @@ public abstract class IndexManager {
 	}
 	
 	
+	public void addCategory4Individual(int ident, String cat){
+		identifier2IndividualIndex.get(ident).addCategory(cat);
+	}
+	
+	
 	public void setShowInOutput4Individual(int ident, boolean showInOutput){
 		identifier2IndividualIndex.get(ident).setShowInOutput(showInOutput);
 	}
@@ -729,6 +734,10 @@ public abstract class IndexManager {
 	
 	public Set<Integer> getIndividualClassTypes4Identifier(int ident){
 		return identifier2IndividualIndex.get(ident).getClassTypes();
+	}
+	
+	public Set<String> getIndividualCategory4Identifier(int ident){
+		return identifier2IndividualIndex.get(ident).getCategories();
 	}
 	
 	
