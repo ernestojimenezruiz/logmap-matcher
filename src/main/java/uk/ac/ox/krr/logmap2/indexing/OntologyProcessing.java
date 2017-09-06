@@ -3470,15 +3470,22 @@ public class OntologyProcessing {
 				
 				String uri_ann = entityAnnAx.getAnnotation().getProperty().getIRI().toString();
 				
-				if (Parameters.accepted_property_URIs_for_instance_categories.contains(uri_ann)){
+				if (Parameters.accepted_property_URIs_for_instance_categories.contains(uri_ann)){									
 					
-					if (!(category_value=asDirectValue(entityAnnAx)).equals("")){
-						//categories4individual.add(category_value);
+					if (!(category_value=asDirectValue(entityAnnAx)).equals("")){												
+						//categories4individual.add(category_value);											
 						index.addCategory4Individual(ident, category_value);
 					}
-					else if (!(category_value=asNamedIndividual(entityAnnAx)).equals("")){
-						//categories4individual.add(category_value);
+					else if (!(category_value=asNamedIndividual(entityAnnAx)).equals("")){						
 						index.addCategory4Individual(ident, category_value);
+						
+						//Mappinsg obtained from doremuss datasets
+						//Cross terminologies
+						//if (category_value.equals("http://data.doremus.org/vocabulary/diabolo/genre/lied"))
+						//	index.addCategory4Individual(ident, "http://data.doremus.org/vocabulary/iaml/genre/li");
+						//Narrower-broader relationships
+						//if (category_value.equals("http://data.doremus.org/vocabulary/iaml/genre/opc"))
+						//	index.addCategory4Individual(ident, "http://data.doremus.org/vocabulary/iaml/genre/op");
 					}
 					
 					

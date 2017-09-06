@@ -208,12 +208,15 @@ public class Parameters {
 	
 	
 	public static String path_chinese_segmenter_dict = "/home/ernesto/Documents/OAEI_2014_campaign/EVAL_2014/logmap2_package_oaei2014/conf/multilingual/dict_ictclas4j";
+	
 	//To store the translations from google codes to be used in next iterations (useful in Multifarm track)
+	//Note that these folders are changed in the parameters file to not to point to local files
 	//Dynamic (on-the-fly) dict folder
 	public static String path_multilingual_tmp = "/home/ernesto/Documents/OAEI_OM_2015/EVAL_2015/dict_multilingual";
 	//Static dictionary folder
 	public static String path_multilingual_local = "/home/ernesto/Documents/OAEI_OM_2015/EVAL_2015/dict_multilingual/local";
 	
+	public static String path_mappings_categories = "/mappings/categories";
 	
 	public static Set<String> accepted_annotation_URIs_for_classes = new HashSet<String>();
 	
@@ -325,6 +328,8 @@ public class Parameters {
 	private static final String path_multilingual_tmp_str = "path_multilingual_tmp";
 	
 	private static final String path_multilingual_local_str = "path_multilingual_local";
+	
+	private static final String path_mappings_categories_str = "path_mappings_categories";
 	
 	private static final String reverse_labels_str = "reverse_labels";
 	
@@ -610,6 +615,9 @@ public class Parameters {
 				}
 				else if (elements[0].equals(path_multilingual_local_str)){
 					path_multilingual_local = elements[1];
+				}				
+				else if (elements[0].equals(path_mappings_categories_str)){
+					path_mappings_categories = elements[1];
 				}
 				else if (elements[0].equals(target_lang_str)){
 					target_lang = elements[1];

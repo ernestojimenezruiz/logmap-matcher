@@ -43,6 +43,7 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 
 
 import uk.ac.manchester.syntactic_locality.ModuleExtractor;
+import uk.ac.ox.krr.logmap2.background.CategoryMappingsLoader;
 import uk.ac.ox.krr.logmap2.io.*;
 import uk.ac.ox.krr.logmap2.reasoning.SatisfiabilityIntegration;
 import uk.ac.ox.krr.logmap2.repair.*;
@@ -97,6 +98,8 @@ public class LogMap2Core {
 	private Set<MappingObjectStr> mappings_gs = new HashSet<MappingObjectStr>();
 	
 	private LexicalUtilities lexicalUtilities = new LexicalUtilities();
+	
+	private CategoryMappingsLoader categoryMappingsLoader = new CategoryMappingsLoader();
 	
 	private OWLDataFactory dataFactory;
 
@@ -815,6 +818,7 @@ public class LogMap2Core {
 		//Lib.debuginfo(LexicalUtilities.getStemming4Word("Prolactin") + " " + LexicalUtilities.getStemming4Word("brachii") + "\n");
 		
 		
+		
 		LogOutput.print("Time initializing lexical utilities (s): " + StatisticsTimeMappings.getRunningTime(init));
 		StatisticsTimeMappings.addUpperbound_mappings_time(StatisticsTimeMappings.getRunningTime(init));
 		
@@ -909,6 +913,11 @@ public class LogMap2Core {
 		//Statistics
 		StatisticsManager.reInitValues();
 		StatisticsManager.setMappingManager(mapping_extractor);
+		
+		
+		//TODO Category mappings
+		categoryMappingsLoader.loadMappings(Parameters.path_mappings_categories);
+		mapping_extractor.setCategoryMappings(categoryMappingsLoader.getCategoryMappings());
 		
 		
 		//Input mappings (e.g. composed mappings using MO given as input)

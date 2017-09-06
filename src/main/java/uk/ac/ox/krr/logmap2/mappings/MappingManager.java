@@ -132,7 +132,6 @@ public abstract class MappingManager {
 	protected Map<Integer, Map<Integer,Integer>> instanceMappings2outputtype = new HashMap<Integer, Map<Integer,Integer>>();
 	
 	
-	
 	/**For statictics purposes*/
 	protected Set<MappingObjectStr> discarded_candidates = new HashSet<MappingObjectStr>();
 	
@@ -140,7 +139,10 @@ public abstract class MappingManager {
 	protected Set<MappingObjectStr> mappings_candidates_Str = new HashSet<MappingObjectStr>();
 	protected Set<MappingObjectStr> mappings_GS_Str = new HashSet<MappingObjectStr>();
 	
-		
+	
+	/** Category mappings (relevant for instance matching) **/
+	protected Map<String, Set<String>> category_mappings = new HashMap<String, Set<String>>();
+	
 	
 	double weightIsub=0.5;
 	double weightIsub_avg=0.0;//not used
@@ -2676,6 +2678,32 @@ public abstract class MappingManager {
 		return false;
 	}
 	
+	
+	
+	
+	public Map<String, Set<String>> getCategoryMappings(){
+		return category_mappings;
+	}
+
+	public void setCategoryMappings(Map<String, Set<String>> mappings){
+		category_mappings=mappings;
+	}
+	
+	public boolean hasCategoryMappings(String uri){
+		return category_mappings.containsKey(uri);
+	}
+	
+	public Set<String> getMappings4Category(String uri){		
+		return category_mappings.get(uri);		
+	}
+	
+	
+	public Set<String> getMappings4CategoryWithCheck(String uri){
+		if (category_mappings.containsKey(uri))
+			return category_mappings.get(uri);
+		else
+			return new HashSet<String>();
+	}
 	
 	
 	

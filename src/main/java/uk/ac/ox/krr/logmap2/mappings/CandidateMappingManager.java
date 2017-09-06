@@ -2101,8 +2101,8 @@ public class CandidateMappingManager extends MappingManager {
 					compatibility_factor = instanceMappingAssessment.getCompatibilityFactor(ident1, ident2);
 					
 					
-					//TODO Categories
-					if (!instanceMappingAssessment.haveInstancesCompatibleCategories(ident1, ident2)){
+					//TODO Categories, only for ambiguouss mappings
+					if (!instanceMappingAssessment.haveInstancesCompatibleCategories(ident1, ident2) && ambiguity){
 						required_confidence=3.0;
 					}
 					
@@ -2202,8 +2202,8 @@ public class CandidateMappingManager extends MappingManager {
 					compatibility_factor = instanceMappingAssessment.getCompatibilityFactor(ident1, ident2);
 					
 					
-					//TODO Categories
-					if (!instanceMappingAssessment.haveInstancesCompatibleCategories(ident1, ident2)){
+					//TODO Categories, only for ambiguouss mappings
+					if (!instanceMappingAssessment.haveInstancesCompatibleCategories(ident1, ident2) & ambiguity){
 						required_confidence=3.0;
 					}
 					

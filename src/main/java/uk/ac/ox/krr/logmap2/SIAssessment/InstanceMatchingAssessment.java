@@ -55,28 +55,62 @@ public class InstanceMatchingAssessment {
 	//However, they do contain information about a dbpedia category or other type of information that make 
 	//the instances incompatible
 	//Categories can come as an annotation, data role assertion or object role assertion
+	Set<String> categories1;
+	Set<String> categories2;
 	public boolean haveInstancesCompatibleCategories(int ident1, int ident2){
 		
-		Set<String> categories1 = index.getIndividualCategory4Identifier(ident1);
-		Set<String> categories2 = index.getIndividualCategory4Identifier(ident2);
-	
+		categories1 = index.getIndividualCategory4Identifier(ident1);
+		categories2 = index.getIndividualCategory4Identifier(ident2);
 		
 		//If not defined one of them
 		if (categories1.size()==0 || categories2.size()==0){
+			//System.out.println(categories1 +   "   "   + categories2 +   "    true");
 			return true;
 		}
+			
+		//Two calls to consider composed mappings A mapped to B, B broader than B'
+		//int cat1 =  categories1.size();
+		//int cat2 =  categories2.size();
+		extendCategoriesWithMappings(categories1);
+		extendCategoriesWithMappings(categories2);
 		
+		//if (cat1<categories1.size() || cat2<categories2.size()){
+		//	System.out.println("Before1 " + cat1 + " " + cat2);
+		//	System.out.println("After1 " + categories1.size() + " " + categories2.size());
+		//}
+		//
+		//cat1 =  categories1.size();
+		//cat2 =  categories2.size();
+		
+		extendCategoriesWithMappings(categories1);
+		extendCategoriesWithMappings(categories2);
+		
+		//if (cat1<categories1.size() || cat2<categories2.size()){
+		//	System.out.println("Before2 " + cat1 + " " + cat2);
+		//	System.out.println("After2 " + categories1.size() + " " + categories2.size());
+		//	System.out.println(categories1 + "\n" + categories2  + "\n");
+		//}
 		
 		//When categories are defined
 		return areCompatibleCategories(categories1, categories2);
 		
 		
-		
-		
 	}
 	
 	
-	
+	private Set<String> additional_categories = new HashSet<String>();
+	private void extendCategoriesWithMappings(Set<String> categories) {
+		
+		for (String cat : categories){
+			if (mapping_manager.hasCategoryMappings(cat)){
+				additional_categories.addAll(mapping_manager.getMappings4Category(cat));
+			}
+		}		
+		categories.addAll(additional_categories);		
+		additional_categories.clear();
+	}
+
+
 	protected int areInstancesCompatible(int ident1, int ident2){
 	
 		Set<Integer> types1 = index.getIndividualClassTypes4Identifier(ident1);
@@ -188,7 +222,7 @@ public class InstanceMatchingAssessment {
 		//System.out.println(cat1 +  "\n" + cat2 + "\n\n");
 		
 		//Non empty intersection
-		//if (cat1.size()>0 && cat2.size()>0){			
+		//if (cat1.size()>0 && cat2.size()>0){			cat1.
 			Set<String> intersection = new HashSet<String>(cat1);
 		
 			intersection.retainAll(cat2);

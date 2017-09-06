@@ -51,15 +51,21 @@ public class FlatAlignmentReader extends MappingsReader {
 		while (line!=null) {
 			
 			try {
-				if (line.indexOf("|")<0){
+				if (line.startsWith("#") || (line.indexOf("|")<0 && line.indexOf(",")<0)){
 					line=reader.readLine();
 					continue;
 				}
 				
-				elements=line.split("\\|");
+				if (line.indexOf("|")>0)
+					elements=line.split("\\|");
+				else
+					elements=line.split("\\,");
 				
-				if (elements.length<4)
+				if (elements.length<4){
+					line=reader.readLine();
 					continue;
+				}
+					
 				
 				
 				if (elements[2].equals(">")){
@@ -81,7 +87,7 @@ public class FlatAlignmentReader extends MappingsReader {
 						type = Utilities.CLASSES;
 					}
 					else if (elements[4].equals(Utilities.DATAPROPERTIES_STR)){
-						type = Utilities.DATAPROPERTIES;
+						type 	= Utilities.DATAPROPERTIES;
 					}
 					else if (elements[4].equals(Utilities.OBJECTPROPERTIES_STR)){
 						type = Utilities.OBJECTPROPERTIES;
