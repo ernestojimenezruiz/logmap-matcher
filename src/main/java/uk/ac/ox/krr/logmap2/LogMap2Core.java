@@ -48,7 +48,7 @@ import uk.ac.ox.krr.logmap2.io.*;
 import uk.ac.ox.krr.logmap2.reasoning.SatisfiabilityIntegration;
 import uk.ac.ox.krr.logmap2.repair.*;
 import uk.ac.ox.krr.logmap2.mappings.objects.*;
-import uk.ac.ox.krr.logmap2.oaei.OracleManager;
+import uk.ac.ox.krr.logmap2.oaei.oracle.OracleManager;
 import uk.ac.ox.krr.logmap2.overlapping.*;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
 import uk.ac.ox.krr.logmap2.utilities.Lib;

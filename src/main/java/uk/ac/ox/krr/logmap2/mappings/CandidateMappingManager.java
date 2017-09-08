@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import uk.ac.ox.krr.logmap2.oaei.OracleManager;
+import uk.ac.ox.krr.logmap2.oaei.oracle.OracleManager;
 
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.SIAssessment.DataPropertyMappingAssessment;

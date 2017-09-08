@@ -1,9 +1,7 @@
-package uk.ac.ox.krr.logmap2.oaei;
+package uk.ac.ox.krr.logmap2.oaei.oracle;
 
 
 import uk.ac.ox.krr.logmap2.io.LogOutput;
-import uk.ac.ox.krr.logmap2.oaei.oracle.LocalOracle;
-import uk.ac.ox.krr.logmap2.oaei.oracle.OAEIOracle;
 
 
 

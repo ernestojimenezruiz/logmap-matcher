@@ -22,7 +22,7 @@ import java.net.URL;
 
 import java.util.Calendar;
 
-import uk.ac.ox.krr.logmap2.oaei.OracleManager;
+import uk.ac.ox.krr.logmap2.oaei.oracle.OracleManager;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.io.OAEIAlignmentOutput;

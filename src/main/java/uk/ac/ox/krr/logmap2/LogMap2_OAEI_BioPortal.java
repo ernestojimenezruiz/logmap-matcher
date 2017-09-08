@@ -32,7 +32,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
-import uk.ac.ox.krr.logmap2.oaei.OracleManager;
+import uk.ac.ox.krr.logmap2.oaei.oracle.OracleManager;
 import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
 import uk.ac.ox.krr.logmap2.reasoning.ReasonerManager;
