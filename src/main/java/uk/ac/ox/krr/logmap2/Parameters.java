@@ -28,7 +28,7 @@ import java.io.File;
 
 public class Parameters {
 
-	private static String rdf_label_uri = "http://www.w3.org/2000/01/rdf-schema#label";
+	public static String rdf_label_uri = "http://www.w3.org/2000/01/rdf-schema#label";
 	public static String rdf_comment_uri = "http://www.w3.org/2000/01/rdf-schema#comment";
 	
 	private static String skos_label_uri =    "http://www.w3.org/2004/02/skos/core#prefLabel";	                                        

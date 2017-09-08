@@ -12,13 +12,13 @@ import uk.ac.ox.krr.logmap2.indexing.IndexManager;
 import uk.ac.ox.krr.logmap2.interactive.objects.MappingObjectInteractivity;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.mappings.MappingManager;
-import uk.ac.ox.krr.logmap2.oaei.Oraculo;
+import uk.ac.ox.krr.logmap2.oaei.OracleManager;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
 
 
 /**
  * 
- * Interactive process eploiting the OAEI oracle
+ * Interactive process exploiting the OAEI oracle
  * 
  * @author Ernesto
  *
@@ -89,7 +89,7 @@ public class InteractiveProcessOAEI extends InteractiveProcess {
 				
 				LogOutput.printAlways("Asking mapping...");
 				
-				if (Oraculo.isMappingValid(
+				if (OracleManager.isMappingValid(
 						index.getIRIStr4ConceptIndex(mapping.getIdentifierOnto1()),
 						index.getIRIStr4ConceptIndex(mapping.getIdentifierOnto2()))){
 					

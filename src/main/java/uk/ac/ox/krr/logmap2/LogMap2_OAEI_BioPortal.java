@@ -32,7 +32,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
-import uk.ac.ox.krr.logmap2.oaei.Oraculo;
+import uk.ac.ox.krr.logmap2.oaei.OracleManager;
 import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
 import uk.ac.ox.krr.logmap2.reasoning.ReasonerManager;
@@ -107,7 +107,7 @@ public class LogMap2_OAEI_BioPortal {
 		
 		//TODO  No interactive mode!
 		Parameters.allow_interactivity=false;
-		Oraculo.allowOracle(Parameters.allow_interactivity);						
+		OracleManager.allowOracle(Parameters.allow_interactivity);						
 		//Read from parameters file done inside calls to LogMap
 		
 		

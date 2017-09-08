@@ -48,7 +48,7 @@ import uk.ac.ox.krr.logmap2.io.*;
 import uk.ac.ox.krr.logmap2.reasoning.SatisfiabilityIntegration;
 import uk.ac.ox.krr.logmap2.repair.*;
 import uk.ac.ox.krr.logmap2.mappings.objects.*;
-import uk.ac.ox.krr.logmap2.oaei.Oraculo;
+import uk.ac.ox.krr.logmap2.oaei.OracleManager;
 import uk.ac.ox.krr.logmap2.overlapping.*;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
 import uk.ac.ox.krr.logmap2.utilities.Lib;
@@ -1281,7 +1281,7 @@ public class LogMap2Core {
 		//------------------------------------
 		for (MappingObjectInteractivity mapping : mapping_extractor.getListOfMappingsToAskUser()){
 					
-			if (Oraculo.isMappingValid(
+			if (OracleManager.isMappingValid(
 					index.getIRIStr4ConceptIndex(mapping.getIdentifierOnto1()),
 					index.getIRIStr4ConceptIndex(mapping.getIdentifierOnto2()))){
 						
@@ -1346,7 +1346,7 @@ public class LogMap2Core {
 		
 		LogOutput.printAlways("\nCANDIDATE DIAGNOSIS 2");
 					
-		if (Oraculo.isActive()){
+		if (OracleManager.isActive()){
 			LogOutput.printAlways("Oracle is active for interactivity.");
 			createCandidateMappingsInteractiveProcess();
 		}

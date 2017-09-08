@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import uk.ac.ox.krr.logmap2.oaei.Oraculo;
+import uk.ac.ox.krr.logmap2.oaei.OracleManager;
 
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.SIAssessment.DataPropertyMappingAssessment;
@@ -1735,7 +1735,7 @@ public class CandidateMappingManager extends MappingManager {
 						
 						
 						//Otherwise we were asking almost nothing in interactive conference track
-						if (Oraculo.isActive()){
+						if (OracleManager.isActive()){
 							addEquivMapping2ListOfAnchors2AskUser(ide1, ide2);
 							
 							LogOutput.printAlways("New Added 2 ask: " +
@@ -2721,9 +2721,9 @@ public class CandidateMappingManager extends MappingManager {
 				}
 				//TODO 
     			//Ask if oracle active and properties are compatible
-				else if (Oraculo.isActive()){
+				else if (OracleManager.isActive()){
     				if (confidence_mapping>=Parameters.min_conf_pro_map){
-    					if (Oraculo.isMappingValid(
+    					if (OracleManager.isMappingValid(
     							index.getIRIStr4DataPropIndex(ident1),
     							index.getIRIStr4DataPropIndex(dataPropertyMappings.get(ident1)))){
     						
@@ -2755,7 +2755,7 @@ public class CandidateMappingManager extends MappingManager {
 				//LogOutput.printAlways(index.getIRIStr4DataPropIndex(dataPropertyMappings.get(ident1)));
     		}
 			//ONLY IF oraculo active we double check those cases extended with alternative labels
-			else if (Oraculo.isActive() && (index.getAlternativeLabels4DataPropertyIndex(ident1).size()>1 || index.getAlternativeLabels4DataPropertyIndex(dataPropertyMappings.get(ident1)).size()>1)){
+			else if (OracleManager.isActive() && (index.getAlternativeLabels4DataPropertyIndex(ident1).size()>1 || index.getAlternativeLabels4DataPropertyIndex(dataPropertyMappings.get(ident1)).size()>1)){
 				
 				
 				double isub_labels = getIsubScore4DataPropertyLabels(ident1, dataPropertyMappings.get(ident1), false);
@@ -2765,7 +2765,7 @@ public class CandidateMappingManager extends MappingManager {
 				
 					LogOutput.printAlways(required_confidence +  "   " +  isub_labels);
 					
-					if (!Oraculo.isMappingValid(
+					if (!OracleManager.isMappingValid(
 							index.getIRIStr4DataPropIndex(ident1),
 							index.getIRIStr4DataPropIndex(dataPropertyMappings.get(ident1)))){
 						
@@ -2929,9 +2929,9 @@ public class CandidateMappingManager extends MappingManager {
 				}
     			//TODO 
     			//Ask if oracle active and compatible props (we also include PROBABLY_INCOMPATIBLE_RANGE_OR_DOMAIN)
-				else if (Oraculo.isActive()){
+				else if (OracleManager.isActive()){
     				if (confidence_mapping>=Parameters.min_conf_pro_map){
-    					if (Oraculo.isMappingValid(
+    					if (OracleManager.isMappingValid(
     							index.getIRIStr4ObjPropIndex(ident1),
     							index.getIRIStr4ObjPropIndex(objPropertyMappings.get(ident1)))){
     						
@@ -2958,7 +2958,7 @@ public class CandidateMappingManager extends MappingManager {
     			
     		}
 			//ONLY IF oraculo active we double check those cases extended with alternative labels
-			else if (Oraculo.isActive() && (index.getAlternativeLabels4ObjectPropertyIndex(ident1).size()>1 || index.getAlternativeLabels4ObjectPropertyIndex(objPropertyMappings.get(ident1)).size()>1)){
+			else if (OracleManager.isActive() && (index.getAlternativeLabels4ObjectPropertyIndex(ident1).size()>1 || index.getAlternativeLabels4ObjectPropertyIndex(objPropertyMappings.get(ident1)).size()>1)){
 				//Check isub without alternative labels
 				
 				double isub_labels = getIsubScore4ObjectPropertyLabels(ident1, objPropertyMappings.get(ident1), false);
@@ -2968,7 +2968,7 @@ public class CandidateMappingManager extends MappingManager {
 					LogOutput.printAlways(required_confidence +  "   " +  isub_labels);
 					
 					
-					if (!Oraculo.isMappingValid(
+					if (!OracleManager.isMappingValid(
 							index.getIRIStr4ObjPropIndex(ident1),
 							index.getIRIStr4ObjPropIndex(objPropertyMappings.get(ident1)))){
 						
@@ -3045,7 +3045,7 @@ public class CandidateMappingManager extends MappingManager {
 						!isMappingInConflictWithFixedMappings(cls1, cls2)){
 					
 					//We ask oraculo
-					if (Oraculo.isMappingValid(
+					if (OracleManager.isMappingValid(
 							index.getIRIStr4ConceptIndex(cls1), 
 							index.getIRIStr4ConceptIndex(cls2))){
 						

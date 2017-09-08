@@ -22,7 +22,7 @@ import java.net.URL;
 
 import java.util.Calendar;
 
-import uk.ac.ox.krr.logmap2.oaei.Oraculo;
+import uk.ac.ox.krr.logmap2.oaei.OracleManager;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.io.OAEIAlignmentOutput;
@@ -57,7 +57,7 @@ public class LogMap2_OAEI {
 		//Done in Bridge
 		//Parameters.readParameters();
 		
-		Oraculo.allowOracle(Parameters.allow_interactivity);
+		OracleManager.allowOracle(Parameters.allow_interactivity);
 		
 		
 		//System.out.println(Parameters.path_chinese_segmenter_dict);
@@ -73,8 +73,8 @@ public class LogMap2_OAEI {
 		//total_time = total_time - time_loading;
 		//System.out.println("Time loading ontos (s): " + time_loading);
 		//System.out.println("Is Oracle active? " + Oraculo.isActive() + "  " + Oraculo.getStatusOraculo());
-		if (Oraculo.isActive()){
-			System.out.println("\tNumber of questions to oracle: " + Oraculo.getNumberOfQuestions());
+		if (OracleManager.isActive()){
+			System.out.println("\tNumber of questions to oracle: " + OracleManager.getNumberOfQuestions());
 		}
 		//System.out.println("LogMap 2 Total Matching Time (s): " + total_time);
 		

@@ -3794,7 +3794,8 @@ public class OntologyProcessing {
 							}
 						}//end for data assertion level 2
 						
-						//Extract comment level 2
+						
+						//Extract comment or label! level 2
 						//---------------------
 						for (OWLAnnotationAssertionAxiom indivAnnAx_level2 : assertion_value_indiv.asOWLNamedIndividual().getAnnotationAssertionAxioms(onto)){
 							
@@ -3802,7 +3803,7 @@ public class OntologyProcessing {
 							String uri_ann = indivAnnAx_level2.getAnnotation().getProperty().getIRI().toString();
 							
 							
-							if (Parameters.rdf_comment_uri.equals(uri_ann)){
+							if (Parameters.rdf_comment_uri.equals(uri_ann) || Parameters.rdf_label_uri.equals(uri_ann)){
 								
 								try{
 									label_value = processLabel(
