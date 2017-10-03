@@ -186,8 +186,9 @@ public class Parameters {
 	public static boolean allow_interactivity = false;
 	
 	public static boolean allow_multilingual = true;
-	public static boolean is_test_mode_multilingual = true;  //for testing, we only simulate translation
+	public static boolean is_test_mode_multilingual = false;  //for testing, we only simulate translation
 	public static boolean use_local_dict = true;
+	public static boolean call_online_translator = true;
 	//TODO default target language is english
 	public static String target_lang = "en";
 	//0= Google, 1= Microsoft, >=2 all
@@ -322,6 +323,8 @@ public class Parameters {
 	private static final String is_test_mode_multilingual_str = "is_test_mode_multilingual";
 	
 	private static final String use_local_dict_str = "use_local_dict";
+	
+	private static final String call_online_translator_str = "call_online_translator";
 	
 	private static final String path_chinese_segmenter_dict_str = "path_chinese_segmenter_dict";
 	
@@ -610,6 +613,12 @@ public class Parameters {
 				else if (elements[0].equals(use_local_dict_str)){
 					use_local_dict = Boolean.valueOf(elements[1]);
 				}
+				
+				else if (elements[0].equals(call_online_translator_str)){
+					call_online_translator = Boolean.valueOf(elements[1]);
+				}
+				
+				
 				else if (elements[0].equals(path_multilingual_tmp_str)){
 					path_multilingual_tmp = elements[1];
 				}

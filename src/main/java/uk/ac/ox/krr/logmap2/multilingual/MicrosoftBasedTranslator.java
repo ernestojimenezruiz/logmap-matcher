@@ -70,42 +70,44 @@ public class MicrosoftBasedTranslator extends Translator{
 		if (isInLocalDictionary(text))
 			return getLocalTranslation(text);
 		
+		else if(Parameters.call_online_translator){		
 		
-		//Set credential
-        Translate.setClientId("LogMapMultilingualOntologyMatcher");
-        Translate.setClientSecret("YMWwAB7c3qRQ+QoBnH/dtZx8C9kFqQObhqZpmGGdE4E=");
-
-        
-        Language originLang = LanguageMap.get(originLangStr);
-		Language targetLang = LanguageMap.get(targetLangStr);
-		
-		num_tranlated_characters+=text.length();
-		num_calls++;
-		
-		LogOutput.printAlways("Translating: '" + text + "' from " + originLangStr + " to " + targetLangStr + " using Microsoft API. Num chars translated so far: " + num_tranlated_characters);
-        
-
-		
-		//Microsoft call
-		if (!Parameters.is_test_mode_multilingual){
-			try{
-				translatedText = Translate.execute(text, originLang, targetLang);
+			//Set credential
+	        Translate.setClientId("LogMapMultilingualOntologyMatcher");
+	        Translate.setClientSecret("YMWwAB7c3qRQ+QoBnH/dtZx8C9kFqQObhqZpmGGdE4E=");
+	
+	        
+	        Language originLang = LanguageMap.get(originLangStr);
+			Language targetLang = LanguageMap.get(targetLangStr);
+			
+			num_tranlated_characters+=text.length();
+			num_calls++;
+			
+			LogOutput.printAlways("Translating: '" + text + "' from " + originLangStr + " to " + targetLangStr + " using Microsoft API. Num chars translated so far: " + num_tranlated_characters);
+	        
+	
+			
+			//Microsoft call
+			if (!Parameters.is_test_mode_multilingual){
+				try{
+					translatedText = Translate.execute(text, originLang, targetLang);
+				}
+				catch (Exception e){
+					LogOutput.printError("Error Translating: '" + text + "' from " + originLangStr + " to " + targetLangStr + " using Microsoft API. " + e.getMessage());
+					return "";
+				}
+				//System.out.println(translatedText.length());
 			}
-			catch (Exception e){
-				LogOutput.printError("Error Translating: '" + text + "' from " + originLangStr + " to " + targetLangStr + " using Microsoft API. " + e.getMessage());
-				return "";
+			else{		//This is for test only!
+				translatedText=text + "_" + num_tranlated_characters + "_m";
 			}
-			//System.out.println(translatedText.length());
+			
+			
+		    //System.out.println(translatedText);
+			
+			//Store in on the fly dictionary
+			addTranslation2Map(text, translatedText);
 		}
-		else{		//This is for test only!
-			translatedText=text + "_" + num_tranlated_characters + "_m";
-		}
-		
-		
-	    //System.out.println(translatedText);
-		
-		//Store in on the fly dictionary
-		addTranslation2Map(text, translatedText);
 		
 	    return translatedText;
 
@@ -138,7 +140,7 @@ public class MicrosoftBasedTranslator extends Translator{
 		
 		MicrosoftBasedTranslator translator = new MicrosoftBasedTranslator();
 		
-		//System.out.println("'"+translator.getTranslation("MedicoCabecera", "es", "en")+"'");
+		System.out.println("'"+translator.getTranslation("MedicoCabecera", "es", "en")+"'");
 		//System.out.println("'"+translator.getTranslation("MedicoCabecera", "es", "ar")+"'");
 		
 		for (Language l : Language.values()){

@@ -86,43 +86,45 @@ public class GoogleBasedTranslator extends Translator{
 		if (isInLocalDictionary(text))
 			return getLocalTranslation(text);
 		
-		
-		// Set Google key here
-		//GoogleAPI.setHttpReferrer("http://code.google.com/p/google-api-translate-java/");
-		//GoogleAPI.setKey("AIzaSyALd_XsjljQ0U0n8SB_3q6Iocc8kPeLsCo"); //api yuan gong
-		GoogleAPI.setHttpReferrer("https://code.google.com/p/logmap-matcher/");
-		//GoogleAPI.setKey("AIzaSyCXIH0M0Ya4WpnbHYIqNrRC4wXOqtszQuU"); //university of oxford api, max 100,000. Old key
-		GoogleAPI.setKey("AIzaSyCOXm6fqYcqJtpFSrlMsgAy1VPkgNcrD2k"); //New key
-		
-		
-		Language originLang = LanguageMap.get(originLangStr);
-		Language targetLang = LanguageMap.get(targetLangStr);
-		
-		num_tranlated_characters+=text.length();
-		num_calls++;
-		
-		LogOutput.printAlways("Translating: '" + text + "' from " + originLangStr + " to " + targetLangStr + " using Google API. Num chars translated so far: " + num_tranlated_characters);
-		
-		//Google call
-		if (!Parameters.is_test_mode_multilingual){
-			try{
-				translatedText = Translate.DEFAULT.execute(text, originLang, targetLang);
+		else if(Parameters.call_online_translator){		
+			// Set Google key here
+			//GoogleAPI.setHttpReferrer("http://code.google.com/p/google-api-translate-java/");
+			//GoogleAPI.setKey("AIzaSyALd_XsjljQ0U0n8SB_3q6Iocc8kPeLsCo"); //api yuan gong
+			GoogleAPI.setHttpReferrer("https://code.google.com/p/logmap-matcher/");
+			//GoogleAPI.setKey("AIzaSyCXIH0M0Ya4WpnbHYIqNrRC4wXOqtszQuU"); //university of oxford api, max 100,000. Old key
+			GoogleAPI.setKey("AIzaSyCOXm6fqYcqJtpFSrlMsgAy1VPkgNcrD2k"); //New key
+			
+			
+			Language originLang = LanguageMap.get(originLangStr);
+			Language targetLang = LanguageMap.get(targetLangStr);
+			
+			num_tranlated_characters+=text.length();
+			num_calls++;
+			
+			LogOutput.printAlways("Translating: '" + text + "' from " + originLangStr + " to " + targetLangStr + " using Google API. Num chars translated so far: " + num_tranlated_characters);
+			
+			//Google call
+			if (!Parameters.is_test_mode_multilingual){
+				try{
+					translatedText = Translate.DEFAULT.execute(text, originLang, targetLang);
+				}
+				catch (Exception e){
+					LogOutput.printError("Error Translating: '" + text + "' from " + originLangStr + " to " + targetLangStr + " using Google API. " + e.getMessage());
+					e.printStackTrace();
+					return "";
+				}
+				//System.out.println(translatedText.length());
 			}
-			catch (Exception e){
-				LogOutput.printError("Error Translating: '" + text + "' from " + originLangStr + " to " + targetLangStr + " using Google API. " + e.getMessage());
-				return "";
+			else{ //This is for test only!
+				translatedText=text + "_" + num_tranlated_characters + "_g";
 			}
-			//System.out.println(translatedText.length());
+			
+			
+		    //System.out.println(translatedText);
+			
+			//Store in on-the-fly dictionary
+			addTranslation2Map(text, translatedText);		
 		}
-		else{ //This is for test only!
-			translatedText=text + "_" + num_tranlated_characters + "_g";
-		}
-		
-		
-	    //System.out.println(translatedText);
-		
-		//Store in on-the-fly dictionary
-		addTranslation2Map(text, translatedText);
 		
 	    return translatedText;
 
@@ -148,8 +150,10 @@ public class GoogleBasedTranslator extends Translator{
 	
 		GoogleBasedTranslator translator = new GoogleBasedTranslator();
 		
-		//System.out.println("'"+translator.getTranslation("MedicoCabecera", "es", "en")+"'");
 		System.out.println("'"+translator.getTranslation("MedicoCabecera", "es", "ar")+"'");
+		//System.out.println("'"+translator.getTranslation("coche", "es", "en")+"'");
+		
+		
 		
 		//System.out.println(Language.ENGLISH.toString());
 		

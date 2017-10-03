@@ -57,6 +57,7 @@ public class ExtractStringFromAnnotationAssertionAxiom {
 			lang = ((OWLLiteral)entityAnnAx.getAnnotation().getValue()).getLang();
 		}
 		catch (Exception e){
+			System.err.println("Error accessing object.");
 			lang="";
 		}
 		
@@ -239,7 +240,7 @@ public class ExtractStringFromAnnotationAssertionAxiom {
 			return annotation_labels;
 		}
 		
-		//For translated labels
+		//For translated labels: used now in ontology processing tranlateLabel method (Sept 2017)
 		//Label is: trans1|trans2|...|transx
 		if (label.indexOf("|")>=0){
 			String[] elements = label.split("\\|");

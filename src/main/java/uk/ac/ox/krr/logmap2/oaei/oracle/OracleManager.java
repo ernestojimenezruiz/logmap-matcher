@@ -3,8 +3,6 @@ package uk.ac.ox.krr.logmap2.oaei.oracle;
 
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 
-
-
 /**
  * Interface to query an Oracle
  * @author Ernesto
@@ -79,16 +77,7 @@ public class OracleManager {
 	}
 	
 	public static boolean isMappingValid(String uri1, String uri2){
-		/*try {
-		    Class.forName("eu.sealsproject.omt.client.interactive.Oracle");
-		    // It is available
-		}
-		catch (ClassNotFoundException exception) {
-		    // It is not available
-		}*/
 		
-		//TODO
-		//Local oraculo (comment for OAEI?)
 		if (status_oraculo==LOCAL){
 			numQuestions++;
 			return localOracle.isMappingValid(uri1, uri2);

@@ -136,6 +136,9 @@ public class OntologyProcessing {
 	private Set<Integer> dangerousClasses = new HashSet<Integer>();
 	
 	
+	private Set<String> alternative_labels_tmp = new HashSet<String>();
+	
+	
 	//private HashMap<Integer, Set<Integer>> identifier2directkids= new HashMap<Integer, Set<Integer>>();	
 	//private Map<Integer, Set<Integer>> identifier2directparents= new HashMap<Integer, Set<Integer>>();
 	
@@ -598,7 +601,9 @@ public class OntologyProcessing {
 	
 	
 	
-	private String translateLabel(OWLAnnotationAssertionAxiom entityAnnAx, String label){
+	private Set<String> translateLabel(OWLAnnotationAssertionAxiom entityAnnAx, String label){
+		
+		Set<String> translation_labels = new HashSet<String>();
 		
 		//We only translate if lang is provided in a direct label
 		String lang = annotationExtractor.getAnntotationLanguage(entityAnnAx);
@@ -606,14 +611,25 @@ public class OntologyProcessing {
 		if (!lang.equals(Parameters.target_lang) && !lang.equals("")){
 				
 			//Call the translation module
-			String translation = translator.getTranslation(label, lang);
+			label = translator.getTranslation(label, lang);
 			//LogOutput.printAlways(label + ":  " + translation);
-			return translation;
-			//return translator.getTranslation(label, lang);
+			
+			
+			//For translated labels (case with many translations)
+			//Label is: trans1|trans2|...|transx
+			if (label.indexOf("|")>=0){
+				String[] elements = label.split("\\|");
+				for (String e : elements){
+					translation_labels.add(e);
+				}
+				return translation_labels;
+			}
 				
 		}
+		
+		translation_labels.add(label); //Original label or single translation
 				
-		return label;
+		return translation_labels;
 	}
 	
 	
@@ -753,19 +769,33 @@ public class OntologyProcessing {
 			//Use rdf:label and others as alternative labels
 			//----------------------------
 			//TODO: labels might be in an annotation
+			
+			
+			
 			for (OWLAnnotationAssertionAxiom dPropAnnAx : dProp.getAnnotationAssertionAxioms(onto)){
 				
 				//String label_value = annotationExtractor.getAnntotationString(dPropAnnAx);
 				
 				LogOutput.print(name);
 				
+				
+				//TODO Perform translation if necessary
 				for (String label_value : annotationExtractor.getAnntotationString(dPropAnnAx, onto, index.getFactory())){
 					
-					//TODO Perform translation if necessary
 					if (Parameters.allow_multilingual){			
-						label_value = translateLabel(dPropAnnAx, label_value);
+						alternative_labels_tmp.addAll(translateLabel(dPropAnnAx, label_value));
 					}
-							
+					else{									
+						alternative_labels_tmp.add(label_value);
+					}
+				
+				}
+				
+				
+				//Cleaning and Indexing
+				for (String label_value : alternative_labels_tmp){
+					
+					
 					LogOutput.print("\t  " + label_value);
 					
 					cleanWords = processLabel(label_value);
@@ -785,6 +815,7 @@ public class OntologyProcessing {
 											
 					}
 				}
+				alternative_labels_tmp.clear();
 			}
 			
 			
@@ -938,14 +969,24 @@ public class OntologyProcessing {
 				
 				LogOutput.print(name);
 				
+				
+				//TODO Perform translation if necessary
 				for (String label_value : annotationExtractor.getAnntotationString(oPropAnnAx, onto, index.getFactory())){
 					
-					//TODO Perform translation if necessary
 					if (Parameters.allow_multilingual){			
-						label_value = translateLabel(oPropAnnAx, label_value);
+						alternative_labels_tmp.addAll(translateLabel(oPropAnnAx, label_value));
 					}
-					
+					else{									
+						alternative_labels_tmp.add(label_value);
+					}
 				
+				}
+				
+				
+				//Cleaning and indexing
+				for (String label_value : alternative_labels_tmp){
+					
+									
 					LogOutput.print("\t  " + label_value);
 					
 					cleanWords = processLabel(label_value);
@@ -966,6 +1007,7 @@ public class OntologyProcessing {
 											
 					}
 				}
+				alternative_labels_tmp.clear();
 			}
 			
 			
@@ -1480,18 +1522,28 @@ public class OntologyProcessing {
 			//String uri_ann = indivAnnAx.getAnnotation().getProperty().getIRI().toString();
 			//System.out.println("\tIndiv label: '" + uri_ann + "'  " + label_value);
 			
+			
+			
+			//TODO Perform translation if necessary
 			for (String label_value : annotationExtractor.getAnntotationString(indivAnnAx, onto, index.getFactory())){
 				
-				//TODO Perform translation if necessary
 				if (Parameters.allow_multilingual){			
-					label_value = translateLabel(indivAnnAx, label_value);
+					alternative_labels_tmp.addAll(translateLabel(indivAnnAx, label_value));
 				}
-				
+				else{									
+					alternative_labels_tmp.add(label_value);
+				}
+			
+			}
+						
+			//Cleaning and indexing
+			for (String label_value : alternative_labels_tmp){
 				
 				if (label_value.length()>2){
 					lexiconValues4individual.add(label_value);
 				}
 			}
+			alternative_labels_tmp.clear();
 					
 		}//end class ann axioms
 		
@@ -2064,19 +2116,29 @@ public class OntologyProcessing {
 			
 			//LogOutput.printError(clsAnnAx.toString());
 			
+			
+			//TODO Perform translation if necessary
 			for (String l_value : annotationExtractor.getAnntotationString(clsAnnAx, onto, index.getFactory())){
 				
-				//TODO Perform translation if necessary
 				if (Parameters.allow_multilingual){			
-					l_value = translateLabel(clsAnnAx, l_value);
+					alternative_labels_tmp.addAll(translateLabel(clsAnnAx, l_value));
 				}
-				
+				else{									
+					alternative_labels_tmp.add(l_value);
+				}
+			
+			}
+						
+			//Cleaning and indexing			
+			for (String l_value : alternative_labels_tmp){
+											
 				//LogOutput.print("\t  " + l_value);
 				
 				if (l_value.length()>2){
 					considerLabel(l_value);
 				}
-			}
+			}			
+			alternative_labels_tmp.clear();
 			
 		}//end class ann axioms
 		
