@@ -51,11 +51,13 @@ public class OWLAlignmentFormat extends OutputMappingsFormat {
 	
 	List<OWLOntologyChange> listAxioms2Add= new ArrayList<OWLOntologyChange>();
 	
-	String logical_iri="http://www.cs.ox.ac.uk/isg/projects/LogMap/mappings.owl";
+	
 	
 	OWLOntologyManager managerMappingsOnto;
 	OWLOntology mappingsOnto;
 	OWLDataFactory factory;
+	
+	String logical_iri="http://www.cs.ox.ac.uk/isg/projects/LogMap/mappings.owl";
 	
 	Set<OWLNamedIndividual> indivSet = new HashSet<OWLNamedIndividual>();
 	

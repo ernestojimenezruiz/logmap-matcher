@@ -450,33 +450,39 @@ public abstract class ReasonerAccessImpl extends ReasonerAccess {
 	
 	private Set<OWLClass> getUnsatisfiableClasses(boolean print) {
 		
+		try{
 		
-		Set<OWLClass> set;
-	
-		//Now the reasoner return a node structure. A Node contains the
-		//set of entities which are equivalent
-		Node<OWLClass> node = reasoner.getUnsatisfiableClasses();
-	
-		//set = node.getEntities();
-		set = node.getEntitiesMinusBottom();
+			Set<OWLClass> set;
 		
-		//set.remove(datafactory.getOWLNothing());
+			//Now the reasoner return a node structure. A Node contains the
+			//set of entities which are equivalent
+			Node<OWLClass> node = reasoner.getUnsatisfiableClasses();
 		
-		if (!set.isEmpty()) {
-			if (print)
-				System.err.println("The following classes are unsatisfiable: ");
+			//set = node.getEntities();
+			set = node.getEntitiesMinusBottom();
 			
-			for(OWLClass cls : set) {
+			//set.remove(datafactory.getOWLNothing());
+			
+			if (!set.isEmpty()) {
 				if (print)
-					System.err.println(" " + cls);
+					System.err.println("The following classes are unsatisfiable: ");
+				
+				for(OWLClass cls : set) {
+					if (print)
+						System.err.println(" " + cls);
+				}
 			}
+			else{
+				if (print)
+					System.out.println("There are '0' unsatisfiable classes.");
+			}
+			
+			return set;
 		}
-		else{
-			if (print)
-				System.out.println("There are '0' unsatisfiable classes.");
+		catch (Exception e){
+			System.err.println("Error when invoking the reasoner to get unsatisfiable classes.");
+			return new HashSet<OWLClass>();
 		}
-		
-		return set;
 		
 	}
 
