@@ -734,7 +734,7 @@ public class ModuleExtractor {
 
 		moduleAxioms.clear();
 		
-		moduleSignature.clear();
+		//moduleSignature.clear();
 		
 		newMembers.clear();
 		

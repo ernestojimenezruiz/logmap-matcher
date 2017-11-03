@@ -68,7 +68,33 @@ public class ExtractStringFromAnnotationAssertionAxiom {
 	
 	
 	
-	
+	public String getSingleLabel(OWLAnnotationAssertionAxiom entityAnnAx, OWLOntology onto, OWLDataFactory datafactory){
+		
+		String label_value="";
+		
+		String uri_ann = entityAnnAx.getAnnotation().getProperty().getIRI().toString();
+					
+		//Accepted URIs
+		if (Parameters.accepted_annotation_URIs_for_classes.contains(uri_ann)){
+			
+			if (!(label_value=asDirectValue(entityAnnAx)).equals("")){
+				return label_value;
+			}
+			if (!(label_value=asAnonymousIndividual(entityAnnAx, onto)).equals("")){
+				return label_value;
+			}
+			if (!(label_value=asNamedIndividual(entityAnnAx, onto, datafactory)).equals("")){
+				return label_value;
+			}
+			if (!(label_value=asNamedIndividualFMA(entityAnnAx, onto, datafactory)).equals("")){
+				return label_value;
+			}			
+		}
+		
+		//Empty value otherwise
+		return label_value;
+		
+	}
 	
 	
 	public Set<String> getAnntotationString(

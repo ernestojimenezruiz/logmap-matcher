@@ -108,6 +108,21 @@ public class WriteFile  {
 
 	}
 	
+	
+	public void writeEmptyLine(){
+		try {
+			wBuffer.write("\n");    
+    	}  
+    	catch (IOException e) {
+    		System.err.println("An error occurred writing the file: " + e.getLocalizedMessage() + " " +e.getMessage());
+    		e.printStackTrace();
+    	}
+    	return;
+    	
+
+
+	}
+	
 	public void closeBuffer(){
 		try {
 			wBuffer.close();
