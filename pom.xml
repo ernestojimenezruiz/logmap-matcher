@@ -13,11 +13,13 @@
   	<url>https://github.com/ernestojimenezruiz/logmap-matcher/issues</url>
   </issueManagement>
   <dependencies>
+  
+  <!--Already with HermiT
   <dependency>
 	<groupId>net.sourceforge.owlapi</groupId>
 	<artifactId>owlapi-api</artifactId>
 	<version>3.4.8</version>
-  </dependency>
+  </dependency> -->
   <dependency>
 	<groupId>com.hermit-reasoner</groupId>
 	<artifactId>org.semanticweb.hermit</artifactId>
@@ -54,10 +56,11 @@
         <version>1.1</version>
         <type>jar</type>
 </dependency>
+<!-- We use 0.4.2. Latest version 0.4.3 supports OWL API 4 -->
 <dependency>
 	<groupId>org.semanticweb.elk</groupId>
 	<artifactId>elk-owlapi</artifactId>
-	<version>0.4.3</version>
+	<version>0.4.2</version>
 </dependency>
 <dependency>
 	<groupId>log4j</groupId>

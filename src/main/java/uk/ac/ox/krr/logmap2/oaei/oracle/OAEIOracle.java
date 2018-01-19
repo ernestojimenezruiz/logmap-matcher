@@ -9,8 +9,8 @@ import uk.ac.ox.krr.logmap2.io.LogOutput;
 
 //TODO
 //Uncomment for OAEI
-import eu.sealsproject.omt.client.interactive.Oracle;
-import eu.sealsproject.omt.client.interactive.Mapping;
+//import eu.sealsproject.omt.client.interactive.Oracle;
+//import eu.sealsproject.omt.client.interactive.Mapping;
 //Uncomment for OAEI
 
 
@@ -27,10 +27,10 @@ public class OAEIOracle extends Oraculo{
 	public boolean isMappingValid(String uri1, String uri2) {
 		
 		//Commend for OAEI
-		//return false;
+		return false;
 		//TODO
 		///Uncomment for OAEI		
-		try{
+		/*try{
 			Set<Mapping> mappings = new HashSet<Mapping>();
 			
 			LogOutput.printAlways("Oracle.check(uri1, uri2)");
@@ -45,11 +45,18 @@ public class OAEIOracle extends Oraculo{
 			LogOutput.printAlways("Error asking OAEI Oracle");
 			return false;
 		}
+		*/
 		///Uncomment for OAEI
 		
 	}
 	
-	public boolean isMappingValid1(String uri1, String uri2) {
+	/*
+	 * 
+	 * @param uri1
+	 * @param uri2
+	 * @deprecated
+	 
+	private boolean isMappingValid1(String uri1, String uri2) {
 		
 		
 		try{
@@ -85,7 +92,7 @@ public class OAEIOracle extends Oraculo{
 			return false;
 		}
 		///Uncomment for OAEI
-	}
+	}*/
 	
 	
 	@Override
@@ -102,10 +109,10 @@ public class OAEIOracle extends Oraculo{
 		
 		//TODO
 		//Uncomment for OAEI
-		return Oracle.isInteractive();						
+		//return Oracle.isInteractive();						
 		
 		//Comment for OAEI
-		//return false;
+		return false;
 	}
 
 }

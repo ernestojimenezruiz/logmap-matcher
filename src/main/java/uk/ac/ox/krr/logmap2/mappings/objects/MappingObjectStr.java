@@ -38,6 +38,8 @@ public class MappingObjectStr {
 	public static final int SUB = 0; //L2R=0; //P->Q
 	public static final int SUP=-1; //R2L P<-Q
 	public static final int EQ=-2; //P<->Q
+	//-3 is reserved in LigMap for otehr things
+	public static final int Flagged=-4; //Flagged mappings in Largebio
 	 
 	
 	

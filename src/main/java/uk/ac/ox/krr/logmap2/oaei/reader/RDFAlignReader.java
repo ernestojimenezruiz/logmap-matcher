@@ -148,6 +148,10 @@ public class RDFAlignReader extends MappingsReader {
 							  dir_relation = Utilities.L2R;
 							  //System.out.println("L2R");
 						  }
+						  else if (relation.equals("?")){
+							  dir_relation = Utilities.Flagged;
+							  //System.out.println("L2R");
+						  }
 						  else { //Any other case: ie Hertuda/Hotmatch does not use "="
 							  dir_relation = Utilities.EQ;
 							  //System.out.println("=");
@@ -173,19 +177,5 @@ public class RDFAlignReader extends MappingsReader {
 	
 	
 	
-	
-	
-	public static void main(String[] args) {
-	
-		String mappings_path = "/usr/local/data/DataUMLS/UMLS_Onto_Versions/OAEI_datasets/Mappings_Tools_2012/";
-		
-		
-		try{
-			new RDFAlignReader(mappings_path + "logmap_small_fma2nci_new.rdf");
-		}
-		catch (Exception e){
-			e.printStackTrace();
-		}
-	}
 
 }

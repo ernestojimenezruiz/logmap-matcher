@@ -61,6 +61,7 @@ public class Utilities {
 	public static final int R2L=-1; //P<-Q
 	public static final int EQ=-2; //P<->Qversion = Utilities.LOGMAPMENDUM;
 	public static final int NoMap=-3; 
+	public static final int Flagged=-4; //Flagged mappinsg in Largebio 
 	
 	
 	//TYPE OF MAPPING
