@@ -17,8 +17,10 @@ Please refer to the [OAIE campaign](http://oaei.ontologymatching.org/) for offic
 
 LogMap standalone distributions and OAEI packages can be downloaded from [SourceForge](https://sourceforge.net/projects/logmap-matcher/).  
 
-Development requires a clone of this git repository. You can use the pre-configured Eclipse (Maven) project (dependencies are automatically downloaded). 
-To generate a JAR file for LogMap from the command line using Maven, run: `mvn package`
+Development requires a clone of this git repository. You can use the pre-configured Eclipse (Maven) project. Dependencies are automatically downloaded with the exception of google translate which needs to be manually added to the maven local repository (see [lib/readme_mvn_install_google_translate.txt](./lib/readme_mvn_install_google_translate.txt)). 
+To generate a JAR file for LogMap from the command line using Maven, run: `mvn package` or `mvn clean install package` 
+
+
 
 
 ## Using LogMap
@@ -30,12 +32,12 @@ LogMap accepts the same ontology formats as the OWL API: e.g., RDF/XML, OWL/XML,
 LogMap can be used from the command line with the [standalone distribution](https://sourceforge.net/projects/logmap-matcher/files/Standalone%20distribution/) or 
 the [OAEI packages](https://sourceforge.net/projects/logmap-matcher/files/OAEI%20packages/), or directly from its [Web interface](http://krrwebtools.cs.ox.ac.uk/logmap/)
 
-LogMap can also be easily integrated in other Java applications.
+LogMap can also be easily integrated in other Java applications. See [wiki](https://code.google.com/archive/p/logmap-matcher/wikis) for additional information.
 
 
 **As a Mapping Debugging System**
 
-LogMap can also be used as a mapping debugging system from the command line or integrated in a Java application.
+LogMap can also be used as a mapping debugging system from the command line or integrated in a Java application. See [wiki](https://code.google.com/archive/p/logmap-matcher/wikis) for additional information.
 
 
 ## Contact
@@ -72,7 +74,7 @@ the [University of Oxford](http://www.ox.ac.uk/) by Ernesto Jiménez-Ruiz, Berna
 
 Development has been supported by The Royal Society, the EPSRC project LogMap and EU FP7 projects SEALS and Optique.
 
-We would like to thank Alessandro SOlimando, Valerie Cross, Anton Morant, Yujiao Zhou, Weiguo Xia, Xi Chen, Yuan Gong and Shuo Zhang, who have contributed to the LogMap project in the past.
+We would like to thank Alessandro Solimando, Valerie Cross, Anton Morant, Yujiao Zhou, Weiguo Xia, Xi Chen, Yuan Gong and Shuo Zhang, who have contributed to the LogMap project in the past.
 
 We also thank the organisers of the [OAEI evaluation campaigns](http://oaei.ontologymatching.org/) for providing test data and infrastructure.
 
