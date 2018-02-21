@@ -14,7 +14,7 @@
   </issueManagement>
   
   <properties>
-        <!--project.build.sourceEncoding>UTF-8</project.build.sourceEncoding-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
    </properties>
@@ -121,5 +121,18 @@
 </dependency-->
 
 </dependencies>
+
+<!-- Important to add stopwords and lexicon files -->
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.txt</include>
+          <include>**/*.gz</include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
 
 </project>
