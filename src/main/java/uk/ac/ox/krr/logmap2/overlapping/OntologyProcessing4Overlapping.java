@@ -55,7 +55,9 @@ public class OntologyProcessing4Overlapping {
 	//protected Map<Set<String>, Set<Integer>> invertedFileWeakLabelsL3 = new HashMap<Set<String>, Set<Integer>>();
 	
 	/** List of OWLClasses. Each position represents index*/
-	List<OWLClass> listofOWLClass = new ArrayList<OWLClass>();
+	//List<OWLClass> listofOWLClass = new ArrayList<OWLClass>();
+	Map<Integer, OWLClass> identifier2class = new HashMap<Integer, OWLClass>();
+	
 	
 	Map<OWLClass, Integer> class2identifier = new HashMap<OWLClass, Integer>();
 	
@@ -86,13 +88,23 @@ public class OntologyProcessing4Overlapping {
 	private ExtractStringFromAnnotationAssertionAxiom annotationExtractor = new ExtractStringFromAnnotationAssertionAxiom();
 	
 	
+	protected int ident=0;
+	
 	public OntologyProcessing4Overlapping(OWLOntology ont, LexicalUtilities lexicalUtilities, boolean full_overlapping, boolean use_class2identifier_index){
+		this(ont, lexicalUtilities, full_overlapping, use_class2identifier_index, 0);
+		
+	}
+	
+	public OntologyProcessing4Overlapping(OWLOntology ont, LexicalUtilities lexicalUtilities, boolean full_overlapping, boolean use_class2identifier_index, int init_index){
 		
 		onto=ont;
 		
 		this.lexicalUtilities=lexicalUtilities;
 		this.full_overlapping=full_overlapping;
 		this.use_class2identifier_index=use_class2identifier_index;
+		
+		
+		this.ident = init_index;
 		
 		
 		//We precompute indexes
@@ -106,6 +118,13 @@ public class OntologyProcessing4Overlapping {
 	public void clearOntoloy(){
 		onto=null;
 	}
+
+	
+	
+	public int getLastidentifier(){
+		return ident;
+	}
+	
 	
 	
 	/**
@@ -116,7 +135,7 @@ public class OntologyProcessing4Overlapping {
 		Set<String> words=new HashSet<String>();
 		Set<String> stemmed_words=new HashSet<String>();
 		
-		int ident=0;
+		//int ident=0;
 		
 		
 		//CLASSES
@@ -125,7 +144,9 @@ public class OntologyProcessing4Overlapping {
 			
 			if (!cls.isTopEntity() && !cls.isBottomEntity()){
 				
-				listofOWLClass.add(cls);
+				//listofOWLClass.add(cls);
+				identifier2class.put(ident,cls);
+				
 				if (use_class2identifier_index)
 					class2identifier.put(cls, ident);
 				
@@ -185,7 +206,7 @@ public class OntologyProcessing4Overlapping {
 			
 		}//for classes
 		
-		LogOutput.print("\t\tClasses index: " + listofOWLClass.size());
+		LogOutput.print("\t\tClasses index: " + identifier2class.keySet().size());//listofOWLClass.size());
 		//LogOutput.print("\t\tClasses labels: " + listofClassLabels.size());
 		LogOutput.print("\t\tClasses labels: " + identifier2stemmedlabels.size());//counts only one
 		
@@ -217,7 +238,8 @@ public class OntologyProcessing4Overlapping {
 	
 	
 	public OWLClass getClass4identifier(int ident){
-		return listofOWLClass.get(ident);		
+		//return listofOWLClass.get(ident);
+		return identifier2class.get(ident);
 	}
 	
 	public int getIdentifier4Class(OWLClass cls){
@@ -252,7 +274,8 @@ public class OntologyProcessing4Overlapping {
 	
 	public void clearStructures(){
 		invertedFileWeakLabels.clear();
-		listofOWLClass.clear();
+		//listofOWLClass.clear();
+		identifier2class.clear();
 		class2identifier.clear();
 		//listofClassLabels.clear();
 		identifier2stemmedlabels.clear(); //already removed before

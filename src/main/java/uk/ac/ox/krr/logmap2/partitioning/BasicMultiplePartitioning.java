@@ -5,22 +5,28 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.semanticweb.owlapi.io.IRIDocumentSource;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.MissingImportHandlingStrategy;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 import uk.ac.manchester.syntactic_locality.OntologyModuleExtractor;
+import uk.ac.ox.krr.logmap2.io.LogOutput;
+import uk.ac.ox.krr.logmap2.io.WriteFile;
 import uk.ac.ox.krr.logmap2.lexicon.LexicalUtilities;
 import uk.ac.ox.krr.logmap2.overlapping.OntologyProcessing4Overlapping;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
+import uk.ac.ox.krr.logmap2.statistics.StatisticsTimeMappings;
 
 
 /**
  * This class aims at implementing an efficient algorithm to produce multiple partitions for ontology alignment.
- * The methods arely on efficient lexical indexes, locality based module extraction and simple clustering algorithms. 
+ * The methods rely on efficient lexical indexes, locality based module extraction and simple clustering algorithms. 
  * @author ernesto
  *
  */
@@ -50,55 +56,154 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 			OWLOntology target) throws OWLOntologyCreationException, Exception {
 		
 		
+		StatisticsTimeMappings.setInitGlobalTime();
+		StatisticsTimeMappings.setCurrentInitTime();
+		
 		//1. Create IF inverted Indexes: ontologyProcessing for overlapping
 		
 		//1.1 Necessary for stemming and stopwords
 		LexicalUtilities lexicalUtilities = new LexicalUtilities();		
 		
 		//1.2 Source
-		createInvertedFile(source_processing, source, lexicalUtilities, use_full_overlapping);
+		source_processing = createInvertedFile(source, lexicalUtilities, use_full_overlapping, 0);
 		//1.3 Target
-		createInvertedFile(target_processing, target, lexicalUtilities, use_full_overlapping);
-				
-						
+		target_processing = createInvertedFile(target, lexicalUtilities, use_full_overlapping, source_processing.getLastidentifier()+10);
+		
+							
 		//2. Intersect inverted indexes				
-		//We perform intersection an we only keep in inverted file the intersected elements
+		//We perform intersection an we only keep in inverted file the intersected elements		
 		if_intersection = source_processing.getWeakInvertedFile().keySet();
 		if_intersection.retainAll(target_processing.getWeakInvertedFile().keySet());
 		target_processing.getWeakInvertedFile().keySet().retainAll(if_intersection);
 
+		LogOutput.printAlways("Time computing inverted file for overlapping (s): " + StatisticsTimeMappings.getRunningTime());		
+		System.out.println("Number of entries IF: " + if_intersection.size());
+		
+		
+		StatisticsTimeMappings.setCurrentInitTime();
+		
 		
 		//3. Create overlapping estimation and discard original ontologies
-					
+		
+		
+		String label1;
+		String label2;
+		
+		label1 = "mouse";
+		label2 = "ncia";
+		
+		
+		label1 = "fma";
+		label2 = "nci";
+		
+		
+		label1 = "fma";
+		label2 = "snomed";
+		
+		
+		label1 = "snomed";
+		label2 = "nci";
+		
+		
+		WriteFile writerO1 =  new WriteFile("/home/ernesto/Documents/OAEI_2017.5/overlapping/if_" + label1);
+		WriteFile writerO2 =  new WriteFile("/home/ernesto/Documents/OAEI_2017.5/overlapping/if_" + label2);
+		WriteFile writerComb =  new WriteFile("/home/ernesto/Documents/OAEI_2017.5/overlapping/if_" + label1 + "_"+label2);
+		
+		String lineO1;
+		String lineO2;
+		String lineComb;
+
+		
 		//3.1. Create Entity sets in Overlapping		
-		for (Set<String> str_set: if_intersection){					
+		for (Set<String> str_set: if_intersection){
+
+			lineO1="";
+			lineO2="";
+			lineComb="";
+					
+			
+			for (String str : str_set){
+				lineO1+= str+";";
+			}
+			
+			//lineO1 = lineO1.substring(0, lineO1.length()-1);
+			lineO1=lineComb=lineO2=lineO1.substring(0, lineO1.length()-1) + "|";
+			
+			
 			for (int ide1 : source_processing.getWeakInvertedFile().get(str_set)){
+				
+				lineO1+=ide1 + ";";
+				lineComb+=ide1 + ";";
+				
 				entities_source.add(source_processing.getClass4identifier(ide1));
 			}
 			for (int ide2 : target_processing.getWeakInvertedFile().get(str_set)){
+				
+				lineO2+=ide2 + ";";
+				lineComb+=ide2 + ";";
+				
 				entities_target.add(target_processing.getClass4identifier(ide2));
 			}
+			
+			
+			lineO1=lineO1.substring(0, lineO1.length()-1);
+			lineO2=lineO2.substring(0, lineO2.length()-1);
+			lineComb=lineComb.substring(0, lineComb.length()-1);
+			
+			
+			writerO1.writeLine(lineO1);
+			writerO2.writeLine(lineO2);
+			writerComb.writeLine(lineComb);
+			
 		}
 		
+		writerO1.closeBuffer();
+		writerO2.closeBuffer();
+		writerComb.closeBuffer();
+		
+		
 		//3.2 Overlapping Source
-		createOverlappingEstimation(source, entities_source, overlapping_source);
+		overlapping_source = createOverlappingEstimation(source, entities_source);
 	
 		//3.3 Overlapping Target
-		createOverlappingEstimation(target, entities_target, overlapping_target);
+		overlapping_target = createOverlappingEstimation(target, entities_target);
 							
+		
+		LogOutput.printAlways("Time computing overlapping modules (overstimation) (s): " + StatisticsTimeMappings.getRunningTime());	
+		StatisticsTimeMappings.setCurrentInitTime();
 		
 		//4. Create logical modules for each entry: we should use a combined module including entities from O1 and O2
 		//We create a list of pre-matching (sub)tasks
-		createModulesPreMatchingTasks();
+		//createModulesPreMatchingTasks();
+		
+		
+		LogOutput.printAlways("Time computing small modules (1 per IF entry) (s): " + StatisticsTimeMappings.getRunningTime());
+		
 		
 		
 		//TODO
+		
+		//Problem: complexity of extracting many modules....
+		//Instead of extracting modules: use labelling index to check similarity among IF values:
+		//For example e1 not= e2 but e1 sub e2
+		
+		
+		
+		//Clustering at the inverted index level: keys pointing to similar values (taking into account o1 and o2)
+		//How to define this similarity value?
+		//Modules would definitiely complement this, but it may be very expensive.
+		
+		
+		
 		//Evaluate recall now and get some statistics about the tasks!
 		//In principle recall should be as large as the overlapping overstimation
 		//Keep some URI to id to compare with Gold standards!
 
 		
 		//Check if extracted modules already include entities. Index, entity to entities
+		//I guess to group entries
+		
+		
 		
 		//4. Merge modules (max size: 1000-2000 classes)
 		//USe a TreeSet and each entry module characterised by a boolean vector (occurrence or not of a class)
@@ -130,8 +235,11 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 			
 			OWLOntologyManager managerOnto;
 			managerOnto = SynchronizedOWLManager.createOWLOntologyManager();			
-			managerOnto.setSilentMissingImportsHandling(true);									
-			return managerOnto.loadOntology(IRI.create(phy_iri_onto));
+			//managerOnto.setSilentMissingImportsHandling(true);	
+			OWLOntologyLoaderConfiguration conf = new OWLOntologyLoaderConfiguration();
+			conf.setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT);			
+			return managerOnto.loadOntologyFromOntologyDocument(
+					new IRIDocumentSource(IRI.create(phy_iri_onto)), conf);
 			
 						
 		}
@@ -143,18 +251,23 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 	}
 	
 	
-	private void createInvertedFile(
-			OntologyProcessing4Overlapping ontology_processing, OWLOntology ontology, LexicalUtilities lexicalUtilities, boolean use_full_overlapping){
+	private OntologyProcessing4Overlapping createInvertedFile( 
+			OWLOntology ontology, 
+			LexicalUtilities lexicalUtilities,
+			boolean use_full_overlapping, 
+			int init_index){
 			
-		ontology_processing = new OntologyProcessing4Overlapping(ontology, lexicalUtilities, use_full_overlapping, true);
+		OntologyProcessing4Overlapping ontology_processing = new OntologyProcessing4Overlapping(ontology, lexicalUtilities, use_full_overlapping, true, init_index);
 		ontology_processing.processOntologyClassLabels();
 		ontology_processing.setInvertedFile4Overlapping();
-				
+		
+		return ontology_processing;
+		
 	}
 	
 	
 		
-	private void createOverlappingEstimation(OWLOntology ontology, Set<OWLEntity> entities, Set<OWLAxiom> overlapping){
+	private Set<OWLAxiom> createOverlappingEstimation(OWLOntology ontology, Set<OWLEntity> entities){
 		
 		//Module: overlapping overestimation
 		OntologyModuleExtractor module_extractor =
@@ -167,7 +280,9 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 		//OWLOntology module_source = module_extractor_source.extractAsOntology(
 		//		entities_source, 
 		//		IRI.create(source.getOntologyID().getOntologyIRI().toString()));
-		overlapping = module_extractor.extract(entities);
+		Set<OWLAxiom> overlapping = new HashSet<OWLAxiom>();
+		
+		overlapping.addAll(module_extractor.extract(entities));
 					
 		module_extractor.clearStrutures();
 						
@@ -176,6 +291,8 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 		ontology=null;
 		
 		entities.clear();
+		
+		return overlapping;
 		
 	}
 	
@@ -272,7 +389,7 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 	
 	/**
 	 * 
-	 * This class stores pre-matching (sub)tasks in thq form or set of class identifiers in the source and target ontologies. 
+	 * This class stores pre-matching (sub)tasks in the form or set of class identifiers in the source and target ontologies. 
 	 * @author ernesto
 	 *
 	 */
@@ -295,14 +412,7 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 		}
 		
 		
-			
-		
-		
-		
 	}
-	
-	
-	
 	
 
 }
