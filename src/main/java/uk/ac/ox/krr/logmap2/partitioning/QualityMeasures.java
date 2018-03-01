@@ -85,6 +85,14 @@ public class QualityMeasures {
 		this.tasks=tasks;
 		this.alignment=alignment;
 		
+		
+		computeMetricsModuleTasks(tasks);
+		
+		computeSizeTasks(tasks);
+		
+		computeCoverageTasks(tasks, alignment);
+		
+		
 	}
 	
 	
@@ -303,7 +311,56 @@ public class QualityMeasures {
 	
 	
 	public String toString(){
-		return "";
+		
+		
+		StringBuilder sb = new StringBuilder();
+		
+		
+		sb.append("number_tasks").append("\t")
+		.append("min_size_modules").append("\t")
+		.append("max_size_modules").append("\t")
+		.append("average_size_modules").append("\t")
+		.append("min_size_task").append("\t")
+		.append("max_size_task").append("\t")
+		.append("avg_size_task").append("\t")
+		.append("min_ratio_modules").append("\t")
+		.append("max_ratio_modules").append("\t")
+		.append("average_ratio_modules").append("\t")
+		.append("aggregation_modules_ontology1").append("\t")
+		.append("aggregation_modules_ontology2").append("\t")
+		.append("aggregation_task_sizes").append("\t")
+		.append("positive_redundancy").append("\t")
+		.append("negative_redundancy").append("\t")
+		.append("min_coverage_task").append("\t")
+		.append("max_coverage_task").append("\t")
+		.append("average_coverage_task").append("\t")
+		.append("global_coverage").append("\n");
+		
+		
+		sb.append(number_tasks).append("\t")
+			.append(min_size_modules).append("\t")
+			.append(max_size_modules).append("\t")
+			.append(average_size_modules).append("\t")
+			.append(min_size_task).append("\t")
+			.append(max_size_task).append("\t")
+			.append(avg_size_task).append("\t")
+			.append(min_ratio_modules).append("\t")
+			.append(max_ratio_modules).append("\t")
+			.append(average_ratio_modules).append("\t")
+			.append(aggregation_modules_ontology1).append("\t")
+			.append(aggregation_modules_ontology2).append("\t")
+			.append(aggregation_task_sizes).append("\t")
+			.append(positive_redundancy).append("\t")
+			.append(negative_redundancy).append("\t")
+			.append(min_coverage_task).append("\t")
+			.append(max_coverage_task).append("\t")
+			.append(average_coverage_task).append("\t")
+			.append(global_coverage);
+		
+		
+		
+		
+		return sb.toString();
 	}
 	
 	

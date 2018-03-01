@@ -3,7 +3,7 @@
  */
 package uk.ac.ox.krr.logmap2.partitioning;
 
-import java.util.Set;
+import java.util.List;
 
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -19,10 +19,10 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 public abstract class OntologyAlignmentPartitioning {
 	
 	
-	public abstract Set<MatchingTask> createPartitionedMatchingTasks(OWLOntology source, OWLOntology target, int num_tasks) throws OWLOntologyCreationException, Exception;
+	public abstract List<MatchingTask> createPartitionedMatchingTasks(OWLOntology source, OWLOntology target, int num_tasks) throws OWLOntologyCreationException, Exception;
 	
 	
-	public abstract Set<MatchingTask> createPartitionedMatchingTasks(String sourceIRIStr, String targetIRIStr, int num_tasks) throws OWLOntologyCreationException, Exception;
+	public abstract List<MatchingTask> createPartitionedMatchingTasks(String sourceIRIStr, String targetIRIStr, int num_tasks) throws OWLOntologyCreationException, Exception;
 	
 	
 

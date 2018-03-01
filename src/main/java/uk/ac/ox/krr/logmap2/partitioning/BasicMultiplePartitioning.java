@@ -54,7 +54,7 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 	
 	
 	@Override
-	public Set<MatchingTask> createPartitionedMatchingTasks(
+	public List<MatchingTask> createPartitionedMatchingTasks(
 			String sourceIRIStr, String targetIRIStr, int num_tasks)
 			throws OWLOntologyCreationException, Exception {		
 		
@@ -65,7 +65,7 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 	
 
 	@Override
-	public Set<MatchingTask> createPartitionedMatchingTasks(OWLOntology source,
+	public List<MatchingTask> createPartitionedMatchingTasks(OWLOntology source,
 			OWLOntology target, int num_tasks) throws OWLOntologyCreationException, Exception {
 		
 		
@@ -74,7 +74,7 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 		StatisticsTimeMappings.setInitGlobalTime();
 		StatisticsTimeMappings.setCurrentInitTime();
 		
-		Set<MatchingTask> tasks = new HashSet<MatchingTask>();
+		List<MatchingTask> tasks = new ArrayList<MatchingTask>();
 		
 		
 		//1. Create IF inverted Indexes: ontologyProcessing for overlapping

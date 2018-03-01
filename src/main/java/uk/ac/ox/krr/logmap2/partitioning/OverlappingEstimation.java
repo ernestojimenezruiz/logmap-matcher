@@ -1,7 +1,7 @@
 package uk.ac.ox.krr.logmap2.partitioning;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -20,7 +20,7 @@ import uk.ac.ox.krr.logmap2.overlapping.LexicalOverlappingExtractor;
 public class OverlappingEstimation extends  OntologyAlignmentPartitioning{
 
 	@Override
-	public Set<MatchingTask> createPartitionedMatchingTasks(OWLOntology source, OWLOntology target, int num_tasks) throws OWLOntologyCreationException, Exception {
+	public List<MatchingTask> createPartitionedMatchingTasks(OWLOntology source, OWLOntology target, int num_tasks) throws OWLOntologyCreationException, Exception {
 		
 		if (num_tasks>1)
 			System.out.println("INFO: This partitioning algorithm only creates one matching task");
@@ -40,14 +40,14 @@ public class OverlappingEstimation extends  OntologyAlignmentPartitioning{
 		task.setSourceOntology(overlappingExtractor.getOverlappingOnto1());
 		task.setTargetOntology(overlappingExtractor.getOverlappingOnto2());
 		
-		Set<MatchingTask> tasks = new HashSet<MatchingTask>();
+		List<MatchingTask> tasks = new ArrayList<MatchingTask>();
 		tasks.add(task);
 		
 		return tasks;
 	}
 
 	@Override
-	public Set<MatchingTask> createPartitionedMatchingTasks(
+	public List<MatchingTask> createPartitionedMatchingTasks(
 			String sourceIRIStr, String targetIRIStr, int num_tasks)
 			throws OWLOntologyCreationException, Exception {
 		
@@ -69,7 +69,7 @@ public class OverlappingEstimation extends  OntologyAlignmentPartitioning{
 		task.setSourceOntology(overlappingExtractor.getOverlappingOnto1());
 		task.setTargetOntology(overlappingExtractor.getOverlappingOnto2());
 		
-		Set<MatchingTask> tasks = new HashSet<MatchingTask>();
+		List<MatchingTask> tasks = new ArrayList<MatchingTask>();
 		tasks.add(task);
 		
 		return tasks;

@@ -16,9 +16,12 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
+import uk.ac.ox.krr.logmap2.io.ReadFile;
 import uk.ac.ox.krr.logmap2.partitioning.BasicMultiplePartitioning;
+import uk.ac.ox.krr.logmap2.partitioning.MatchingTask;
 import uk.ac.ox.krr.logmap2.partitioning.OntologyAlignmentPartitioning;
 import uk.ac.ox.krr.logmap2.partitioning.OverlappingEstimation;
+import uk.ac.ox.krr.logmap2.partitioning.QualityMeasures;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
 
 /**
@@ -29,6 +32,48 @@ import uk.ac.ox.krr.logmap2.utilities.Utilities;
  */
 public class TestPartitioning {
 
+	
+	
+	/**
+	 * UMLS mappings will be our gold standard.
+	 * @throws Exception
+	 */
+	private static void loadMappingsTXT(String file_mappings, Set<String> entities1, Set<String> entities2) throws Exception{
+	
+		ReadFile reader = new ReadFile(file_mappings);
+		
+		
+		String line;
+		String[] elements;
+		
+		line=reader.readLine();
+		
+		while (line!=null) {
+			
+			if (line.indexOf("|")<0){
+				line=reader.readLine();
+				continue;
+			}
+			
+			elements=line.split("\\|");
+			
+			entities1.add(elements[0]);			
+			entities2.add(elements[1]);
+			 
+				
+			line=reader.readLine();
+		}		
+		
+		reader.closeBuffer();
+		
+		
+		//LogOutput.print("Entities Ref Alignment 1: " + entities1.size());
+		//LogOutput.print("Entities Ref Alignment 2: " + entities2.size());
+				
+		
+	}
+	
+	
 	/**
 	 * @param args
 	 */
@@ -166,7 +211,14 @@ public class TestPartitioning {
 			//overlapping.createPartitionedMatchingTasks(uri1, uri2);
 			
 			partitioner = new BasicMultiplePartitioning();
-			partitioner.createPartitionedMatchingTasks(uri1, uri2, 20);
+			List<MatchingTask> tasks = partitioner.createPartitionedMatchingTasks(uri1, uri2, 20);
+			
+			QualityMeasures quality = new QualityMeasures(tasks, null); //TODO read alignment ass Set of mappingObjectStr
+			
+			System.out.println(quality.toString());
+			
+			
+			
 			
 		} catch (OWLOntologyCreationException e) {
 			// TODO Auto-generated catch block
