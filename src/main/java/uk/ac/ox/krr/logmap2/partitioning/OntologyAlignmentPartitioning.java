@@ -19,10 +19,10 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 public abstract class OntologyAlignmentPartitioning {
 	
 	
-	public abstract Set<MatchingTask> createPartitionedMatchingTasks(OWLOntology source, OWLOntology target) throws OWLOntologyCreationException, Exception;
+	public abstract Set<MatchingTask> createPartitionedMatchingTasks(OWLOntology source, OWLOntology target, int num_tasks) throws OWLOntologyCreationException, Exception;
 	
 	
-	public abstract Set<MatchingTask> createPartitionedMatchingTasks(String sourceIRIStr, String targetIRIStr) throws OWLOntologyCreationException, Exception;
+	public abstract Set<MatchingTask> createPartitionedMatchingTasks(String sourceIRIStr, String targetIRIStr, int num_tasks) throws OWLOntologyCreationException, Exception;
 	
 	
 

@@ -33,6 +33,7 @@ public class QualityMeasures {
 	int min_size_modules;
 	int max_size_modules;
 	double average_size_modules;
+	
 	int min_size_task; //m X n
 	int max_size_task;
 	double avg_size_task;

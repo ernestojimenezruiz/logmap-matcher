@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map;
 
-import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -27,6 +26,8 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
+
+import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
 
 //import uk.ac.manchester.cs.owlapi.modularity.ModuleType;
 //import uk.ac.manchester.cs.owlapi.modularity.SyntacticLocalityModuleExtractor;
@@ -425,7 +426,7 @@ public class OntologyModuleExtractor implements OntologySegmenter {
 		if (ontologyManager!=null)
 			manager=ontologyManager;
 		else 
-			manager = OWLManager.createOWLOntologyManager();
+			manager = SynchronizedOWLManager.createOWLOntologyManager();
 		
 		return manager.createOntology(extractModule4Entities(signature, typeModule, manager), iri);				
 	}
@@ -447,7 +448,7 @@ public class OntologyModuleExtractor implements OntologySegmenter {
 	
 	
 	public Set<OWLAxiom> extractModule4Entity(OWLEntity entity, TYPEMODULE typeModule) {
-		return extractModule4Entity(entity, typeModule, OWLManager.createOWLOntologyManager());
+		return extractModule4Entity(entity, typeModule, SynchronizedOWLManager.createOWLOntologyManager());
 	}
 	
 	public Set<OWLAxiom> extractModule4Entity(OWLEntity entity, TYPEMODULE typeModule, OWLOntologyManager ontologyManager) {
@@ -472,7 +473,7 @@ public class OntologyModuleExtractor implements OntologySegmenter {
 	
 	
 	public Set<OWLAxiom> extractModule4Entities(Set<OWLEntity> signature, TYPEMODULE typeModule) {
-		return extractModule4Entities(signature, typeModule, OWLManager.createOWLOntologyManager());
+		return extractModule4Entities(signature, typeModule, SynchronizedOWLManager.createOWLOntologyManager());
 	}
 	
 	
@@ -697,7 +698,7 @@ public class OntologyModuleExtractor implements OntologySegmenter {
 
 
 	 public void saveExtractedModule(OWLOntologyManager manager, OWLOntology module, String physicalModuleURI) {
-	    	//OWLOntologyManager ontologyModuleManager = OWLManager.createOWLOntologyManager();
+	    	//OWLOntologyManager ontologyModuleManager = SynchronizedOWLManager.createOWLOntologyManager();
 	    	
 	        try {
 	        	manager.saveOntology(module, new RDFXMLOntologyFormat(), IRI.create(physicalModuleURI));

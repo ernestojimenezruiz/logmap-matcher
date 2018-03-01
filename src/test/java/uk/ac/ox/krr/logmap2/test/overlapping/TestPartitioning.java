@@ -6,7 +6,10 @@
  *******************************************************************************/
 package uk.ac.ox.krr.logmap2.test.overlapping;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -79,8 +82,8 @@ public class TestPartitioning {
 		
 		ontopair=Utilities.MOUSE2HUMAN;
 		ontopair=Utilities.FMA2NCI;		
-		ontopair=Utilities.FMA2SNOMED;
-		ontopair=Utilities.SNOMED2NCI;
+		//ontopair=Utilities.FMA2SNOMED;
+		//ontopair=Utilities.SNOMED2NCI;
 		
 					
 		String path = "/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/OAEI_datasets/oaei_2013/";
@@ -163,7 +166,7 @@ public class TestPartitioning {
 			//overlapping.createPartitionedMatchingTasks(uri1, uri2);
 			
 			partitioner = new BasicMultiplePartitioning();
-			partitioner.createPartitionedMatchingTasks(uri1, uri2);
+			partitioner.createPartitionedMatchingTasks(uri1, uri2, 20);
 			
 		} catch (OWLOntologyCreationException e) {
 			// TODO Auto-generated catch block
@@ -173,6 +176,34 @@ public class TestPartitioning {
 			e.printStackTrace();
 		}
 		
+		
+		/*
+		
+		
+		List<String> list = new ArrayList<String>();
+		
+		list.add("a");
+		list.add("b");
+		list.add("c");
+		list.add("d");
+		list.add("e");
+		
+		System.out.println(list);
+		
+		Collections.shuffle(list);
+		
+		System.out.println(list);
+		
+		Collections.shuffle(list);
+		
+		System.out.println(list);
+		
+		Collections.shuffle(list);
+		
+		System.out.println(list);
+		
+		
+		*/
 	}
 
 }
