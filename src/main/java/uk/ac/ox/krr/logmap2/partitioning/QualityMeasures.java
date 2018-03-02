@@ -30,9 +30,14 @@ public class QualityMeasures {
 	
 	//general statistics
 	int number_tasks;
-	int min_size_modules;
-	int max_size_modules;
-	double average_size_modules;
+	
+	
+	int min_size_modules_ontology1;
+	int max_size_modules_ontology1;
+	double average_size_modules_ontology1;
+	int min_size_modules_ontology2;
+	int max_size_modules_ontology2;
+	double average_size_modules_ontology2;
 	
 	int min_size_task; //m X n
 	int max_size_task;
@@ -69,6 +74,8 @@ public class QualityMeasures {
 	int negative_redundancy;
 	
 	
+	double computation_time=0.0;
+	
 	
 	List<MatchingTask> tasks;
 	Set<MappingObjectStr> alignment;
@@ -81,9 +88,27 @@ public class QualityMeasures {
 	}
 	
 	
+	public QualityMeasures(List<MatchingTask> tasks, Set<MappingObjectStr> alignment, double time){
+		this(tasks, alignment);
+		
+		computation_time=time;
+		
+		
+		
+	}
+	
+	
 	public QualityMeasures(List<MatchingTask> tasks, Set<MappingObjectStr> alignment){
 		this.tasks=tasks;
 		this.alignment=alignment;
+		
+		
+		/*for (MatchingTask task : tasks){
+			System.out.println(
+					task.getSignatureSourceOntology().size() + "\t" + 
+					task.getSignatureTargetOntology().size() + "\t" + getLocalCoverage(task, alignment));
+		}*/
+		
 		
 		
 		computeMetricsModuleTasks(tasks);
@@ -107,9 +132,14 @@ public class QualityMeasures {
 		aggregation_modules_ontology2=0;		
 		
 	
-		min_size_modules = min(tasks.get(0).getSignatureSourceOntology().size(), tasks.get(0).getSignatureTargetOntology().size());
-		max_size_modules = max(tasks.get(0).getSignatureSourceOntology().size(), tasks.get(0).getSignatureTargetOntology().size());
-		average_size_modules=0;
+		min_size_modules_ontology1 = tasks.get(0).getSignatureSourceOntology().size();
+		max_size_modules_ontology1 = tasks.get(0).getSignatureSourceOntology().size();
+		
+		min_size_modules_ontology2 = tasks.get(0).getSignatureTargetOntology().size();
+		max_size_modules_ontology2 = tasks.get(0).getSignatureTargetOntology().size();
+		
+		average_size_modules_ontology1=0;
+		average_size_modules_ontology2=0;
 		
 		min_ratio_modules = (double)tasks.get(0).getSignatureSourceOntology().size()/(double)tasks.get(0).getSignatureTargetOntology().size();
 		max_ratio_modules = (double)tasks.get(0).getSignatureSourceOntology().size()/(double)tasks.get(0).getSignatureTargetOntology().size();
@@ -121,15 +151,22 @@ public class QualityMeasures {
 			aggregation_modules_ontology2+=tasks.get(i).getSignatureTargetOntology().size();
 			
 			
-			aux = min(tasks.get(i).getSignatureSourceOntology().size(), tasks.get(i).getSignatureTargetOntology().size());
-			if (aux<min_size_modules)
-				min_size_modules = aux;
+			aux = tasks.get(i).getSignatureSourceOntology().size();
+			if (aux<min_size_modules_ontology1)
+				min_size_modules_ontology1 = aux;
+			else if (aux>max_size_modules_ontology1)
+				max_size_modules_ontology1 = aux;
 			
-			aux = max(tasks.get(i).getSignatureSourceOntology().size(), tasks.get(i).getSignatureTargetOntology().size());
-			if (aux>max_size_modules)
-				max_size_modules = aux;
 			
-			average_size_modules += tasks.get(i).getSignatureSourceOntology().size() + tasks.get(i).getSignatureTargetOntology().size();
+			aux = tasks.get(i).getSignatureTargetOntology().size();
+			if (aux<min_size_modules_ontology2)
+				min_size_modules_ontology2 = aux;
+			else if (aux>max_size_modules_ontology2)
+				max_size_modules_ontology2 = aux;
+			
+			
+			average_size_modules_ontology1 += tasks.get(i).getSignatureSourceOntology().size();
+			average_size_modules_ontology2 += tasks.get(i).getSignatureTargetOntology().size();
 			
 			
 			ratio = (double)tasks.get(i).getSignatureSourceOntology().size()/(double)tasks.get(i).getSignatureTargetOntology().size();
@@ -142,7 +179,8 @@ public class QualityMeasures {
 			
 		}
 		
-		average_size_modules = (double)average_size_modules/(double)tasks.size()*2;
+		average_size_modules_ontology1 = (double)average_size_modules_ontology1/(double)tasks.size();
+		average_size_modules_ontology2 = (double)average_size_modules_ontology2/(double)tasks.size();
 		
 		average_ratio_modules = (double)average_ratio_modules/(double)tasks.size();
 		
@@ -308,6 +346,41 @@ public class QualityMeasures {
 	}
 	
 	
+	public static String toStringHeader(){
+		
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("\n");
+		
+		sb.append("number_tasks").append("\t")
+		.append("min_modules_O1").append("\t")
+		.append("max_modules_O1").append("\t")
+		.append("avg_modules_O1").append("\t")
+		.append("min_modules_O2").append("\t")
+		.append("max_modules_O2").append("\t")
+		.append("avg_modules_O2").append("\t")
+		//.append("min_size_task").append("\t")
+		//.append("max_size_task").append("\t")
+		//.append("avg_size_task").append("\t")
+		//.append("min_ratio_modules").append("\t")
+		//.append("max_ratio_modules").append("\t")
+		//.append("average_ratio_modules").append("\t")
+		//.append("aggregation_modules_ontology1").append("\t")
+		//.append("aggregation_modules_ontology2").append("\t")
+		.append("task_size").append("\t")
+		//.append("positive_redundancy").append("\t")
+		//.append("negative_redundancy").append("\t")
+		//.append("min_coverage_task").append("\t")
+		//.append("max_coverage_task").append("\t")
+		//.append("average_coverage_task").append("\t")
+		.append("coverage").append("\t")
+		.append("time");
+		
+		return sb.toString();
+	}
+	
+	
 	
 	
 	public String toString(){
@@ -315,47 +388,29 @@ public class QualityMeasures {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		
-		sb.append("number_tasks").append("\t")
-		.append("min_size_modules").append("\t")
-		.append("max_size_modules").append("\t")
-		.append("average_size_modules").append("\t")
-		.append("min_size_task").append("\t")
-		.append("max_size_task").append("\t")
-		.append("avg_size_task").append("\t")
-		.append("min_ratio_modules").append("\t")
-		.append("max_ratio_modules").append("\t")
-		.append("average_ratio_modules").append("\t")
-		.append("aggregation_modules_ontology1").append("\t")
-		.append("aggregation_modules_ontology2").append("\t")
-		.append("aggregation_task_sizes").append("\t")
-		.append("positive_redundancy").append("\t")
-		.append("negative_redundancy").append("\t")
-		.append("min_coverage_task").append("\t")
-		.append("max_coverage_task").append("\t")
-		.append("average_coverage_task").append("\t")
-		.append("global_coverage").append("\n");
-		
-		
 		sb.append(number_tasks).append("\t")
-			.append(min_size_modules).append("\t")
-			.append(max_size_modules).append("\t")
-			.append(average_size_modules).append("\t")
-			.append(min_size_task).append("\t")
-			.append(max_size_task).append("\t")
-			.append(avg_size_task).append("\t")
-			.append(min_ratio_modules).append("\t")
-			.append(max_ratio_modules).append("\t")
-			.append(average_ratio_modules).append("\t")
-			.append(aggregation_modules_ontology1).append("\t")
-			.append(aggregation_modules_ontology2).append("\t")
+			.append(min_size_modules_ontology1).append("\t")
+			.append(max_size_modules_ontology1).append("\t")
+			.append(average_size_modules_ontology1).append("\t")
+			.append(min_size_modules_ontology2).append("\t")
+			.append(max_size_modules_ontology2).append("\t")
+			.append(average_size_modules_ontology2).append("\t")
+			//.append(min_size_task).append("\t")
+			//.append(max_size_task).append("\t")
+			//.append(avg_size_task).append("\t")
+			//.append(min_ratio_modules).append("\t")
+			//.append(max_ratio_modules).append("\t")
+			//.append(average_ratio_modules).append("\t")
+			//.append(aggregation_modules_ontology1).append("\t")
+			//.append(aggregation_modules_ontology2).append("\t")
 			.append(aggregation_task_sizes).append("\t")
-			.append(positive_redundancy).append("\t")
-			.append(negative_redundancy).append("\t")
-			.append(min_coverage_task).append("\t")
-			.append(max_coverage_task).append("\t")
-			.append(average_coverage_task).append("\t")
-			.append(global_coverage);
+			//.append(positive_redundancy).append("\t")
+			//.append(negative_redundancy).append("\t")
+			//.append(min_coverage_task).append("\t")
+			//.append(max_coverage_task).append("\t")
+			//.append(average_coverage_task).append("\t")
+			.append(global_coverage).append("\t")
+			.append(computation_time);
 		
 		
 		

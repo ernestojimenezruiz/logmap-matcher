@@ -17,6 +17,8 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.io.ReadFile;
+import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
+import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
 import uk.ac.ox.krr.logmap2.partitioning.BasicMultiplePartitioning;
 import uk.ac.ox.krr.logmap2.partitioning.MatchingTask;
 import uk.ac.ox.krr.logmap2.partitioning.OntologyAlignmentPartitioning;
@@ -32,47 +34,21 @@ import uk.ac.ox.krr.logmap2.utilities.Utilities;
  */
 public class TestPartitioning {
 
-	
+
 	
 	/**
 	 * UMLS mappings will be our gold standard.
 	 * @throws Exception
 	 */
-	private static void loadMappingsTXT(String file_mappings, Set<String> entities1, Set<String> entities2) throws Exception{
+	private static Set<MappingObjectStr> loadMappingsRDF(String file_mappings) throws Exception{
 	
-		ReadFile reader = new ReadFile(file_mappings);
+		RDFAlignReader reader = new RDFAlignReader(file_mappings);
 		
-		
-		String line;
-		String[] elements;
-		
-		line=reader.readLine();
-		
-		while (line!=null) {
-			
-			if (line.indexOf("|")<0){
-				line=reader.readLine();
-				continue;
-			}
-			
-			elements=line.split("\\|");
-			
-			entities1.add(elements[0]);			
-			entities2.add(elements[1]);
-			 
-				
-			line=reader.readLine();
-		}		
-		
-		reader.closeBuffer();
-		
-		
-		//LogOutput.print("Entities Ref Alignment 1: " + entities1.size());
-		//LogOutput.print("Entities Ref Alignment 2: " + entities2.size());
-				
+		return reader.getMappingObjects();
 		
 	}
 	
+
 	
 	/**
 	 * @param args
@@ -82,6 +58,9 @@ public class TestPartitioning {
 		String uri2;
 		
 		String file_gs_mappings; 
+		
+		String file_gs_rdf; 
+		
 		String file_logmapbio_mappings;
 		String file_logmap2_mappings;
 		
@@ -126,7 +105,7 @@ public class TestPartitioning {
 		double overlappingratio2;
 		
 		ontopair=Utilities.MOUSE2HUMAN;
-		ontopair=Utilities.FMA2NCI;		
+		//ontopair=Utilities.FMA2NCI;		
 		//ontopair=Utilities.FMA2SNOMED;
 		//ontopair=Utilities.SNOMED2NCI;
 		
@@ -144,6 +123,10 @@ public class TestPartitioning {
 			
 			
 			file_gs_mappings = path + "oaei2013_FMA2NCI_repaired_UMLS_mappings.txt";				
+			file_gs_rdf = path + "reference_alignment/oaei2013_FMA2NCI_original_UMLS_mappings_with_confidence.rdf";
+			
+			
+			
 			//file_logmap_mappings = "file:/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/ISWC_LogMap0.9_Mappings/FMA2NCI_logmap_mappings.owl";
 			file_logmapbio_mappings="/home/ernesto/Documents/OAEI_2016/EVAL_2016/MAPPINGS/LargeBio/LogMapBio-largebio-fma_nci_whole_2016.rdf";
 			file_logmap2_mappings="/home/ernesto/Documents/OAEI_2016/EVAL_2016/MAPPINGS/LargeBio/LogMap-largebio-fma_nci_whole_2016.rdf";
@@ -161,7 +144,10 @@ public class TestPartitioning {
 			
 			
 			file_gs_mappings = path + "oaei2013_FMA2SNOMED_repaired_UMLS_mappings.txt";
-				
+			
+			file_gs_rdf = path + "reference_alignment/oaei2013_FMA2SNOMED_original_UMLS_mappings_with_confidence.rdf";
+			
+			
 			//file_logmap_mappings = "file:/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/ISWC_LogMap0.9_Mappings/FMA2SNMD_logmap_mappings.owl";
 			file_logmapbio_mappings="/home/ernesto/Documents/OAEI_2016/EVAL_2016/MAPPINGS/LargeBio/LogMapBio-largebio-fma_snomed_whole_2016.rdf";
 			file_logmap2_mappings="/home/ernesto/Documents/OAEI_2016/EVAL_2016/MAPPINGS/LargeBio/LogMap-largebio-fma_snomed_whole_2016.rdf";
@@ -178,7 +164,9 @@ public class TestPartitioning {
 			task="SNOMED-NCI";
 			
 			file_gs_mappings = path + "oaei2013_SNOMED2NCI_repaired_UMLS_mappings.txt";
-				
+			file_gs_rdf = path + "reference_alignment/oaei2013_SNOMED2NCI_original_UMLS_mappings_with_confidence.rdf";
+			
+			
 			//file_logmap_mappings = "file:/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/ISWC_LogMap0.9_Mappings/SNMD2NCI_logmap_mappings.owl";
 			file_logmapbio_mappings="/home/ernesto/Documents/OAEI_2016/EVAL_2016/MAPPINGS/LargeBio/LogMapBio-largebio-snomed_nci_whole_2016.rdf";
 			file_logmap2_mappings="/home/ernesto/Documents/OAEI_2016/EVAL_2016/MAPPINGS/LargeBio/LogMap-largebio-snomed_nci_whole_2016.rdf";
@@ -193,6 +181,7 @@ public class TestPartitioning {
 			uri2= "file:/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/Anatomy/2012/human2012.owl";
 								
 			file_gs_mappings = "/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/Anatomy/2012/reference2012.txt";
+			file_gs_rdf = "/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/Anatomy/2012/reference2012.rdf";
 			
 			file_logmapbio_mappings="/home/ernesto/Documents/OAEI_2016/EVAL_2016/MAPPINGS/LargeBio/LogMapBio-Anatomy.rdf";
 			file_logmap2_mappings="/home/ernesto/Documents/OAEI_2016/EVAL_2016/MAPPINGS/LargeBio/LogMap-Anatomy.rdf";
@@ -204,19 +193,41 @@ public class TestPartitioning {
 		}
 		
 		
-		OntologyAlignmentPartitioning partitioner;
+		BasicMultiplePartitioning partitioner;
 		
 
 		try {
 			//overlapping.createPartitionedMatchingTasks(uri1, uri2);
 			
 			partitioner = new BasicMultiplePartitioning();
-			List<MatchingTask> tasks = partitioner.createPartitionedMatchingTasks(uri1, uri2, 20);
 			
-			QualityMeasures quality = new QualityMeasures(tasks, null); //TODO read alignment ass Set of mappingObjectStr
 			
-			System.out.println(quality.toString());
+			//number of tasks
+			//int[] num_tasks={1,5,10,20,50,100,200};
+			int[] num_tasks={200};
+			//int repetitions = 10;
+			int repetitions = 1;
 			
+			
+			for (int j=0; j<num_tasks.length; j++){
+				
+				//Header				
+				System.out.println(QualityMeasures.toStringHeader());
+				
+				//Repetitions
+				for (int i=0; i<repetitions; i++){ 
+										
+					List<MatchingTask> tasks = partitioner.createPartitionedMatchingTasks(uri1, uri2, num_tasks[j]);
+					
+					Set<MappingObjectStr> alignment = loadMappingsRDF(file_gs_rdf);
+					
+					
+					QualityMeasures quality = new QualityMeasures(tasks, alignment, partitioner.getComputationTime()); //TODO read alignment ass Set of mappingObjectStr
+					
+					
+					System.out.println(quality.toString());
+				}
+			}
 			
 			
 			

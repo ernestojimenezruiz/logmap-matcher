@@ -52,6 +52,15 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 	OntologyModuleExtractor module_extractor_target;
 	
 	
+	double total_time=0.0;
+	
+	
+	
+	public double getComputationTime(){
+		return total_time;
+	}
+	
+	
 	
 	@Override
 	public List<MatchingTask> createPartitionedMatchingTasks(
@@ -70,11 +79,17 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 		
 		
 		boolean compute_overlapping_stimation=true;
+		if (num_tasks==1)
+			compute_overlapping_stimation=false;
 		
 		StatisticsTimeMappings.setInitGlobalTime();
 		StatisticsTimeMappings.setCurrentInitTime();
 		
 		List<MatchingTask> tasks = new ArrayList<MatchingTask>();
+		
+		
+		entities_source.clear();
+		entities_target.clear();
 		
 		
 		//1. Create IF inverted Indexes: ontologyProcessing for overlapping
@@ -97,8 +112,8 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 		
 		double if_file_time = StatisticsTimeMappings.getRunningTime();
 
-		LogOutput.printAlways("Time computing inverted file for overlapping (s): " + if_file_time);		
-		System.out.println("Number of entries IF: " + if_intersection.size());
+		LogOutput.print("Time computing inverted file for overlapping (s): " + if_file_time);		
+		LogOutput.print("Number of entries IF: " + if_intersection.size());
 		
 		
 		//It has a good impact specially if number of tasks > 10
@@ -126,7 +141,7 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 			
 			
 			double overlapping_time = StatisticsTimeMappings.getRunningTime();
-			LogOutput.printAlways("Time computing overlapping modules (overstimation) (s): " + overlapping_time);	
+			LogOutput.print("Time computing overlapping modules (overstimation) (s): " + overlapping_time);	
 		}	
 		
 		
@@ -141,7 +156,7 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 		
 		
 		double shufling_time = StatisticsTimeMappings.getRunningTime();
-		LogOutput.printAlways("Time shuffling IF (s): " + shufling_time);		
+		LogOutput.print("Time shuffling IF (s): " + shufling_time);		
 		
 		
 		//4. Split shuffled into X groups, being X the number of desired matching tasks
@@ -162,21 +177,28 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 		
 		Long size_groups = Math.round((double)list_if_entries.size() / (double)num_tasks);
 		
+		//System.out.println(size_groups);
+		
 		for (int n_task = 0; n_task<num_tasks; n_task++){
 		
-			tasks.add(createMatchingTask(uri_onto1, uri_onto2, list_if_entries, n_task, size_groups.intValue()));
+			//To avoid empty tasks
+			if (n_task*size_groups.intValue()<list_if_entries.size())
+				tasks.add(createMatchingTask(uri_onto1, uri_onto2, list_if_entries, n_task, size_groups.intValue()));
 
 		
 		}
 		
 		double modules_time = StatisticsTimeMappings.getRunningTime();
-		LogOutput.printAlways("Time computing modules for tasks (s): " + modules_time);		
+		LogOutput.print("Time computing modules for tasks (s): " + modules_time);		
 
 		
 		
 		
-		double total_time = StatisticsTimeMappings.getTotalRunningTime();
-		LogOutput.printAlways("Total time (s): " + total_time);		
+		//TODO Store matching tasks!
+		
+		
+		total_time = StatisticsTimeMappings.getTotalRunningTime();
+		LogOutput.print("Total time (s): " + total_time);		
 		
 		
 
@@ -265,7 +287,7 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 	
 	
 	
-	public OWLOntology loadOWLOntology(String phy_iri_onto) throws OWLOntologyCreationException{		
+	private OWLOntology loadOWLOntology(String phy_iri_onto) throws OWLOntologyCreationException{		
 
 		try {
 			
