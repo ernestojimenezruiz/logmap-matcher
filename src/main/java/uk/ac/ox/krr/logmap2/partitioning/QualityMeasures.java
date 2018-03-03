@@ -7,6 +7,7 @@
 package uk.ac.ox.krr.logmap2.partitioning;
 
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
 import java.util.Set;
 
@@ -57,6 +58,11 @@ public class QualityMeasures {
 	int aggregation_modules_ontology2;
 	int aggregation_task_sizes;
 	
+	double ratio_task_size;
+	
+	int size_ontology1;
+	int size_ontology2;
+	
 	
 	
 	//Coverage
@@ -77,8 +83,12 @@ public class QualityMeasures {
 	double computation_time=0.0;
 	
 	
+	
+	
 	List<MatchingTask> tasks;
 	Set<MappingObjectStr> alignment;
+	
+	
 	
 	
 	
@@ -88,8 +98,8 @@ public class QualityMeasures {
 	}
 	
 	
-	public QualityMeasures(List<MatchingTask> tasks, Set<MappingObjectStr> alignment, double time){
-		this(tasks, alignment);
+	public QualityMeasures(List<MatchingTask> tasks, Set<MappingObjectStr> alignment, double time, int size_ontology1, int size_ontology2){
+		this(tasks, alignment, size_ontology1, size_ontology2);
 		
 		computation_time=time;
 		
@@ -98,7 +108,7 @@ public class QualityMeasures {
 	}
 	
 	
-	public QualityMeasures(List<MatchingTask> tasks, Set<MappingObjectStr> alignment){
+	public QualityMeasures(List<MatchingTask> tasks, Set<MappingObjectStr> alignment, int size_ontology1, int size_ontology2){
 		this.tasks=tasks;
 		this.alignment=alignment;
 		
@@ -113,7 +123,7 @@ public class QualityMeasures {
 		
 		computeMetricsModuleTasks(tasks);
 		
-		computeSizeTasks(tasks);
+		computeSizeTasks(tasks, size_ontology1, size_ontology2);
 		
 		computeCoverageTasks(tasks, alignment);
 		
@@ -189,7 +199,7 @@ public class QualityMeasures {
 	
 	
 	
-	public void computeSizeTasks(List<MatchingTask> tasks){
+	public void computeSizeTasks(List<MatchingTask> tasks, int size_ontology1, int size_ontology2){
 		
 		avg_size_task=0;
 		
@@ -214,6 +224,8 @@ public class QualityMeasures {
 		}
 		
 		avg_size_task = (double)aggregation_task_sizes/(double)tasks.size();
+		
+		ratio_task_size = (double)aggregation_task_sizes / (double)(size_ontology1*size_ontology2); 
 		
 		
 	}
@@ -368,7 +380,8 @@ public class QualityMeasures {
 		//.append("average_ratio_modules").append("\t")
 		//.append("aggregation_modules_ontology1").append("\t")
 		//.append("aggregation_modules_ontology2").append("\t")
-		.append("task_size").append("\t")
+		//.append("task_size").append("\t")
+		.append("ratio_task_size").append("\t")
 		//.append("positive_redundancy").append("\t")
 		//.append("negative_redundancy").append("\t")
 		//.append("min_coverage_task").append("\t")
@@ -387,6 +400,10 @@ public class QualityMeasures {
 		
 		
 		StringBuilder sb = new StringBuilder();
+		//StringBuilder sb_formattter = new StringBuilder();
+		//=Formatter formatter = new Formatter(sb_formattter);
+		//formatter.format("%,d", 
+		
 		
 		sb.append(number_tasks).append("\t")
 			.append(min_size_modules_ontology1).append("\t")
@@ -403,7 +420,8 @@ public class QualityMeasures {
 			//.append(average_ratio_modules).append("\t")
 			//.append(aggregation_modules_ontology1).append("\t")
 			//.append(aggregation_modules_ontology2).append("\t")
-			.append(aggregation_task_sizes).append("\t")
+			//.append(aggregation_task_sizes).append("\t")
+			.append(ratio_task_size).append("\t")
 			//.append(positive_redundancy).append("\t")
 			//.append(negative_redundancy).append("\t")
 			//.append(min_coverage_task).append("\t")

@@ -105,7 +105,7 @@ public class TestPartitioning {
 		double overlappingratio2;
 		
 		ontopair=Utilities.MOUSE2HUMAN;
-		//ontopair=Utilities.FMA2NCI;		
+		ontopair=Utilities.FMA2NCI;		
 		//ontopair=Utilities.FMA2SNOMED;
 		//ontopair=Utilities.SNOMED2NCI;
 		
@@ -203,10 +203,10 @@ public class TestPartitioning {
 			
 			
 			//number of tasks
-			//int[] num_tasks={1,5,10,20,50,100,200};
-			int[] num_tasks={200};
-			//int repetitions = 10;
-			int repetitions = 1;
+			int[] num_tasks={1,5,10,20,50,100,200};
+			//int[] num_tasks={200};
+			int repetitions = 10;
+			//int repetitions = 1;
 			
 			
 			for (int j=0; j<num_tasks.length; j++){
@@ -222,7 +222,7 @@ public class TestPartitioning {
 					Set<MappingObjectStr> alignment = loadMappingsRDF(file_gs_rdf);
 					
 					
-					QualityMeasures quality = new QualityMeasures(tasks, alignment, partitioner.getComputationTime()); //TODO read alignment ass Set of mappingObjectStr
+					QualityMeasures quality = new QualityMeasures(tasks, alignment, partitioner.getComputationTime(), partitioner.getSizeSourceOntology(), partitioner.getSizeTargetOntology()); //TODO read alignment ass Set of mappingObjectStr
 					
 					
 					System.out.println(quality.toString());

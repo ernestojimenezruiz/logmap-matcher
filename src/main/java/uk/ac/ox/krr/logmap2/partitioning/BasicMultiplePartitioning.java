@@ -55,9 +55,21 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 	double total_time=0.0;
 	
 	
+	int size_source_ontology;
+	int size_target_ontology;
 	
 	public double getComputationTime(){
 		return total_time;
+	}
+	
+	
+	public int getSizeSourceOntology(){
+		return size_source_ontology;
+	}
+	
+	
+	public int getSizeTargetOntology(){
+		return size_target_ontology;
 	}
 	
 	
@@ -76,6 +88,12 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 	@Override
 	public List<MatchingTask> createPartitionedMatchingTasks(OWLOntology source,
 			OWLOntology target, int num_tasks) throws OWLOntologyCreationException, Exception {
+		
+		
+		
+		size_source_ontology = source.getSignature(true).size();
+		size_target_ontology = target.getSignature(true).size();
+		
 		
 		
 		boolean compute_overlapping_stimation=true;
