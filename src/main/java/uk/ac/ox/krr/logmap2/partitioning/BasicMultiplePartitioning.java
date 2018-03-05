@@ -212,8 +212,23 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 		
 		StatisticsTimeMappings.setCurrentInitTime();
 		
-		String uri_onto1 = source.getOntologyID().getOntologyIRI().toString();
-		String uri_onto2 = target.getOntologyID().getOntologyIRI().toString();
+		
+		//SOme ontologies does not include an (explicit) URI....
+		String uri_onto1;		
+		try	{
+			uri_onto1 = source.getOntologyID().getOntologyIRI().toString();
+		}
+		catch (Exception e){
+			uri_onto1 = "http://logmap-partitioning/ontology1";
+		}
+		String uri_onto2;
+		
+		try{
+			uri_onto2 = target.getOntologyID().getOntologyIRI().toString();
+		}
+		catch (Exception e){
+			uri_onto2 = "http://logmap-partitioning/ontology2";
+		}
 		
 		if (compute_overlapping_stimation)
 			setUpModuleExtractors(overlapping_source, overlapping_target);
