@@ -55,23 +55,51 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 	double total_time=0.0;
 	
 	
-	int size_source_ontology;
-	int size_target_ontology;
+	long size_source_ontology;
+	long size_target_ontology;
 	
 	public double getComputationTime(){
 		return total_time;
 	}
 	
 	
-	public int getSizeSourceOntology(){
+	public long getSizeSourceOntology(){
 		return size_source_ontology;
 	}
 	
 	
-	public int getSizeTargetOntology(){
+	public long getSizeTargetOntology(){
 		return size_target_ontology;
 	}
 	
+	
+	
+	public void clear(){
+		
+		try{
+			source_processing.clearStructures();
+			target_processing.clearStructures();
+			
+			source_processing.clearClass2Identifier();
+			target_processing.clearClass2Identifier();
+			
+			if_intersection.clear();
+			
+			entities_source.clear();
+			entities_target.clear();
+			
+			
+			module_extractor_source.clearStrutures();
+			
+			module_extractor_target.clearStrutures();
+			
+			overlapping_source.clear();
+			overlapping_target.clear();
+		}
+		catch (Exception e){
+			//In case of error
+		}
+	}
 	
 	
 	@Override
@@ -363,8 +391,8 @@ public class BasicMultiplePartitioning extends OntologyAlignmentPartitioning{
 		module_extractor.clearStrutures();
 						
 		//Remove original ontology
-		ontology.getOWLOntologyManager().removeOntology(ontology);
-		ontology=null;
+		//ontology.getOWLOntologyManager().removeOntology(ontology);
+		//ontology=null;
 		
 		entities.clear();
 		

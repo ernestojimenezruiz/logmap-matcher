@@ -40,8 +40,8 @@ public class QualityMeasures {
 	int max_size_modules_ontology2;
 	double average_size_modules_ontology2;
 	
-	int min_size_task; //m X n
-	int max_size_task;
+	long min_size_task; //m X n
+	long max_size_task;
 	double avg_size_task;
 	
 	//balanced/ratio modules: 01/02 -> compare with ratio of original task
@@ -56,12 +56,12 @@ public class QualityMeasures {
 	//aggregation of (sub)task sizes wrt size original task (Sig(O1) x Sig(O2)).
 	int aggregation_modules_ontology1;
 	int aggregation_modules_ontology2;
-	int aggregation_task_sizes;
+	long aggregation_task_sizes;
 	
 	double ratio_task_size;
 	
-	int size_ontology1;
-	int size_ontology2;
+	long size_ontology1;
+	long size_ontology2;
 	
 	
 	
@@ -98,17 +98,24 @@ public class QualityMeasures {
 	}
 	
 	
-	public QualityMeasures(List<MatchingTask> tasks, Set<MappingObjectStr> alignment, double time, int size_ontology1, int size_ontology2){
+
+	
+	
+	public QualityMeasures(List<MatchingTask> tasks, Set<MappingObjectStr> alignment, double time, long size_ontology1, long size_ontology2){
 		this(tasks, alignment, size_ontology1, size_ontology2);
 		
 		computation_time=time;
 		
-		
-		
 	}
 	
 	
-	public QualityMeasures(List<MatchingTask> tasks, Set<MappingObjectStr> alignment, int size_ontology1, int size_ontology2){
+	public void clear(){
+		tasks.clear();
+		alignment.clear();
+	}
+	
+	
+	public QualityMeasures(List<MatchingTask> tasks, Set<MappingObjectStr> alignment, long size_ontology1, long size_ontology2){
 		this.tasks=tasks;
 		this.alignment=alignment;
 		
@@ -199,20 +206,25 @@ public class QualityMeasures {
 	
 	
 	
-	public void computeSizeTasks(List<MatchingTask> tasks, int size_ontology1, int size_ontology2){
+	public void computeSizeTasks(List<MatchingTask> tasks, long size_ontology1, long size_ontology2){
 		
 		avg_size_task=0;
 		
 		aggregation_task_sizes=0;
 		
-		int size_task  = tasks.get(0).getSignatureSourceOntology().size() * tasks.get(0).getSignatureTargetOntology().size(); //m X n;
+		
+		//long is important for the ontology sizes otherwise the task size does not fit within "int"
+		long original_task_size = size_ontology1 * size_ontology2;
+		
+		
+		long size_task  = (long)tasks.get(0).getSignatureSourceOntology().size() * (long)tasks.get(0).getSignatureTargetOntology().size(); //m X n;
 		
 		min_size_task = size_task;
 		max_size_task = size_task;
 		
 		for (int i=0; i<tasks.size(); i++){	
 		
-			size_task = tasks.get(i).getSignatureSourceOntology().size() * tasks.get(i).getSignatureTargetOntology().size(); //m X n;
+			size_task = (long)tasks.get(i).getSignatureSourceOntology().size() * (long)tasks.get(i).getSignatureTargetOntology().size(); //m X n;
 			
 			if (size_task<min_size_task)
 				min_size_task=size_task;
@@ -221,11 +233,19 @@ public class QualityMeasures {
 			
 			aggregation_task_sizes+=size_task;
 			
+			//System.out.println(size_task);
+			
 		}
 		
 		avg_size_task = (double)aggregation_task_sizes/(double)tasks.size();
 		
-		ratio_task_size = (double)aggregation_task_sizes / (double)(size_ontology1*size_ontology2); 
+		
+		//System.out.println(tasks.get(0).getSignatureSourceOntology().size()  + " "+ tasks.get(0).getSignatureTargetOntology().size());
+		//System.out.println(size_ontology1 + " " + size_ontology2);
+		//
+		//System.out.println(aggregation_task_sizes);
+		//System.out.println(original_task_size);
+		ratio_task_size = (double)aggregation_task_sizes / (double)(original_task_size); 
 		
 		
 	}
@@ -381,7 +401,7 @@ public class QualityMeasures {
 		//.append("aggregation_modules_ontology1").append("\t")
 		//.append("aggregation_modules_ontology2").append("\t")
 		//.append("task_size").append("\t")
-		.append("ratio_task_size").append("\t")
+		.append("ratio_tasks_size").append("\t")
 		//.append("positive_redundancy").append("\t")
 		//.append("negative_redundancy").append("\t")
 		//.append("min_coverage_task").append("\t")

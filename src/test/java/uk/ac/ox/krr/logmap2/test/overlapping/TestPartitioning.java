@@ -12,13 +12,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.semanticweb.owlapi.io.IRIDocumentSource;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.MissingImportHandlingStrategy;
+import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.io.ReadFile;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
+import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
 import uk.ac.ox.krr.logmap2.partitioning.BasicMultiplePartitioning;
 import uk.ac.ox.krr.logmap2.partitioning.MatchingTask;
 import uk.ac.ox.krr.logmap2.partitioning.OntologyAlignmentPartitioning;
@@ -47,6 +54,30 @@ public class TestPartitioning {
 		return reader.getMappingObjects();
 		
 	}
+	
+	
+	
+	private static OWLOntology loadOWLOntology(String phy_iri_onto) throws OWLOntologyCreationException{		
+
+		try {
+			
+			OWLOntologyManager managerOnto;
+			managerOnto = SynchronizedOWLManager.createOWLOntologyManager();			
+			//managerOnto.setSilentMissingImportsHandling(true);	
+			OWLOntologyLoaderConfiguration conf = new OWLOntologyLoaderConfiguration();
+			conf.setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT);			
+			return managerOnto.loadOntologyFromOntologyDocument(
+					new IRIDocumentSource(IRI.create(phy_iri_onto)), conf);
+			
+						
+		}
+		catch(Exception e){
+			System.err.println("Error loading OWL ontology: " + e.getMessage());
+			//e.printStackTrace();
+			throw new OWLOntologyCreationException();
+		}
+	}
+	
 	
 
 	
@@ -106,8 +137,11 @@ public class TestPartitioning {
 		
 		ontopair=Utilities.MOUSE2HUMAN;
 		ontopair=Utilities.FMA2NCI;		
-		//ontopair=Utilities.FMA2SNOMED;
-		//ontopair=Utilities.SNOMED2NCI;
+		ontopair=Utilities.FMA2SNOMED;
+		ontopair=Utilities.SNOMED2NCI;
+		
+		//TODO
+		//phenotype
 		
 					
 		String path = "/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/OAEI_datasets/oaei_2013/";
@@ -136,8 +170,8 @@ public class TestPartitioning {
 		else if (ontopair==Utilities.FMA2SNOMED){
 			
 			uri1 = irirootpath + "oaei2013_FMA_whole_ontology.owl";
-			//uri2 = irirootpath + "oaei2013_SNOMED_extended_overlapping_fma_nci.owl";			
-			uri2 = "file:/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/OAEI_datasets/snomed20090131_replab.owl";
+			uri2 = irirootpath + "oaei2013_SNOMED_extended_overlapping_fma_nci.owl";			
+			//uri2 = "file:/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/OAEI_datasets/snomed20090131_replab.owl";
 			
 			
 			task="FMA-SNOMED";
@@ -157,8 +191,8 @@ public class TestPartitioning {
 		}
 		else if (ontopair==Utilities.SNOMED2NCI){
 			
-			uri1 = "file:/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/OAEI_datasets/snomed20090131_replab.owl";
-			//uri1 = irirootpath + "oaei2013_SNOMED_extended_overlapping_fma_nci.owl";
+			//uri1 = "file:/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/OAEI_datasets/snomed20090131_replab.owl";
+			uri1 = irirootpath + "oaei2013_SNOMED_extended_overlapping_fma_nci.owl";
 			uri2 = irirootpath + "oaei2013_NCI_whole_ontology.owl";
 
 			task="SNOMED-NCI";
@@ -193,20 +227,23 @@ public class TestPartitioning {
 		}
 		
 		
-		BasicMultiplePartitioning partitioner;
+		
 		
 
 		try {
 			//overlapping.createPartitionedMatchingTasks(uri1, uri2);
 			
-			partitioner = new BasicMultiplePartitioning();
-			
 			
 			//number of tasks
-			int[] num_tasks={1,5,10,20,50,100,200};
-			//int[] num_tasks={200};
+			int[] num_tasks={1,2,5,10,20,50,100,200};
+			//int[] num_tasks={1,2,5,10};
+			//int[] num_tasks={2};
 			int repetitions = 10;
 			//int repetitions = 1;
+			
+			
+			OWLOntology onto1 = loadOWLOntology(uri1);
+			OWLOntology onto2 = loadOWLOntology(uri2);
 			
 			
 			for (int j=0; j<num_tasks.length; j++){
@@ -216,16 +253,32 @@ public class TestPartitioning {
 				
 				//Repetitions
 				for (int i=0; i<repetitions; i++){ 
-										
-					List<MatchingTask> tasks = partitioner.createPartitionedMatchingTasks(uri1, uri2, num_tasks[j]);
+					
+					BasicMultiplePartitioning partitioner = new BasicMultiplePartitioning();
+					
+					List<MatchingTask> tasks = partitioner.createPartitionedMatchingTasks(onto1, onto2, num_tasks[j]);
 					
 					Set<MappingObjectStr> alignment = loadMappingsRDF(file_gs_rdf);
 					
 					
-					QualityMeasures quality = new QualityMeasures(tasks, alignment, partitioner.getComputationTime(), partitioner.getSizeSourceOntology(), partitioner.getSizeTargetOntology()); //TODO read alignment ass Set of mappingObjectStr
+					QualityMeasures quality = new QualityMeasures(tasks, alignment, partitioner.getComputationTime(), 
+							onto1.getSignature(true).size(), 
+							onto2.getSignature(true).size()); //TODO read alignment ass Set of mappingObjectStr
 					
 					
 					System.out.println(quality.toString());
+					
+					
+					for (MatchingTask mtask : tasks){
+						mtask.clear();
+					}
+					
+					tasks.clear();
+					alignment.clear();
+					quality.clear();
+					
+					partitioner.clear();
+					
 				}
 			}
 			

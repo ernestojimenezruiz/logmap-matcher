@@ -23,6 +23,7 @@ public class MatchingTask {
 		
 	}
 	
+	
 	public MatchingTask(OWLOntology sourceOntology, OWLOntology targetOntology){
 		this.sourceOntology=sourceOntology;
 		this.targetOntology=targetOntology;
@@ -31,7 +32,30 @@ public class MatchingTask {
 		signatureTargetOntology = createSignatureStrOntology(targetOntology);
 		
 		
+		//TODO only for tests! We do not need ontology. Only entities
+		sourceOntology.getOWLOntologyManager().removeOntology(sourceOntology);
+		targetOntology.getOWLOntologyManager().removeOntology(targetOntology);
+		sourceOntology=null;
+		targetOntology=null;
+		
+		
 	}
+	
+	
+	
+	public void clear(){
+		signatureSourceOntology.clear();
+		signatureTargetOntology.clear();
+		
+		
+		sourceOntology.getOWLOntologyManager().removeOntology(sourceOntology);
+		targetOntology.getOWLOntologyManager().removeOntology(targetOntology);
+		sourceOntology=null;
+		targetOntology=null;
+		
+		
+	}
+	
 	
 	
 	public OWLOntology getSourceOntology() {
