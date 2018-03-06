@@ -5,8 +5,15 @@ package uk.ac.ox.krr.logmap2.partitioning;
 
 import java.util.List;
 
+import org.semanticweb.owlapi.io.IRIDocumentSource;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.MissingImportHandlingStrategy;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+
+import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
 
 /**
  * 
@@ -16,13 +23,14 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
  * @author ernesto
  *
  */
-public abstract class OntologyAlignmentPartitioning {
+public interface OntologyAlignmentPartitioning {
 	
 	
-	public abstract List<MatchingTask> createPartitionedMatchingTasks(OWLOntology source, OWLOntology target, int num_tasks) throws OWLOntologyCreationException, Exception;
+	public List<MatchingTask> createPartitionedMatchingTasks(OWLOntology source, OWLOntology target) throws OWLOntologyCreationException, Exception;
 	
 	
-	public abstract List<MatchingTask> createPartitionedMatchingTasks(String sourceIRIStr, String targetIRIStr, int num_tasks) throws OWLOntologyCreationException, Exception;
+	public List<MatchingTask> createPartitionedMatchingTasks(String sourceIRIStr, String targetIRIStr) throws OWLOntologyCreationException, Exception;
+	
 	
 	
 

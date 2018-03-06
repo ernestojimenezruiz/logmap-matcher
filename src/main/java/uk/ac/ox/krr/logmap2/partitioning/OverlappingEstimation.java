@@ -17,13 +17,13 @@ import uk.ac.ox.krr.logmap2.overlapping.LexicalOverlappingExtractor;
  * @author ernesto
  *
  */
-public class OverlappingEstimation extends  OntologyAlignmentPartitioning{
+public class OverlappingEstimation implements OntologyAlignmentPartitioning{
 
 	@Override
-	public List<MatchingTask> createPartitionedMatchingTasks(OWLOntology source, OWLOntology target, int num_tasks) throws OWLOntologyCreationException, Exception {
+	public List<MatchingTask> createPartitionedMatchingTasks(OWLOntology source, OWLOntology target) throws OWLOntologyCreationException, Exception {
 		
-		if (num_tasks>1)
-			System.out.println("INFO: This partitioning algorithm only creates one matching task");
+		//if (num_tasks>1)
+		//	System.out.println("INFO: This partitioning algorithm only creates one matching task");
 		
 		Parameters.use_overlapping=true;
 		Parameters.min_size_overlapping=0;
@@ -48,11 +48,11 @@ public class OverlappingEstimation extends  OntologyAlignmentPartitioning{
 
 	@Override
 	public List<MatchingTask> createPartitionedMatchingTasks(
-			String sourceIRIStr, String targetIRIStr, int num_tasks)
+			String sourceIRIStr, String targetIRIStr)
 			throws OWLOntologyCreationException, Exception {
 		
-		if (num_tasks>1)
-			System.out.println("INFO: This partitioning algorithm only creates one matching task");
+		//if (num_tasks>1)
+		//	System.out.println("INFO: This partitioning algorithm only creates one matching task");
 		
 		Parameters.use_overlapping=true;
 		Parameters.min_size_overlapping=0;

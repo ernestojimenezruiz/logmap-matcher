@@ -23,6 +23,7 @@ import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
 import uk.ac.ox.krr.logmap2.partitioning.BasicMultiplePartitioning;
+import uk.ac.ox.krr.logmap2.partitioning.BasicPartitioningPredictor;
 import uk.ac.ox.krr.logmap2.partitioning.MatchingTask;
 import uk.ac.ox.krr.logmap2.partitioning.QualityMeasures;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
@@ -33,7 +34,7 @@ import uk.ac.ox.krr.logmap2.utilities.Utilities;
  * Created on 26 Feb 2018
  *
  */
-public class TestPartitioning {
+public class TestPartitioningPrediction {
 
 
 	
@@ -266,10 +267,10 @@ public class TestPartitioning {
 			
 			
 			//number of tasks
-			//int[] num_tasks={1,2,5,10,20,50,100,200};
+			int[] size_module={100,200,500,1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000};
 			//int[] num_tasks={1,2,5,10};
-			int[] num_tasks={75};
-			int repetitions = 10;
+			//int[] num_tasks={2};
+			int repetitions = 1;
 			//int repetitions = 1;
 			
 			
@@ -277,28 +278,30 @@ public class TestPartitioning {
 			OWLOntology onto2 = loadOWLOntology(uri2);
 			
 			
-			for (int j=0; j<num_tasks.length; j++){
+			for (int j=0; j<size_module.length; j++){
 				
 				//Header				
-				System.out.println(QualityMeasures.toStringHeader());
+				//System.out.println(QualityMeasures.toStringHeader());
+				
+				System.out.println("\n\nMAX Size module: "+size_module[j]);
 				
 				//Repetitions
 				for (int i=0; i<repetitions; i++){ 
 					
-					BasicMultiplePartitioning partitioner = new BasicMultiplePartitioning(num_tasks[j]);
+					BasicPartitioningPredictor partitioner = new BasicPartitioningPredictor(size_module[j]);
 					
 					List<MatchingTask> tasks = partitioner.createPartitionedMatchingTasks(onto1, onto2);
 					
 					Set<MappingObjectStr> alignment = loadMappingsRDF(file_gs_rdf);
 					
 					
-					QualityMeasures quality = new QualityMeasures(tasks, alignment, partitioner.getComputationTime(), 
-							onto1.getSignature(true).size(), 
-							onto2.getSignature(true).size()); 
+					//QualityMeasures quality = new QualityMeasures(tasks, alignment, partitioner.getComputationTime(), 
+					//		onto1.getSignature(true).size(), 
+					//		onto2.getSignature(true).size()); 
 					
 					
 					
-					System.out.println(quality.toString());
+					//System.out.println(quality.toString());
 					
 					
 					for (MatchingTask mtask : tasks){
@@ -307,7 +310,7 @@ public class TestPartitioning {
 					
 					tasks.clear();
 					alignment.clear();
-					quality.clear();
+					//quality.clear();
 					
 					partitioner.clear();
 					
@@ -319,6 +322,7 @@ public class TestPartitioning {
 		} catch (OWLOntologyCreationException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
+			System.err.println(e.getLocalizedMessage());
 			e.printStackTrace();
 		}
 		
