@@ -116,7 +116,7 @@ public class TestPartitioningPrediction {
 
 		
 		ontopair=Utilities.MOUSE2HUMAN;
-		ontopair=Utilities.FMA2NCI;		
+		//ontopair=Utilities.FMA2NCI;		
 		//ontopair=Utilities.FMA2SNOMED;
 		//ontopair=Utilities.SNOMED2NCI;
 		
@@ -263,14 +263,12 @@ public class TestPartitioningPrediction {
 		
 
 		try {
-			//overlapping.createPartitionedMatchingTasks(uri1, uri2);
-			
-			
+						
 			//number of tasks
-			int[] size_module={100,200,500,1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000};
-			//int[] num_tasks={1,2,5,10};
-			//int[] num_tasks={2};
-			int repetitions = 1;
+			//int[] size_module={10000, 9000, 8000, 7000, 6000, 5000, 4000, 3000, 2000, 1000, 500, 200, 100};
+			int[] size_module={100};
+
+			int repetitions = 10;
 			//int repetitions = 1;
 			
 			
@@ -280,29 +278,32 @@ public class TestPartitioningPrediction {
 			
 			for (int j=0; j<size_module.length; j++){
 				
-				//Header				
-				//System.out.println(QualityMeasures.toStringHeader());
+				System.out.println("\nRequired module size: "+size_module[j]);
 				
-				System.out.println("\n\nMAX Size module: "+size_module[j]);
+				//Header				
+				System.out.println(QualityMeasures.toStringHeader());
+				
+			
 				
 				//Repetitions
 				for (int i=0; i<repetitions; i++){ 
 					
-					BasicPartitioningPredictor partitioner = new BasicPartitioningPredictor(size_module[j]);
+					BasicPartitioningPredictor partitioner = new BasicPartitioningPredictor(size_module[j], false);
 					
 					List<MatchingTask> tasks = partitioner.createPartitionedMatchingTasks(onto1, onto2);
 					
 					Set<MappingObjectStr> alignment = loadMappingsRDF(file_gs_rdf);
 					
 					
-					//QualityMeasures quality = new QualityMeasures(tasks, alignment, partitioner.getComputationTime(), 
-					//		onto1.getSignature(true).size(), 
-					//		onto2.getSignature(true).size()); 
-					
-					
-					
-					//System.out.println(quality.toString());
-					
+					if (tasks.size()>0){
+						QualityMeasures quality = new QualityMeasures(tasks, alignment, partitioner.getComputationTime(), 
+								onto1.getSignature(true).size(), 
+								onto2.getSignature(true).size()); 
+						
+						
+						
+						System.out.println(quality.toString());
+					}
 					
 					for (MatchingTask mtask : tasks){
 						mtask.clear();

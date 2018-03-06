@@ -38,11 +38,21 @@ public class BasicPartitioningPredictor extends AbstractBasicPartitioning implem
 	
 	int max_number_tasks=500;
 	
-	int predicted_number_tasks;
+	int predicted_number_tasks=-1;
+	
+	boolean strict_requirement=false;
 	
 	
-	public  BasicPartitioningPredictor(int required_module_size){
+	/**
+	 * Predicts number of matching tasks to (approximately) obtain modules of the given size. 
+	 * If "strict_requirement"=true then both source and target ontology modules must be smaller than required_module_size
+	 * If "strict_requirement"=false then one of the  module (source or target) is required to be smaller than required_module_size
+	 * @param required_module_size
+	 * @param strict_requirement
+	 */
+	public BasicPartitioningPredictor(int required_module_size, boolean strict_requirement){
 		this.required_module_size=required_module_size;
+		this.strict_requirement = strict_requirement;
 	}
 	
 	
@@ -59,12 +69,14 @@ public class BasicPartitioningPredictor extends AbstractBasicPartitioning implem
 	public List<MatchingTask> createPartitionedMatchingTasks(OWLOntology source, OWLOntology target)
 			throws OWLOntologyCreationException, Exception {
 		
+		StatisticsTimeMappings.setInitGlobalTime();
 		
-		List<MatchingTask> tasks;
+		
+		List<MatchingTask> tasks=null;
+		
+		predicted_number_tasks=-1;
 		
 		createTaskSizesList();
-		
-		
 		
 		for (int n_tasks : number_tasks_list){
 			BasicMultiplePartitioning partitioning = new BasicMultiplePartitioning(n_tasks);
@@ -74,11 +86,12 @@ public class BasicPartitioningPredictor extends AbstractBasicPartitioning implem
 			
 			tasks = partitioning.createPartitionedMatchingTasks(source, target);
 			
-			if (tasks.get(0).getSignatureSourceOntology().size()<=required_module_size && tasks.get(0).getSignatureTargetOntology().size()<=required_module_size){
+			if ((tasks.get(0).getSignatureSourceOntology().size()<=required_module_size && tasks.get(0).getSignatureTargetOntology().size()<=required_module_size) ||
+				(!strict_requirement && (tasks.get(0).getSignatureSourceOntology().size()<=required_module_size || tasks.get(0).getSignatureTargetOntology().size()<=required_module_size))){
 				
 				predicted_number_tasks = n_tasks;
 				
-				System.out.println("\tPREDICTED NUMBER TASKS: " + predicted_number_tasks);
+				LogOutput.print("\tPREDICTED NUMBER TASKS: " + predicted_number_tasks);
 				
 				break;
 			}
@@ -86,11 +99,25 @@ public class BasicPartitioningPredictor extends AbstractBasicPartitioning implem
 			
 		}
 		
-		
-		//Return partitioning for prediction
-		BasicMultiplePartitioning partitioning = new BasicMultiplePartitioning(predicted_number_tasks);
+		if (predicted_number_tasks < 0){
+			System.err.println("The required module size is too small for the maximun number of tasks set to '" + max_number_tasks + "'. The current maximum number of tasks leads to modules of size (approximately): " + 
+						tasks.get(0).getSignatureSourceOntology().size() + " in the source ontoology, and "+ tasks.get(0).getSignatureTargetOntology().size() + " in the target ontology.");
+			tasks =  new ArrayList<MatchingTask>();
 			
-		return partitioning.createPartitionedMatchingTasks(source, target);
+		}
+		else{
+			//Return partitioning for prediction
+			BasicMultiplePartitioning partitioning = new BasicMultiplePartitioning(predicted_number_tasks);				
+			
+			//Return tasks
+			tasks= partitioning.createPartitionedMatchingTasks(source, target);
+			
+		}
+		
+		total_time = StatisticsTimeMappings.getTotalRunningTime();
+		LogOutput.print("Total time (s): " + total_time);		
+		
+		return tasks;
 	}
 
 	
