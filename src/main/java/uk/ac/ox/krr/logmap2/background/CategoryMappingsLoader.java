@@ -29,6 +29,11 @@ public class CategoryMappingsLoader {
 	public void loadMappings(String path){
 		
 		File directory = new File(path);
+		
+		//This is given in OAEI distribution
+		if (!directory.exists())
+			return;
+		
 		String filenames[] = directory.list();
 		
 		MappingsReaderManager manager;

@@ -3,8 +3,12 @@ package uk.ac.ox.krr.logmap2.partitioning;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
+import org.semanticweb.owlapi.io.OWLFunctionalSyntaxOntologyFormat;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
 
 
@@ -119,6 +123,30 @@ public class MatchingTask {
 	
 	
 	
+	
+	public void saveMatchingTask(String path) throws OWLOntologyStorageException{
+		
+		String prefix="";
+		if (!path.startsWith("/"))
+			prefix="/";
+		
+		String sufix="";
+		if (!path.endsWith("/"))
+			sufix="/";
+		
+		String uri_file1= "file:" + prefix + path + sufix + "source.owl";
+		String uri_file2= "file:" + prefix + path + sufix + "target.owl";
+		
+		sourceOntology.getOWLOntologyManager().saveOntology(sourceOntology, new RDFXMLOntologyFormat(), IRI.create(uri_file1));
+		//sourceOntology.getOWLOntologyManager().saveOntology(sourceOntology, new OWLFunctionalSyntaxOntologyFormat(), IRI.create(uri_file1));
+		
+		targetOntology.getOWLOntologyManager().saveOntology(targetOntology, new RDFXMLOntologyFormat(), IRI.create(uri_file2));
+		//targetOntology.getOWLOntologyManager().saveOntology(targetOntology, new OWLFunctionalSyntaxOntologyFormat(), IRI.create(uri_file2));
+		
+	}
+	
+	
+	
 	public boolean equals(Object o){
 		
 		if  (o == null)
@@ -142,6 +170,9 @@ public class MatchingTask {
 		}
 		return true;
 	}
+	
+	
+	
 	
 	
 	public String toString(){

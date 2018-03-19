@@ -17,6 +17,7 @@ import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 import uk.ac.manchester.syntactic_locality.OntologyModuleExtractor;
+import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.lexicon.LexicalUtilities;
 import uk.ac.ox.krr.logmap2.overlapping.OntologyProcessing4Overlapping;
@@ -96,7 +97,12 @@ public class BasicMultiplePartitioning extends AbstractBasicPartitioning impleme
 		//1. Create IF inverted Indexes: ontologyProcessing for overlapping
 		
 		//1.1 Necessary for stemming and stopwords
-		LexicalUtilities lexicalUtilities = new LexicalUtilities();		
+		LexicalUtilities lexicalUtilities = new LexicalUtilities();
+		lexicalUtilities.loadStopWords();
+		//lexicalUtilities.loadStopWordsExtended();
+		//if (Parameters.use_umls_lexicon)
+		//	lexicalUtilities.loadUMLSLexiconResources();		
+		lexicalUtilities.setStemmer(); //creates stemmer object (Paice by default)
 		
 		//1.2 Source
 		source_processing = createInvertedFile(source, lexicalUtilities, use_full_overlapping, 0);
@@ -146,7 +152,7 @@ public class BasicMultiplePartitioning extends AbstractBasicPartitioning impleme
 		}	
 		
 		
-		//3. Shuffle intersection of inverted file
+		//4. Shuffle intersection of inverted file
 		//Required to perform several experiments and see if order in IF has an important impact as the split is random!
 		StatisticsTimeMappings.setCurrentInitTime();
 		
@@ -160,10 +166,10 @@ public class BasicMultiplePartitioning extends AbstractBasicPartitioning impleme
 		LogOutput.print("Time shuffling IF (s): " + shufling_time);		
 		
 		
-		//4. Split shuffled into X groups, being X the number of desired matching tasks
-		//4.1 Extract entities for each of the groups,
-		//4.2. then corresponding modules in source and target
-		//4.3. and finally create task
+		//5. Split shuffled into X groups, being X the number of desired matching tasks
+		//5.1 Extract entities for each of the groups,
+		//5.2. then corresponding modules in source and target
+		//5.3. and finally create task
 		
 		StatisticsTimeMappings.setCurrentInitTime();
 		
@@ -191,17 +197,33 @@ public class BasicMultiplePartitioning extends AbstractBasicPartitioning impleme
 			setUpModuleExtractors(source.getAxioms(), target.getAxioms());
 		
 		
+		double modules_setUp__time = StatisticsTimeMappings.getRunningTime();
+		LogOutput.print("Time setting up module extractors (s): " + modules_setUp__time);		
+
+		
+		
+		
+		StatisticsTimeMappings.setCurrentInitTime();
+		
 		Long size_groups = Math.round((double)list_if_entries.size() / (double)num_tasks);
 		
 		//System.out.println(size_groups);
 		
 		for (int n_task = 0; n_task<num_tasks_ouput; n_task++){
 		
+			long init_task = StatisticsTimeMappings.getCurrentTimeInMillis();
+			
+			
+			
 			//To avoid empty tasks
 			if (n_task*size_groups.intValue()<list_if_entries.size())
 				tasks.add(createMatchingTask(uri_onto1, uri_onto2, list_if_entries, n_task, size_groups.intValue()));
 
 		
+			
+			double modules_time_task = StatisticsTimeMappings.getRunningTime(init_task);
+			LogOutput.print("Time computing modules for task "+ n_task + "  (s): " + modules_time_task);	
+			
 		}
 		
 		double modules_time = StatisticsTimeMappings.getRunningTime();
@@ -209,8 +231,6 @@ public class BasicMultiplePartitioning extends AbstractBasicPartitioning impleme
 
 		
 		
-		
-		//TODO Store matching tasks!
 		
 		
 		total_time = StatisticsTimeMappings.getTotalRunningTime();

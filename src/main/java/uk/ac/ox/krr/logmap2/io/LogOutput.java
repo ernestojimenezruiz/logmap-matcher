@@ -29,8 +29,8 @@ public class LogOutput {
 	private final static Logger LOGGER = Logger.getLogger(LogOutput.class.getName()); 
 
 	
-	private static boolean show_output=true;
-	private static boolean show_output_always=true;
+	private static boolean show_output=false;
+	private static boolean show_output_always=false;
 	
 	
 	public static void setLoggerLevel(Level level){

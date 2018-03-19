@@ -154,7 +154,7 @@ public abstract class AbstractBasicPartitioning {
 						true,
 						false,
 						true);
-		
+		//Optimization very important!
 		
 		
 		
@@ -199,7 +199,6 @@ public abstract class AbstractBasicPartitioning {
 			}
 			
 		}
-		
 		
 		return new MatchingTask(
 				module_extractor_source.extractAsOntology(entities_source, IRI.create(uri_source + "-Task-" + n_task)),

@@ -6,6 +6,7 @@
  *******************************************************************************/
 package uk.ac.ox.krr.logmap2.test.overlapping;
 
+import java.io.File;
 import java.util.List;
 import java.util.Set;
 
@@ -17,14 +18,17 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
+import uk.ac.ox.krr.logmap2.LogMap2_Matcher;
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
 import uk.ac.ox.krr.logmap2.partitioning.BasicMultiplePartitioning;
+import uk.ac.ox.krr.logmap2.partitioning.BasicMultiplePartitioningOld;
 import uk.ac.ox.krr.logmap2.partitioning.MatchingTask;
 import uk.ac.ox.krr.logmap2.partitioning.QualityMeasures;
+import uk.ac.ox.krr.logmap2.statistics.StatisticsTimeMappings;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
 
 /**
@@ -45,10 +49,6 @@ public class TestPartitioning {
 	
 	
 	
-	/**
-	 * UMLS mappings will be our gold standard.
-	 * @throws Exception
-	 */
 	private static Set<MappingObjectStr> loadMappingsRDF(String file_mappings) throws Exception{
 	
 		RDFAlignReader reader = new RDFAlignReader(file_mappings);
@@ -87,6 +87,15 @@ public class TestPartitioning {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		
+		//String str = "ernesto;jim;ruix;";
+		//System.out.println(str.substring(0, str.length()-1));
+		
+		//if (true)
+		//	return;
+		
+		
 		String uri1;
 		String uri2;
 		
@@ -106,7 +115,7 @@ public class TestPartitioning {
 		Parameters.readParameters();
 		
 		Parameters.print_output = false;
-		Parameters.print_output_always = true;
+		Parameters.print_output_always = false;
 		
 		LogOutput.showOutpuLog(Parameters.print_output);
 		LogOutput.showOutpuLogAlways(Parameters.print_output_always);
@@ -115,7 +124,7 @@ public class TestPartitioning {
 
 		
 		ontopair=Utilities.MOUSE2HUMAN;
-		ontopair=Utilities.FMA2NCI;		
+		//ontopair=Utilities.FMA2NCI;		
 		//ontopair=Utilities.FMA2SNOMED;
 		//ontopair=Utilities.SNOMED2NCI;
 		
@@ -126,6 +135,8 @@ public class TestPartitioning {
 					
 		String path = "/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/OAEI_datasets/oaei_2013/";
 		String irirootpath = "file:" + path;
+		
+		String folder;
 		
 		
 		if (ontopair==Utilities.FMA2NCI){
@@ -139,6 +150,7 @@ public class TestPartitioning {
 			//file_gs_mappings = path + "oaei2013_FMA2NCI_repaired_UMLS_mappings.txt";				
 			file_gs_rdf = path + "reference_alignment/oaei2013_FMA2NCI_original_UMLS_mappings_with_confidence.rdf";
 			
+			folder = "fma2nci/";
 			
 			
 			//file_logmap_mappings = "file:/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/ISWC_LogMap0.9_Mappings/FMA2NCI_logmap_mappings.owl";
@@ -153,6 +165,8 @@ public class TestPartitioning {
 			uri2 = irirootpath + "oaei2013_SNOMED_extended_overlapping_fma_nci.owl";			
 			//uri2 = "file:/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/OAEI_datasets/snomed20090131_replab.owl";
 			
+			
+			folder = "fma2snomed/";
 			
 			//task="FMA-SNOMED";
 			
@@ -177,6 +191,9 @@ public class TestPartitioning {
 
 			//task="SNOMED-NCI";
 			
+			folder = "fma2nci/";
+			
+			
 			//file_gs_mappings = path + "oaei2013_SNOMED2NCI_repaired_UMLS_mappings.txt";
 			file_gs_rdf = path + "reference_alignment/oaei2013_SNOMED2NCI_original_UMLS_mappings_with_confidence.rdf";
 			
@@ -190,6 +207,8 @@ public class TestPartitioning {
 		else if (ontopair==Utilities.MOUSE2HUMAN){
 			
 			//task="MOUSE";
+			
+			folder = "mouse/";
 			
 			uri1= "file:/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/Anatomy/2012/mouse2012.owl";
 			uri2= "file:/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/Anatomy/2012/human2012.owl";
@@ -207,6 +226,8 @@ public class TestPartitioning {
 		
 		else if (ontopair==HP2MP2016){
 			
+			folder = "hp2mp/";
+			
 			String path2 = "/home/ernesto/Documents/OAEI_2016/Pistoia/OAEI_datasets/";
 			String iri_path2 = "file:"+ path2;
 			
@@ -220,6 +241,8 @@ public class TestPartitioning {
 		
 		else  if (ontopair==DOID2ORDO2016) {
 			
+			folder = "doid2ordo/";
+			
 			String path2 = "/home/ernesto/Documents/OAEI_2016/Pistoia/OAEI_datasets/";
 			String iri_path2 = "file:"+ path2;
 			
@@ -231,6 +254,8 @@ public class TestPartitioning {
 			
 		}
 		else if (ontopair==HP2MP2017){
+			
+			folder = "hp2mp2017/";
 			
 			String path2 = "/home/ernesto/Documents/OAEI_2017/Pistoia/OAEI_datasets/";
 			String iri_path2 = "file:"+ path2;
@@ -244,6 +269,8 @@ public class TestPartitioning {
 		}
 		
 		else { //if (ontopair==DOID2ORDO2017) {
+			
+			folder = "doid2ordo2017/";
 			
 			String path2 = "/home/ernesto/Documents/OAEI_2017/Pistoia/OAEI_datasets/";
 			String iri_path2 = "file:"+ path2;
@@ -265,29 +292,49 @@ public class TestPartitioning {
 			//overlapping.createPartitionedMatchingTasks(uri1, uri2);
 			
 			
+			String output_path = "/home/ernesto/Documents/OAEI_2017.5/overlapping/tasks/";
+			
+			
 			//number of tasks
-			//int[] num_tasks={1,2,5,10,20,50,100,200};
-			//int[] num_tasks={1,2,5,10};
-			int[] num_tasks={75};
-			int repetitions = 10;
-			//int repetitions = 1;
+			int[] num_tasks={1,2,5,10,20,50,100,200};
+			//int[] num_tasks={1,2,5,10,20};
+			//int[] num_tasks={200};
+			//int repetitions = 10;
+			int repetitions = 1;
 			
 			
 			OWLOntology onto1 = loadOWLOntology(uri1);
 			OWLOntology onto2 = loadOWLOntology(uri2);
 			
 			
+			boolean store_tasks=true;
+			boolean run_system=false;
+			
+			new File(output_path + folder).mkdir();
+			
+			
 			for (int j=0; j<num_tasks.length; j++){
+				
+				new File(output_path + folder + num_tasks[j] + "/").mkdir();
 				
 				//Header				
 				System.out.println(QualityMeasures.toStringHeader());
 				
 				//Repetitions
-				for (int i=0; i<repetitions; i++){ 
+				for (int i=0; i<repetitions; i++){
 					
+					Parameters.use_overlapping=true;
+					Parameters.min_size_overlapping=0;
+					
+					//TODO
 					BasicMultiplePartitioning partitioner = new BasicMultiplePartitioning(num_tasks[j]);
+					//BasicMultiplePartitioningOld partitioner = new BasicMultiplePartitioningOld();
 					
 					List<MatchingTask> tasks = partitioner.createPartitionedMatchingTasks(onto1, onto2);
+					
+					//if (true)
+					//	return;
+					
 					
 					Set<MappingObjectStr> alignment = loadMappingsRDF(file_gs_rdf);
 					
@@ -298,12 +345,40 @@ public class TestPartitioning {
 					
 					
 					
+					
 					System.out.println(quality.toString());
 					
 					
-					for (MatchingTask mtask : tasks){
-						mtask.clear();
+					StatisticsTimeMappings.setCurrentInitTime();
+					
+					
+					//Parameters.min_size_overlapping=0;
+					Parameters.use_overlapping=false;
+					
+					//for (MatchingTask mtask : tasks){
+					for (int id_task = 0; id_task<tasks.size(); id_task++){
+						//mtask.saveMatchingTask(irirootpath);
+						//mtask.clear();
+						
+						if (store_tasks){
+							new File(output_path + folder + num_tasks[j] + "/" + id_task + "/").mkdir();
+							System.out.println(output_path + folder + num_tasks[j] + "/" + id_task + "/");
+							tasks.get(id_task).saveMatchingTask(output_path + folder + num_tasks[j] + "/" + id_task + "/");
+						}
+						
+						//Call systems
+						if (run_system){
+							LogMap2_Matcher logmap = new LogMap2_Matcher(tasks.get(id_task).getSourceOntology(), tasks.get(id_task).getTargetOntology());
+						}
+						
+						
+						tasks.get(id_task).clear();
 					}
+					
+					
+					double system_time = StatisticsTimeMappings.getRunningTime();
+					System.out.println("System or storage time for "+ num_tasks[j] + " partitions: " + system_time);
+					
 					
 					tasks.clear();
 					alignment.clear();

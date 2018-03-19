@@ -143,10 +143,14 @@ public class OntologyLoader {
 			
 			Set<OWLAxiom> axioms = new HashSet<OWLAxiom>();
 			axioms.addAll(given_onto.getAxioms());
-			//Get import closure
-			for (OWLOntology imported_onto : given_onto.getImportsClosure()){
-				axioms.addAll(imported_onto.getAxioms());
+			
+			try{
+				//Get import closure
+				for (OWLOntology imported_onto : given_onto.getImportsClosure()){
+					axioms.addAll(imported_onto.getAxioms());
+				}
 			}
+			catch (Exception e){}
 			
 			
 			onto = managerOnto.createOntology(axioms, IRI.create(iri_onto_str));
