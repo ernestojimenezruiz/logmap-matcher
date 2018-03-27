@@ -164,6 +164,7 @@ public abstract class AbstractBasicPartitioning {
 
 
 	/**
+	 * Method from naive algorithm
 	 * @param source
 	 * @param target
 	 * @param list_if_entries
@@ -190,6 +191,42 @@ public abstract class AbstractBasicPartitioning {
 			
 			Set<String> set_words = list_if_entries.get(i);
 			
+			
+			for (int ide1 : source_processing.getWeakInvertedFile().get(set_words)){
+				entities_source.add(source_processing.getClass4identifier(ide1));
+			}
+			for (int ide2 : target_processing.getWeakInvertedFile().get(set_words)){
+				entities_target.add(target_processing.getClass4identifier(ide2));
+			}
+			
+		}
+		
+		return new MatchingTask(
+				module_extractor_source.extractAsOntology(entities_source, IRI.create(uri_source + "-Task-" + n_task)),
+				module_extractor_target.extractAsOntology(entities_target, IRI.create(uri_target + "-Task-" + n_task))
+				);
+		
+	}
+	
+	
+	
+	/**
+	 * Method from advanced algorithm
+	 * @param source
+	 * @param target
+	 * @param list_if_entries
+	 * @param n_task
+	 * @return
+	 * @throws OWLOntologyCreationException 
+	 */
+	protected MatchingTask createMatchingTask(String uri_source, String uri_target, Set<Set<String>> set_if_entries, int n_task) throws OWLOntologyCreationException {
+		
+		entities_source.clear();
+		entities_target.clear();
+		
+		
+		//Extract entities from IFs and convert id to OWLEntity		
+		for (Set<String> set_words : set_if_entries){
 			
 			for (int ide1 : source_processing.getWeakInvertedFile().get(set_words)){
 				entities_source.add(source_processing.getClass4identifier(ide1));

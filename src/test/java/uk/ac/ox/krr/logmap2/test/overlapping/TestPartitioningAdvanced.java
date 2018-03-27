@@ -24,6 +24,7 @@ import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
+import uk.ac.ox.krr.logmap2.partitioning.AdvancedMultiplePartitioning;
 import uk.ac.ox.krr.logmap2.partitioning.BasicMultiplePartitioning;
 import uk.ac.ox.krr.logmap2.partitioning.BasicMultiplePartitioningOld;
 import uk.ac.ox.krr.logmap2.partitioning.MatchingTask;
@@ -37,7 +38,7 @@ import uk.ac.ox.krr.logmap2.utilities.Utilities;
  * Created on 26 Feb 2018
  *
  */
-public class TestPartitioning {
+public class TestPartitioningAdvanced {
 
 
 	
@@ -87,6 +88,27 @@ public class TestPartitioning {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		
+		//String str = "ernesto;jim;ruix;";
+		//System.out.println(str.substring(0, str.length()-1));
+		
+		/*String line = "word1, word2, word3:cluster_index";
+		String[] elements = line.split(":");
+		
+		System.out.println(elements[0]);
+		System.out.println(elements[1]);
+		
+		String[] words = elements[0].split(",");
+
+		for (String word : words)
+			System.out.println(word);
+		
+
+		if (true)
+			return;
+		*/
+		
 		
 		
 		String uri1;
@@ -285,7 +307,7 @@ public class TestPartitioning {
 			//overlapping.createPartitionedMatchingTasks(uri1, uri2);
 			
 			
-			String output_path = "/home/ernesto/Documents/OAEI_2017.5/overlapping/tasks/";
+			String output_path = "/home/ernesto/Documents/OAEI_2017.5/overlapping/tasks_advanced/";
 			
 			
 			//number of tasks
@@ -293,7 +315,7 @@ public class TestPartitioning {
 			//int[] num_tasks={1,2,5,10,20};
 			//int[] num_tasks={200};
 			//int[] num_tasks={300};
-			int repetitions = 10;
+			int repetitions = 3;
 			//int repetitions = 1;
 			
 			
@@ -308,6 +330,8 @@ public class TestPartitioning {
 			
 			
 			for (int j=0; j<num_tasks.length; j++){
+			
+				String file_clusters = "/home/ernesto/Documents/OAEI_2017.5/overlapping/clusters_advanced/"+ folder + "cluster-" +  num_tasks[j];
 				
 				new File(output_path + folder + num_tasks[j] + "/").mkdir();
 				
@@ -321,8 +345,7 @@ public class TestPartitioning {
 					Parameters.min_size_overlapping=0;
 					
 					//TODO
-					BasicMultiplePartitioning partitioner = new BasicMultiplePartitioning(num_tasks[j]);
-					//BasicMultiplePartitioningOld partitioner = new BasicMultiplePartitioningOld();
+					AdvancedMultiplePartitioning partitioner = new AdvancedMultiplePartitioning(file_clusters, num_tasks[j]);
 					
 					List<MatchingTask> tasks = partitioner.createPartitionedMatchingTasks(onto1, onto2);
 					

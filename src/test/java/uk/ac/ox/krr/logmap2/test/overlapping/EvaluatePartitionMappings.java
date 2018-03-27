@@ -50,8 +50,10 @@ public class EvaluatePartitionMappings {
 	private static Set<MappingObjectStr> loadMappingsRDF(String file_mappings) throws Exception{
 		
 		File file = new File(file_mappings);
-		if (!file.exists())
+		if (!file.exists()){
+			//System.err.println(file_mappings);
 			return Collections.emptySet();
+		}
 			
 		RDFAlignReader reader = new RDFAlignReader(file_mappings);
 		
@@ -206,11 +208,18 @@ public class EvaluatePartitionMappings {
 			//int[] num_tasks={1,2,5,10,20,50,100,200};
 			//String[] tools={"AML", "LogMap"};
 			//String[] tools={"LogMap"};
-			//String[] tools={"AML"};
+			//String[] tools={"AML2"};
+			String[] tools={"AML"};
 			//String[] tools={"Mamba"};
-			String[] tools={"YAM-BIO"};
-			//int[] num_tasks={1,2,5,10,20, 50, 100, 200};
-			int[] num_tasks={1, 2};
+			//String[] tools={"YAM-BIO"};
+			//String[] tools={"LogMapLite"}
+			//String[] tools={"FCA_Map"};
+			//String[] tools={"GMap"};
+			//String[] tools={"KEPLER"};
+			int[] num_tasks={1,2,5,10,20, 50, 100, 200};
+			//%int[] num_tasks={1, 2, 5, 10};
+			//int[] num_tasks={20, 50};
+			//int[] num_tasks={5};
 			
 			
 			
@@ -233,7 +242,7 @@ public class EvaluatePartitionMappings {
 						
 						String m_file = mappings_path + folder + tool + "-" + num_tasks[j] +"-" + i +".rdf";
 			
-						System.out.println(m_file);
+						//System.out.println(m_file);
 						
 						
 						mappings.addAll(loadMappingsRDF(m_file));
@@ -243,7 +252,12 @@ public class EvaluatePartitionMappings {
 					
 					StandardMeasures.computeStandardMeasures(mappings, mappings_RA);
 
-					System.out.println(tool +"\t"+ mappings.size() + "\t" + num_tasks[j]  + "\t" + StandardMeasures.getPrecision() + "\t" + StandardMeasures.getRecall()+ "\t" + StandardMeasures.getFscore());
+					//System.out.println(tool +"\t"+ mappings.size() + "\t" + num_tasks[j]  + "\t" + StandardMeasures.getPrecision() + "\t" + StandardMeasures.getRecall()+ "\t" + StandardMeasures.getFscore());
+					
+					//System.out.println(StandardMeasures.getFscore());
+					
+					System.out.println(StandardMeasures.getPrecision() + "\t" + StandardMeasures.getRecall() + "\t"+ StandardMeasures.getFscore());
+					
 					
 					mappings.clear();
 					

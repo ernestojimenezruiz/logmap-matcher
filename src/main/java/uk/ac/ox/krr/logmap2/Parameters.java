@@ -144,7 +144,7 @@ public class Parameters {
 	public static int good_ambiguity = 2;
 	
 	//Note that even if overlapping is set to true. It will only applied for big ontologies >15000 
-	public static boolean use_overlapping = true;
+	public static boolean use_overlapping = false;
 	
 	public static boolean second_chance_conflicts = true;
 	

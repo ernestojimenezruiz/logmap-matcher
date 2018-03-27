@@ -8,7 +8,10 @@ import org.semanticweb.owlapi.io.OWLFunctionalSyntaxOntologyFormat;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+
+import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
 
 
 
@@ -137,10 +140,16 @@ public class MatchingTask {
 		String uri_file1= "file:" + prefix + path + sufix + "source.owl";
 		String uri_file2= "file:" + prefix + path + sufix + "target.owl";
 		
-		sourceOntology.getOWLOntologyManager().saveOntology(sourceOntology, new RDFXMLOntologyFormat(), IRI.create(uri_file1));
-		//sourceOntology.getOWLOntologyManager().saveOntology(sourceOntology, new OWLFunctionalSyntaxOntologyFormat(), IRI.create(uri_file1));
 		
-		targetOntology.getOWLOntologyManager().saveOntology(targetOntology, new RDFXMLOntologyFormat(), IRI.create(uri_file2));
+		OWLOntologyManager manager = SynchronizedOWLManager.createOWLOntologyManager();
+		
+		
+		//sourceOntology.getOWLOntologyManager().saveOntology(sourceOntology, new RDFXMLOntologyFormat(), IRI.create(uri_file1));
+		//sourceOntology.getOWLOntologyManager().saveOntology(sourceOntology, new OWLFunctionalSyntaxOntologyFormat(), IRI.create(uri_file1));
+		manager.saveOntology(sourceOntology, new RDFXMLOntologyFormat(), IRI.create(uri_file1));
+		
+		manager.saveOntology(targetOntology, new RDFXMLOntologyFormat(), IRI.create(uri_file2));
+		//targetOntology.getOWLOntologyManager().saveOntology(targetOntology, new RDFXMLOntologyFormat(), IRI.create(uri_file2));
 		//targetOntology.getOWLOntologyManager().saveOntology(targetOntology, new OWLFunctionalSyntaxOntologyFormat(), IRI.create(uri_file2));
 		
 	}
