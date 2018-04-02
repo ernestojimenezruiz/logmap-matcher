@@ -228,11 +228,17 @@ public abstract class AbstractBasicPartitioning {
 		//Extract entities from IFs and convert id to OWLEntity		
 		for (Set<String> set_words : set_if_entries){
 			
-			for (int ide1 : source_processing.getWeakInvertedFile().get(set_words)){
-				entities_source.add(source_processing.getClass4identifier(ide1));
+			try{
+				for (int ide1 : source_processing.getWeakInvertedFile().get(set_words)){
+					entities_source.add(source_processing.getClass4identifier(ide1));
+				}
+				for (int ide2 : target_processing.getWeakInvertedFile().get(set_words)){
+					entities_target.add(target_processing.getClass4identifier(ide2));
+				}
 			}
-			for (int ide2 : target_processing.getWeakInvertedFile().get(set_words)){
-				entities_target.add(target_processing.getClass4identifier(ide2));
+			catch (Exception e){
+				//System.out.println(set_words);
+				e.printStackTrace();
 			}
 			
 		}

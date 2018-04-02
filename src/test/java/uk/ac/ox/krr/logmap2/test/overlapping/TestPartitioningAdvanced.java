@@ -21,6 +21,7 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import uk.ac.ox.krr.logmap2.LogMap2_Matcher;
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
+import uk.ac.ox.krr.logmap2.io.WriteFile;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
@@ -130,7 +131,7 @@ public class TestPartitioningAdvanced {
 		Parameters.readParameters();
 		
 		Parameters.print_output = false;
-		Parameters.print_output_always = false;
+		Parameters.print_output_always = true;
 		
 		LogOutput.showOutpuLog(Parameters.print_output);
 		LogOutput.showOutpuLogAlways(Parameters.print_output_always);
@@ -143,8 +144,8 @@ public class TestPartitioningAdvanced {
 		ontopair=Utilities.FMA2SNOMED;
 		ontopair=Utilities.SNOMED2NCI;
 		
-		//ontopair=HP2MP2016;
-		//ontopair=DOID2ORDO2016;
+		ontopair=HP2MP2016;
+		ontopair=DOID2ORDO2016;
 		//ontopair=HP2MP2017;
 		//ontopair=DOID2ORDO2017;
 					
@@ -309,14 +310,17 @@ public class TestPartitioningAdvanced {
 			
 			String output_path = "/home/ernesto/Documents/OAEI_2017.5/overlapping/tasks_advanced/";
 			
+			String path_sizes = "/home/ernesto/Documents/OAEI_2017.5/overlapping/task_sizes_advanced/";
+			
 			
 			//number of tasks
-			int[] num_tasks={1,2,5,10,20,50,100,200};
+			int[] num_tasks={2,5,10,20, 50,100,200};
+			//int[] num_tasks={1, 2,5,10, 20,50,100,200};
 			//int[] num_tasks={1,2,5,10,20};
-			//int[] num_tasks={200};
+			//int[] num_tasks={20};
 			//int[] num_tasks={300};
-			int repetitions = 3;
-			//int repetitions = 1;
+			//int repetitions = 5;
+			int repetitions = 1;
 			
 			
 			OWLOntology onto1 = loadOWLOntology(uri1);
@@ -325,9 +329,10 @@ public class TestPartitioningAdvanced {
 			
 			boolean store_tasks=false;
 			boolean run_system=false;
+			boolean store_size_files=true;
 			
 			new File(output_path + folder).mkdir();
-			
+			new File(path_sizes + folder).mkdir();
 			
 			for (int j=0; j<num_tasks.length; j++){
 			
@@ -335,8 +340,10 @@ public class TestPartitioningAdvanced {
 				
 				new File(output_path + folder + num_tasks[j] + "/").mkdir();
 				
+				
+				
 				//Header				
-				System.out.println(QualityMeasures.toStringHeader());
+				//System.out.println(QualityMeasures.toStringHeader());
 				
 				//Repetitions
 				for (int i=0; i<repetitions; i++){
@@ -372,6 +379,10 @@ public class TestPartitioningAdvanced {
 					//Parameters.min_size_overlapping=0;
 					Parameters.use_overlapping=false;
 					
+					WriteFile writer=null;
+					if (store_size_files)
+						writer = new WriteFile(path_sizes + folder + num_tasks[j] + ".txt");
+					
 					//for (MatchingTask mtask : tasks){
 					for (int id_task = 0; id_task<tasks.size(); id_task++){
 						//mtask.saveMatchingTask(irirootpath);
@@ -389,8 +400,16 @@ public class TestPartitioningAdvanced {
 						}
 						
 						
+						//Store file swith sizes of the mathcing tasks
+						if (store_size_files)
+							writer.writeLine(tasks.get(id_task).getSignatureSourceOntology().size()+ "\t" + tasks.get(id_task).getSignatureTargetOntology().size());
+						
+						
 						tasks.get(id_task).clear();
 					}
+					
+					if (store_size_files)
+						writer.closeBuffer();
 					
 					
 					double system_time = StatisticsTimeMappings.getRunningTime();

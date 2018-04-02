@@ -51,13 +51,19 @@ public class EvaluatePartitionMappings {
 		
 		File file = new File(file_mappings);
 		if (!file.exists()){
-			//System.err.println(file_mappings);
+			System.err.println(file_mappings);
 			return Collections.emptySet();
 		}
 			
-		RDFAlignReader reader = new RDFAlignReader(file_mappings);
-		
-		return reader.getMappingObjects();
+		try{
+			RDFAlignReader reader = new RDFAlignReader(file_mappings);
+			
+			return reader.getMappingObjects();
+		}
+		catch(Exception e){
+			System.err.println("Error reading: " +  file_mappings);
+			return new HashSet<MappingObjectStr>();
+		}
 		
 	}
 	
@@ -209,17 +215,21 @@ public class EvaluatePartitionMappings {
 			//String[] tools={"AML", "LogMap"};
 			//String[] tools={"LogMap"};
 			//String[] tools={"AML2"};
-			String[] tools={"AML"};
+			//String[] tools={"AML"};
 			//String[] tools={"Mamba"};
 			//String[] tools={"YAM-BIO"};
 			//String[] tools={"LogMapLite"}
 			//String[] tools={"FCA_Map"};
+			String[] tools={"POMAP"};
 			//String[] tools={"GMap"};
 			//String[] tools={"KEPLER"};
-			int[] num_tasks={1,2,5,10,20, 50, 100, 200};
+			//int[] num_tasks={1,2,5,10,20, 50, 100, 200};
 			//%int[] num_tasks={1, 2, 5, 10};
 			//int[] num_tasks={20, 50};
-			//int[] num_tasks={5};
+			int[] num_tasks={50};
+			//int[] num_tasks={5, 10};
+			
+			boolean naive = false;
 			
 			
 			
@@ -231,9 +241,13 @@ public class EvaluatePartitionMappings {
 			
 			for (String tool : tools){
 				
-				String mappings_path = "/home/ernesto/Documents/OAEI_2017/EVAL_2017/MAPPINGS/"+track+"/"+tool+"_partitioning/";
-				
-			
+				String mappings_path;
+					if (naive)
+						mappings_path = "/home/ernesto/Documents/OAEI_2017/EVAL_2017/MAPPINGS/"+track+"/"+tool+"_partitioning/";
+					else
+						mappings_path = "/home/ernesto/Documents/OAEI_2017/EVAL_2017/MAPPINGS/"+track+"/"+tool+"_partitioning_advanced/";
+					
+					
 				for (int j=0; j<num_tasks.length; j++){
 					
 					

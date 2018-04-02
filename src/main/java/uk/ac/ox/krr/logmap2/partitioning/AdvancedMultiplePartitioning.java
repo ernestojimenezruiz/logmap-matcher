@@ -246,13 +246,20 @@ public class AdvancedMultiplePartitioning extends AbstractBasicPartitioning impl
 	
 	
 	private void readClusters() throws FileNotFoundException{
+		
+		//System.out.println(cluster_file);
+		
 		ReadFile reader = new ReadFile(cluster_file);
 		
 		String line=reader.readLine();
 		
 		Set<String> words_set= new HashSet<String>();
 		
+		int i=0;
+		
 		while (line!=null) {
+			
+			i++;
 		
 			//"word1, word2,...:cluster_index"
 			String[] elements = line.split(":");
@@ -268,12 +275,21 @@ public class AdvancedMultiplePartitioning extends AbstractBasicPartitioning impl
 			if (!identifier2cluster.containsKey(cluster_id))
 				identifier2cluster.put(cluster_id, new HashSet<Set<String>>());
 			
-			identifier2cluster.get(cluster_id).add(words_set);
+			identifier2cluster.get(cluster_id).add(new HashSet<String>(words_set));
 			
+			words_set.clear();
+			
+			
+			//if (i<10)
+			//	System.out.println(identifier2cluster);
 			
 			line = reader.readLine();
 			
 		}
+		
+		
+		
+		//System.out.println(i);;
 		
 		
 	}
