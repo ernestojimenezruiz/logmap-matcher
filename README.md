@@ -1,5 +1,4 @@
-
-
+(Check out new material about partitioning of the ontology alignment task [here](#partitioning). April 2018)
 
 # LogMap: An Ontology Alignment and Alignment Repair System
 
@@ -48,7 +47,7 @@ LogMap can also be used as a mapping debugging system from the command line or i
 
 ## Partitioning
 
-LogMap also includes a novel module to partition the ontolgy alignment task (work in progress).
+LogMap also includes a novel module to partition the ontology alignment task (work in progress).
 
 Resources: [source classes](https://github.com/ernestojimenezruiz/logmap-matcher/tree/master/src/main/java/uk/ac/ox/krr/logmap2/partitioning), [test classes](https://github.com/ernestojimenezruiz/logmap-matcher/tree/master/src/test/java/uk/ac/ox/krr/logmap2/test/overlapping), [datasets](https://doi.org/10.5281/zenodo.1214149).
 
