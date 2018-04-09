@@ -1,4 +1,4 @@
-(Check out new material about partitioning of the ontology alignment task [here](#partitioning). April 2018)
+(Check out the new material about partitioning the ontology alignment task [here](#partitioning). April 2018)
 
 # LogMap: An Ontology Alignment and Alignment Repair System
 
