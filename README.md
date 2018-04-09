@@ -1,3 +1,6 @@
+
+
+
 # LogMap: An Ontology Alignment and Alignment Repair System
 
 LogMap is a highly scalable ontology matching system with ‘built-in’ reasoning and inconsistency repair capabilities. LogMap extract mappings between classes, properties and instances.
@@ -41,6 +44,14 @@ LogMap can also be easily integrated in other Java applications. See [wiki](http
 **As a Mapping Debugging System**
 
 LogMap can also be used as a mapping debugging system from the command line or integrated in a Java application. See [wiki](https://code.google.com/archive/p/logmap-matcher/wikis) for additional information.
+
+
+## Partitioning
+
+LogMap also includes a novel module to partition the ontolgy alignment task (work in progress).
+
+Resources: [source classes](https://github.com/ernestojimenezruiz/logmap-matcher/tree/master/src/main/java/uk/ac/ox/krr/logmap2/partitioning), [test classes](https://github.com/ernestojimenezruiz/logmap-matcher/tree/master/src/test/java/uk/ac/ox/krr/logmap2/test/overlapping), [datasets](https://doi.org/10.5281/zenodo.1214149).
+
 
 
 ## Contact
