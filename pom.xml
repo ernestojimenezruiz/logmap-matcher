@@ -109,8 +109,8 @@
     <groupId>com.googlecode</groupId>
     <artifactId>google-api-translate-java</artifactId>
     <version>0.97</version>
-    <scope>system</scope>
-    <systemPath>${basedir}/lib/google-api-translate-java-0.97.jar</systemPath>
+    <!--scope>system</scope>
+    <systemPath>${basedir}/lib/google-api-translate-java-0.97.jar</systemPath-->
 </dependency>
 <!--dependency>
 	<groupId>eu.sealsproject.omt</groupId>
