@@ -1,3 +1,5 @@
+(Check out the new material about the division of the ontology alignment task [here](#division). April 2018)
+
 # LogMap: An Ontology Alignment and Alignment Repair System
 
 LogMap is a highly scalable ontology matching system with ‘built-in’ reasoning and inconsistency repair capabilities. LogMap extract mappings between classes, properties and instances.
@@ -43,6 +45,14 @@ LogMap can also be easily integrated in other Java applications. See [wiki](http
 LogMap can also be used as a mapping debugging system from the command line or integrated in a Java application. See [wiki](https://code.google.com/archive/p/logmap-matcher/wikis) for additional information.
 
 
+## Division
+
+LogMap also includes a novel module to divide the ontology alignment task into manageable subtasks (work in progress).
+
+Resources: [source classes](https://github.com/ernestojimenezruiz/logmap-matcher/tree/master/src/main/java/uk/ac/ox/krr/logmap2/partitioning), [test classes](https://github.com/ernestojimenezruiz/logmap-matcher/tree/master/src/test/java/uk/ac/ox/krr/logmap2/test/overlapping), [datasets](https://doi.org/10.5281/zenodo.1214149), [paper](https://arxiv.org/pdf/1805.12402.pdf).
+
+
+
 ## Contact
 Ernesto Jiménez-Ruiz (ernesto [.] jimenez [.] ruiz [at] gmail.com)
 
@@ -66,6 +76,8 @@ LogMap is free software: you can redistribute it and/or modify it under the term
 - Ernesto Jiménez-Ruiz, Bernardo Cuenca Grau. **LogMap: Logic-based and Scalable Ontology Matching**. In the 10th International Semantic Web Confernece (ISWC 2011). ([PDF](http://www.cs.ox.ac.uk/isg/projects/LogMap/papers/paper_ISWC2011.pdf))
 
 - Ernesto Jiménez-Ruiz, Christian Meilicke, Bernardo Cuenca Grau and Ian Horrocks. **Evaluating Mapping Repair Systems with Large Biomedical Ontologies**. In 26th International Workshop on Description Logics (DL 2013). ([PDF](http://ceur-ws.org/Vol-1014/paper_63.pdf))
+
+- Ernesto Jiménez-Ruiz, Asan Agibetov, Matthias Samwald, Valerie Cross. **Breaking-down the Ontology Alignment Task with a Lexical Index and Neural Embeddings**. arXiv:1805.12402. ([PDF](https://arxiv.org/pdf/1805.12402.pdf))
 
 Complete list of [LogMap-related publications](http://www.cs.ox.ac.uk/projects/publications/date/LogMap.html).
 
