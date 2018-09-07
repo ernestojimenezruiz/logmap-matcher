@@ -11,12 +11,12 @@ avoid_redundant_labels|true
 max_redundancy_labels|3
 max_ambiguity|4
 good_ambiguity|2
-use_overlapping|true
+use_overlapping|false
 min_size_overlapping|15000
 output_class_mappings|true
 output_prop_mappings|true
-instance_matching|false
-output_instance_mappings|false
+instance_matching|true
+output_instance_mappings|true
 #only for statistics
 output_instance_mapping_files|false
 reason_datatypes|false
@@ -71,7 +71,7 @@ annotation_URI|http://www.w3.org/2004/02/skos/core#altLabel
 #Doremus annotation
 #annotation_URI|http://erlangen-crm.org/current/P3_has_note
 #In case only a subset of the individuals should be matched
-restrict_individual_types|true
+restrict_individual_types|false
 #Categories for individuals (e.g. dbpedia category). Additional compatibility information to class types of an insstance
 category_URI|http://data.doremus.org/ontology#U12_has_genre
 #category_URI|http://data.doremus.org/ontology#U16_has_catalogue_statement
@@ -79,6 +79,7 @@ category_URI|http://data.doremus.org/ontology#U12_has_genre
 path_mappings_categories|mappings/categories
 ##Check about and category for SPIMBENCH
 #Lexical information as assertions
+data_assertion_URI_Indiv|http://dbkwik.webdatacommons.org/oldschoolrunescape/property/name
 data_assertion_URI_Indiv|http://dkm.fbk.eu/index.php/BPMN2_Ontology#name
 data_assertion_URI_Indiv|http://dkm.fbk.eu/index.php/BPMN2_Ontology#id
 data_assertion_URI_Indiv|http://xmlns.com/foaf/0.1/isPrimaryTopicOf
@@ -114,8 +115,7 @@ allowed_individual_type|http://owl.protege.stanford.edu#Place
 #Doremus
 allowed_individual_type|http://erlangen-crm.org/efrbroo/F22_Self-Contained_Expression
 ##
-#Filter entities from these URIS: not included in Benchmark referece alignment
+#Filter entities from these URIS: not included in Benchmark reference alignment
 filter_entity|http://xmlns.com/foaf/
 filter_entity|http://www.w3.org/1999/02/22-rdf-syntax-ns
 filter_entity|http://purl.org/dc/elements/
-

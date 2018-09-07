@@ -28,6 +28,8 @@ import java.io.File;
 
 public class Parameters {
 
+	public static String deprecated_uri = "http://www.w3.org/2002/07/owl#deprecated";
+	
 	public static String rdf_label_uri = "http://www.w3.org/2000/01/rdf-schema#label";
 	public static String rdf_comment_uri = "http://www.w3.org/2000/01/rdf-schema#comment";
 	
@@ -464,6 +466,7 @@ public class Parameters {
 			
 			if (!file.exists()){
 				//LogOutput.printAlways("Error reading LogMap parameters. File 'parameters.txt' is not available. Using default parameters.");
+				System.err.println("Error reading LogMap parameters. File 'parameters.txt' is not available. Using default parameters.");
 				return;
 			}
 			

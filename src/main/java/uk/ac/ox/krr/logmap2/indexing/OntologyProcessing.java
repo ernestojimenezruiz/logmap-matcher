@@ -175,6 +175,7 @@ public class OntologyProcessing {
 	
 	//IRI labels annotations 
 	private String rdf_label_uri = "http://www.w3.org/2000/01/rdf-schema#label";
+	public static String deprecated_uri = "http://www.w3.org/2002/07/owl#deprecated";
 	
 	
 	
@@ -641,6 +642,16 @@ public class OntologyProcessing {
 		
 		String ns_ent;
 		String name;
+		
+		
+		
+		//TODO Added on Sept 7, 2018
+		//Avoid deprecated cases. Possibly extend the ways a class is declared as deprecated
+		if (isDeprecatedClass(cls)){
+			//System.out.println("Filtering deprecated cls: " + cls.getIRI());
+			return;
+		}
+		
 		
 		ns_ent=Utilities.getNameSpaceFromURI(cls.getIRI().toString());
 		
@@ -1861,6 +1872,25 @@ public class OntologyProcessing {
 		
 			
 		
+	}
+	
+	
+	
+	
+	private boolean isDeprecatedClass(OWLClass cls){
+		
+		for (OWLAnnotationAssertionAxiom annAx : cls.getAnnotationAssertionAxioms(onto)){
+			
+			if (annAx.getAnnotation().getProperty().getIRI().toString().equals(deprecated_uri)){
+				
+				String ann_label=((OWLLiteral)annAx.getAnnotation().getValue()).getLiteral().toLowerCase();
+				
+				if (ann_label!=null && ann_label.equals("true")){
+					return true;
+				}									
+			}
+		}
+		return false;
 	}
 
 	

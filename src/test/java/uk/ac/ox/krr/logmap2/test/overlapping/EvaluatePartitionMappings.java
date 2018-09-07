@@ -229,7 +229,7 @@ public class EvaluatePartitionMappings {
 			int[] num_tasks={50};
 			//int[] num_tasks={5, 10};
 			
-			boolean naive = false;
+			boolean naive = true;
 			
 			
 			

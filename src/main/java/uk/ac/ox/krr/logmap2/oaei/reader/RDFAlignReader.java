@@ -21,6 +21,7 @@ package uk.ac.ox.krr.logmap2.oaei.reader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.URL;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -57,10 +58,21 @@ public class RDFAlignReader extends MappingsReader {
 	
 	
 	
-	public RDFAlignReader(String rdf_alignment_file) throws Exception {
+	public RDFAlignReader(URL url_rdf_alignment_file) throws Exception {
+		this(url_rdf_alignment_file.openStream());
 		
-		File xmlFile = new File(rdf_alignment_file);
-		InputStream is = new FileInputStream(xmlFile);
+	}
+	
+	public RDFAlignReader(String rdf_alignment_file) throws Exception {
+		this(new FileInputStream(new File(rdf_alignment_file)));
+	}
+	
+	
+	public RDFAlignReader(InputStream is) throws Exception {
+		
+		//File xmlFile = new File(rdf_alignment_file);		
+		//InputStream is = new FileInputStream(xmlFile);
+		
 		XMLInputFactory factory = XMLInputFactory.newInstance();
 		XMLStreamReader reader = factory.createXMLStreamReader(is);
 		
