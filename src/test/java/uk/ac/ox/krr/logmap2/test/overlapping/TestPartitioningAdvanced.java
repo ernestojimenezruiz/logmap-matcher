@@ -27,7 +27,7 @@ import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
 import uk.ac.ox.krr.logmap2.partitioning.AdvancedMultiplePartitioning;
 import uk.ac.ox.krr.logmap2.partitioning.BasicMultiplePartitioning;
-import uk.ac.ox.krr.logmap2.partitioning.BasicMultiplePartitioningOld;
+//import uk.ac.ox.krr.logmap2.partitioning.BasicMultiplePartitioningOld;
 import uk.ac.ox.krr.logmap2.partitioning.MatchingTask;
 import uk.ac.ox.krr.logmap2.partitioning.QualityMeasures;
 import uk.ac.ox.krr.logmap2.statistics.StatisticsTimeMappings;
