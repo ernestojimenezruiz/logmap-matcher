@@ -41,6 +41,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
+import uk.ac.ox.krr.logmap2.utilities.Utilities;
 import uk.ac.ox.krr.logmap_lite.io.ReadFile;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
@@ -69,6 +70,10 @@ public class OntologyProcessing {
 	protected String synonym_iri ="http://oaei.ontologymatching.org/annotations#synonym";
 	private String hasRelatedSynonym_uri = "http://www.geneontology.org/formats/oboInOwl#hasRelatedSynonym";
 	private String hasExactSynonym_uri   = "http://www.geneontology.org/formats/oboInOwl#hasExactSynonym";
+	private String hasExactSynonym_uri2   = "http://www.geneontology.org/formats/oboInOWL#hasExactSynonym";
+	
+	private String skos_pref_label  = "http://www.w3.org/2004/02/skos/core#prefLabel";
+	private String skos_alt_label  = "http://www.w3.org/2004/02/skos/core#altLabel";
 	
 	
 	private String name_dprop_im_uri = "http://oaei.ontologymatching.org/2012/IIMBTBOX/name";
@@ -378,7 +383,7 @@ public class OntologyProcessing {
 	}
 	
 	public String getLabel4identifier(int ident){
-		return getEntityLabelFromURI(listofOWLClass.get(ident).getIRI().toString());		
+		return Utilities.getEntityLabelFromURI(listofOWLClass.get(ident).getIRI().toString());		
 	}
 	
 
@@ -413,7 +418,9 @@ public class OntologyProcessing {
 		for (OWLAnnotationAssertionAxiom annAx : ent.getAnnotationAssertionAxioms(onto)){
 					
 			if (annAx.getAnnotation().getProperty().getIRI().toString().equals(rdf_label_uri) ||
-					annAx.getAnnotation().getProperty().getIRI().toString().equals(synonym_iri)){
+					annAx.getAnnotation().getProperty().getIRI().toString().equals(synonym_iri) ||
+					annAx.getAnnotation().getProperty().getIRI().toString().equals(skos_pref_label) ||
+					annAx.getAnnotation().getProperty().getIRI().toString().equals(skos_alt_label)){
 						
 				labels.add(((OWLLiteral)annAx.getAnnotation().getValue()).getLiteral()); //No lower case yet
 				
@@ -423,7 +430,9 @@ public class OntologyProcessing {
 			//Annotations in original Mouse Anatomy and NCI Anatomy
 			//---------------------------------------------
 			else if (annAx.getAnnotation().getProperty().getIRI().toString().equals(hasRelatedSynonym_uri) ||
-					annAx.getAnnotation().getProperty().getIRI().toString().equals(hasExactSynonym_uri)){
+					annAx.getAnnotation().getProperty().getIRI().toString().equals(hasExactSynonym_uri) ||
+					annAx.getAnnotation().getProperty().getIRI().toString().equals(hasExactSynonym_uri2))
+					{
 				
 				try{
 									
@@ -442,8 +451,14 @@ public class OntologyProcessing {
 					}
 				}
 			
+				//Consider other cases with direct value
 				catch (Exception e){
-					System.err.println("Error accessing annotation: hasRelatedSynonym_uri or hasExactSynonym_uri");
+					try {
+						labels.add(((OWLLiteral)annAx.getAnnotation().getValue()).getLiteral()); //No lower case yet
+					}
+					catch (Exception e1) {
+						System.err.println("Error accessing annotation: hasRelatedSynonym_uri or hasExactSynonym_uri");
+					}
 				}
 				
 			}
@@ -455,7 +470,7 @@ public class OntologyProcessing {
 		
 		//If it doesn't exist any label then we use entity name
 		if (labels.isEmpty()){
-			labels.add(getEntityLabelFromURI(ent.getIRI().toString()));
+			labels.add(Utilities.getEntityLabelFromURI(ent.getIRI().toString()));
 			
 		}
 		
@@ -464,7 +479,7 @@ public class OntologyProcessing {
 	}
 	
 	
-	private String getEntityLabelFromURI(String uriStr){
+	/*private String getEntityLabelFromURI(String uriStr){
 		//System.err.println("Error processing URI: "+ uriStr);
 		try{
 			if (uriStr.indexOf("#")>=0 && uriStr.indexOf("#")<uriStr.length()-1)
@@ -474,7 +489,7 @@ public class OntologyProcessing {
 			System.err.println("Error processing URI: "+ uriStr);
 		}
 		return uriStr;
-	}
+	}*/
 	
 	
 	private String[] splitStringByCapitalLetter(String str){
@@ -723,7 +738,7 @@ public class OntologyProcessing {
 			
 			
 			//Add label name
-			label_value = getEntityLabelFromURI(indiv.getIRI().toString());
+			label_value = Utilities.getEntityLabelFromURI(indiv.getIRI().toString());
 			if (label_value.length()>2){
 				lexiconValues4individual.add(label_value);
 			}
