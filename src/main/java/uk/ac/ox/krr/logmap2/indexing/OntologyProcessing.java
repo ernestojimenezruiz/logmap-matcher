@@ -178,6 +178,8 @@ public class OntologyProcessing {
 	public static String deprecated_uri = "http://www.w3.org/2002/07/owl#deprecated";
 	
 	
+	protected Set<OWLClass> obsolete_classes = new HashSet<OWLClass>();
+	
 	
 	
 	private String iri_onto = "http://krono.act.uji.es/ontology.owl";
@@ -1879,6 +1881,9 @@ public class OntologyProcessing {
 	
 	private boolean isDeprecatedClass(OWLClass cls){
 		
+		//if (obsolete_classes.contains(cls))
+		//	return true;
+		
 		for (OWLAnnotationAssertionAxiom annAx : cls.getAnnotationAssertionAxioms(onto)){
 			
 			if (annAx.getAnnotation().getProperty().getIRI().toString().equals(deprecated_uri)){
@@ -1886,6 +1891,7 @@ public class OntologyProcessing {
 				String ann_label=((OWLLiteral)annAx.getAnnotation().getValue()).getLiteral().toLowerCase();
 				
 				if (ann_label!=null && ann_label.equals("true")){
+					//obsolete_classes.add(cls);
 					return true;
 				}									
 			}
@@ -2975,6 +2981,8 @@ public class OntologyProcessing {
 				continue;
 			
 			
+			
+			
 			identRepresentative = node2identifier.get(node);
 			//clsRepresentative = identifier2class.get(identRepresentative);
 			clsRepresentative = node.getRepresentativeElement();
@@ -2997,7 +3005,12 @@ public class OntologyProcessing {
 					if (nodeSub.isBottomNode() || nodeSub.isTopNode())
 						continue;
 					
+					//Required if filtered obsolete classes
+					if (!node2identifier.containsKey(nodeSub))
+						continue;
+					
 					//identifier2directkids.get(identRepresentative).add(node2identifier.get(nodeSub));//will give us direct kid identifiers
+					//System.err.println(nodeSub);
 					index.getClassIndex(identRepresentative).addDirectSubClass(node2identifier.get(nodeSub));
 					
 					
