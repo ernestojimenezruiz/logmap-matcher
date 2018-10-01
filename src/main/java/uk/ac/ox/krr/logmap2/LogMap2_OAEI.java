@@ -114,6 +114,12 @@ public class LogMap2_OAEI {
 						continue;	
 					
 					
+					//Avoid same URI mappings
+					if (logmap2.getIRI4ConceptIdentifier(ide1).equals(logmap2.getIRI4ConceptIdentifier(ide2)))
+						continue;
+					
+					
+					
 					if (dir_mapping!=Utilities.NoMap){
 						
 						if (dir_mapping!=Utilities.R2L){						
@@ -122,6 +128,8 @@ public class LogMap2_OAEI {
 							if (Parameters.output_equivalences_only){
 								dir_mapping=Utilities.EQ;
 							}
+							
+							//TODO Filter cases where IRIs are the same
 								
 							alignment_output.addClassMapping2Output(
 									logmap2.getIRI4ConceptIdentifier(ide1),
@@ -159,6 +167,10 @@ public class LogMap2_OAEI {
 					ignoreMapping(logmap2.getIRI4DataPropIdentifier(logmap2.getDataPropMappings().get(ide1))))
 					continue;
 				
+				//Avoid same URI mappings
+				if (logmap2.getIRI4DataPropIdentifier(ide1).equals(logmap2.getIRI4DataPropIdentifier(logmap2.getDataPropMappings().get(ide1))))
+					continue;
+				
 				
 				alignment_output.addDataPropMapping2Output(
 							logmap2.getIRI4DataPropIdentifier(ide1),
@@ -173,6 +185,11 @@ public class LogMap2_OAEI {
 				//ignore mappings involving entities containing these uris
 				if (ignoreMapping(logmap2.getIRI4ObjectPropIdentifier(ide1))||
 					ignoreMapping(logmap2.getIRI4ObjectPropIdentifier(logmap2.getObjectPropMappings().get(ide1))))
+					continue;
+			
+				
+				//Avoid same URI mappings
+				if (logmap2.getIRI4ObjectPropIdentifier(ide1).equals(logmap2.getIRI4ObjectPropIdentifier(logmap2.getObjectPropMappings().get(ide1))))
 					continue;
 				
 				
@@ -196,6 +213,11 @@ public class LogMap2_OAEI {
 					for (int ide2 : logmap2.getInstanceMappings4OutputType().get(ide1).keySet()){
 					
 						
+						//Avoid same URI mappings
+						if (logmap2.getIRI4InstanceIdentifier(ide1).equals(logmap2.getIRI4InstanceIdentifier(ide2)))
+							continue;
+						
+						
 						type = logmap2.getInstanceMappings4OutputType().get(ide1).get(ide2);
 												
 						if (type<=1){
@@ -211,6 +233,10 @@ public class LogMap2_OAEI {
 			else{
 				for (int ide1 : logmap2.getInstanceMappings().keySet()){
 					for (int ide2 : logmap2.getInstanceMappings().get(ide1)){
+						
+						//Avoid same URI mappings
+						if (logmap2.getIRI4InstanceIdentifier(ide1).equals(logmap2.getIRI4InstanceIdentifier(ide2)))
+							continue;
 					
 						alignment_output.addInstanceMapping2Output(
 								logmap2.getIRI4InstanceIdentifier(ide1), 

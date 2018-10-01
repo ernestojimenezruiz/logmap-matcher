@@ -21,6 +21,12 @@ public class TestPhenotypeTrack extends TestOAEITrack{
 	protected void setUp() {
 		
 		//Current results
+		//hp-mp		32883.0		3108	0.593	0.856	0.701
+		//doid-ordo	14517.0		2323	0.927	0.814	0.867
+		//Removing sam uri mappings
+		//hp-mp		31155.0		2130	0.865	0.856	0.86
+		//doid-ordo	14127.0		2323	0.927	0.814	0.867
+
 		
 		
 		String uri_path = "file:/home/ejimenez-ruiz/Documents/OAEI_2018/Tracks/Phenotype/";

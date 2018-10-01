@@ -27,7 +27,8 @@ public class TestBioDiversityTrack extends TestOAEITrack{
 		//flopo-pto		19181.0		236		0.814	0.787	0.8
 		
 		
-		String uri_path = "file:/home/ernesto/Documents/OAEI_2018/BioDIV/";
+		//String uri_path = "file:/home/ernesto/Documents/OAEI_2018/BioDIV/";
+		String uri_path = "file:/home/ejimenez-ruiz/Documents/OAEI_2018/Tracks/BioDiv/";
 		
 		tasks.add(
 				new OAEITask(

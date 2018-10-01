@@ -49,7 +49,7 @@ LogMap can also be used as a mapping debugging system from the command line or i
 
 LogMap also includes a novel module to divide the ontology alignment task into manageable subtasks (work in progress).
 
-Resources: [source classes](https://github.com/ernestojimenezruiz/logmap-matcher/tree/master/src/main/java/uk/ac/ox/krr/logmap2/partitioning), [test classes](https://github.com/ernestojimenezruiz/logmap-matcher/tree/master/src/test/java/uk/ac/ox/krr/logmap2/test/overlapping), [datasets](https://doi.org/10.5281/zenodo.1214149), [paper](https://arxiv.org/pdf/1805.12402.pdf).
+Resources: [source classes](https://github.com/ernestojimenezruiz/logmap-matcher/tree/master/src/main/java/uk/ac/ox/krr/logmap2/partitioning), [test classes](https://github.com/ernestojimenezruiz/logmap-matcher/tree/master/src/test/java/uk/ac/ox/krr/logmap2/test/overlapping), [neural embeddings](https://github.com/plumdeq/neuro-onto-part), [datasets](https://doi.org/10.5281/zenodo.1214149), [paper](https://arxiv.org/pdf/1805.12402.pdf).
 
 
 

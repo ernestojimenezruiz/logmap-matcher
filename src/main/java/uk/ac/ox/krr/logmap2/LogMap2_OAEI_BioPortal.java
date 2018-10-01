@@ -253,12 +253,16 @@ public class LogMap2_OAEI_BioPortal {
 				if (Parameters.output_equivalences_only)
 					dir_mapping=Utilities.EQ;
 				
-				alignment_output.addClassMapping2Output(
-						mapping.getIRIStrEnt1(),
-						mapping.getIRIStrEnt2(),
-						dir_mapping,
-						mapping.getConfidence()
-						);
+				//Avoid same URI mappings
+				if (!mapping.getIRIStrEnt1().equals(mapping.getIRIStrEnt2())) {
+				
+					alignment_output.addClassMapping2Output(
+							mapping.getIRIStrEnt1(),
+							mapping.getIRIStrEnt2(),
+							dir_mapping,
+							mapping.getConfidence()
+							);
+				}
 				
 			}
 			
@@ -268,24 +272,32 @@ public class LogMap2_OAEI_BioPortal {
 
 					dir_mapping = mapping.getMappingDirection();
 										
-					alignment_output.addDataPropMapping2Output(
-							mapping.getIRIStrEnt1(),
-							mapping.getIRIStrEnt2(),
-							dir_mapping,
-							mapping.getConfidence()
-							);
+					
+					//Avoid same URI mappings
+					if (!mapping.getIRIStrEnt1().equals(mapping.getIRIStrEnt2())) {
+						
+						alignment_output.addDataPropMapping2Output(
+								mapping.getIRIStrEnt1(),
+								mapping.getIRIStrEnt2(),
+								dir_mapping,
+								mapping.getConfidence()
+								);
+					}
 				}
 					
 				if (mapping.isObjectPropertyMapping()){
 
 					dir_mapping = mapping.getMappingDirection();
-											
-					alignment_output.addObjPropMapping2Output(
-							mapping.getIRIStrEnt1(),
-							mapping.getIRIStrEnt2(),
-							dir_mapping,
-							mapping.getConfidence()
-							);
+					
+					//Avoid same URI mappings
+					if (!mapping.getIRIStrEnt1().equals(mapping.getIRIStrEnt2())) {
+						alignment_output.addObjPropMapping2Output(
+								mapping.getIRIStrEnt1(),
+								mapping.getIRIStrEnt2(),
+								dir_mapping,
+								mapping.getConfidence()
+								);
+					}
 				}				
 				
 			}
@@ -296,11 +308,14 @@ public class LogMap2_OAEI_BioPortal {
 
 				dir_mapping = mapping.getMappingDirection();
 				
-				alignment_output.addInstanceMapping2Output(
-						mapping.getIRIStrEnt1(),
-						mapping.getIRIStrEnt2(),
-						mapping.getConfidence()
-						);
+				//Avoid same URI mappings
+				if (!mapping.getIRIStrEnt1().equals(mapping.getIRIStrEnt2())) {
+					alignment_output.addInstanceMapping2Output(
+							mapping.getIRIStrEnt1(),
+							mapping.getIRIStrEnt2(),
+							mapping.getConfidence()
+							);
+				}
 				
 			}
 			

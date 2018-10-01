@@ -221,6 +221,12 @@ public class LogMap2_Matcher {
 				for (int ide1 : logmap2.getClassMappings().keySet()){
 					for (int ide2 : logmap2.getClassMappings().get(ide1)){
 						
+						
+						//Avoid same URI mappings
+						if (logmap2.getIRI4ConceptIdentifier(ide1).equals(logmap2.getIRI4ConceptIdentifier(ide2)))
+							continue;
+						
+						
 						dir_mapping = logmap2.getDirClassMapping(ide1, ide2);
 						
 						if (dir_mapping!=Utilities.NoMap){
@@ -273,6 +279,10 @@ public class LogMap2_Matcher {
 			
 				for (int ide1 : logmap2.getDataPropMappings().keySet()){		
 					
+					//Avoid same URI mappings
+					if (logmap2.getIRI4DataPropIdentifier(ide1).equals(logmap2.getIRI4DataPropIdentifier(logmap2.getDataPropMappings().get(ide1))))
+						continue;
+					
 					logmap2_mappings.add(
 							new MappingObjectStr(			
 								logmap2.getIRI4DataPropIdentifier(ide1),
@@ -283,7 +293,11 @@ public class LogMap2_Matcher {
 				}
 				
 				for (int ide1 : logmap2.getObjectPropMappings().keySet()){
-						
+
+					//Avoid same URI mappings
+					if (logmap2.getIRI4ObjectPropIdentifier(ide1).equals(logmap2.getIRI4ObjectPropIdentifier(logmap2.getObjectPropMappings().get(ide1))))
+						continue;
+					
 					logmap2_mappings.add(
 							new MappingObjectStr(
 								logmap2.getIRI4ObjectPropIdentifier(ide1),
@@ -300,6 +314,11 @@ public class LogMap2_Matcher {
 				
 				for (int ide1 : logmap2.getInstanceMappings().keySet()){
 					for (int ide2 : logmap2.getInstanceMappings().get(ide1)){
+						
+						
+						//Avoid same URI mappings
+						if (logmap2.getIRI4InstanceIdentifier(ide1).equals(logmap2.getIRI4InstanceIdentifier(ide2)))
+							continue;
 					
 						logmap2_mappings.add(
 								new MappingObjectStr(
