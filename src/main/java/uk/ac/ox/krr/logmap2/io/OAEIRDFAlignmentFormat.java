@@ -132,7 +132,7 @@ public class OAEIRDFAlignmentFormat extends OutputMappingsFormat {
 	}
 
 	
-	protected void saveOutputFile() throws Exception {
+	public void saveOutputFile() throws Exception {
 		
 		printTail();
 		

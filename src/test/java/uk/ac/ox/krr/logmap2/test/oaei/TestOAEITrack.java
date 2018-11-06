@@ -13,6 +13,7 @@ import java.util.Set;
 
 import uk.ac.ox.krr.logmap2.LogMap2_Matcher;
 import uk.ac.ox.krr.logmap2.Parameters;
+import uk.ac.ox.krr.logmap2.io.OutPutFilesManagerStatic;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 import uk.ac.ox.krr.logmap2.oaei.reader.MappingsReaderManager;
 import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
@@ -30,6 +31,9 @@ public abstract class TestOAEITrack {
 	List<OAEITask> tasks = new ArrayList<OAEITask>();
 	
 	Timer t;
+	
+	protected boolean SAVE_MAPPINGS = false;
+	protected String OUTPUT_FILE_TEMPLATE = "/tmp/logmap-alignment";
 	
 	
 	
@@ -83,6 +87,11 @@ public abstract class TestOAEITrack {
 		
 		t = new Timer();
 		LogMap2_Matcher logmap = new LogMap2_Matcher(task.getSource(), task.getTarget());
+		
+		if (SAVE_MAPPINGS){
+			saveLogMapMappings(logmap.getLogmap2_Mappings());
+		}
+		
 		matching_time = t.durationMilisecons();
 		t.pause();
 		
@@ -105,6 +114,34 @@ public abstract class TestOAEITrack {
 		
 		System.out.println(task.getTaskName() + "\t" + matching_time + "\t" + logmap.getLogmap2_Mappings().size() + "\t" + StandardMeasures.getPrecision()  + "\t" + StandardMeasures.getRecall()  + "\t" + StandardMeasures.getFscore());
 		
+		
+		
+	}
+
+
+	private void saveLogMapMappings(Set<MappingObjectStr> mappings) throws Exception {
+		
+
+		OutPutFilesManagerStatic.createOutFiles(OUTPUT_FILE_TEMPLATE, OutPutFilesManagerStatic.AllFormats, "http://logmap-tests/oaei/source.owl", "http://logmap-tests/oaei/target.owl");
+		
+		for (MappingObjectStr mapping : mappings) {
+			
+			if (mapping.isClassMapping())
+				OutPutFilesManagerStatic.addClassMapping2Files(
+						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			else if (mapping.isObjectPropertyMapping())
+				OutPutFilesManagerStatic.addObjPropMapping2Files(
+						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			else if (mapping.isDataPropertyMapping())
+				OutPutFilesManagerStatic.addDataPropMapping2Files(
+						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			else if (mapping.isInstanceMapping())
+				OutPutFilesManagerStatic.addInstanceMapping2Files(
+						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getConfidence());
+			
+		}
+		
+		OutPutFilesManagerStatic.closeAndSaveFiles();
 		
 		
 	}

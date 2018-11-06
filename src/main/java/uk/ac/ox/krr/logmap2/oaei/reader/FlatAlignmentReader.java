@@ -20,6 +20,7 @@ package uk.ac.ox.krr.logmap2.oaei.reader;
 
 
 import uk.ac.ox.krr.logmap2.io.LogOutput;
+import uk.ac.ox.krr.logmap2.io.OAEIRDFAlignmentFormat;
 import uk.ac.ox.krr.logmap2.io.ReadFile;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
@@ -51,55 +52,62 @@ public class FlatAlignmentReader extends MappingsReader {
 		while (line!=null) {
 			
 			try {
-				if (line.startsWith("#") || (line.indexOf("|")<0 && line.indexOf(",")<0)){
+				if (line.startsWith("#") || (line.indexOf("|")<0 && line.indexOf(",")<0 && line.indexOf("\t")<0)){
 					line=reader.readLine();
 					continue;
 				}
 				
 				if (line.indexOf("|")>0)
 					elements=line.split("\\|");
-				else
+				else if (line.indexOf(",")>0)
 					elements=line.split("\\,");
+				else
+					elements=line.split("\\t");
 				
-				if (elements.length<4){
+				/*if (elements.length<4){
 					line=reader.readLine();
 					continue;
-				}
+				}*/
 					
 				
-				
-				if (elements[2].equals(">")){
-					dir = Utilities.R2L;
-				}
-				else if (elements[2].equals("<")){
-					dir = Utilities.L2R;
+				if (elements.length==2) {
+					//System.out.println(elements[0] + "--" + elements[1]);
+					mappings.add(new MappingObjectStr(elements[0], elements[1], 1.0, Utilities.EQ));
 				}
 				else {
-					dir = Utilities.EQ;
-				}				
-				
-				if (elements.length==4){
-					mappings.add(new MappingObjectStr(elements[0], elements[1], Double.valueOf(elements[3]), dir));
-				}
-				else if (elements.length==5){
-					
-					if (elements[4].equals(Utilities.CLASSES_STR)){
-						type = Utilities.CLASSES;
+					if (elements[2].equals(">")){
+						dir = Utilities.R2L;
 					}
-					else if (elements[4].equals(Utilities.DATAPROPERTIES_STR)){
-						type 	= Utilities.DATAPROPERTIES;
-					}
-					else if (elements[4].equals(Utilities.OBJECTPROPERTIES_STR)){
-						type = Utilities.OBJECTPROPERTIES;
-					}
-					else if (elements[4].equals(Utilities.INSTANCES_STR)){
-						type = Utilities.INSTANCES;
+					else if (elements[2].equals("<")){
+						dir = Utilities.L2R;
 					}
 					else {
-						type = Utilities.UNKNOWN;
-					}
+						dir = Utilities.EQ;
+					}				
 					
-					mappings.add(new MappingObjectStr(elements[0], elements[1], Double.valueOf(elements[3]), dir, type));
+					if (elements.length==4){
+						mappings.add(new MappingObjectStr(elements[0], elements[1], Double.valueOf(elements[3]), dir));
+					}
+					else if (elements.length==5){
+						
+						if (elements[4].equals(Utilities.CLASSES_STR)){
+							type = Utilities.CLASSES;
+						}
+						else if (elements[4].equals(Utilities.DATAPROPERTIES_STR)){
+							type 	= Utilities.DATAPROPERTIES;
+						}
+						else if (elements[4].equals(Utilities.OBJECTPROPERTIES_STR)){
+							type = Utilities.OBJECTPROPERTIES;
+						}
+						else if (elements[4].equals(Utilities.INSTANCES_STR)){
+							type = Utilities.INSTANCES;
+						}
+						else {
+							type = Utilities.UNKNOWN;
+						}
+						
+						mappings.add(new MappingObjectStr(elements[0], elements[1], Double.valueOf(elements[3]), dir, type));
+					}
 				}
 				
 				
@@ -125,11 +133,24 @@ public class FlatAlignmentReader extends MappingsReader {
 	
 	public static void main(String[] args) {
 		
-		String mappings_path = "/usr/local/data/DataUMLS/UMLS_Onto_Versions/OAEI_datasets/Mappings_Tools_2012/";
+		//String mappings_path = "/usr/local/data/DataUMLS/UMLS_Onto_Versions/OAEI_datasets/Mappings_Tools_2012/";
+		
+		String mappings_path = "/home/ejimenez-ruiz/Documents/OAEI_2018/Tracks/KER-game-im/";
+		
 		
 		
 		try{
-			new FlatAlignmentReader(mappings_path + "logmap_small_fma2nci_new.txt");
+			FlatAlignmentReader reader = new FlatAlignmentReader(mappings_path + "alignment.csv");
+			
+			
+			OAEIRDFAlignmentFormat writer = new OAEIRDFAlignmentFormat(mappings_path + "alignment.rdf", "http://islab.di.unimi.it/content/gamesonto", "http://islab.di.unimi.it/content/gamesonto");
+			
+			for (MappingObjectStr mapping : reader.getMappingObjects()) {
+				writer.addInstanceMapping2Output(mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getConfidence());
+			}
+			
+			writer.saveOutputFile();
+			
 		}
 		catch (Exception e){
 			e.printStackTrace();

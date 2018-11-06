@@ -89,6 +89,16 @@ public class OutPutFilesManagerStatic {
 	
 	}
 	
+	
+	public static void addInstanceMapping2Files(String iri_str1, String iri_str2, double conf) throws Exception{
+		
+		for (int i=0; i<file_formats.size(); i++){
+			file_formats.get(i).addInstanceMapping2Output(iri_str1, iri_str2, conf);
+		}
+	
+	}
+	
+	
 	public static void closeAndSaveFiles() throws Exception{
 
 		for (int i=0; i<file_formats.size(); i++){
