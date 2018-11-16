@@ -135,7 +135,7 @@ public class FlatAlignmentReader extends MappingsReader {
 		
 		//String mappings_path = "/usr/local/data/DataUMLS/UMLS_Onto_Versions/OAEI_datasets/Mappings_Tools_2012/";
 		
-		String mappings_path = "/home/ejimenez-ruiz/Documents/OAEI_2018/Tracks/KER-game-im/";
+		String mappings_path = "/home/ejimenez-ruiz/Documents/OAEI_2018/Tracks/KER-game-im/v2/";
 		
 		
 		

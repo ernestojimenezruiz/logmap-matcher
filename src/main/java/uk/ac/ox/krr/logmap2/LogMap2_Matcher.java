@@ -37,6 +37,8 @@ public class LogMap2_Matcher {
 	LogMap2Core logmap2;	
 	Set<MappingObjectStr> logmap2_mappings = new HashSet<MappingObjectStr>();
 	Set<MappingObjectStr> logmap2_discarded_mappings = new HashSet<MappingObjectStr>();
+	Set<MappingObjectStr> logmap2_hard_discarded_mappings = new HashSet<MappingObjectStr>();
+	Set<MappingObjectStr> logmap2_conflictive_mappings = new HashSet<MappingObjectStr>();
 	Set<String> representative_labels = new HashSet<String>();
 	
 	
@@ -188,6 +190,15 @@ public class LogMap2_Matcher {
 	public Set<MappingObjectStr> getLogmap2_DiscardedMappings(){
 		return logmap2_discarded_mappings;
 	}
+	
+	public Set<MappingObjectStr> getLogmap2_HardDiscardedMappings(){
+		return logmap2_hard_discarded_mappings;
+	}
+	
+	public Set<MappingObjectStr> getLogmap2_ConflictiveMappings(){
+		return logmap2_conflictive_mappings;
+	}
+	
 	
 	
 	public Set<String> getRepresentativeLabelsForMappings(){
@@ -438,7 +449,7 @@ public class LogMap2_Matcher {
 					
 					if (ide1<ide2){						
 						
-							logmap2_discarded_mappings.add(
+							logmap2_hard_discarded_mappings.add(
 									new MappingObjectStr(
 											logmap2.getIRI4ConceptIdentifier(ide1), 
 											logmap2.getIRI4ConceptIdentifier(ide2), 
@@ -449,7 +460,7 @@ public class LogMap2_Matcher {
 					}
 					else{
 							
-						logmap2_discarded_mappings.add(
+						logmap2_hard_discarded_mappings.add(
 									new MappingObjectStr(								
 									logmap2.getIRI4ConceptIdentifier(ide2),
 									logmap2.getIRI4ConceptIdentifier(ide1),										
@@ -468,7 +479,7 @@ public class LogMap2_Matcher {
 					
 					if (ide1<ide2){						
 						
-							logmap2_discarded_mappings.add(
+							logmap2_conflictive_mappings.add(
 									new MappingObjectStr(
 											logmap2.getIRI4ConceptIdentifier(ide1), 
 											logmap2.getIRI4ConceptIdentifier(ide2), 
@@ -479,7 +490,7 @@ public class LogMap2_Matcher {
 					}
 					else{
 							
-						logmap2_discarded_mappings.add(
+						logmap2_conflictive_mappings.add(
 									new MappingObjectStr(								
 									logmap2.getIRI4ConceptIdentifier(ide2),
 									logmap2.getIRI4ConceptIdentifier(ide1),										
