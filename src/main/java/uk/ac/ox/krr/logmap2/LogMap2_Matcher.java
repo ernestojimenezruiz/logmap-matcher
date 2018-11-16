@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 
-
+import uk.ac.ox.krr.logmap2.io.FlatAlignmentFormat;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
 
@@ -56,6 +56,12 @@ public class LogMap2_Matcher {
 		try {
 			logmap2 = new LogMap2Core(iri_onto1, iri_onto2, output_path, eval_impact);
 			createObjectMappings();
+			
+			//TODO save mappings
+			saveMappings(output_path);
+			
+			
+			
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -63,6 +69,41 @@ public class LogMap2_Matcher {
 		
 	}
 	
+
+	private void saveMappings(String output_path) throws Exception {
+		
+		saveMappings(getLogmap2_Mappings(), output_path, "logmap_mappings.txt");
+		saveMappings(getLogmap2_DiscardedMappings(), output_path, "discarded_mappings.txt");
+		saveMappings(getLogmap2_HardDiscardedMappings(), output_path, "hard_discarded_mappings.txt");
+		saveMappings(getLogmap2_ConflictiveMappings(), output_path, "logically_conflicting_mappings.txt");
+		
+	}
+	
+	
+	private void saveMappings(Set<MappingObjectStr> mappings, String output_path, String name) throws Exception {
+		
+		FlatAlignmentFormat flat_format = new FlatAlignmentFormat(output_path + name);
+		
+		for (MappingObjectStr mapping : mappings) {
+			
+			if (mapping.isClassMapping())
+				flat_format.addClassMapping2Output(mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			
+			else if (mapping.isObjectPropertyMapping())
+				flat_format.addObjPropMapping2Output(mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			
+			else if (mapping.isDataPropertyMapping())
+				flat_format.addDataPropMapping2Output(mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			
+			else if (mapping.isInstanceMapping())
+				flat_format.addInstanceMapping2Output(mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getConfidence());
+			
+		}
+		
+		flat_format.saveOutputFile();
+	}
+	
+
 
 	/**
 	 * LogMap access from java application
