@@ -111,12 +111,15 @@ public class RESTBioPortalAccess implements BioPortalAccess {
         	
             if (conn.getResponseCode()==200)
             	return true;
+            
+            System.out.println("BioPortal is not active: " + conn.getResponseCode());
             	 
         }
         catch (Exception e) {
         	
         }
         
+       
         return false;
 		
 	
@@ -498,9 +501,10 @@ public class RESTBioPortalAccess implements BioPortalAccess {
 			
 			nextPageNumber = mappings_page.get(NEXTPAGE).asInt();
 			
-			if (nextPageNumber==5 || nextPageNumber==100 || nextPageNumber==200 || nextPageNumber==500 || nextPageNumber==1000 || nextPageNumber==1500 || 
+			if (nextPageNumber==1 || nextPageNumber==5 || nextPageNumber==100 || nextPageNumber==200 || nextPageNumber==500 || nextPageNumber==1000 || nextPageNumber==1500 || 
 					nextPageNumber==2000 || nextPageNumber==2500 || nextPageNumber==2770 || nextPageNumber==3000 || nextPageNumber==3500 || nextPageNumber==4200 || nextPageNumber==4000
 					|| nextPageNumber==4500 || nextPageNumber==5000 || nextPageNumber==5500 || nextPageNumber==6000)
+				
 				System.out.println("Getting page: " + nextPageNumber);
 			
 		}

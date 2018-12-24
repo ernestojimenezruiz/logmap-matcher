@@ -39,6 +39,9 @@ public abstract class TestOAEITrack {
 	
 	public TestOAEITrack(){
 		
+		//Parameters.print_output_always=true;
+		//Parameters.use_overlapping=false;
+		
 		setUp();
 		
 	}
@@ -110,6 +113,7 @@ public abstract class TestOAEITrack {
 		//printIntersection(logmap.getLogmap2_Mappings(), readerReference.getMappingObjects());
 		
 		StandardMeasures.computeStandardMeasures(logmap.getLogmap2_Mappings(), readerReference.getMappingObjects());
+		//System.out.println(readerReference.getMappingObjects().size());
 		
 		
 		System.out.println(task.getTaskName() + "\t" + matching_time + "\t" + logmap.getLogmap2_Mappings().size() + "\t" + StandardMeasures.getPrecision()  + "\t" + StandardMeasures.getRecall()  + "\t" + StandardMeasures.getFscore());

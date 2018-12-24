@@ -852,6 +852,9 @@ public class LogMap2Core {
 		
 		overlappingExtractor.createOverlapping(iri1_str, iri2_str);
 		
+		LogOutput.printAlways("Entities ontology 1: " + overlappingExtractor.getBaseOverlappedEntities1().size());
+		LogOutput.printAlways("Entities ontology 2: " + overlappingExtractor.getBaseOverlappedEntities2().size());
+		
 		LogOutput.print("Time extracting overlapping (s): " + StatisticsTimeMappings.getRunningTime(init));
 	}
 	
