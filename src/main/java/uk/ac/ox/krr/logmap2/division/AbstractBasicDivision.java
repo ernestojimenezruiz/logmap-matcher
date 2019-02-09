@@ -4,7 +4,7 @@
  *    This file is part of the Ontology Services Toolkit 
  *
  *******************************************************************************/
-package uk.ac.ox.krr.logmap2.partitioning;
+package uk.ac.ox.krr.logmap2.division;
 
 import java.util.HashSet;
 import java.util.List;
@@ -31,7 +31,7 @@ import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
  * Created on 6 Mar 2018
  *
  */
-public abstract class AbstractBasicPartitioning {
+public abstract class AbstractBasicDivision {
 	
 	protected OntologyProcessing4Overlapping source_processing;
 	protected OntologyProcessing4Overlapping target_processing;

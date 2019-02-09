@@ -1,4 +1,4 @@
-package uk.ac.ox.krr.logmap2.partitioning;
+package uk.ac.ox.krr.logmap2.division;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import uk.ac.ox.krr.logmap2.statistics.StatisticsTimeMappings;
  * @author ernesto
  *
  */
-public class AdvancedMultiplePartitioning extends AbstractBasicPartitioning implements OntologyAlignmentPartitioning {
+public class AdvancedMultipleDivision extends AbstractBasicDivision implements OntologyAlignmentDivision {
 	
 	
 	//Number of clausters as ouput
@@ -55,7 +55,7 @@ public class AdvancedMultiplePartitioning extends AbstractBasicPartitioning impl
 	 * 
 	 * @param num_tasks The number of required matching tasks
 	 */
-	public AdvancedMultiplePartitioning(String cluster_file, int num_tasks){
+	public AdvancedMultipleDivision(String cluster_file, int num_tasks){
 		this.num_tasks=num_tasks;
 		this.num_tasks_ouput=num_tasks;
 		this.cluster_file=cluster_file;

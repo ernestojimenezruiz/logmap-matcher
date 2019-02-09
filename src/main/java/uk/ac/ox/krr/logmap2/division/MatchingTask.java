@@ -1,4 +1,4 @@
-package uk.ac.ox.krr.logmap2.partitioning;
+package uk.ac.ox.krr.logmap2.division;
 
 import java.util.HashSet;
 import java.util.Set;

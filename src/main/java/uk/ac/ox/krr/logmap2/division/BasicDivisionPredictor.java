@@ -4,7 +4,7 @@
  *    This file is part of the Ontology Services Toolkit 
  *
  *******************************************************************************/
-package uk.ac.ox.krr.logmap2.partitioning;
+package uk.ac.ox.krr.logmap2.division;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +31,7 @@ import uk.ac.ox.krr.logmap2.statistics.StatisticsTimeMappings;
  * Created on 6 Mar 2018
  *
  */
-public class BasicPartitioningPredictor extends AbstractBasicPartitioning implements OntologyAlignmentPartitioning{
+public class BasicDivisionPredictor extends AbstractBasicDivision implements OntologyAlignmentDivision{
 	
 	
 	int required_module_size;
@@ -50,7 +50,7 @@ public class BasicPartitioningPredictor extends AbstractBasicPartitioning implem
 	 * @param required_module_size
 	 * @param strict_requirement
 	 */
-	public BasicPartitioningPredictor(int required_module_size, boolean strict_requirement){
+	public BasicDivisionPredictor(int required_module_size, boolean strict_requirement){
 		this.required_module_size=required_module_size;
 		this.strict_requirement = strict_requirement;
 	}
@@ -79,7 +79,7 @@ public class BasicPartitioningPredictor extends AbstractBasicPartitioning implem
 		createTaskSizesList();
 		
 		for (int n_tasks : number_tasks_list){
-			BasicMultiplePartitioning partitioning = new BasicMultiplePartitioning(n_tasks);
+			BasicMultipleDivision partitioning = new BasicMultipleDivision(n_tasks);
 			
 			//We only require one
 			partitioning.setNumTask2Outout(1);
@@ -107,7 +107,7 @@ public class BasicPartitioningPredictor extends AbstractBasicPartitioning implem
 		}
 		else{
 			//Return partitioning for prediction
-			BasicMultiplePartitioning partitioning = new BasicMultiplePartitioning(predicted_number_tasks);				
+			BasicMultipleDivision partitioning = new BasicMultipleDivision(predicted_number_tasks);				
 			
 			//Return tasks
 			tasks= partitioning.createPartitionedMatchingTasks(source, target);

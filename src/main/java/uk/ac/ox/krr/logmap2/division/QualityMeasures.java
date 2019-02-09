@@ -4,7 +4,7 @@
  *    This file is part of the Ontology Services Toolkit 
  *
  *******************************************************************************/
-package uk.ac.ox.krr.logmap2.partitioning;
+package uk.ac.ox.krr.logmap2.division;
 
 import java.util.ArrayList;
 import java.util.Formatter;

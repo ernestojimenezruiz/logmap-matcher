@@ -20,16 +20,14 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 import uk.ac.ox.krr.logmap2.LogMap2_Matcher;
 import uk.ac.ox.krr.logmap2.Parameters;
+import uk.ac.ox.krr.logmap2.division.BasicMultipleDivision;
+import uk.ac.ox.krr.logmap2.division.MatchingTask;
+import uk.ac.ox.krr.logmap2.division.QualityMeasures;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.io.WriteFile;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
-import uk.ac.ox.krr.logmap2.partitioning.AdvancedMultiplePartitioning;
-import uk.ac.ox.krr.logmap2.partitioning.BasicMultiplePartitioning;
-//import uk.ac.ox.krr.logmap2.partitioning.BasicMultiplePartitioningOld;
-import uk.ac.ox.krr.logmap2.partitioning.MatchingTask;
-import uk.ac.ox.krr.logmap2.partitioning.QualityMeasures;
 import uk.ac.ox.krr.logmap2.statistics.StatisticsTimeMappings;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
 
@@ -39,7 +37,7 @@ import uk.ac.ox.krr.logmap2.utilities.Utilities;
  * Created on 26 Feb 2018
  *
  */
-public class TestPartitioningAdvanced {
+public class TestDivisionAlignmentTask {
 
 
 	
@@ -91,27 +89,6 @@ public class TestPartitioningAdvanced {
 	public static void main(String[] args) {
 		
 		
-		//String str = "ernesto;jim;ruix;";
-		//System.out.println(str.substring(0, str.length()-1));
-		
-		/*String line = "word1, word2, word3:cluster_index";
-		String[] elements = line.split(":");
-		
-		System.out.println(elements[0]);
-		System.out.println(elements[1]);
-		
-		String[] words = elements[0].split(",");
-
-		for (String word : words)
-			System.out.println(word);
-		
-
-		if (true)
-			return;
-		*/
-		
-		
-		
 		String uri1;
 		String uri2;
 		
@@ -131,7 +108,7 @@ public class TestPartitioningAdvanced {
 		Parameters.readParameters();
 		
 		Parameters.print_output = false;
-		Parameters.print_output_always = true;
+		Parameters.print_output_always = false;
 		
 		LogOutput.showOutpuLog(Parameters.print_output);
 		LogOutput.showOutpuLogAlways(Parameters.print_output_always);
@@ -144,8 +121,8 @@ public class TestPartitioningAdvanced {
 		ontopair=Utilities.FMA2SNOMED;
 		ontopair=Utilities.SNOMED2NCI;
 		
-		ontopair=HP2MP2016;
-		ontopair=DOID2ORDO2016;
+		//ontopair=HP2MP2016;
+		//ontopair=DOID2ORDO2016;
 		//ontopair=HP2MP2017;
 		//ontopair=DOID2ORDO2017;
 					
@@ -308,18 +285,18 @@ public class TestPartitioningAdvanced {
 			//overlapping.createPartitionedMatchingTasks(uri1, uri2);
 			
 			
-			String output_path = "/home/ernesto/Documents/OAEI_2017.5/overlapping/tasks_advanced/";
+			String output_path = "/home/ernesto/Documents/OAEI_2017.5/overlapping/tasks/";
 			
-			String path_sizes = "/home/ernesto/Documents/OAEI_2017.5/overlapping/task_sizes_advanced/";
+			
+			String path_sizes = "/home/ernesto/Documents/OAEI_2017.5/overlapping/task_sizes/";
 			
 			
 			//number of tasks
-			int[] num_tasks={2,5,10,20, 50,100,200};
-			//int[] num_tasks={1, 2,5,10, 20,50,100,200};
+			int[] num_tasks={1,2,5,10,20,50,100,200};
 			//int[] num_tasks={1,2,5,10,20};
-			//int[] num_tasks={20};
+			//int[] num_tasks={200};
 			//int[] num_tasks={300};
-			//int repetitions = 5;
+			//int repetitions = 10;
 			int repetitions = 1;
 			
 			
@@ -334,16 +311,13 @@ public class TestPartitioningAdvanced {
 			new File(output_path + folder).mkdir();
 			new File(path_sizes + folder).mkdir();
 			
-			for (int j=0; j<num_tasks.length; j++){
 			
-				String file_clusters = "/home/ernesto/Documents/OAEI_2017.5/overlapping/clusters_advanced/"+ folder + "cluster-" +  num_tasks[j];
+			for (int j=0; j<num_tasks.length; j++){
 				
 				new File(output_path + folder + num_tasks[j] + "/").mkdir();
 				
-				
-				
 				//Header				
-				//System.out.println(QualityMeasures.toStringHeader());
+				System.out.println(QualityMeasures.toStringHeader());
 				
 				//Repetitions
 				for (int i=0; i<repetitions; i++){
@@ -352,7 +326,8 @@ public class TestPartitioningAdvanced {
 					Parameters.min_size_overlapping=0;
 					
 					//TODO
-					AdvancedMultiplePartitioning partitioner = new AdvancedMultiplePartitioning(file_clusters, num_tasks[j]);
+					BasicMultipleDivision partitioner = new BasicMultipleDivision(num_tasks[j]);
+					//BasicMultiplePartitioningOld partitioner = new BasicMultiplePartitioningOld();
 					
 					List<MatchingTask> tasks = partitioner.createPartitionedMatchingTasks(onto1, onto2);
 					
@@ -379,6 +354,7 @@ public class TestPartitioningAdvanced {
 					//Parameters.min_size_overlapping=0;
 					Parameters.use_overlapping=false;
 					
+					
 					WriteFile writer=null;
 					if (store_size_files)
 						writer = new WriteFile(path_sizes + folder + num_tasks[j] + ".txt");
@@ -399,10 +375,10 @@ public class TestPartitioningAdvanced {
 							LogMap2_Matcher logmap = new LogMap2_Matcher(tasks.get(id_task).getSourceOntology(), tasks.get(id_task).getTargetOntology());
 						}
 						
-						
 						//Store file swith sizes of the mathcing tasks
 						if (store_size_files)
 							writer.writeLine(tasks.get(id_task).getSignatureSourceOntology().size()+ "\t" + tasks.get(id_task).getSignatureTargetOntology().size());
+						
 						
 						
 						tasks.get(id_task).clear();

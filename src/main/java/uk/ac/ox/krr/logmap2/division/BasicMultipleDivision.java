@@ -1,4 +1,4 @@
-package uk.ac.ox.krr.logmap2.partitioning;
+package uk.ac.ox.krr.logmap2.division;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +33,7 @@ import uk.ac.ox.krr.logmap2.statistics.StatisticsTimeMappings;
  * @author ernesto
  *
  */
-public class BasicMultiplePartitioning extends AbstractBasicPartitioning implements OntologyAlignmentPartitioning {
+public class BasicMultipleDivision extends AbstractBasicDivision implements OntologyAlignmentDivision {
 	
 	
 	int num_tasks;
@@ -43,7 +43,7 @@ public class BasicMultiplePartitioning extends AbstractBasicPartitioning impleme
 	 * 
 	 * @param num_tasks The number of required matching tasks
 	 */
-	public BasicMultiplePartitioning(int num_tasks){
+	public BasicMultipleDivision(int num_tasks){
 		this.num_tasks=num_tasks;
 		this.num_tasks_ouput=num_tasks;
 	}

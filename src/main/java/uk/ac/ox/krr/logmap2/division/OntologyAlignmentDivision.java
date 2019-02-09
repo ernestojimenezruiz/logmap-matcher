@@ -1,7 +1,7 @@
 /**
  * 
  */
-package uk.ac.ox.krr.logmap2.partitioning;
+package uk.ac.ox.krr.logmap2.division;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
  * @author ernesto
  *
  */
-public interface OntologyAlignmentPartitioning {
+public interface OntologyAlignmentDivision {
 	
 	
 	public List<MatchingTask> createPartitionedMatchingTasks(OWLOntology source, OWLOntology target) throws OWLOntologyCreationException, Exception;

@@ -20,14 +20,13 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 import uk.ac.ox.krr.logmap2.LogMap2_Matcher;
 import uk.ac.ox.krr.logmap2.Parameters;
+import uk.ac.ox.krr.logmap2.division.BasicMultipleDivision;
+import uk.ac.ox.krr.logmap2.division.MatchingTask;
+import uk.ac.ox.krr.logmap2.division.QualityMeasures;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
-import uk.ac.ox.krr.logmap2.partitioning.BasicMultiplePartitioning;
-//import uk.ac.ox.krr.logmap2.partitioning.BasicMultiplePartitioningOld;
-import uk.ac.ox.krr.logmap2.partitioning.MatchingTask;
-import uk.ac.ox.krr.logmap2.partitioning.QualityMeasures;
 import uk.ac.ox.krr.logmap2.statistics.StatisticsTimeMappings;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
 
