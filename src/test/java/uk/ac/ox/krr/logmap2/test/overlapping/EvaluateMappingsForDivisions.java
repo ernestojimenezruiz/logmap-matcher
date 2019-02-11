@@ -18,7 +18,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 import uk.ac.ox.krr.logmap2.LogMap2_Matcher;
 import uk.ac.ox.krr.logmap2.Parameters;
-import uk.ac.ox.krr.logmap2.division.BasicMultipleDivision;
+import uk.ac.ox.krr.logmap2.division.BasicDivision;
 import uk.ac.ox.krr.logmap2.division.MatchingTask;
 import uk.ac.ox.krr.logmap2.division.QualityMeasures;
 import uk.ac.ox.krr.logmap2.io.LogOutput;

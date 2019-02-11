@@ -31,7 +31,7 @@ import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
  * Created on 6 Mar 2018
  *
  */
-public abstract class AbstractBasicDivision {
+public abstract class AbstractDivision {
 	
 	protected OntologyProcessing4Overlapping source_processing;
 	protected OntologyProcessing4Overlapping target_processing;
@@ -211,7 +211,7 @@ public abstract class AbstractBasicDivision {
 	
 	
 	/**
-	 * Method from advanced algorithm
+	 * Method from advanced algorithm (word embeddings)
 	 * @param source
 	 * @param target
 	 * @param list_if_entries
@@ -242,6 +242,58 @@ public abstract class AbstractBasicDivision {
 			}
 			
 		}
+		
+		return new MatchingTask(
+				module_extractor_source.extractAsOntology(entities_source, IRI.create(uri_source + "-Task-" + n_task)),
+				module_extractor_target.extractAsOntology(entities_target, IRI.create(uri_target + "-Task-" + n_task))
+				);
+		
+	}
+	
+	
+	
+	/**
+	 * Method from advanced algorithm (concept embeddings)
+	 * @param source
+	 * @param target
+	 * @param list_if_entries
+	 * @param n_task
+	 * @return
+	 * @throws OWLOntologyCreationException 
+	 */
+	protected MatchingTask createMatchingTask(String uri_source, String uri_target, int n_task, Set<Integer> concept_ids) throws OWLOntologyCreationException {
+		
+		entities_source.clear();
+		entities_target.clear();
+		
+		
+		//System.out.println("Last identifier s: " + source_processing.getLastidentifier());
+		//System.out.println("Last identifier t: " + target_processing.getLastidentifier());
+		
+		//Extract entities from IFs and convert id to OWLEntity		
+		for (int concept_id : concept_ids){
+			
+			try{
+				//Belongs to ontology 1
+				if (concept_id <= source_processing.getLastidentifier()){
+					entities_source.add(source_processing.getClass4identifier(concept_id));
+				}
+				else {
+					
+					entities_target.add(target_processing.getClass4identifier(concept_id));
+				}
+			}
+			catch (Exception e){
+				//System.out.println(set_words);
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+		//System.out.println("Entities source: " + entities_source.size());
+		//System.out.println("Entities target: " + entities_target.size());
+		
 		
 		return new MatchingTask(
 				module_extractor_source.extractAsOntology(entities_source, IRI.create(uri_source + "-Task-" + n_task)),

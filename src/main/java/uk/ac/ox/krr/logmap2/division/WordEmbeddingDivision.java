@@ -1,9 +1,12 @@
 package uk.ac.ox.krr.logmap2.division;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.semanticweb.owlapi.io.IRIDocumentSource;
@@ -19,6 +22,7 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import uk.ac.manchester.syntactic_locality.OntologyModuleExtractor;
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
+import uk.ac.ox.krr.logmap2.io.ReadFile;
 import uk.ac.ox.krr.logmap2.lexicon.LexicalUtilities;
 import uk.ac.ox.krr.logmap2.overlapping.OntologyProcessing4Overlapping;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
@@ -26,26 +30,36 @@ import uk.ac.ox.krr.logmap2.statistics.StatisticsTimeMappings;
 
 
 /**
- * This class aims at implementing an efficient algorithm to produce multiple 
- * partitions for ontology alignment. 
+ * This class relies on word embeddings to produce multiple 
+ * divisions for ontology alignment. 
  * The methods rely on efficient lexical indexes and locality based module extraction. 
- * Number of partitions or matching tasks is required as input.
+ * Clusters of words of the IF are currently computed by a neural embedding model
+ * Number of divisions/segments or matching tasks is required as input.
  * @author ernesto
  *
  */
-public class BasicMultipleDivision extends AbstractBasicDivision implements OntologyAlignmentDivision {
+public class WordEmbeddingDivision extends AbstractDivision implements OntologyAlignmentDivision {
 	
 	
+	//Number of clausters as ouput
 	int num_tasks;
 	int num_tasks_ouput;
+	
+	
+	protected String cluster_file;
+	
+	Map<String, Set<Set<String>>> identifier2cluster = new HashMap<String, Set<Set<String>>>();
+	
+	
 	
 	/**
 	 * 
 	 * @param num_tasks The number of required matching tasks
 	 */
-	public BasicMultipleDivision(int num_tasks){
+	public WordEmbeddingDivision(String cluster_file, int num_tasks){
 		this.num_tasks=num_tasks;
 		this.num_tasks_ouput=num_tasks;
+		this.cluster_file=cluster_file;
 	}
 	
 	
@@ -150,27 +164,17 @@ public class BasicMultipleDivision extends AbstractBasicDivision implements Onto
 			double overlapping_time = StatisticsTimeMappings.getRunningTime();
 			LogOutput.print("Time computing overlapping modules (overstimation) (s): " + overlapping_time);	
 		}	
+	
 		
 		
-		//4. Shuffle intersection of inverted file
-		//Required to perform several experiments and see if order in IF has an important impact as the split is random!
-		StatisticsTimeMappings.setCurrentInitTime();
+		//OFFLINE
+		//4. Create embedding for words in IF 
+		//4.1. Associate vector to IF entry. There is one vector per word. Then sum or average (most common)
+		//5. Apply clustering: K-Means
+		//OFFLINE
 		
 		
-		List<Set<String>> list_if_entries = new ArrayList<Set<String>>();
-		list_if_entries.addAll(if_intersection)	;
-		Collections.shuffle(list_if_entries);
-		
-		
-		double shufling_time = StatisticsTimeMappings.getRunningTime();
-		LogOutput.print("Time shuffling IF (s): " + shufling_time);		
-		
-		
-		//5. Split shuffled into X groups, being X the number of desired matching tasks
-		//5.1 Extract entities for each of the groups,
-		//5.2. then corresponding modules in source and target
-		//5.3. and finally create task
-		
+		//6. Set up module extractors
 		StatisticsTimeMappings.setCurrentInitTime();
 		
 		
@@ -201,23 +205,20 @@ public class BasicMultipleDivision extends AbstractBasicDivision implements Onto
 		LogOutput.print("Time setting up module extractors (s): " + modules_setUp__time);		
 
 		
+
+		//7. Read clusters and extract modules
+		readClusters();
 		
 		
 		StatisticsTimeMappings.setCurrentInitTime();
 		
-		Long size_groups = Math.round((double)list_if_entries.size() / (double)num_tasks);
-		
-		//System.out.println(size_groups);
-		
 		for (int n_task = 0; n_task<num_tasks_ouput; n_task++){
-		
+			
+			
 			long init_task = StatisticsTimeMappings.getCurrentTimeInMillis();
 			
 			
-			
-			//To avoid empty tasks
-			if (n_task*size_groups.intValue()<list_if_entries.size())
-				tasks.add(createMatchingTask(uri_onto1, uri_onto2, list_if_entries, n_task, size_groups.intValue()));
+			tasks.add(createMatchingTask(uri_onto1, uri_onto2, identifier2cluster.get(String.valueOf(n_task)), n_task));  //n_task identifiers the cluster
 
 		
 			
@@ -231,7 +232,7 @@ public class BasicMultipleDivision extends AbstractBasicDivision implements Onto
 
 		
 		
-		
+
 		
 		total_time = StatisticsTimeMappings.getTotalRunningTime();
 		LogOutput.print("Total time (s): " + total_time);		
@@ -239,6 +240,57 @@ public class BasicMultipleDivision extends AbstractBasicDivision implements Onto
 		
 
 		return tasks;
+		
+		
+	}
+	
+	
+	
+	private void readClusters() throws FileNotFoundException{
+		
+		//System.out.println(cluster_file);
+		
+		ReadFile reader = new ReadFile(cluster_file);
+		
+		String line=reader.readLine();
+		
+		Set<String> words_set= new HashSet<String>();
+		
+		int i=0;
+		
+		while (line!=null) {
+			
+			i++;
+		
+			//"word1, word2,...:cluster_index"
+			String[] elements = line.split(":");
+			
+			String cluster_id = elements[1];
+			
+			String[] words = elements[0].split(",");
+			
+			for (String word: words)
+				words_set.add(word);
+			
+			
+			if (!identifier2cluster.containsKey(cluster_id))
+				identifier2cluster.put(cluster_id, new HashSet<Set<String>>());
+			
+			identifier2cluster.get(cluster_id).add(new HashSet<String>(words_set));
+			
+			words_set.clear();
+			
+			
+			//if (i<10)
+			//	System.out.println(identifier2cluster);
+			
+			line = reader.readLine();
+			
+		}
+		
+		
+		
+		//System.out.println(i);;
 		
 		
 	}

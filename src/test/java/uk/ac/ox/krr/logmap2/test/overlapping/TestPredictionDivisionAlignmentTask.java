@@ -18,7 +18,7 @@ import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 import uk.ac.ox.krr.logmap2.Parameters;
-import uk.ac.ox.krr.logmap2.division.BasicMultipleDivision;
+import uk.ac.ox.krr.logmap2.division.BasicDivision;
 import uk.ac.ox.krr.logmap2.division.BasicDivisionPredictor;
 import uk.ac.ox.krr.logmap2.division.MatchingTask;
 import uk.ac.ox.krr.logmap2.division.QualityMeasures;

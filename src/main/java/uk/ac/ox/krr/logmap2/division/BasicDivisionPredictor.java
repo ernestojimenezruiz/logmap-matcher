@@ -31,7 +31,7 @@ import uk.ac.ox.krr.logmap2.statistics.StatisticsTimeMappings;
  * Created on 6 Mar 2018
  *
  */
-public class BasicDivisionPredictor extends AbstractBasicDivision implements OntologyAlignmentDivision{
+public class BasicDivisionPredictor extends AbstractDivision implements OntologyAlignmentDivision{
 	
 	
 	int required_module_size;
@@ -79,7 +79,7 @@ public class BasicDivisionPredictor extends AbstractBasicDivision implements Ont
 		createTaskSizesList();
 		
 		for (int n_tasks : number_tasks_list){
-			BasicMultipleDivision partitioning = new BasicMultipleDivision(n_tasks);
+			BasicDivision partitioning = new BasicDivision(n_tasks);
 			
 			//We only require one
 			partitioning.setNumTask2Outout(1);
@@ -107,7 +107,7 @@ public class BasicDivisionPredictor extends AbstractBasicDivision implements Ont
 		}
 		else{
 			//Return partitioning for prediction
-			BasicMultipleDivision partitioning = new BasicMultipleDivision(predicted_number_tasks);				
+			BasicDivision partitioning = new BasicDivision(predicted_number_tasks);				
 			
 			//Return tasks
 			tasks= partitioning.createPartitionedMatchingTasks(source, target);

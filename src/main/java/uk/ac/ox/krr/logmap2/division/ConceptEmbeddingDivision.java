@@ -30,14 +30,15 @@ import uk.ac.ox.krr.logmap2.statistics.StatisticsTimeMappings;
 
 
 /**
- * This class aims at implementing an efficient algorithm to produce multiple 
- * partitions for ontology alignment. 
+ * This class relies on concept embeddings to produce multiple 
+ * divisions for ontology alignment. 
  * The methods rely on efficient lexical indexes and locality based module extraction. 
- * Number of partitions or matching tasks is required as input.
+ * Clusters of concepts of the IF are currently computed by a neural embedding model
+ * Number of divisions/segments or matching tasks is required as input.
  * @author ernesto
  *
  */
-public class AdvancedMultipleDivision extends AbstractBasicDivision implements OntologyAlignmentDivision {
+public class ConceptEmbeddingDivision extends AbstractDivision implements OntologyAlignmentDivision {
 	
 	
 	//Number of clausters as ouput
@@ -47,7 +48,7 @@ public class AdvancedMultipleDivision extends AbstractBasicDivision implements O
 	
 	protected String cluster_file;
 	
-	Map<String, Set<Set<String>>> identifier2cluster = new HashMap<String, Set<Set<String>>>();
+	Map<String, Set<Integer>> identifier2cluster = new HashMap<String, Set<Integer>>();
 	
 	
 	
@@ -55,7 +56,7 @@ public class AdvancedMultipleDivision extends AbstractBasicDivision implements O
 	 * 
 	 * @param num_tasks The number of required matching tasks
 	 */
-	public AdvancedMultipleDivision(String cluster_file, int num_tasks){
+	public ConceptEmbeddingDivision(String cluster_file, int num_tasks){
 		this.num_tasks=num_tasks;
 		this.num_tasks_ouput=num_tasks;
 		this.cluster_file=cluster_file;
@@ -217,7 +218,8 @@ public class AdvancedMultipleDivision extends AbstractBasicDivision implements O
 			long init_task = StatisticsTimeMappings.getCurrentTimeInMillis();
 			
 			
-			tasks.add(createMatchingTask(uri_onto1, uri_onto2, identifier2cluster.get(String.valueOf(n_task)), n_task));  //n_task identifiers the cluster
+			//Concept embedding driven tasks 
+			tasks.add(createMatchingTask(uri_onto1, uri_onto2, n_task, identifier2cluster.get(String.valueOf(n_task))));  //n_task identifiers the cluster
 
 		
 			
@@ -253,31 +255,26 @@ public class AdvancedMultipleDivision extends AbstractBasicDivision implements O
 		
 		String line=reader.readLine();
 		
-		Set<String> words_set= new HashSet<String>();
+		//int i=0;
 		
-		int i=0;
+		int concept_id;
 		
 		while (line!=null) {
 			
-			i++;
+			//i++;
 		
-			//"word1, word2,...:cluster_index"
+			//__label__5034:1
 			String[] elements = line.split(":");
 			
 			String cluster_id = elements[1];
 			
-			String[] words = elements[0].split(",");
-			
-			for (String word: words)
-				words_set.add(word);
+			concept_id = Integer.valueOf(elements[0].replaceAll("__label__", ""));
 			
 			
 			if (!identifier2cluster.containsKey(cluster_id))
-				identifier2cluster.put(cluster_id, new HashSet<Set<String>>());
+				identifier2cluster.put(cluster_id, new HashSet<Integer>());
 			
-			identifier2cluster.get(cluster_id).add(new HashSet<String>(words_set));
-			
-			words_set.clear();
+			identifier2cluster.get(cluster_id).add(concept_id);
 			
 			
 			//if (i<10)
