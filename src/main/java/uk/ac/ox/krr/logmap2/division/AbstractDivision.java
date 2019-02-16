@@ -219,7 +219,7 @@ public abstract class AbstractDivision {
 	 * @return
 	 * @throws OWLOntologyCreationException 
 	 */
-	protected MatchingTask createMatchingTask(String uri_source, String uri_target, Set<Set<String>> set_if_entries, int n_task) throws OWLOntologyCreationException {
+	protected MatchingTask createMatchingTask(String uri_source, String uri_target, Set<Set<String>> set_if_entries, int n_task, int max_ambiguity, boolean change_ontology_uri) throws OWLOntologyCreationException {
 		
 		entities_source.clear();
 		entities_target.clear();
@@ -227,6 +227,19 @@ public abstract class AbstractDivision {
 		
 		//Extract entities from IFs and convert id to OWLEntity		
 		for (Set<String> set_words : set_if_entries){
+			
+			//Safety check
+			if (!source_processing.getWeakInvertedFile().containsKey(set_words) ||
+				!target_processing.getWeakInvertedFile().containsKey(set_words))
+				continue;
+			
+			int num_ids1 = source_processing.getWeakInvertedFile().get(set_words).size();
+			int num_ids2 = target_processing.getWeakInvertedFile().get(set_words).size();
+			
+			//To avoid highly ambiguos entries in IF 
+			if ((num_ids1 + num_ids2) > max_ambiguity)
+				continue;
+			
 			
 			try{
 				for (int ide1 : source_processing.getWeakInvertedFile().get(set_words)){
@@ -238,16 +251,28 @@ public abstract class AbstractDivision {
 			}
 			catch (Exception e){
 				//System.out.println(set_words);
-				e.printStackTrace();
+				//for (String s : set_words)
+				//	System.out.println(s);
+				//e.printStackTrace();
+				continue;
 			}
 			
 		}
 		
-		return new MatchingTask(
-				module_extractor_source.extractAsOntology(entities_source, IRI.create(uri_source + "-Task-" + n_task)),
-				module_extractor_target.extractAsOntology(entities_target, IRI.create(uri_target + "-Task-" + n_task))
-				);
+		if (change_ontology_uri) {
 		
+			return new MatchingTask(
+					module_extractor_source.extractAsOntology(entities_source, IRI.create(uri_source + "-Task-" + n_task)),
+					module_extractor_target.extractAsOntology(entities_target, IRI.create(uri_target + "-Task-" + n_task))
+					);
+		}
+		else {
+			//Alod2vec does not like the change of uri. ALthough it seem to be a bug in the system
+			return new MatchingTask(
+					module_extractor_source.extractAsOntology(entities_source, IRI.create(uri_source)),
+					module_extractor_target.extractAsOntology(entities_target, IRI.create(uri_target))
+					);
+		}
 	}
 	
 	

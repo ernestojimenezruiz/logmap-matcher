@@ -65,7 +65,7 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 
 		
 		ontopair=Utilities.MOUSE2HUMAN;
-		//ontopair=Utilities.FMA2NCI;		
+		ontopair=Utilities.FMA2NCI;		
 		//ontopair=Utilities.FMA2SNOMED;
 		//ontopair=Utilities.SNOMED2NCI;
 		
@@ -96,10 +96,39 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 			String path_sizes;
 			String path_file_clusters;
 			
-			output_path = base_output_path + "tasks/embeddings_words/";
-			path_sizes = base_output_path + "task_sizes/embeddings_words/";
-			path_file_clusters = "/home/ejimenez-ruiz/Documents/ATI_AIDA/DivisionMatchingTask/experiments-ijcai/clusters-words/";
 			
+			//------------------------------------
+			//Three variants:
+			//1. Only aggregated vector word embeddings for the IF entries
+			//2. Cncatenated vector for IF entries:
+			//aggregated vector word embeddings + aggregated vector concept embeddings
+			//3. Only aggregated vector concept embeddings for the IF entries
+			int type_embedding;
+			int WORD_EMBEDDING=0;
+			int WORD_CONCEPT_EMBEDDING=1;
+			int CONCEPT_EMBEDDING=2; //We still cluster word entries but according to concept embeddings only
+			
+			//type_embedding=WORD_EMBEDDING;
+			type_embedding=WORD_CONCEPT_EMBEDDING;
+			//type_embedding=CONCEPT_EMBEDDING;
+			
+			
+			if (type_embedding==WORD_EMBEDDING) {
+				output_path = base_output_path + "tasks/embeddings_words/";
+				path_sizes = base_output_path + "task_sizes/embeddings_words/";
+				path_file_clusters = "/home/ejimenez-ruiz/Documents/ATI_AIDA/DivisionMatchingTask/experiments-ijcai/clusters-words/";
+			}
+			else if (type_embedding==WORD_CONCEPT_EMBEDDING) {
+				output_path = base_output_path + "tasks/embeddings_if/";
+				//output_path = base_output_path + "tasks_alod2vec/embeddings_if/";
+				path_sizes = base_output_path + "task_sizes/embeddings_if/";
+				path_file_clusters = "/home/ejimenez-ruiz/Documents/ATI_AIDA/DivisionMatchingTask/experiments-ijcai/clusters-if/";
+			}
+			else {//if (type_embedding==WORD_CONCEPT_EMBEDDING) {
+				output_path = base_output_path + "tasks/embeddings_if_concepts/";
+				path_sizes = base_output_path + "task_sizes/embeddings_if_concepts/";
+				path_file_clusters = "/home/ejimenez-ruiz/Documents/ATI_AIDA/DivisionMatchingTask/experiments-ijcai/clusters-if-concepts/";
+			}
 			//output_path = base_output_path + "tasks/embeddings_iswc/";
 			//path_sizes = base_output_path + "task_sizes/embeddings_iswc/";
 			//path_file_clusters = "/home/ejimenez-ruiz/Documents/ATI_AIDA/DivisionMatchingTask/experiments-ijcai/clusters-iswc/";
@@ -107,13 +136,19 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 			
 			
 			//number of tasks
-			int[] num_tasks={2,5,10,20, 50, 75,100, 125, 150, 175,200};
+			//int[] num_tasks={2,5,10,20, 50, 75,100, 125, 150, 175,200};
+			
+			
 			//int[] num_tasks={1, 2,5,10, 20,50,100,200};
 			//int[] num_tasks={2,5, 10, 20};
-			//int[] num_tasks={20};
+			int[] num_tasks={150};
 			//int[] num_tasks={300};
 			//int repetitions = 5;
 			int repetitions = 1;
+			
+			
+			//TODO Important parameter to filter entries in IF pointing to a large number of concepts!!
+			int max_ambiguity = 60;  //Anatomy=60, fma-nci=60
 			
 			
 			
@@ -130,6 +165,10 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 			new File(output_path + folder).mkdir();
 			new File(path_sizes + folder).mkdir();
 			
+			//Header				
+			System.out.println(QualityMeasures.toStringHeader());
+			
+			
 			for (int j=0; j<num_tasks.length; j++){
 			
 				//String file_clusters = "/home/ernesto/Documents/OAEI_2017.5/overlapping/clusters_advanced/"+ folder + "cluster-" +  num_tasks[j];
@@ -139,8 +178,6 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 				
 				
 				
-				//Header				
-				//System.out.println(QualityMeasures.toStringHeader());
 				
 				//Repetitions
 				for (int i=0; i<repetitions; i++){
@@ -149,19 +186,21 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 					Parameters.min_size_overlapping=0;
 					
 					//TODO
-					WordEmbeddingDivision partitioner = new WordEmbeddingDivision(file_clusters, num_tasks[j]);
+					WordEmbeddingDivision segmenter = new WordEmbeddingDivision(file_clusters, num_tasks[j], max_ambiguity, true); //false for alod2vec
 					
-					List<MatchingTask> tasks = partitioner.createPartitionedMatchingTasks(onto1, onto2);
+					List<MatchingTask> tasks = segmenter.createPartitionedMatchingTasks(onto1, onto2);
 					
 					//if (true)
 					//	return;
 					
 					
-					Set<MappingObjectStr> alignment = loadMappingsRDF(file_gs_rdf);
+					//Load ground truth and consensus
+					Set<MappingObjectStr> alignment_gt = loadMappingsRDF(file_gs_rdf);
+					Set<MappingObjectStr> alignment_consensus = loadMappingsRDF(file_consensus_rdf);
 					
 					
 					QualityMeasures quality = new QualityMeasures(
-							tasks, alignment, partitioner.getComputationTime(), size_onto1, size_onto2); 
+							tasks, alignment_gt, alignment_consensus, segmenter.getComputationTime(), size_onto1, size_onto2); 
 					
 					
 					
@@ -186,7 +225,7 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 						
 						if (store_tasks){
 							new File(output_path + folder + num_tasks[j] + "/" + id_task + "/").mkdir();
-							System.out.println(output_path + folder + num_tasks[j] + "/" + id_task + "/");
+							//System.out.println(output_path + folder + num_tasks[j] + "/" + id_task + "/");
 							tasks.get(id_task).saveMatchingTask(output_path + folder + num_tasks[j] + "/" + id_task + "/");
 						}
 						
@@ -213,10 +252,11 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 					
 					
 					tasks.clear();
-					alignment.clear();
+					alignment_gt.clear();
+					alignment_consensus.clear();
 					quality.clear();
 					
-					partitioner.clear();
+					segmenter.clear();
 					
 				}
 			}

@@ -152,11 +152,13 @@ public class TestBasicDivisionAlignmentTask extends AbstractTestDivisionAlignmen
 					//	return;
 					
 					
-					Set<MappingObjectStr> alignment = loadMappingsRDF(file_gs_rdf);
+					//Load ground truth and consensus
+					Set<MappingObjectStr> alignment_gt = loadMappingsRDF(file_gs_rdf);
+					Set<MappingObjectStr> alignment_consensus = loadMappingsRDF(file_consensus_rdf);
 					
 					
 					QualityMeasures quality = new QualityMeasures(
-							tasks, alignment, segmenter.getComputationTime(), size_onto1, size_onto2); 
+							tasks, alignment_gt, alignment_consensus, segmenter.getComputationTime(), size_onto1, size_onto2); 
 					
 					
 					
@@ -209,7 +211,8 @@ public class TestBasicDivisionAlignmentTask extends AbstractTestDivisionAlignmen
 					
 					
 					tasks.clear();
-					alignment.clear();
+					alignment_gt.clear();
+					alignment_consensus.clear();
 					quality.clear();
 					
 					segmenter.clear();

@@ -28,7 +28,8 @@ public class AbstractTestDivisionAlignmentTask {
 	
 	protected static String uri1;
 	protected static String uri2;
-	protected static String file_gs_rdf; 
+	protected static String file_gs_rdf; //gold standard ground truct
+	protected static String file_consensus_rdf; //alternative consensus
 	
 	
 	//String path = "/home/ernesto/Documents/BackUp_Mar_20_2014/data/DataUMLS/UMLS_Onto_Versions/OAEI_datasets/oaei_2013/";
@@ -67,6 +68,14 @@ public class AbstractTestDivisionAlignmentTask {
 			
 			file_gs_rdf = path + "largebio/" + "reference_alignment/oaei2013_FMA2NCI_original_UMLS_mappings_with_confidence.rdf";
 			
+			
+			//consensus 2
+			//file_consensus_rdf = path + "largebio/" + "consensus-2018/Consensus-2-largebio-fma_nci.rdf";
+			
+			//consensus 3
+			file_consensus_rdf = path + "largebio/" + "consensus-2018/Consensus-3-largebio-fma_nci.rdf";
+			
+			
 			folder = "fma2nci/";
 				
 																				
@@ -88,6 +97,13 @@ public class AbstractTestDivisionAlignmentTask {
 			file_gs_rdf = path + "largebio/" + "reference_alignment/oaei2013_FMA2SNOMED_original_UMLS_mappings_with_confidence.rdf";
 			
 			
+			//consensus 2
+			//file_consensus_rdf = path + "largebio/" + "consensus-2018/Consensus-2-largebio-fma_snomed.rdf";
+			
+			//consensus 3
+			file_consensus_rdf = path + "largebio/" + "consensus-2018/Consensus-3-largebio-fma_snomed.rdf";
+			
+			
 				
 					
 		}
@@ -104,6 +120,12 @@ public class AbstractTestDivisionAlignmentTask {
 			
 			file_gs_rdf = path + "largebio/" + "reference_alignment/oaei2013_SNOMED2NCI_original_UMLS_mappings_with_confidence.rdf";
 			
+			
+			//consensus 2
+			//file_consensus_rdf = path + "largebio/" + "consensus-2018/Consensus-2-largebio-snomed_nci.rdf";
+			
+			//consensus 3
+			file_consensus_rdf = path + "largebio/" + "consensus-2018/Consensus-3-largebio-snomed_nci.rdf";
 				
 			
 		}
@@ -117,6 +139,16 @@ public class AbstractTestDivisionAlignmentTask {
 			uri2= irirootpath + "mouse/" + "human2012.owl";
 								
 			file_gs_rdf = path + "mouse/" + "/reference2012.rdf";
+			
+			//consensus 2
+			//file_consensus_rdf = path + "mouse/" + "/Consensus-2-anatomy.rdf";
+			
+			//consensus 3
+			file_consensus_rdf = path + "mouse/" + "/Consensus-3-anatomy.rdf";
+			
+			//consensus 4
+			//file_consensus_rdf = path + "mouse/" + "/Consensus-4-anatomy.rdf";
+			
 			
 			
 				
@@ -132,8 +164,10 @@ public class AbstractTestDivisionAlignmentTask {
 			uri1 = iri_path2 + "HP.rdf";
 			uri2 = iri_path2 + "MP.rdf";
 			
-			//silver 2
+			//silver 2 (no gt available)
 			file_gs_rdf = path2 + "Silver-hp-mp-2.rdf";
+			//silver 3
+			file_consensus_rdf = path2 + "Silver-hp-mp-3.rdf";
 			
 		}
 		
@@ -147,8 +181,10 @@ public class AbstractTestDivisionAlignmentTask {
 			uri1 = iri_path2 + "DOID.rdf";
 			uri2 = iri_path2 + "ORDO.rdf";
 			
-			//silver 2
-			file_gs_rdf = path2 + "Silver-doid-ordo-3.rdf";
+			//silver 2 (not gt available)
+			file_gs_rdf = path2 + "Silver-doid-ordo-2.rdf";
+			//silver 3
+			file_consensus_rdf = path2 + "Silver-doid-ordo-3.rdf";
 			
 		}
 		else if (ontopair==HP2MP2017){

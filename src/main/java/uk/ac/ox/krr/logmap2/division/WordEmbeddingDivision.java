@@ -44,6 +44,8 @@ public class WordEmbeddingDivision extends AbstractDivision implements OntologyA
 	//Number of clausters as ouput
 	int num_tasks;
 	int num_tasks_ouput;
+	int max_ambiguity;
+	boolean change_original_uris;
 	
 	
 	protected String cluster_file;
@@ -56,10 +58,12 @@ public class WordEmbeddingDivision extends AbstractDivision implements OntologyA
 	 * 
 	 * @param num_tasks The number of required matching tasks
 	 */
-	public WordEmbeddingDivision(String cluster_file, int num_tasks){
+	public WordEmbeddingDivision(String cluster_file, int num_tasks, int max_ambiguity, boolean change_original_uris){
 		this.num_tasks=num_tasks;
 		this.num_tasks_ouput=num_tasks;
 		this.cluster_file=cluster_file;
+		this.max_ambiguity=max_ambiguity;
+		this.change_original_uris=change_original_uris;
 	}
 	
 	
@@ -212,13 +216,15 @@ public class WordEmbeddingDivision extends AbstractDivision implements OntologyA
 		
 		StatisticsTimeMappings.setCurrentInitTime();
 		
+		//QualityMeasures.toStringHeader();
+		
 		for (int n_task = 0; n_task<num_tasks_ouput; n_task++){
 			
 			
 			long init_task = StatisticsTimeMappings.getCurrentTimeInMillis();
 			
 			
-			tasks.add(createMatchingTask(uri_onto1, uri_onto2, identifier2cluster.get(String.valueOf(n_task)), n_task));  //n_task identifiers the cluster
+			tasks.add(createMatchingTask(uri_onto1, uri_onto2, identifier2cluster.get(String.valueOf(n_task)), n_task, max_ambiguity, change_original_uris));  //n_task identifiers the cluster
 
 		
 			

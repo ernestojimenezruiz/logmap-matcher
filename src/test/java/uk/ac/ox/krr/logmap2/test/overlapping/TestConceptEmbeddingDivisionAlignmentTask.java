@@ -68,8 +68,8 @@ public class TestConceptEmbeddingDivisionAlignmentTask extends AbstractTestDivis
 		ontopair=Utilities.FMA2SNOMED;
 		//ontopair=Utilities.SNOMED2NCI;
 		
-		//ontopair=HP2MP2016;
-		//ontopair=DOID2ORDO2016;
+		ontopair=HP2MP2016;
+		ontopair=DOID2ORDO2016;
 		//ontopair=HP2MP2017;
 		//ontopair=DOID2ORDO2017;
 			
@@ -145,11 +145,13 @@ public class TestConceptEmbeddingDivisionAlignmentTask extends AbstractTestDivis
 					//	return;
 					
 					
-					Set<MappingObjectStr> alignment = loadMappingsRDF(file_gs_rdf);
+					//Load ground truth and consensus
+					Set<MappingObjectStr> alignment_gt = loadMappingsRDF(file_gs_rdf);
+					Set<MappingObjectStr> alignment_consensus = loadMappingsRDF(file_consensus_rdf);
 					
 					
 					QualityMeasures quality = new QualityMeasures(
-							tasks, alignment, segmenter.getComputationTime(), size_onto1, size_onto2); 
+							tasks, alignment_gt, alignment_consensus, segmenter.getComputationTime(), size_onto1, size_onto2); 
 					
 					
 					
@@ -174,7 +176,7 @@ public class TestConceptEmbeddingDivisionAlignmentTask extends AbstractTestDivis
 						
 						if (store_tasks){
 							new File(output_path + folder + num_tasks[j] + "/" + id_task + "/").mkdir();
-							System.out.println(output_path + folder + num_tasks[j] + "/" + id_task + "/");
+							//System.out.println(output_path + folder + num_tasks[j] + "/" + id_task + "/");
 							tasks.get(id_task).saveMatchingTask(output_path + folder + num_tasks[j] + "/" + id_task + "/");
 						}
 						
@@ -201,7 +203,8 @@ public class TestConceptEmbeddingDivisionAlignmentTask extends AbstractTestDivis
 					
 					
 					tasks.clear();
-					alignment.clear();
+					alignment_gt.clear();
+					alignment_consensus.clear();
 					quality.clear();
 					
 					segmenter.clear();

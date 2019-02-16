@@ -296,7 +296,12 @@ public class TestPredictionDivisionAlignmentTask {
 					
 					
 					if (tasks.size()>0){
-						QualityMeasures quality = new QualityMeasures(tasks, alignment, partitioner.getComputationTime(), 
+						
+						//TODO Add different alignment
+						QualityMeasures quality = new QualityMeasures(tasks, 
+								alignment,
+								alignment,
+								partitioner.getComputationTime(), 
 								onto1.getSignature(true).size(), 
 								onto2.getSignature(true).size()); 
 						

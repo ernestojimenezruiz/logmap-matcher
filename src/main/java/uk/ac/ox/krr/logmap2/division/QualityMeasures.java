@@ -42,6 +42,8 @@ public class QualityMeasures {
 	
 	long min_size_task; //m X n
 	long max_size_task;
+	String min_size_task_str; //m X n
+	String max_size_task_str;
 	double avg_size_task;
 	
 	//balanced/ratio modules: 01/02 -> compare with ratio of original task
@@ -71,7 +73,8 @@ public class QualityMeasures {
 	double max_coverage_task;
 	double average_coverage_task;
 	//Global
-	double global_coverage;
+	double global_coverage_1;
+	double global_coverage_2;
 	
 	//Coverage + overlapping
 	//Cases where e1 from RA appears in MT but not e2 and viceversa: related to coverage?
@@ -86,7 +89,7 @@ public class QualityMeasures {
 	
 	
 	List<MatchingTask> tasks;
-	Set<MappingObjectStr> alignment;
+	//Set<MappingObjectStr> alignment;
 	
 	
 	
@@ -101,8 +104,8 @@ public class QualityMeasures {
 
 	
 	
-	public QualityMeasures(List<MatchingTask> tasks, Set<MappingObjectStr> alignment, double time, long size_ontology1, long size_ontology2){
-		this(tasks, alignment, size_ontology1, size_ontology2);
+	public QualityMeasures(List<MatchingTask> tasks, Set<MappingObjectStr> alignment_1, Set<MappingObjectStr> alignment_2, double time, long size_ontology1, long size_ontology2){
+		this(tasks, alignment_1, alignment_2, size_ontology1, size_ontology2);
 		
 		computation_time=time;
 		
@@ -111,13 +114,13 @@ public class QualityMeasures {
 	
 	public void clear(){
 		tasks.clear();
-		alignment.clear();
+		//alignment.clear();
 	}
 	
 	
-	public QualityMeasures(List<MatchingTask> tasks, Set<MappingObjectStr> alignment, long size_ontology1, long size_ontology2){
+	public QualityMeasures(List<MatchingTask> tasks, Set<MappingObjectStr> alignment_1, Set<MappingObjectStr> alignment_2, long size_ontology1, long size_ontology2){
 		this.tasks=tasks;
-		this.alignment=alignment;
+		//this.alignment=alignment;
 		
 		
 		/*for (MatchingTask task : tasks){
@@ -132,7 +135,8 @@ public class QualityMeasures {
 		
 		computeSizeTasks(tasks, size_ontology1, size_ontology2);
 		
-		computeCoverageTasks(tasks, alignment);
+		global_coverage_1 = computeCoverageTasks(tasks, alignment_1);
+		global_coverage_2 = computeCoverageTasks(tasks, alignment_2);
 		
 		
 	}
@@ -218,18 +222,27 @@ public class QualityMeasures {
 		
 		
 		long size_task  = (long)tasks.get(0).getSignatureSourceOntology().size() * (long)tasks.get(0).getSignatureTargetOntology().size(); //m X n;
+		String size_task_str = (long)tasks.get(0).getSignatureSourceOntology().size() + " x " + (long)tasks.get(0).getSignatureTargetOntology().size();
 		
 		min_size_task = size_task;
+		min_size_task_str = size_task_str;
 		max_size_task = size_task;
+		max_size_task_str = size_task_str;
 		
 		for (int i=0; i<tasks.size(); i++){	
 		
 			size_task = (long)tasks.get(i).getSignatureSourceOntology().size() * (long)tasks.get(i).getSignatureTargetOntology().size(); //m X n;
+			size_task_str = (long)tasks.get(i).getSignatureSourceOntology().size() + " x " + (long)tasks.get(i).getSignatureTargetOntology().size();
 			
-			if (size_task<min_size_task)
+			
+			if (size_task<min_size_task) {
 				min_size_task=size_task;
-			else if (size_task>max_size_task)
+				min_size_task_str=size_task_str;
+			}
+			else if (size_task>max_size_task) {
 				max_size_task=size_task;
+				max_size_task_str=size_task_str;
+			}
 			
 			aggregation_task_sizes+=size_task;
 			
@@ -352,9 +365,11 @@ public class QualityMeasures {
 			
 		}
 		
-		global_coverage = (double)positive_hits/(double)alignment.size();
+		//global_coverage = (double)positive_hits/(double)alignment.size();
 		
-		return global_coverage;
+		//return global_coverage;
+		
+		return (double)positive_hits/(double)alignment.size();
 		
 	}
 	
@@ -383,7 +398,7 @@ public class QualityMeasures {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		sb.append("\n");
+		//sb.append("\n");
 		
 		sb.append("number_tasks").append("\t")
 		.append("min_modules_O1").append("\t")
@@ -392,6 +407,8 @@ public class QualityMeasures {
 		.append("min_modules_O2").append("\t")
 		.append("max_modules_O2").append("\t")
 		.append("avg_modules_O2").append("\t")
+		.append("min_task").append("\t")
+		.append("max_task").append("\t")
 		//.append("min_size_task").append("\t")
 		//.append("max_size_task").append("\t")
 		//.append("avg_size_task").append("\t")
@@ -407,7 +424,8 @@ public class QualityMeasures {
 		//.append("min_coverage_task").append("\t")
 		//.append("max_coverage_task").append("\t")
 		//.append("average_coverage_task").append("\t")
-		.append("coverage").append("\t")
+		.append("coverage1").append("\t")
+		.append("coverage2").append("\t")
 		.append("time");
 		
 		return sb.toString();
@@ -432,6 +450,8 @@ public class QualityMeasures {
 			.append(min_size_modules_ontology2).append("\t")
 			.append(max_size_modules_ontology2).append("\t")
 			.append(average_size_modules_ontology2).append("\t")
+			.append(min_size_task_str).append("\t")
+			.append(max_size_task_str).append("\t")
 			//.append(min_size_task).append("\t")
 			//.append(max_size_task).append("\t")
 			//.append(avg_size_task).append("\t")
@@ -447,7 +467,8 @@ public class QualityMeasures {
 			//.append(min_coverage_task).append("\t")
 			//.append(max_coverage_task).append("\t")
 			//.append(average_coverage_task).append("\t")
-			.append(global_coverage).append("\t")
+			.append(global_coverage_1).append("\t")
+			.append(global_coverage_2).append("\t")
 			.append(computation_time);
 		
 		
