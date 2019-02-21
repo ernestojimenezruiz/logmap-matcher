@@ -264,6 +264,9 @@ public abstract class AbstractDivision {
 			return new MatchingTask(
 					module_extractor_source.extractAsOntology(entities_source, IRI.create(uri_source + "-Task-" + n_task)),
 					module_extractor_target.extractAsOntology(entities_target, IRI.create(uri_target + "-Task-" + n_task))
+					//Pomap case
+					//module_extractor_source.extractAsOntology(entities_source, IRI.create("http://source.owl")),
+					//module_extractor_target.extractAsOntology(entities_target, IRI.create("http://target.owl"))
 					);
 		}
 		else {

@@ -65,7 +65,7 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 
 		
 		ontopair=Utilities.MOUSE2HUMAN;
-		ontopair=Utilities.FMA2NCI;		
+		//ontopair=Utilities.FMA2NCI;		
 		//ontopair=Utilities.FMA2SNOMED;
 		//ontopair=Utilities.SNOMED2NCI;
 		
@@ -119,8 +119,9 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 				path_file_clusters = "/home/ejimenez-ruiz/Documents/ATI_AIDA/DivisionMatchingTask/experiments-ijcai/clusters-words/";
 			}
 			else if (type_embedding==WORD_CONCEPT_EMBEDDING) {
-				output_path = base_output_path + "tasks/embeddings_if/";
-				//output_path = base_output_path + "tasks_alod2vec/embeddings_if/";
+				//output_path = base_output_path + "tasks/embeddings_if/";
+				//output_path = base_output_path + "tasks_alod2vec/embeddings_if/";   //for alod2vec and sanom
+				output_path = base_output_path + "tasks_pomap/embeddings_if/";   //special case for pomap for which anatomy uris must be different
 				path_sizes = base_output_path + "task_sizes/embeddings_if/";
 				path_file_clusters = "/home/ejimenez-ruiz/Documents/ATI_AIDA/DivisionMatchingTask/experiments-ijcai/clusters-if/";
 			}
@@ -136,13 +137,13 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 			
 			
 			//number of tasks
-			//int[] num_tasks={2,5,10,20, 50, 75,100, 125, 150, 175,200};
+			int[] num_tasks={2,5,10,20, 50, 75,100, 125, 150, 175,200};
 			
 			
 			//int[] num_tasks={1, 2,5,10, 20,50,100,200};
 			//int[] num_tasks={2,5, 10, 20};
-			int[] num_tasks={150};
-			//int[] num_tasks={300};
+			//int[] num_tasks={200};
+			//int[] num_tasks={20,50,100};
 			//int repetitions = 5;
 			int repetitions = 1;
 			
@@ -156,9 +157,11 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 			loadOntologies(ontopair);//uri1 and uri2);
 			
 			
+			//Change from http://uri1 to http://ur1_task_10
+			//Alod2vec seems to have a problem when concepts have a different namespace from the ontology URI
+			boolean change_original_uris = true; //false for alod2vec and sanom  //true for pomap
 			
-			
-			boolean store_tasks=false;
+			boolean store_tasks=true;
 			boolean run_system=false;
 			boolean store_size_files=true;
 			
@@ -186,7 +189,7 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 					Parameters.min_size_overlapping=0;
 					
 					//TODO
-					WordEmbeddingDivision segmenter = new WordEmbeddingDivision(file_clusters, num_tasks[j], max_ambiguity, true); //false for alod2vec
+					WordEmbeddingDivision segmenter = new WordEmbeddingDivision(file_clusters, num_tasks[j], max_ambiguity, change_original_uris); 
 					
 					List<MatchingTask> tasks = segmenter.createPartitionedMatchingTasks(onto1, onto2);
 					

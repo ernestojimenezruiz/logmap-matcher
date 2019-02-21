@@ -1,5 +1,8 @@
 package uk.ac.ox.krr.logmap2.test.overlapping;
 
+import java.io.File;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.semanticweb.owlapi.io.IRIDocumentSource;
@@ -222,11 +225,32 @@ public class AbstractTestDivisionAlignmentTask {
 	
 	
 	
-	protected static Set<MappingObjectStr> loadMappingsRDF(String file_mappings) throws Exception{
+	/*protected static Set<MappingObjectStr> loadMappingsRDF(String file_mappings) throws Exception{
 		
 		RDFAlignReader reader = new RDFAlignReader(file_mappings);
 		
 		return reader.getMappingObjects();
+		
+	}*/
+	
+	protected static Set<MappingObjectStr> loadMappingsRDF(String file_mappings) throws Exception{
+		
+		File file = new File(file_mappings);
+		if (!file.exists()){
+			System.err.println("Missing mappings file: " + file_mappings);
+			return Collections.emptySet();
+		}
+			
+		try{
+			RDFAlignReader reader = new RDFAlignReader(file_mappings);
+			
+			return reader.getMappingObjects();
+		}
+		catch(Exception e){
+			System.err.println("Error reading: " +  file_mappings);
+			//return new HashSet<MappingObjectStr>();
+			return Collections.emptySet();
+		}
 		
 	}
 	

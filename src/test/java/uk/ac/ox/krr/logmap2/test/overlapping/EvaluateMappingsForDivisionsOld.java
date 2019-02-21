@@ -35,7 +35,7 @@ import uk.ac.ox.krr.logmap2.utilities.Utilities;
  * Created on 18 Mar 2018
  *
  */
-public class EvaluateMappingsForDivisions {
+public class EvaluateMappingsForDivisionsOld {
 
 	
 	
