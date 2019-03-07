@@ -67,7 +67,7 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 		ontopair=Utilities.MOUSE2HUMAN;
 		//ontopair=Utilities.FMA2NCI;		
 		//ontopair=Utilities.FMA2SNOMED;
-		//ontopair=Utilities.SNOMED2NCI;
+		ontopair=Utilities.SNOMED2NCI;
 		
 		//ontopair=HP2MP2016;
 		//ontopair=DOID2ORDO2016;
@@ -119,9 +119,9 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 				path_file_clusters = "/home/ejimenez-ruiz/Documents/ATI_AIDA/DivisionMatchingTask/experiments-ijcai/clusters-words/";
 			}
 			else if (type_embedding==WORD_CONCEPT_EMBEDDING) {
-				//output_path = base_output_path + "tasks/embeddings_if/";
+				output_path = base_output_path + "tasks/embeddings_if/";
 				//output_path = base_output_path + "tasks_alod2vec/embeddings_if/";   //for alod2vec and sanom
-				output_path = base_output_path + "tasks_pomap/embeddings_if/";   //special case for pomap for which anatomy uris must be different
+				//output_path = base_output_path + "tasks_pomap/embeddings_if/";   //special case for pomap for which anatomy uris must be different
 				path_sizes = base_output_path + "task_sizes/embeddings_if/";
 				path_file_clusters = "/home/ejimenez-ruiz/Documents/ATI_AIDA/DivisionMatchingTask/experiments-ijcai/clusters-if/";
 			}
@@ -137,12 +137,12 @@ public class TestWordEmbeddingDivisionAlignmentTask extends AbstractTestDivision
 			
 			
 			//number of tasks
-			int[] num_tasks={2,5,10,20, 50, 75,100, 125, 150, 175,200};
+			//int[] num_tasks={2,5,10,20, 50, 75,100, 125, 150, 175,200};
 			
 			
 			//int[] num_tasks={1, 2,5,10, 20,50,100,200};
 			//int[] num_tasks={2,5, 10, 20};
-			//int[] num_tasks={200};
+			int[] num_tasks={200};
 			//int[] num_tasks={20,50,100};
 			//int repetitions = 5;
 			int repetitions = 1;

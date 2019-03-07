@@ -55,9 +55,9 @@ public class EvaluateSystemMappingsForDivisions extends AbstractTestDivisionAlig
 		LogOutput.showOutpuLogAlways(Parameters.print_output_always);
 				
 		ontopair=Utilities.MOUSE2HUMAN;
-		//ontopair=Utilities.FMA2NCI;		
-		//ontopair=Utilities.FMA2SNOMED;
-		//ontopair=Utilities.SNOMED2NCI;
+		ontopair=Utilities.FMA2NCI;		
+		ontopair=Utilities.FMA2SNOMED;
+		ontopair=Utilities.SNOMED2NCI;
 		
 		//ontopair=HP2MP2016;
 		//ontopair=DOID2ORDO2016;
@@ -79,7 +79,7 @@ public class EvaluateSystemMappingsForDivisions extends AbstractTestDivisionAlig
 			
 			//number of tasks
 			//int[] num_tasks={1,2,5,10,20,50,100,200};
-			int[] num_tasks={2,5,10,20,50,75,100,125,150,175,200};
+			//int[] num_tasks={2,5,10,20,50,75,100,125,150,175,200};
 			//String[] tools={"AML", "LogMap"};
 			//String[] tools={"LogMap"};
 			//String[] tools={"AML2"};
@@ -87,15 +87,25 @@ public class EvaluateSystemMappingsForDivisions extends AbstractTestDivisionAlig
 			//String[] tools={"Mamba"};
 			//String[] tools={"YAM-BIO"};
 			//String[] tools={"LogMapLite"}
-			//String[] tools={"FCA_Map"};
-			//String[] tools={"POMAP"};
+			
+			String[] tools={"FCA_Map"};
+			
+			//String[] tools={"POMAP++"};
+			
+			//String[] tools={"SANOM"};
+			
+			//String[] tools={"ALOD2Vec"};
+			
+			
+			
 			//String[] tools={"GMap"};
-			String[] tools={"POMAP++", "Mamba", "SANOM2", "FCA_Map", "ALOD2Vec"};
+			//String[] tools={"POMAP++", "Mamba", "SANOM2", "FCA_Map", "ALOD2Vec"};
+			//String[] tools={"POMAP++", "SANOM", "FCA_Map", "ALOD2Vec"};
 			//int[] num_tasks={1,2,5,10,20, 50, 100, 200};
 			//%int[] num_tasks={1, 2, 5, 10};
 			//int[] num_tasks={20, 50};
 			//int[] num_tasks={10, 20, 50};
-			//int[] num_tasks={20, 50};
+			int[] num_tasks={150, 200};
 			
 			//int[] num_tasks={2};
 			
