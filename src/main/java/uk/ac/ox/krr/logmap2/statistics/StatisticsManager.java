@@ -83,8 +83,8 @@ public class StatisticsManager {
 	public static void extractStatisticsAnchors(){
 		
 		//Initial number
-		for (int ide1 : mapping_manager.getAnchors().keySet()){
-			for (int ide2 : mapping_manager.getAnchors().get(ide1)){
+		for (int ide1 : mapping_manager.getLogMapMappings().keySet()){
+			for (int ide2 : mapping_manager.getLogMapMappings().get(ide1)){
 				if (mapping_manager.isId1SmallerThanId2(ide1, ide2)){
 					
 					Manchors++;
@@ -116,8 +116,8 @@ public class StatisticsManager {
 	
 	
 	public static void extracStatisticsDiscardedMappings(){
-		for (int ide1 : mapping_manager.getDiscardedAnchors().keySet()){
-			for (int ide2 : mapping_manager.getDiscardedAnchors().get(ide1)){
+		for (int ide1 : mapping_manager.getDiscardedMappings().keySet()){
+			for (int ide2 : mapping_manager.getDiscardedMappings().get(ide1)){
 				
 				//check only one side
 				if (mapping_manager.isId1SmallerThanId2(ide1, ide2)){
@@ -134,8 +134,8 @@ public class StatisticsManager {
 	
 	public static void extracStatisticsHardDiscardedMappings(){
 	
-		for (int ide1 : mapping_manager.getHardDiscardedAnchors().keySet()){
-			for (int ide2 : mapping_manager.getHardDiscardedAnchors().get(ide1)){
+		for (int ide1 : mapping_manager.getHardDiscardedMappings().keySet()){
+			for (int ide2 : mapping_manager.getHardDiscardedMappings().get(ide1)){
 				
 				if (mapping_manager.isMappingInDiscardedSet(ide1, ide2) || 
 						mapping_manager.isMappingInDiscardedSet(ide2, ide1)){
@@ -159,12 +159,12 @@ public class StatisticsManager {
 	
 	public static void extracStatisticsConflictiveMappings(){
 		
-		for (int ide1 : mapping_manager.getConflictiveAnchors().keySet()){
-			for (int ide2 : mapping_manager.getConflictiveAnchors().get(ide1)){
+		for (int ide1 : mapping_manager.getConflictiveMappings().keySet()){
+			for (int ide2 : mapping_manager.getConflictiveMappings().get(ide1)){
 				
 				if (!mapping_manager.isId1SmallerThanId2(ide1, ide2)){
-					if (mapping_manager.getConflictiveAnchors().containsKey(ide2) && 
-						mapping_manager.getConflictiveAnchors().get(ide2).contains(ide1)){
+					if (mapping_manager.getConflictiveMappings().containsKey(ide2) && 
+						mapping_manager.getConflictiveMappings().get(ide2).contains(ide1)){
 						
 						continue; //Already visited
 					}

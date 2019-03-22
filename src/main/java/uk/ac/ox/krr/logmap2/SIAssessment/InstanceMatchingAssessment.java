@@ -128,8 +128,8 @@ public class InstanceMatchingAssessment {
 		
 		
 		for (int cls1 : types1){
-			if (mapping_manager.getAnchors().containsKey(cls1)){
-				mapped_types1.addAll(mapping_manager.getAnchors().get(cls1));
+			if (mapping_manager.getLogMapMappings().containsKey(cls1)){
+				mapped_types1.addAll(mapping_manager.getLogMapMappings().get(cls1));
 			}
 		}
 		

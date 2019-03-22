@@ -116,15 +116,15 @@ public class InteractiveProcessAmbiguity extends InteractiveProcess {
 		//TODO: we ask everything. This will be used in experiments
 		//We ask even anchors!!!
 		if (ask_everything){
-			for (int ide1 : mapping_manager.getAnchors().keySet()){
-				for (int ide2 : mapping_manager.getAnchors().get(ide1)){
+			for (int ide1 : mapping_manager.getLogMapMappings().keySet()){
+				for (int ide2 : mapping_manager.getLogMapMappings().get(ide1)){
 					if (mapping_manager.isId1SmallerThanId2(ide1, ide2)){
 						mapping_manager.addMappingObject2AskUserList(ide1, ide2); //we add equivalence
 					}
 				}
 			}
 			
-			mapping_manager.getAnchors().clear();
+			mapping_manager.getLogMapMappings().clear();
 			
 			//mapping_manager.setExactAsFixed(false);		
 			
@@ -696,10 +696,10 @@ public class InteractiveProcessAmbiguity extends InteractiveProcess {
 		setStringMappings();
 			
 		
-		intersection=new HashSet<MappingObjectStr>(mapping_manager.getStringAnchors());
+		intersection=new HashSet<MappingObjectStr>(mapping_manager.getStringLogMapMappings());
 		intersection.retainAll(mapping_manager.getStringGoldStandardAnchors());
 		
-		precision=((double)intersection.size())/((double)mapping_manager.getStringAnchors().size());
+		precision=((double)intersection.size())/((double)mapping_manager.getStringLogMapMappings().size());
 		recall=((double)intersection.size())/((double)mapping_manager.getStringGoldStandardAnchors().size());
 
 		Fmeasure = (2*recall*precision)/(precision+recall);

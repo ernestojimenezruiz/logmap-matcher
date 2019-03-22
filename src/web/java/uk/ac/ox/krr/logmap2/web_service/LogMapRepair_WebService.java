@@ -354,7 +354,7 @@ public class LogMapRepair_WebService {
 		
 		
 		init = Calendar.getInstance().getTimeInMillis();
-		mapping_assessment.CheckSatisfiabilityOfIntegration_DandG(mapping_manager.getAnchors());
+		mapping_assessment.CheckSatisfiabilityOfIntegration_DandG(mapping_manager.getLogMapMappings());
 		fin = Calendar.getInstance().getTimeInMillis();
 		LogOutput.printAlways("\tTime cleaning reliable class mappings Dowling and Gallier (s): " + (float)((double)fin-(double)init)/1000.0);
 		LogOutput.printAlways("\tRepaired Root Unsat using Dowling and Gallier (aproximation): " + mapping_assessment.getNumRepairedUnsatClasses());
@@ -370,7 +370,7 @@ public class LogMapRepair_WebService {
 			init = Calendar.getInstance().getTimeInMillis();
 			
 			//Index already have the necessary taxonomical information apart from the equiv mappings
-			index.setIntervalLabellingIndex(mapping_manager.getFixedAnchors());
+			index.setIntervalLabellingIndex(mapping_manager.getFixedMappings());
 			index.clearAuxStructuresforLabellingSchema();
 			
 			fin = Calendar.getInstance().getTimeInMillis();
@@ -417,7 +417,7 @@ public class LogMapRepair_WebService {
 			//------------------------------
 			try{			
 				init = Calendar.getInstance().getTimeInMillis();
-				index.setIntervalLabellingIndex(mapping_manager.getAnchors());//It also contains mappings 2 review
+				index.setIntervalLabellingIndex(mapping_manager.getLogMapMappings());//It also contains mappings 2 review
 				index.clearAuxStructuresforLabellingSchema();
 				fin = Calendar.getInstance().getTimeInMillis();
 				LogOutput.printAlways("Time indexing hierarchy + anchors and candidates I (ILS) (s): " + (float)((double)fin-(double)init)/1000.0);
@@ -430,9 +430,9 @@ public class LogMapRepair_WebService {
 		
 		
 		//Add weakened
-		for (int ide1 : mapping_manager.getWeakenedDandGAnchors().keySet()){
+		for (int ide1 : mapping_manager.getWeakenedDandGMappings().keySet()){
 			
-			for (int ide2 : mapping_manager.getWeakenedDandGAnchors().get(ide1)){
+			for (int ide2 : mapping_manager.getWeakenedDandGMappings().get(ide1)){
 				
 				if (!mapping_manager.isMappingInConflictWithFixedMappings(ide1, ide2)){
 					
@@ -448,7 +448,7 @@ public class LogMapRepair_WebService {
 		mapping_manager.setExactAsFixed(false);
 		
 		init = Calendar.getInstance().getTimeInMillis();
-		mapping_assessment.CheckSatisfiabilityOfIntegration_DandG(mapping_manager.getAnchors());
+		mapping_assessment.CheckSatisfiabilityOfIntegration_DandG(mapping_manager.getLogMapMappings());
 		fin = Calendar.getInstance().getTimeInMillis();
 		LogOutput.printAlways("\tTime cleaning ALL class mappings Dowling and Gallier (s): " + (float)((double)fin-(double)init)/1000.0);
 		LogOutput.printAlways("\tRepaired Root Unsat using Dowling and Gallier 3 (aproximation): " + mapping_assessment.getNumRepairedUnsatClasses());
@@ -656,8 +656,8 @@ public class LogMapRepair_WebService {
 			
 			//if (Parameters.output_class_mappings){
 			
-			for (int idea : mapping_manager.getAnchors().keySet()){
-				for (int ideb : mapping_manager.getAnchors().get(idea)){
+			for (int idea : mapping_manager.getLogMapMappings().keySet()){
+				for (int ideb : mapping_manager.getLogMapMappings().get(idea)){
 						
 						//This is important to keep compatibility with OAEI and Flat alignment formats
 						//The order of mappings is important
@@ -905,8 +905,8 @@ public class LogMapRepair_WebService {
 		
 		try {
 			
-			for (int idea : mapping_manager.getAnchors().keySet()){
-				for (int ideb : mapping_manager.getAnchors().get(idea)){
+			for (int idea : mapping_manager.getLogMapMappings().keySet()){
+				for (int ideb : mapping_manager.getLogMapMappings().get(idea)){
 						
 						//This is important to keep compatibility with OAEI and Flat alignment formats
 						//The order of mappings is important

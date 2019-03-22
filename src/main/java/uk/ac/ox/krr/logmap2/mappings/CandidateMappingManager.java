@@ -1657,7 +1657,7 @@ public class CandidateMappingManager extends MappingManager {
 		//We add everything ins discarded if it is a small set
 		//Useful in cases like  mouse anatomy and fma2nci small 
 		//where discarded mappinsg are small wrt the number of anchors
-		if (getNumDiscardedMappings()<(getAnchors().size()/Parameters.ratio_second_chance_discarded)){
+		if (getNumDiscardedMappings()<(getLogMapMappings().size()/Parameters.ratio_second_chance_discarded)){
 		//if (getNumDiscardedMappings()<(getAnchors().size()/2.5)){
 			
 			LogOutput.print("Second chance to discarded mappings.");
@@ -1670,15 +1670,15 @@ public class CandidateMappingManager extends MappingManager {
 			//no effect for 2nd chance mappings)
 			setFilterWithHeuristicsSecondLevelMappings(false);
 			
-			for (int ide1 : getDiscardedAnchors().keySet()){
-				for (int ide2 : getDiscardedAnchors().get(ide1)){
+			for (int ide1 : getDiscardedMappings().keySet()){
+				for (int ide2 : getDiscardedMappings().get(ide1)){
 					//addEquivMapping2ListOfAnchors2AskUser(ide1, ide2);
 					addMapping2ListOfAnchors2AskLogMap(ide1, ide2);
 					
 				}
 			}
 			
-			getDiscardedAnchors().clear();
+			getDiscardedMappings().clear();
 		}
 		
 		
@@ -2007,9 +2007,9 @@ public class CandidateMappingManager extends MappingManager {
 	public void assessConflictiveMappings(){
 
 		
-		for (int ident1 : getConflictiveAnchors().keySet()){
+		for (int ident1 : getConflictiveMappings().keySet()){
 			
-			for (int ident2 : getConflictiveAnchors().get(ident1)){
+			for (int ident2 : getConflictiveMappings().get(ident1)){
 				
 				if (isMappingInConflictWithFixedMappings(ident1, ident2)){
 					
@@ -3132,8 +3132,8 @@ public class CandidateMappingManager extends MappingManager {
 		
 		LinkedList<MappingObjectIdentifiers> list_mappings = new LinkedList<MappingObjectIdentifiers>();
 		
-		for (int ide1 : anchorMappings1N.keySet()){
-			for (int ide2 : anchorMappings1N.get(ide1)){
+		for (int ide1 : logmapMappings1N.keySet()){
+			for (int ide2 : logmapMappings1N.get(ide1)){
 				
 				//we consider the equivalence only
 				if (isId1SmallerThanId2(ide1, ide2)){

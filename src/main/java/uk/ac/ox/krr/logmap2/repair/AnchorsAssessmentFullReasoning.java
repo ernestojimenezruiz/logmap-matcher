@@ -328,8 +328,8 @@ public class AnchorsAssessmentFullReasoning {
 		//Non fixed mappings yet
 		if (review_anchors){
 		
-			for (int ide1 : mapping_extractor.getAnchors().keySet()){
-				for (int ide2 : mapping_extractor.getAnchors().get(ide1)){
+			for (int ide1 : mapping_extractor.getLogMapMappings().keySet()){
+				for (int ide2 : mapping_extractor.getLogMapMappings().get(ide1)){
 					
 					if (ide1<ide2){
 					
@@ -364,8 +364,8 @@ public class AnchorsAssessmentFullReasoning {
 			
 			//THERE ARE FIXED MAPPINGS
 			
-			for (int ide1 : mapping_extractor.getFixedAnchors().keySet()){
-				for (int ide2 : mapping_extractor.getFixedAnchors().get(ide1)){
+			for (int ide1 : mapping_extractor.getFixedMappings().keySet()){
+				for (int ide2 : mapping_extractor.getFixedMappings().get(ide1)){
 					
 					if (ide1<ide2){
 						

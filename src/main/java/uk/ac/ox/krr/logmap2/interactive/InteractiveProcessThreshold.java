@@ -220,10 +220,10 @@ public class InteractiveProcessThreshold extends InteractiveProcess
 		setStringMappings();
 			
 		
-		intersection=new HashSet<MappingObjectStr>(m_manager.getStringAnchors());
+		intersection=new HashSet<MappingObjectStr>(m_manager.getStringLogMapMappings());
 		intersection.retainAll(m_manager.getStringGoldStandardAnchors());
 		
-		precision=((double)intersection.size())/((double)m_manager.getStringAnchors().size());
+		precision=((double)intersection.size())/((double)m_manager.getStringLogMapMappings().size());
 		recall=((double)intersection.size())/((double)m_manager.getStringGoldStandardAnchors().size());
 
 		Fmeasure = (2*recall*precision)/(precision+recall);
@@ -252,9 +252,9 @@ public class InteractiveProcessThreshold extends InteractiveProcess
 		
 		//TODO Add Weakened mappings (only for P&R)
 		//Note that removed ones are not added
-		for (int ide1 : m_manager.getWeakenedDandGAnchors().keySet()){
+		for (int ide1 : m_manager.getWeakenedDandGMappings().keySet()){
 			
-			for (int ide2 : m_manager.getWeakenedDandGAnchors().get(ide1)){
+			for (int ide2 : m_manager.getWeakenedDandGMappings().get(ide1)){
 						
 				if (m_manager.isMappingInConflictWithFixedMappings(ide1, ide2) || 
 						m_manager.isMappingInferred(ide1, ide2) ||
@@ -306,8 +306,8 @@ public class InteractiveProcessThreshold extends InteractiveProcess
 		if (considerDiscarded){
 			MappingObjectInteractivity m;
 			
-			for (int ideA : m_manager.getDiscardedAnchors().keySet()){
-				for (int ideB : m_manager.getDiscardedAnchors().get(ideA)){
+			for (int ideA : m_manager.getDiscardedMappings().keySet()){
+				for (int ideB : m_manager.getDiscardedMappings().get(ideA)){
 					
 					if (ideA<ideB)
 					{

@@ -208,7 +208,7 @@ public class AnchorAssessment {
 		Set<Integer> mapped_entities = new HashSet<Integer>();
 		
 		//We include all entities. Note that we store both directions ofmappings
-		mapped_entities.addAll(mapping_extractor.getFixedAnchors().keySet());
+		mapped_entities.addAll(mapping_extractor.getFixedMappings().keySet());
 		//
 		mapped_entities.addAll(mappings2repair.keySet());//Do they represent mappings L2R or R2L?
 		
@@ -224,7 +224,7 @@ public class AnchorAssessment {
 				index.getGeneralHornAxiom(),
 				addClassTypes,
 				index.getDirectIndividualClassTypes(),
-				mapping_extractor.getFixedAnchors(),
+				mapping_extractor.getFixedMappings(),
 				mappings2repair,
 				hornMappings2Remove);
 		
@@ -1376,7 +1376,7 @@ public class AnchorAssessment {
 		
 		
 		LogOutput.print("\nDISCARDED MAPPINGS: " + discarded + " - ");// + mapping_extractor.getDircardedAnchors().size());
-		LogOutput.print("WEAKENED MAPPINGS: " + weakened  + " - " + mapping_extractor.getWeakenedDandGAnchors().size());
+		LogOutput.print("WEAKENED MAPPINGS: " + weakened  + " - " + mapping_extractor.getWeakenedDandGMappings().size());
 		LogOutput.print("Clauses 2 ignore: " + hornMappings2Remove.size());
 		
 	}

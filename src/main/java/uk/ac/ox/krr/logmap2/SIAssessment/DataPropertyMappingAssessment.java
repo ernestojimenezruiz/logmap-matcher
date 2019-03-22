@@ -91,8 +91,8 @@ public class DataPropertyMappingAssessment extends PropertyMappingAssessment<Str
 		if (!domain1.isEmpty() && !domain2.isEmpty()){
 			//Find mappings		
 			for (int cls1 : domain1){
-				if (mapping_manager.getAnchors().containsKey(cls1)){
-					mapped_domain1.addAll(mapping_manager.getAnchors().get(cls1));
+				if (mapping_manager.getLogMapMappings().containsKey(cls1)){
+					mapped_domain1.addAll(mapping_manager.getLogMapMappings().get(cls1));
 				}
 			}
 		}
@@ -188,8 +188,8 @@ public class DataPropertyMappingAssessment extends PropertyMappingAssessment<Str
 		if (!domain1.isEmpty() && !domain2.isEmpty()){
 			//Find mappings		
 			for (int cls1 : domain1){
-				if (mapping_manager.getAnchors().containsKey(cls1)){
-					mapped_domain1.addAll(mapping_manager.getAnchors().get(cls1));
+				if (mapping_manager.getLogMapMappings().containsKey(cls1)){
+					mapped_domain1.addAll(mapping_manager.getLogMapMappings().get(cls1));
 				}
 			}
 		}

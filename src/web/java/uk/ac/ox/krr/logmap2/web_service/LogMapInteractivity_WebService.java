@@ -549,7 +549,7 @@ public class LogMapInteractivity_WebService {
 			init = Calendar.getInstance().getTimeInMillis();
 			mappings_assessment
 					.CheckSatisfiabilityOfIntegration_DandG(mapping_extractor
-							.getAnchors());
+							.getLogMapMappings());
 			fin = Calendar.getInstance().getTimeInMillis();
 			writeInternalLog("Time cleaning anchors D&G (s): "
 					+ (float) ((double) fin - (double) init) / 1000.0);
@@ -568,7 +568,7 @@ public class LogMapInteractivity_WebService {
 		// Index already have the necessary taxonomical information apart from
 		// the equiv mappings
 		// TODO Extract ident2directkids with clean anchors
-		index.setIntervalLabellingIndex(mapping_extractor.getFixedAnchors());
+		index.setIntervalLabellingIndex(mapping_extractor.getFixedMappings());
 
 		index.clearAuxStructuresforLabellingSchema();
 
@@ -628,7 +628,7 @@ public class LogMapInteractivity_WebService {
 		// INTERVAL LABELLING SCHEMA
 		// --------------------------
 		init = Calendar.getInstance().getTimeInMillis();
-		index.setIntervalLabellingIndex(mapping_extractor.getAnchors());// It
+		index.setIntervalLabellingIndex(mapping_extractor.getLogMapMappings());// It
 																		// also
 																		// contains
 																		// mappings
@@ -1137,7 +1137,7 @@ public class LogMapInteractivity_WebService {
 	}
 
 	public Map<Integer, Set<Integer>> getClassMappings() {
-		return mapping_extractor.getAnchors();
+		return mapping_extractor.getLogMapMappings();
 
 	}
 

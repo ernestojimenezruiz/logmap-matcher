@@ -778,10 +778,10 @@ public class LogMap2Core {
 	
 	private boolean areAnchorsdAmbiguous(){
 		
-		for (int ide : mapping_extractor.getAnchors().keySet()){
+		for (int ide : mapping_extractor.getLogMapMappings().keySet()){
 			
-			if (mapping_extractor.getAnchors().get(ide).size()>1){
-				LogOutput.print(ide + "  " + mapping_extractor.getAnchors().get(ide));
+			if (mapping_extractor.getLogMapMappings().get(ide).size()>1){
+				LogOutput.print(ide + "  " + mapping_extractor.getLogMapMappings().get(ide));
 				return true;
 			}
 			
@@ -1055,20 +1055,22 @@ public class LogMap2Core {
 			//Only for statistical purposes or to extract global infor			
 			if (Parameters.extractGlobal_D_G_Info){
 				init = StatisticsTimeMappings.getCurrentTimeInMillis();
-				mappings_assessment.CountSatisfiabilityOfIntegration_DandG(mapping_extractor.getAnchors());
+				mappings_assessment.CountSatisfiabilityOfIntegration_DandG(mapping_extractor.getLogMapMappings());
 				
 				LogOutput.printAlways("Time checking satisfiability D&G (s): " + StatisticsTimeMappings.getRunningTime(init));
 			}
 			
 			
 			init = StatisticsTimeMappings.getCurrentTimeInMillis();
-			mappings_assessment.CheckSatisfiabilityOfIntegration_DandG(mapping_extractor.getAnchors());
+			mappings_assessment.CheckSatisfiabilityOfIntegration_DandG(mapping_extractor.getLogMapMappings());
 			
 			LogOutput.printAlways("Time cleaning anchors D&G (s): " + StatisticsTimeMappings.getRunningTime(init));
 		}
 		
 		//After repairing exact
 		mapping_extractor.setExactAsFixed(true);
+		mapping_extractor.saveAnchors(); //we save anchors in new structure so that we can retrieve them at the end of the process
+		
 		countAnchors();
 		
 		
@@ -1082,7 +1084,7 @@ public class LogMap2Core {
 		
 		//Index already have the necessary taxonomical information apart from the equiv mappings
 
-		index.setIntervalLabellingIndex(mapping_extractor.getFixedAnchors());
+		index.setIntervalLabellingIndex(mapping_extractor.getFixedMappings());
 		
 		index.clearAuxStructuresforLabellingSchema();
 		
@@ -1098,8 +1100,8 @@ public class LogMap2Core {
 		
 		int numMappings = 0;
 		
-		for (int ide1: mapping_extractor.getAnchors().keySet()){
-			for (int ide2: mapping_extractor.getAnchors().get(ide1)){
+		for (int ide1: mapping_extractor.getLogMapMappings().keySet()){
+			for (int ide2: mapping_extractor.getLogMapMappings().get(ide1)){
 			
 				if (ide1<ide2)
 					numMappings++;
@@ -1184,7 +1186,7 @@ public class LogMap2Core {
 		//INTERVAL LABELLING SCHEMA
 		//--------------------------
 		init = StatisticsTimeMappings.getCurrentTimeInMillis();
-		index.setIntervalLabellingIndex(mapping_extractor.getAnchors());//It also contains mappings 2 review
+		index.setIntervalLabellingIndex(mapping_extractor.getLogMapMappings());//It also contains mappings 2 review
 		index.clearAuxStructuresforLabellingSchema();
 		
 		LogOutput.printAlways("Time indexing hierarchy + anchors and candidates I (ILS) (s): " + StatisticsTimeMappings.getRunningTime(init));
@@ -1589,7 +1591,7 @@ public class LogMap2Core {
 			init = StatisticsTimeMappings.getCurrentTimeInMillis();
 		
 			mapping_extractor.setExactAsFixed(false);
-			mappings_assessment.CheckSatisfiabilityOfIntegration_DandG(mapping_extractor.getAnchors());  ///No fixed mappings: we clean everything just in case
+			mappings_assessment.CheckSatisfiabilityOfIntegration_DandG(mapping_extractor.getLogMapMappings());  ///No fixed mappings: we clean everything just in case
 			mapping_extractor.setExactAsFixed(true);
 			
 			
@@ -1709,9 +1711,9 @@ public class LogMap2Core {
 	private void createOutput4Overlapping(boolean use_discarded){
 		
 		
-		createSignatureFromMappings(mapping_extractor.getAnchors());
+		createSignatureFromMappings(mapping_extractor.getLogMapMappings());
 		if (use_discarded)
-			createSignatureFromMappings(mapping_extractor.getDiscardedAnchors());
+			createSignatureFromMappings(mapping_extractor.getDiscardedMappings());
 		
 		
 		
@@ -1763,8 +1765,8 @@ public class LogMap2Core {
 			
 			if (Parameters.output_class_mappings){
 			
-				for (int idea : mapping_extractor.getAnchors().keySet()){
-					for (int ideb : mapping_extractor.getAnchors().get(idea)){
+				for (int idea : mapping_extractor.getLogMapMappings().keySet()){
+					for (int ideb : mapping_extractor.getLogMapMappings().get(idea)){
 						
 						//This is important to keep compatibility with OAEI and Flat alignment formats
 						//The order of mappings is important
@@ -1966,7 +1968,7 @@ public class LogMap2Core {
 				Parameters.output_prop_mappings,
 				Parameters.output_instance_mappings);
 		
-		return mapping_extractor.getStringAnchors();
+		return mapping_extractor.getStringLogMapMappings();
 	}
 	
 	
@@ -1994,18 +1996,18 @@ public class LogMap2Core {
 				Parameters.output_instance_mappings);
 		
 		
-		StatisticsManager.setMFinal(mapping_extractor.getStringAnchors().size());
-		LogOutput.printAlways("MAPPINGS: " + mapping_extractor.getStringAnchors().size());
+		StatisticsManager.setMFinal(mapping_extractor.getStringLogMapMappings().size());
+		LogOutput.printAlways("MAPPINGS: " + mapping_extractor.getStringLogMapMappings().size());
 		
 		
 		//ALL UMLS MAPPINGS
-		intersection=new HashSet<MappingObjectStr>(mapping_extractor.getStringAnchors());
+		intersection=new HashSet<MappingObjectStr>(mapping_extractor.getStringLogMapMappings());
 		intersection.retainAll(mappings_gs);
 		
 		StatisticsManager.setGoodMFinal(intersection.size());
 		
 		
-		precision=((double)intersection.size())/((double)mapping_extractor.getStringAnchors().size());
+		precision=((double)intersection.size())/((double)mapping_extractor.getStringLogMapMappings().size());
 		recall=((double)intersection.size())/((double)mappings_gs.size());
 
 		//String dir = "/auto/users/yzhou/LogMapStuff/Test/FMA2NCI/";
@@ -2059,7 +2061,7 @@ public class LogMap2Core {
 		
 		Set <MappingObjectStr> difference;
         difference=new HashSet<MappingObjectStr>(mappings_gs);
-        difference.removeAll(mapping_extractor.getStringAnchors());
+        difference.removeAll(mapping_extractor.getStringLogMapMappings());
         //LogOutput.print("Difference in GS: " + difference.size());
         LogOutput.printAlways("Difference in GS: " + difference.size());
         LogOutput.printAlways("\tPrinting only the first 250");
@@ -2074,7 +2076,7 @@ public class LogMap2Core {
 	        }
 	    //}
         Set <MappingObjectStr> difference2;
-        difference2=new HashSet<MappingObjectStr>(mapping_extractor.getStringAnchors());
+        difference2=new HashSet<MappingObjectStr>(mapping_extractor.getStringLogMapMappings());
         difference2.removeAll(mappings_gs);
         //LogOutput.print("Difference in Candidates: " + difference2.size());
         LogOutput.printAlways("Difference in Candidates: " + difference2.size());
@@ -2265,9 +2267,9 @@ public class LogMap2Core {
 		
 		
 		//ORDER ANCHORS
-		for (int idea : mapping_extractor.getAnchors().keySet()){
+		for (int idea : mapping_extractor.getLogMapMappings().keySet()){
 			
-			for (int ideb : mapping_extractor.getAnchors().get(idea)){
+			for (int ideb : mapping_extractor.getLogMapMappings().get(idea)){
 				
 				if (idea<ideb){
 					
@@ -2340,9 +2342,9 @@ public class LogMap2Core {
 				}
 			}*/
 			
-			for (int idea : mapping_extractor.getHardDiscardedAnchors().keySet()){
+			for (int idea : mapping_extractor.getHardDiscardedMappings().keySet()){
 				
-				for (int ideb : mapping_extractor.getHardDiscardedAnchors().get(idea)){
+				for (int ideb : mapping_extractor.getHardDiscardedMappings().get(idea)){
 					
 					if (idea<ideb){
 						
@@ -2411,23 +2413,35 @@ public class LogMap2Core {
 	
 	
 	public Map<Integer, Set<Integer>> getClassMappings(){
-		return mapping_extractor.getAnchors();
+		return mapping_extractor.getLogMapMappings();
 		
 	}
 	
 	
 	public Map<Integer, Set<Integer>> getDiscardedClassMappings(){
-		return mapping_extractor.getDiscardedAnchors();
+		return mapping_extractor.getDiscardedMappings();
 		
 	}
 	
 	public Map<Integer, Set<Integer>> getHardDiscardedClassMappings(){
-		return mapping_extractor.getHardDiscardedAnchors();
+		return mapping_extractor.getHardDiscardedMappings();
 		
 	}
 	
 	public Map<Integer, Set<Integer>> getConflictiveAnchors(){
-		return mapping_extractor.getConflictiveAnchors();
+		return mapping_extractor.getConflictiveMappings();
+		
+	}
+	
+	
+	public Map<Integer, Set<Integer>> getAnchors(){
+		return mapping_extractor.getAnchors();
+		
+	}
+	
+	
+	public Map<Integer, Set<Integer>> getLogMapMappings1N(){
+		return mapping_extractor.getLogMapMappings();
 		
 	}
 	

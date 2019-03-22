@@ -38,7 +38,9 @@ public class LogMap2_Matcher {
 	Set<MappingObjectStr> logmap2_mappings = new HashSet<MappingObjectStr>();
 	Set<MappingObjectStr> logmap2_discarded_mappings = new HashSet<MappingObjectStr>();
 	Set<MappingObjectStr> logmap2_hard_discarded_mappings = new HashSet<MappingObjectStr>();
-	Set<MappingObjectStr> logmap2_conflictive_mappings = new HashSet<MappingObjectStr>();
+	Set<MappingObjectStr> logmap2_conflictive_mappings = new HashSet<MappingObjectStr>();	
+	Set<MappingObjectStr> logmap2_anchors = new HashSet<MappingObjectStr>();
+	
 	Set<String> representative_labels = new HashSet<String>();
 	
 	
@@ -73,9 +75,10 @@ public class LogMap2_Matcher {
 	private void saveMappings(String output_path) throws Exception {
 		
 		//saveMappings(getLogmap2_Mappings(), output_path, "logmap_mappings.txt"); ALready created
-		saveMappings(getLogmap2_DiscardedMappings(), output_path, "discarded_mappings.txt");
-		saveMappings(getLogmap2_HardDiscardedMappings(), output_path, "hard_discarded_mappings.txt");
-		saveMappings(getLogmap2_ConflictiveMappings(), output_path, "logically_conflicting_mappings.txt");
+		saveMappings(getLogmap2_DiscardedMappings(), output_path, "logmap_discarded_mappings.txt");
+		saveMappings(getLogmap2_HardDiscardedMappings(), output_path, "logmap_hard_discarded_mappings.txt");
+		saveMappings(getLogmap2_ConflictiveMappings(), output_path, "logmap_logically_conflicting_mappings.txt");
+		saveMappings(getLogmap2_anchors(), output_path, "logmap_anchors.txt");
 		
 	}
 	
@@ -239,6 +242,14 @@ public class LogMap2_Matcher {
 	public Set<MappingObjectStr> getLogmap2_ConflictiveMappings(){
 		return logmap2_conflictive_mappings;
 	}
+	
+	
+	
+	public Set<MappingObjectStr> getLogmap2_anchors(){
+		return logmap2_anchors;
+	}
+	
+	
 	
 	
 	
@@ -451,6 +462,8 @@ public class LogMap2_Matcher {
 				
 			}
 			
+			//TODO revise direction of mapping
+			
 			
 			//For statistics. They may also be reusable since sometimes are border-line cases
 			//We also create here discarded mappings
@@ -542,6 +555,39 @@ public class LogMap2_Matcher {
 					}
 				} //for ide2
 			}//for ide1
+			
+			
+			for (int ide1 : logmap2.getAnchors().keySet()){
+				for (int ide2 : logmap2.getAnchors().get(ide1)){
+					
+					
+					if (ide1<ide2){						
+						
+							logmap2_anchors.add(
+									new MappingObjectStr(
+											logmap2.getIRI4ConceptIdentifier(ide1), 
+											logmap2.getIRI4ConceptIdentifier(ide2), 
+											logmap2.getConfidence4ConceptMapping(ide1, ide2), 
+											Utilities.EQ,
+											Utilities.CLASSES));
+							
+					}
+					else{
+							
+						logmap2_anchors.add(
+									new MappingObjectStr(								
+									logmap2.getIRI4ConceptIdentifier(ide2),
+									logmap2.getIRI4ConceptIdentifier(ide1),										
+									logmap2.getConfidence4ConceptMapping(ide1, ide2),
+									Utilities.EQ,
+									Utilities.CLASSES));
+						
+					}
+				} //for ide2
+			}//for ide1
+			
+			
+			//logmap2.ge
 			
 			
 			

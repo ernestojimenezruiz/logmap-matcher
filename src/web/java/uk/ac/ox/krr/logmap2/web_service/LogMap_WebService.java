@@ -430,7 +430,7 @@ public class LogMap_WebService {
 			*/
 			
 			init = Calendar.getInstance().getTimeInMillis();
-			mappings_assessment.CheckSatisfiabilityOfIntegration_DandG(mapping_extractor.getAnchors());
+			mappings_assessment.CheckSatisfiabilityOfIntegration_DandG(mapping_extractor.getLogMapMappings());
 			fin = Calendar.getInstance().getTimeInMillis();
 			writeInternalLog("Time cleaning anchors D&G (s): " + (float)((double)fin-(double)init)/1000.0);
 		}
@@ -450,7 +450,7 @@ public class LogMap_WebService {
 		
 		//Index already have the necessary taxonomical information apart from the equiv mappings
 		//TODO Extract ident2directkids with clean anchors
-		index.setIntervalLabellingIndex(mapping_extractor.getFixedAnchors());
+		index.setIntervalLabellingIndex(mapping_extractor.getFixedMappings());
 		
 		index.clearAuxStructuresforLabellingSchema();
 		
@@ -521,7 +521,7 @@ public class LogMap_WebService {
 		//INTERVAL LABELLING SCHEMA
 		//--------------------------
 		init = Calendar.getInstance().getTimeInMillis();
-		index.setIntervalLabellingIndex(mapping_extractor.getAnchors());//It also contains mappings 2 review
+		index.setIntervalLabellingIndex(mapping_extractor.getLogMapMappings());//It also contains mappings 2 review
 		index.clearAuxStructuresforLabellingSchema();
 		fin = Calendar.getInstance().getTimeInMillis();
 		writeInternalLog("Time indexing hierarchy + anchors and candidates I (ILS) (s): " + (float)((double)fin-(double)init)/1000.0);
@@ -971,7 +971,7 @@ public class LogMap_WebService {
 	
 	
 	public Map<Integer, Set<Integer>> getClassMappings(){
-		return mapping_extractor.getAnchors();
+		return mapping_extractor.getLogMapMappings();
 		
 	}
 	

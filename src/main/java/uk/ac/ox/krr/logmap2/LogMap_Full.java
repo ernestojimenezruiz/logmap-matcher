@@ -294,7 +294,7 @@ public class LogMap_Full {
 	
 	
 	public Map<Integer, Set<Integer>> getClassMappings(){
-		return mapping_extractor.getAnchors();
+		return mapping_extractor.getLogMapMappings();
 		
 	}
 	
@@ -538,8 +538,8 @@ public class LogMap_Full {
 		
 		int numMappings = 0;
 		
-		for (int ide1: mapping_extractor.getAnchors().keySet()){
-			for (int ide2: mapping_extractor.getAnchors().get(ide1)){
+		for (int ide1: mapping_extractor.getLogMapMappings().keySet()){
+			for (int ide2: mapping_extractor.getLogMapMappings().get(ide1)){
 			
 				if (ide1<ide2)
 					numMappings++;
@@ -747,22 +747,22 @@ public class LogMap_Full {
 		mapping_extractor.setStringAnchors();
 		
 		
-		StatisticsManager.setMFinal(mapping_extractor.getStringAnchors().size());
-		LogOutput.print("MAPPINGS: " + mapping_extractor.getStringAnchors().size());
+		StatisticsManager.setMFinal(mapping_extractor.getStringLogMapMappings().size());
+		LogOutput.print("MAPPINGS: " + mapping_extractor.getStringLogMapMappings().size());
 		
 		
 		//ALL UMLS MAPPINGS
-		intersection=new HashSet<MappingObjectStr>(mapping_extractor.getStringAnchors());
+		intersection=new HashSet<MappingObjectStr>(mapping_extractor.getStringLogMapMappings());
 		intersection.retainAll(mappings_gs);
 		
 		StatisticsManager.setGoodMFinal(intersection.size());
 		
 		
-		precision=((double)intersection.size())/((double)mapping_extractor.getStringAnchors().size());
+		precision=((double)intersection.size())/((double)mapping_extractor.getStringLogMapMappings().size());
 		recall=((double)intersection.size())/((double)mappings_gs.size());
 
 		
-		System.out.println("MAPPINGS: " + mapping_extractor.getStringAnchors().size());
+		System.out.println("MAPPINGS: " + mapping_extractor.getStringLogMapMappings().size());
 		System.out.println("WRT GS MAPPINGS");
 		System.out.println("\tPrecision Mappings: " + precision);
 		System.out.println("\tRecall Mapping: " + recall);
@@ -777,12 +777,12 @@ public class LogMap_Full {
 		
 		Set <MappingObjectStr> difference;
         difference=new HashSet<MappingObjectStr>(mappings_gs);
-        difference.removeAll(mapping_extractor.getStringAnchors());
+        difference.removeAll(mapping_extractor.getStringLogMapMappings());
         //LogOutput.print("Difference in GS: " + difference.size());
         System.out.println("Difference in GS: " + difference.size());
         
         Set <MappingObjectStr> difference2;
-        difference2=new HashSet<MappingObjectStr>(mapping_extractor.getStringAnchors());
+        difference2=new HashSet<MappingObjectStr>(mapping_extractor.getStringLogMapMappings());
         difference2.removeAll(mappings_gs);
         //LogOutput.print("Difference in Candidates: " + difference2.size());
         System.out.println("Difference in Candidates: " + difference2.size());

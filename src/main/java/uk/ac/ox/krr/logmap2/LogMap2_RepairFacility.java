@@ -596,7 +596,7 @@ public class LogMap2_RepairFacility {
 		
 		
 		init = Calendar.getInstance().getTimeInMillis();
-		mapping_assessment.CheckSatisfiabilityOfIntegration_DandG(mapping_manager.getAnchors());
+		mapping_assessment.CheckSatisfiabilityOfIntegration_DandG(mapping_manager.getLogMapMappings());
 		fin = Calendar.getInstance().getTimeInMillis();
 		LogOutput.print("\tTime cleaning reliable class mappings Dowling and Gallier (s): " + (float)((double)fin-(double)init)/1000.0);
 		LogOutput.print("\tRepaired Root Unsat using Dowling and Gallier (aproximation): " + mapping_assessment.getNumRepairedUnsatClasses());
@@ -612,7 +612,7 @@ public class LogMap2_RepairFacility {
 			init = Calendar.getInstance().getTimeInMillis();
 			
 			//Index already have the necessary taxonomical information apart from the equiv mappings
-			index.setIntervalLabellingIndex(mapping_manager.getFixedAnchors());
+			index.setIntervalLabellingIndex(mapping_manager.getFixedMappings());
 			index.clearAuxStructuresforLabellingSchema();
 			
 			fin = Calendar.getInstance().getTimeInMillis();
@@ -661,7 +661,7 @@ public class LogMap2_RepairFacility {
 			//------------------------------
 			try{			
 				init = Calendar.getInstance().getTimeInMillis();
-				index.setIntervalLabellingIndex(mapping_manager.getAnchors());//It also contains mappings 2 review
+				index.setIntervalLabellingIndex(mapping_manager.getLogMapMappings());//It also contains mappings 2 review
 				index.clearAuxStructuresforLabellingSchema();
 				fin = Calendar.getInstance().getTimeInMillis();
 				LogOutput.print("Time indexing hierarchy + anchors and candidates I (ILS) (s): " + (float)((double)fin-(double)init)/1000.0);
@@ -674,9 +674,9 @@ public class LogMap2_RepairFacility {
 		
 		
 		//Add weakened
-		for (int ide1 : mapping_manager.getWeakenedDandGAnchors().keySet()){
+		for (int ide1 : mapping_manager.getWeakenedDandGMappings().keySet()){
 			
-			for (int ide2 : mapping_manager.getWeakenedDandGAnchors().get(ide1)){
+			for (int ide2 : mapping_manager.getWeakenedDandGMappings().get(ide1)){
 				
 				if (!mapping_manager.isMappingInConflictWithFixedMappings(ide1, ide2)){
 					
@@ -724,7 +724,7 @@ public class LogMap2_RepairFacility {
 					
 					
 		init = Calendar.getInstance().getTimeInMillis();
-		mapping_assessment.CheckSatisfiabilityOfIntegration_DandG(mapping_manager.getAnchors());
+		mapping_assessment.CheckSatisfiabilityOfIntegration_DandG(mapping_manager.getLogMapMappings());
 		fin = Calendar.getInstance().getTimeInMillis();
 		LogOutput.print("\tTime cleaning class mappings Dowling and Gallier (s): " + (float)((double)fin-(double)init)/1000.0);
 		LogOutput.print("\tRepaired Root Unsat using Dowling and Gallier (aproximation): " + mapping_assessment.getNumRepairedUnsatClasses());
@@ -738,7 +738,7 @@ public class LogMap2_RepairFacility {
 			init = Calendar.getInstance().getTimeInMillis();
 			
 			//Index already have the necessary taxonomical information apart from the equiv mappings
-			index.setIntervalLabellingIndex(mapping_manager.getAnchors());
+			index.setIntervalLabellingIndex(mapping_manager.getLogMapMappings());
 			index.clearAuxStructuresforLabellingSchema();
 			
 			fin = Calendar.getInstance().getTimeInMillis();
@@ -750,9 +750,9 @@ public class LogMap2_RepairFacility {
 		}
 		
 					
-		for (int ide1 : mapping_manager.getWeakenedDandGAnchors().keySet()){
+		for (int ide1 : mapping_manager.getWeakenedDandGMappings().keySet()){
 			
-			for (int ide2 : mapping_manager.getWeakenedDandGAnchors().get(ide1)){
+			for (int ide2 : mapping_manager.getWeakenedDandGMappings().get(ide1)){
 				
 				//TODO: This is necessary no?
 				if (!mapping_manager.isMappingInConflictWithFixedMappings(ide1, ide2)){
@@ -1057,8 +1057,8 @@ public class LogMap2_RepairFacility {
 			
 			//if (Parameters.output_class_mappings){
 			
-			for (int idea : mapping_manager.getAnchors().keySet()){
-				for (int ideb : mapping_manager.getAnchors().get(idea)){
+			for (int idea : mapping_manager.getLogMapMappings().keySet()){
+				for (int ideb : mapping_manager.getLogMapMappings().get(idea)){
 						
 						//This is important to keep compatibility with OAEI and Flat alignment formats
 						//The order of mappings is important
@@ -1199,8 +1199,8 @@ public class LogMap2_RepairFacility {
 		
 		int clauses = 0;
 		
-		for (int ide1 : mapping_manager.getConflictiveAnchors().keySet()){
-			clauses += mapping_manager.getConflictiveAnchors().get(ide1).size();
+		for (int ide1 : mapping_manager.getConflictiveMappings().keySet()){
+			clauses += mapping_manager.getConflictiveMappings().get(ide1).size();
 		}
 		
 		return clauses;
@@ -1326,8 +1326,8 @@ public class LogMap2_RepairFacility {
 		
 		try {
 			
-			for (int idea : mapping_manager.getAnchors().keySet()){
-				for (int ideb : mapping_manager.getAnchors().get(idea)){
+			for (int idea : mapping_manager.getLogMapMappings().keySet()){
+				for (int ideb : mapping_manager.getLogMapMappings().get(idea)){
 						
 						//This is important to keep compatibility with OAEI and Flat alignment formats
 						//The order of mappings is important

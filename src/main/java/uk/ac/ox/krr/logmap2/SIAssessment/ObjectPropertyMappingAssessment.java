@@ -100,8 +100,8 @@ public class ObjectPropertyMappingAssessment extends PropertyMappingAssessment<I
 		if (!domain1.isEmpty() && !domain2.isEmpty()){
 			//Find mappings		
 			for (int cls1 : domain1){
-				if (mapping_manager.getAnchors().containsKey(cls1)){
-					mapped_domain1.addAll(mapping_manager.getAnchors().get(cls1));
+				if (mapping_manager.getLogMapMappings().containsKey(cls1)){
+					mapped_domain1.addAll(mapping_manager.getLogMapMappings().get(cls1));
 				}
 			}
 		}
@@ -109,8 +109,8 @@ public class ObjectPropertyMappingAssessment extends PropertyMappingAssessment<I
 		if (!range1.isEmpty() && !range2.isEmpty()){
 			//Find mappings (only for object properties) 
 			for (int cls1 : range1){
-				if (mapping_manager.getAnchors().containsKey(cls1)){
-					mapped_range1.addAll(mapping_manager.getAnchors().get(cls1));
+				if (mapping_manager.getLogMapMappings().containsKey(cls1)){
+					mapped_range1.addAll(mapping_manager.getLogMapMappings().get(cls1));
 				}
 			}
 		}
@@ -259,8 +259,8 @@ public class ObjectPropertyMappingAssessment extends PropertyMappingAssessment<I
 		if (!domain1.isEmpty() && !domain2.isEmpty()){
 			//Find mappings		
 			for (int cls1 : domain1){
-				if (mapping_manager.getAnchors().containsKey(cls1)){
-					mapped_domain1.addAll(mapping_manager.getAnchors().get(cls1));
+				if (mapping_manager.getLogMapMappings().containsKey(cls1)){
+					mapped_domain1.addAll(mapping_manager.getLogMapMappings().get(cls1));
 				}
 			}
 		}
@@ -268,8 +268,8 @@ public class ObjectPropertyMappingAssessment extends PropertyMappingAssessment<I
 		if (!range1.isEmpty() && !range2.isEmpty()){
 			//Find mappings (only for object properties) 
 			for (int cls1 : range1){
-				if (mapping_manager.getAnchors().containsKey(cls1)){
-					mapped_range1.addAll(mapping_manager.getAnchors().get(cls1));
+				if (mapping_manager.getLogMapMappings().containsKey(cls1)){
+					mapped_range1.addAll(mapping_manager.getLogMapMappings().get(cls1));
 				}
 			}
 		}

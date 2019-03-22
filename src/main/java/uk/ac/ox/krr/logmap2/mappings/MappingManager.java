@@ -58,6 +58,10 @@ public abstract class MappingManager {
 	 * They will be used as reference to asses/clean other candidates. We store mappings and implicitly the dir.*/
 	protected Map<Integer, Set<Integer>> anchorMappings1N = new HashMap<Integer, Set<Integer>>();
 	
+	
+	/** LogMap Mappings: they grow from anchors to the final set of output mappings **/
+	protected Map<Integer, Set<Integer>> logmapMappings1N = new HashMap<Integer, Set<Integer>>();
+	
 	/** Mappings from IF exact which must be assessed; or "repechaged" from 2ask (logmap or user)*/
 	protected Map<Integer, Set<Integer>> mappings2Review = new HashMap<Integer, Set<Integer>>();
 	
@@ -302,8 +306,8 @@ public abstract class MappingManager {
 		// Side 
 		int amb=0;
 		
-		if (getAnchors().containsKey(ide)){
-			amb += getAnchors().get(ide).size();
+		if (getLogMapMappings().containsKey(ide)){
+			amb += getLogMapMappings().get(ide).size();
 		}
 		
 		if (getToAskLogMapMappings().containsKey(ide)){
@@ -318,8 +322,8 @@ public abstract class MappingManager {
 		// Side 
 		int amb=0;
 		
-		if (getAnchors().containsKey(ide)){
-			amb += getAnchors().get(ide).size();
+		if (getLogMapMappings().containsKey(ide)){
+			amb += getLogMapMappings().get(ide).size();
 		}
 		
 		if (getToAskUserMappings().containsKey(ide)){
@@ -342,7 +346,7 @@ public abstract class MappingManager {
 	
 	
 	public boolean isEntityAlreadyMapped(int index){
-		return anchorMappings1N.containsKey(index); //If the entry was deleted if should be then in discarded entries!!!
+		return logmapMappings1N.containsKey(index); //If the entry was deleted if should be then in discarded entries!!!
 	}
 	
 	
@@ -361,8 +365,8 @@ public abstract class MappingManager {
 	 * @return
 	 */
 	public int getTargetEntity4Index(int index){
-		if (anchorMappings1N.containsKey(index)){
-			for (int ide2 : anchorMappings1N.get(index))
+		if (logmapMappings1N.containsKey(index)){
+			for (int ide2 : logmapMappings1N.get(index))
 				return ide2;
 		}
 			
@@ -371,8 +375,8 @@ public abstract class MappingManager {
 	
 	
 	public Set<Integer> getTargetEntities4Index(int index){
-		if (anchorMappings1N.containsKey(index)){
-			return anchorMappings1N.get(index);
+		if (logmapMappings1N.containsKey(index)){
+			return logmapMappings1N.get(index);
 		}
 			
 		return Collections.emptySet();
@@ -380,10 +384,10 @@ public abstract class MappingManager {
 	
 
 	public void removeSubMappingFromStructure(int ide1, int ide2){ //only one direction
-		if (anchorMappings1N.containsKey(ide1)){
-			anchorMappings1N.get(ide1).remove(ide2);
-			if (anchorMappings1N.get(ide1).size()==0){
-				anchorMappings1N.remove(ide1);
+		if (logmapMappings1N.containsKey(ide1)){
+			logmapMappings1N.get(ide1).remove(ide2);
+			if (logmapMappings1N.get(ide1).size()==0){
+				logmapMappings1N.remove(ide1);
 			}
 		}
 	}
@@ -479,19 +483,34 @@ public abstract class MappingManager {
 	
 	
 	
+	public void saveAnchors() {
+		anchorMappings1N.putAll(logmapMappings1N);
+	}
+	
+	
 	public void setExactAsFixed(boolean set){
 		areExactFixed=set;
 	}
 	
-	public Map<Integer, Set<Integer>> getFixedAnchors(){
+	public Map<Integer, Set<Integer>> getFixedMappings(){
 		if (areExactFixed)
-			return anchorMappings1N;
+			return logmapMappings1N;
 		else
 			return Collections.EMPTY_MAP;
 	}
 	
+	
+	/**
+	 * Highly precise mappings
+	 * @return
+	 */
 	public Map<Integer, Set<Integer>> getAnchors(){
 		return anchorMappings1N;
+	}
+	
+	
+	public Map<Integer, Set<Integer>> getLogMapMappings(){
+		return logmapMappings1N;
 	}
 	
 	
@@ -726,7 +745,7 @@ public abstract class MappingManager {
 	}*/
 	
 	
-	public Set<MappingObjectStr> getStringAnchors(){
+	public Set<MappingObjectStr> getStringLogMapMappings(){
 		return mappings_candidates_Str;
 	}
 	
@@ -735,11 +754,11 @@ public abstract class MappingManager {
 	}
 	
 	
-	public Map<Integer, Set<Integer>> getDiscardedAnchors(){
+	public Map<Integer, Set<Integer>> getDiscardedMappings(){
 		return discardedMappings1N;
 	}
 	
-	public Map<Integer, Set<Integer>> getHardDiscardedAnchors(){
+	public Map<Integer, Set<Integer>> getHardDiscardedMappings(){
 		return hardDiscardedMappings1N;
 	}
 	
@@ -749,11 +768,11 @@ public abstract class MappingManager {
 	
 	
 	
-	public Map<Integer, Set<Integer>> getConflictiveAnchors(){
+	public Map<Integer, Set<Integer>> getConflictiveMappings(){
 		return conflictiveMappings1N;
 	}
 	
-	public Map<Integer, Set<Integer>> getWeakenedDandGAnchors(){
+	public Map<Integer, Set<Integer>> getWeakenedDandGMappings(){
 		return weakenedDandG_Mappings1N;
 	}
 	
@@ -779,10 +798,10 @@ public abstract class MappingManager {
 		//	identifier2anchor.add(mapping);
 		//}
 		
-		if (!anchorMappings1N.containsKey(index1)){
-			anchorMappings1N.put(index1, new HashSet<Integer>());
+		if (!logmapMappings1N.containsKey(index1)){
+			logmapMappings1N.put(index1, new HashSet<Integer>());
 		}
-		anchorMappings1N.get(index1).add(index2);
+		logmapMappings1N.get(index1).add(index2);
 		
 	}
 	
@@ -1167,8 +1186,8 @@ public abstract class MappingManager {
 	
 	public boolean isMappingAlreadyInList(int index1, int index2){
 		
-		if (anchorMappings1N.containsKey(index1)){
-			if (anchorMappings1N.get(index1).contains(index2)){
+		if (logmapMappings1N.containsKey(index1)){
+			if (logmapMappings1N.get(index1).contains(index2)){
 				return true;
 			}
 		}
@@ -1368,8 +1387,8 @@ public abstract class MappingManager {
 		
 		if (out_class_map){
 		
-			for (int ide1 : anchorMappings1N.keySet()){
-				for (int ide2 : anchorMappings1N.get(ide1)){
+			for (int ide1 : logmapMappings1N.keySet()){
+				for (int ide2 : logmapMappings1N.get(ide1)){
 					addStringAnchor(ide1, ide2);
 				}
 			}
@@ -1481,8 +1500,8 @@ public abstract class MappingManager {
 		discarded_candidates.clear();
 		
 		
-		for (int ide1 : getDiscardedAnchors().keySet()){
-				for (int ide2 : getDiscardedAnchors().get(ide1)){
+		for (int ide1 : getDiscardedMappings().keySet()){
+				for (int ide2 : getDiscardedMappings().get(ide1)){
 					addDiscardedStringMappingsAnchor(ide1, ide2);
 				}
 		}
@@ -2185,9 +2204,9 @@ public abstract class MappingManager {
 			
 			//In exact mappings (they are not complete yet...)
 			//------------------------------------------
-			if (anchorMappings1N.containsKey(ent1)){
+			if (logmapMappings1N.containsKey(ent1)){
 				
-				for (int ent2 : anchorMappings1N.get(ent1)){ //Candidate mappings
+				for (int ent2 : logmapMappings1N.get(ent1)){ //Candidate mappings
 					
 					if (module2.contains(ent2)){
 						
@@ -2332,9 +2351,9 @@ public abstract class MappingManager {
 			
 			//In exact mappings (they are not complete yet...)
 			//------------------------------------------
-			if (anchorMappings1N.containsKey(ent1)){
+			if (logmapMappings1N.containsKey(ent1)){
 				
-				for (int ent2 : anchorMappings1N.get(ent1)){ //Candidate mappings
+				for (int ent2 : logmapMappings1N.get(ent1)){ //Candidate mappings
 					
 					if (module2.contains(ent2)){
 						
@@ -2716,8 +2735,8 @@ public abstract class MappingManager {
 		
 		int mappings=0;
 		int good=0;
-		for (int ide1 : anchorMappings1N.keySet()){
-			for (int ide2 : anchorMappings1N.get(ide1)){
+		for (int ide1 : logmapMappings1N.keySet()){
+			for (int ide2 : logmapMappings1N.get(ide1)){
 				
 				if (isId1SmallerThanId2(ide1, ide2)){
 				

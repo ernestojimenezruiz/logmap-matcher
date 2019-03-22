@@ -371,7 +371,7 @@ public class LogMap3_RepairFacility {
 			init = Calendar.getInstance().getTimeInMillis();
 			
 			//Index already have the necessary taxonomical information apart from the equiv mappings
-			index.setIntervalLabellingIndex(mapping_manager.getAnchors());
+			index.setIntervalLabellingIndex(mapping_manager.getLogMapMappings());
 			index.clearAuxStructuresforLabellingSchema();
 			
 			fin = Calendar.getInstance().getTimeInMillis();
@@ -383,9 +383,9 @@ public class LogMap3_RepairFacility {
 		}
 		
 					
-		for (int ide1 : mapping_manager.getWeakenedDandGAnchors().keySet()){
+		for (int ide1 : mapping_manager.getWeakenedDandGMappings().keySet()){
 			
-			for (int ide2 : mapping_manager.getWeakenedDandGAnchors().get(ide1)){
+			for (int ide2 : mapping_manager.getWeakenedDandGMappings().get(ide1)){
 				
 				//TODO: This is necessary no?
 				if (!mapping_manager.isMappingInConflictWithFixedMappings(ide1, ide2)){
@@ -582,8 +582,8 @@ public class LogMap3_RepairFacility {
 			
 			//if (Parameters.output_class_mappings){
 			
-			for (int idea : mapping_manager.getAnchors().keySet()){
-				for (int ideb : mapping_manager.getAnchors().get(idea)){
+			for (int idea : mapping_manager.getLogMapMappings().keySet()){
+				for (int ideb : mapping_manager.getLogMapMappings().get(idea)){
 						
 						//This is important to keep compatibility with OAEI and Flat alignment formats
 						//The order of mappings is important
@@ -724,8 +724,8 @@ public class LogMap3_RepairFacility {
 		
 		int clauses = 0;
 		
-		for (int ide1 : mapping_manager.getConflictiveAnchors().keySet()){
-			clauses += mapping_manager.getConflictiveAnchors().get(ide1).size();
+		for (int ide1 : mapping_manager.getConflictiveMappings().keySet()){
+			clauses += mapping_manager.getConflictiveMappings().get(ide1).size();
 		}
 		
 		return clauses;
@@ -851,8 +851,8 @@ public class LogMap3_RepairFacility {
 		
 		try {
 			
-			for (int idea : mapping_manager.getAnchors().keySet()){
-				for (int ideb : mapping_manager.getAnchors().get(idea)){
+			for (int idea : mapping_manager.getLogMapMappings().keySet()){
+				for (int ideb : mapping_manager.getLogMapMappings().get(idea)){
 						
 						//This is important to keep compatibility with OAEI and Flat alignment formats
 						//The order of mappings is important
