@@ -97,7 +97,7 @@ Additional list of [LogMap-related publications](http://www.cs.ox.ac.uk/projects
 LogMap has been created in the [Knowledge Representation and Reasoning group](http://www.cs.ox.ac.uk/isg/krr/) at the [Department of Computer Science](http://www.cs.ox.ac.uk/) of 
 the [University of Oxford](http://www.ox.ac.uk/) by Ernesto Jiménez-Ruiz, Bernardo Cuenca Grau and Ian Horrocks. 
 
-Development has been supported by The Royal Society, the EPSRC project LogMap and EU FP7 projects SEALS and Optique.
+Development has been supported by The Royal Society, the EPSRC project LogMap, the EU FP7 projects SEALS and Optique, the [AIDA project](https://www.turing.ac.uk/research/research-projects/artificial-intelligence-data-analytics), and the [SIRIUS Centre for Scalable Data Access](http://sirius-labs.no/).
 
 We would like to thank Alessandro Solimando, Valerie Cross, Anton Morant, Yujiao Zhou, Weiguo Xia, Xi Chen, Yuan Gong and Shuo Zhang, who have contributed to the LogMap project in the past.
 
