@@ -32,6 +32,7 @@ import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.search.EntitySearcher;
 
 import uk.ac.ox.krr.logmap2.lexicon.LexicalUtilities;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
@@ -308,7 +309,7 @@ public class OntologyProcessing4Overlapping {
 		
 		
 		//We look for label first
-		for (OWLAnnotationAssertionAxiom annAx : cls.getAnnotationAssertionAxioms(onto)){
+		for (OWLAnnotationAssertionAxiom annAx : EntitySearcher.getAnnotationAssertionAxioms(cls, onto)){
 					
 			if (annAx.getAnnotation().getProperty().getIRI().toString().equals(rdf_label_uri) ||
 					annAx.getAnnotation().getProperty().getIRI().toString().equals(synonym_iri)){
@@ -347,7 +348,7 @@ public class OntologyProcessing4Overlapping {
 			Set<String> labels = new HashSet<String>();
 			
 			//All labels
-			for (OWLAnnotationAssertionAxiom annAx : cls.getAnnotationAssertionAxioms(onto)){
+			for (OWLAnnotationAssertionAxiom annAx : EntitySearcher.getAnnotationAssertionAxioms(cls, onto)){
 				
 				
 				labels.addAll(annotationExtractor.getAnntotationString(annAx, onto, onto.getOWLOntologyManager().getOWLDataFactory()));				
@@ -437,7 +438,7 @@ public class OntologyProcessing4Overlapping {
 		
 		
 		//We look for label first
-		for (OWLAnnotationAssertionAxiom annAx : cls.getAnnotationAssertionAxioms(onto)){
+		for (OWLAnnotationAssertionAxiom annAx : EntitySearcher.getAnnotationAssertionAxioms(cls, onto)){
 			
 			if (annAx.getAnnotation().getProperty().getIRI().toString().equals(rdf_label_uri)){
 				

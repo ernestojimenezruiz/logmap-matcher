@@ -38,6 +38,8 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.search.EntitySearcher;
+import org.semanticweb.owlapi.search.Searcher;
 
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
@@ -415,7 +417,7 @@ public class OntologyProcessing {
 		
 		
 		//We look for label first
-		for (OWLAnnotationAssertionAxiom annAx : ent.getAnnotationAssertionAxioms(onto)){
+		for (OWLAnnotationAssertionAxiom annAx : EntitySearcher.getAnnotationAssertionAxioms(ent, onto)){
 					
 			if (annAx.getAnnotation().getProperty().getIRI().toString().equals(rdf_label_uri) ||
 					annAx.getAnnotation().getProperty().getIRI().toString().equals(synonym_iri) ||
@@ -748,7 +750,7 @@ public class OntologyProcessing {
 			//We also add from rdfs:comments or rdfs:label
 			//-----------------------------------------
 			//Since the comments may be long we need to pre-process them
-			for (OWLAnnotationAssertionAxiom indivAnnAx : indiv.getAnnotationAssertionAxioms(onto)){
+			for (OWLAnnotationAssertionAxiom indivAnnAx : EntitySearcher.getAnnotationAssertionAxioms(indiv, onto)){
 				
 								
 				String uri_ann = indivAnnAx.getAnnotation().getProperty().getIRI().toString();
@@ -788,8 +790,10 @@ public class OntologyProcessing {
 			//Datatype assertion
 			for (String uri_indiv_ann : accepted_data_uris){
 			
-				for (OWLLiteral assertion_value : indiv.getDataPropertyValues(
-						OWLManager.getOWLDataFactory().getOWLDataProperty(IRI.create(uri_indiv_ann)), onto)){
+				
+				for (OWLLiteral assertion_value : Searcher.values(
+						onto.getDataPropertyAssertionAxioms(indiv), OWLManager.getOWLDataFactory().getOWLDataProperty(IRI.create(uri_indiv_ann)))
+				){
 					
 					
 					//LogOutput.print(indiv.getIRI().toString());
@@ -817,8 +821,12 @@ public class OntologyProcessing {
 			//-------------------------------------
 			for (String uri_indiv_ann_deep1 : accepted_obj_uris){
 				
-				for (OWLIndividual assertion_value_indiv : indiv.getObjectPropertyValues(
-						OWLManager.getOWLDataFactory().getOWLObjectProperty(IRI.create(uri_indiv_ann_deep1)), onto)){
+				
+				
+				
+				
+				for (OWLIndividual assertion_value_indiv : Searcher.values(
+						onto.getObjectPropertyAssertionAxioms(indiv), OWLManager.getOWLDataFactory().getOWLObjectProperty(IRI.create(uri_indiv_ann_deep1)))){
 					
 					//We only consider named individuals
 					if (assertion_value_indiv.isNamed()){
@@ -827,8 +835,11 @@ public class OntologyProcessing {
 						//----------------------------------------
 						for (String uri_indiv_ann_deep2 : accepted_data_uris_deep2){
 						
-							for (OWLLiteral assertion_value_deep2 : assertion_value_indiv.asOWLNamedIndividual().getDataPropertyValues(
-									OWLManager.getOWLDataFactory().getOWLDataProperty(IRI.create(uri_indiv_ann_deep2)), onto)){
+							
+							
+							for (OWLLiteral assertion_value_deep2 : Searcher.values(
+									onto.getDataPropertyAssertionAxioms(assertion_value_indiv.asOWLNamedIndividual()), 
+									OWLManager.getOWLDataFactory().getOWLDataProperty(IRI.create(uri_indiv_ann_deep2)))){
 								
 								
 								label_value = processLabel(
@@ -848,7 +859,7 @@ public class OntologyProcessing {
 						
 						//Extract comment level 2
 						//---------------------
-						for (OWLAnnotationAssertionAxiom indivAnnAx_level2 : assertion_value_indiv.asOWLNamedIndividual().getAnnotationAssertionAxioms(onto)){
+						for (OWLAnnotationAssertionAxiom indivAnnAx_level2 : EntitySearcher.getAnnotationAssertionAxioms(assertion_value_indiv.asOWLNamedIndividual(), onto)){
 							
 							
 							String uri_ann = indivAnnAx_level2.getAnnotation().getProperty().getIRI().toString();

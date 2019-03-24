@@ -279,6 +279,8 @@ public class LogMap2_Matcher {
 		
 		try {
 			
+			//System.out.println(Parameters.output_class_mappings + "  " + logmap2.getClassMappings().size());
+			
 			if (Parameters.output_class_mappings){
 			
 				for (int ide1 : logmap2.getClassMappings().keySet()){

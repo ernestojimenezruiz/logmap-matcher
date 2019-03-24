@@ -3,13 +3,14 @@ package uk.ac.manchester.syntactic_locality;
 import java.util.ArrayList;
 
 
+
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
 
-import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
+import org.semanticweb.owlapi.formats.RDFXMLDocumentFormat;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
@@ -25,7 +26,9 @@ import org.semanticweb.owlapi.modularity.OntologySegmenter;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.semanticweb.owlapi.search.EntitySearcher;
 
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
 
@@ -311,41 +314,48 @@ public class OntologyModuleExtractor implements OntologySegmenter {
 			boolean ignoreAssertions){
 	
 		Set<OWLAxiom> axioms = new HashSet<OWLAxiom>(); 
+		
+		Imports imports;
+		
+		if (considerImportsClosure)
+			imports = Imports.INCLUDED;
+		else	
+			imports = Imports.EXCLUDED;
 				
 		
 		//axioms.addAll(ontology.getGeneralClassAxioms());
-		axioms.addAll(ontology.getTBoxAxioms(considerImportsClosure));
-		axioms.addAll(ontology.getRBoxAxioms(considerImportsClosure));
+		axioms.addAll(ontology.getTBoxAxioms(imports));
+		axioms.addAll(ontology.getRBoxAxioms(imports));
 		if (!ignoreAssertions){
-			axioms.addAll(ontology.getABoxAxioms(considerImportsClosure));
+			axioms.addAll(ontology.getABoxAxioms(imports));
 		}
 		
 		if (considerEntityAnnotations){
 			
-			for (OWLClass cls : ontology.getClassesInSignature(considerImportsClosure)){
-				axioms.addAll(cls.getAnnotationAssertionAxioms(ontology));
+			for (OWLClass cls : ontology.getClassesInSignature(imports)){
+				axioms.addAll(EntitySearcher.getAnnotationAssertionAxioms(cls, ontology));
 				//axioms.addAll(ontology.getDeclarationAxioms(cls));
 				
 			}
 			
-			for (OWLObjectProperty oprop : ontology.getObjectPropertiesInSignature(considerImportsClosure)){
-				axioms.addAll(oprop.getAnnotationAssertionAxioms(ontology));
+			for (OWLObjectProperty oprop : ontology.getObjectPropertiesInSignature(imports)){
+				axioms.addAll(EntitySearcher.getAnnotationAssertionAxioms(oprop, ontology));
 				//axioms.addAll(ontology.getDeclarationAxioms(oprop));
 			}
 			
-			for (OWLDataProperty dprop : ontology.getDataPropertiesInSignature(considerImportsClosure)){
-				axioms.addAll(dprop.getAnnotationAssertionAxioms(ontology));
+			for (OWLDataProperty dprop : ontology.getDataPropertiesInSignature(imports)){
+				axioms.addAll(EntitySearcher.getAnnotationAssertionAxioms(dprop, ontology));
 				//axioms.addAll(ontology.getDeclarationAxioms(dprop));
 			}
 			
 			for (OWLAnnotationProperty aprop : ontology.getAnnotationPropertiesInSignature()){
-				axioms.addAll(aprop.getAnnotationAssertionAxioms(ontology));
+				axioms.addAll(EntitySearcher.getAnnotationAssertionAxioms(aprop, ontology));
 				//axioms.addAll(ontology.getDeclarationAxioms(aprop));
 			}
 			
 			if (!ignoreAssertions){
-				for (OWLNamedIndividual indiv : ontology.getIndividualsInSignature(considerImportsClosure)){
-					axioms.addAll(indiv.getAnnotationAssertionAxioms(ontology));
+				for (OWLNamedIndividual indiv : ontology.getIndividualsInSignature(imports)){
+					axioms.addAll(EntitySearcher.getAnnotationAssertionAxioms(indiv, ontology));
 					//axioms.addAll(ontology.getDeclarationAxioms(indiv));
 				}
 				
@@ -701,7 +711,7 @@ public class OntologyModuleExtractor implements OntologySegmenter {
 	    	//OWLOntologyManager ontologyModuleManager = SynchronizedOWLManager.createOWLOntologyManager();
 	    	
 	        try {
-	        	manager.saveOntology(module, new RDFXMLOntologyFormat(), IRI.create(physicalModuleURI));
+	        	manager.saveOntology(module, new RDFXMLDocumentFormat(), IRI.create(physicalModuleURI));
 	        }
 	        catch (Exception e) {
 	        	System.err.println("Error saving module\n" + e.getLocalizedMessage());

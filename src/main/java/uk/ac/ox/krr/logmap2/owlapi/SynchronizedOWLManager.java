@@ -19,7 +19,7 @@
 package uk.ac.ox.krr.logmap2.owlapi;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
+import org.semanticweb.owlapi.formats.RDFXMLDocumentFormat;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLDataFactory;
@@ -41,8 +41,21 @@ public class SynchronizedOWLManager {
 	}
 	
 	
+	/**
+	 * Concurrent safe method added in OWL APi 4
+	 * @return
+	 */
+	public static synchronized OWLOntologyManager createConcurrentOWLOntologyManager(){
+		return OWLManager.createConcurrentOWLOntologyManager();
+	}
+	
+	
+	/**
+	 * Fix implemented in LogMap to allow the concurrent access to the OWLManager 
+	 * @return
+	 */
 	public static synchronized OWLOntologyManager createOWLOntologyManager(){
-		return OWLManager.createOWLOntologyManager(createOWLDataFactory());
+		return OWLManager.createOWLOntologyManager();
 	}
 	
 	
@@ -60,7 +73,7 @@ public class SynchronizedOWLManager {
 	public static synchronized void saveOntology(OWLOntologyManager moduleManager, OWLOntology ontology, String IRIstr) throws Exception{
 		
 		moduleManager.saveOntology(
-				ontology, new RDFXMLOntologyFormat(), IRI.create(IRIstr));
+				ontology, new RDFXMLDocumentFormat(), IRI.create(IRIstr));
 	}
 	
 	

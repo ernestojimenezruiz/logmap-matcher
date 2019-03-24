@@ -244,7 +244,7 @@ public class ModuleExtractorManager {
 	
 
 	public IRI getModuleIRI(){
-		return module.getOntologyID().getOntologyIRI();
+		return module.getOntologyID().getOntologyIRI().get();
 	}
 	
 	

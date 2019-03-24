@@ -488,6 +488,7 @@ public abstract class MappingManager {
 	}
 	
 	
+	
 	public void setExactAsFixed(boolean set){
 		areExactFixed=set;
 	}

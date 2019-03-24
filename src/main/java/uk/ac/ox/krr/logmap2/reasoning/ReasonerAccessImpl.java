@@ -33,6 +33,7 @@ import java.util.concurrent.TimeoutException;
 
 //import org.semanticweb.HermiT.Reasoner;
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;
@@ -569,8 +570,15 @@ public abstract class ReasonerAccessImpl extends ReasonerAccess {
            
            //OWLOntologyManager classifiedOntoMan = OWLManager.createOWLOntologyManager();
 		   OWLOntologyManager classifiedOntoMan = SynchronizedOWLManager.createOWLOntologyManager();
-		   																 
-           OWLOntology inferredOnt = classifiedOntoMan.createOntology(ontoBase.getOntologyID().getOntologyIRI());
+		   
+		   IRI iri;
+		   if (ontoBase.getOntologyID().getOntologyIRI().isPresent()) 
+			   iri= ontoBase.getOntologyID().getOntologyIRI().get();
+		   else 
+			   iri = IRI.create("http://inferred-ontology.owl");
+		   
+		   
+           OWLOntology inferredOnt = classifiedOntoMan.createOntology(iri);
            InferredOntologyGenerator ontGen = new InferredOntologyGenerator(
         		   reasoner, new ArrayList<InferredAxiomGenerator<? extends OWLAxiom>>());
            //InferredOntologyGenerator ontGen = new InferredOntologyGenerator(reasoner);
@@ -580,7 +588,7 @@ public abstract class ReasonerAccessImpl extends ReasonerAccess {
            ontGen.addGenerator(new InferredSubClassAxiomGenerator());
            
            //Fills inferred onto
-           ontGen.fillOntology(classifiedOntoMan, inferredOnt);
+           ontGen.fillOntology(classifiedOntoMan.getOWLDataFactory(), inferredOnt);
          
            
            //Getting closure without axioms "subclass of Thing"	           

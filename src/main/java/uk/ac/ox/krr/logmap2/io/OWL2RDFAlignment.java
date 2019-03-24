@@ -73,13 +73,20 @@ public class OWL2RDFAlignment {
 	}
 	
 	
+	private void setSilentMissingImportStrategy() {
+		//In case an import is broken
+		OWLOntologyLoaderConfiguration config = new OWLOntologyLoaderConfiguration();
+		config.setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT);
+		managerOnto.setOntologyLoaderConfiguration(config);
+	}
+	
 	
 	private void loadOWLMappings(String phy_iri_onto) throws Exception{
 		
 		managerOnto = OWLManager.createOWLOntologyManager();
 
 		//If import cannot be loaded
-		managerOnto.setSilentMissingImportsHandling(true);
+		setSilentMissingImportStrategy();
 		
 		onto = managerOnto.loadOntology(IRI.create(phy_iri_onto));
 		

@@ -278,6 +278,33 @@ public class LogMap_Lite {
 	
 	
 	/**
+	 * Basic method 
+	 * @param source
+	 * @param target
+	 * @throws Exception
+	 */
+	public void align(String source, String target) throws Exception{
+		
+		
+		init_tot = Calendar.getInstance().getTimeInMillis();
+		
+		loadingAndProcessingOntologies(source, target);
+		
+		computeMappings();
+		
+		fin = Calendar.getInstance().getTimeInMillis();
+		//System.out.println("Matching Time (s): " + (float)((double)fin-(double)init_tot)/1000.0);
+		total_time = (float)((double)fin-(double)init_tot)/1000.0;
+		total_time = total_time - time_loading;
+		System.out.println("Size LogMap Lite mappings: "+ mappings.size());
+		System.out.println("Time loading ontos (s): " + time_loading);
+		System.out.println("LogMap Lite Matching Time (s): " + total_time);
+		
+		
+	}
+	
+	
+	/**
 	 * Method OAEI
 	 * @return
 	 * @throws Exception

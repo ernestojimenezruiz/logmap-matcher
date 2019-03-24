@@ -19,16 +19,19 @@
 package uk.ac.ox.krr.logmap2;
 
 //import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
+import org.semanticweb.owlapi.formats.RDFXMLDocumentFormat;
 
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.MissingImportHandlingStrategy;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.util.DLExpressivityChecker;
 
 import org.semanticweb.owlapi.model.OWLOntologyChange;
@@ -90,6 +93,7 @@ public class OntologyLoader {
 	public OntologyLoader(String phy_iri_onto, boolean keepLogicalAxiomsOnly) throws OWLOntologyCreationException{
 		//managerOnto = OWLManager.createOWLOntologyManager();
 		managerOnto = SynchronizedOWLManager.createOWLOntologyManager();
+		
 		dataFactory=managerOnto.getOWLDataFactory();
 		this.keepLogicalAxiomsOnly=keepLogicalAxiomsOnly;
 		loadOWLOntology(phy_iri_onto);		
@@ -104,8 +108,17 @@ public class OntologyLoader {
 	public OntologyLoader(OWLOntology given_onto) throws OWLOntologyCreationException{
 		//managerOnto = OWLManager.createOWLOntologyManager();
 		managerOnto = SynchronizedOWLManager.createOWLOntologyManager();
+		
 		dataFactory=managerOnto.getOWLDataFactory();
 		setOWLOntology(given_onto);		
+	}
+	
+	
+	private void setSilentMissingImportStrategy() {
+		//In case an import is broken
+		OWLOntologyLoaderConfiguration config = new OWLOntologyLoaderConfiguration();
+		config.setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT);
+		managerOnto.setOntologyLoaderConfiguration(config);
 	}
 
 	
@@ -161,8 +174,8 @@ public class OntologyLoader {
 					
 			
 			
-			size_signature = onto.getSignature(true).size();
-			size_classes = onto.getClassesInSignature(true).size();
+			size_signature = onto.getSignature(Imports.INCLUDED).size();
+			size_classes = onto.getClassesInSignature(Imports.INCLUDED).size();
 			
 			
 			//We add dummy axiom
@@ -186,11 +199,10 @@ public class OntologyLoader {
 		try {
 			
 			//If import cannot be loaded
-			//TODO: deprecated??
-			managerOnto.setSilentMissingImportsHandling(true);
+			setSilentMissingImportStrategy();
 									
+			//System.out.println(phy_iri_onto);
 			onto = managerOnto.loadOntology(IRI.create(phy_iri_onto));
-			
 			
 			
 			//The preclassification with condor has no ontology id
@@ -207,8 +219,8 @@ public class OntologyLoader {
 					
 			
 			
-			size_signature = onto.getSignature(true).size();
-			size_classes = onto.getClassesInSignature(true).size();
+			size_signature = onto.getSignature(Imports.INCLUDED).size();
+			size_classes = onto.getClassesInSignature(Imports.INCLUDED).size();
 			
 			
 			//We add dummy axiom
@@ -220,9 +232,9 @@ public class OntologyLoader {
 			//Important when reasoning with the integrated ontology from LogMap webservice
 			if (keepLogicalAxiomsOnly){				
 				Set<OWLAxiom> filteredAxioms = new HashSet<OWLAxiom>();
-				filteredAxioms.addAll(onto.getTBoxAxioms(true));
-				filteredAxioms.addAll(onto.getRBoxAxioms(true));
-				filteredAxioms.addAll(onto.getABoxAxioms(true));
+				filteredAxioms.addAll(onto.getTBoxAxioms(Imports.INCLUDED));
+				filteredAxioms.addAll(onto.getRBoxAxioms(Imports.INCLUDED));
+				filteredAxioms.addAll(onto.getABoxAxioms(Imports.INCLUDED));
 				managerOnto.removeOntology(onto);
 				onto = managerOnto.createOntology(filteredAxioms,
 						IRI.create(iri_onto_str));				
@@ -311,9 +323,9 @@ public class OntologyLoader {
 		
 		//TODO DO NOT delete any of these lines		
 		axiomSet.addAll(onto.getAxioms());  //Add All axioms. This line also includes annotations.
-		axiomSet.addAll(onto.getTBoxAxioms(true));//also imports closure...
-		axiomSet.addAll(onto.getABoxAxioms(true));
-		axiomSet.addAll(onto.getRBoxAxioms(true));
+		axiomSet.addAll(onto.getTBoxAxioms(Imports.INCLUDED));//also imports closure...
+		axiomSet.addAll(onto.getABoxAxioms(Imports.INCLUDED));
+		axiomSet.addAll(onto.getRBoxAxioms(Imports.INCLUDED));
 		
 		//Original size
 		//size_axioms = axiomSet.size();
@@ -377,7 +389,7 @@ public class OntologyLoader {
 	
 	public void saveOntology(String phy_iri_onto) throws Exception{
 		
-		managerOnto.saveOntology(onto, new RDFXMLOntologyFormat(), IRI.create(phy_iri_onto));
+		managerOnto.saveOntology(onto, new RDFXMLDocumentFormat(), IRI.create(phy_iri_onto));
 		
 	}
 	

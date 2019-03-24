@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.model.OWLAxiom;
 
 
@@ -86,8 +87,8 @@ public abstract class OverlappingExtractor {
 	}
 	
 	public void keepOnlyTBOXOverlapping(boolean removeModules){
-		module1_tbox_axioms = module1.getTBoxAxioms(true); //importsclosure
-		module2_tbox_axioms = module2.getTBoxAxioms(true); //importsclosure
+		module1_tbox_axioms = module1.getTBoxAxioms(Imports.INCLUDED); //importsclosure
+		module2_tbox_axioms = module2.getTBoxAxioms(Imports.INCLUDED); //importsclosure
 		
 		if (removeModules){
 			module1=null;

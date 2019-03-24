@@ -18,6 +18,7 @@ import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 import uk.ac.ox.krr.logmap2.oaei.reader.MappingsReaderManager;
 import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
 import uk.ac.ox.krr.logmap2.utilities.Timer;
+import uk.ac.ox.krr.logmap_lite.LogMap_Lite;
 
 /**
  *
@@ -90,6 +91,17 @@ public abstract class TestOAEITrack {
 		
 		t = new Timer();
 		LogMap2_Matcher logmap = new LogMap2_Matcher(task.getSource(), task.getTarget());
+		
+		//TEST LogMap Lite
+		//LogMap_Lite logmap_lite = new LogMap_Lite();
+		//logmap_lite.align(task.getSource(), task.getTarget());
+		
+		
+		/*System.out.println("Size mappings: "+ logmap.getLogmap2_Mappings().size());
+		System.out.println("Size anchors: "+ logmap.getLogmap2_anchors().size());
+		System.out.println("Size discarded: "+ logmap.getLogmap2_DiscardedMappings().size());
+		System.out.println("Size hard discarded: "+ logmap.getLogmap2_HardDiscardedMappings().size());
+		System.out.println("Size conflicting: "+ logmap.getLogmap2_ConflictiveMappings().size());*/
 		
 		if (SAVE_MAPPINGS){
 			saveLogMapMappings(logmap.getLogmap2_Mappings());

@@ -27,8 +27,6 @@ import java.util.Set;
 import java.util.HashMap;
 import java.util.Map;
 
-//import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
 import org.semanticweb.owlapi.model.AddImport;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -37,8 +35,6 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 
-
-//import uk.ac.manchester.syntactic_locality.ModuleExtractor;
 import uk.ac.manchester.syntactic_locality.OntologyModuleExtractor;
 
 import uk.ac.ox.krr.logmap2.io.LogOutput;

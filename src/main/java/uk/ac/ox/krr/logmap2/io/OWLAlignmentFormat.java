@@ -26,7 +26,7 @@ import java.util.Set;
 import java.util.List;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
+import org.semanticweb.owlapi.formats.RDFXMLDocumentFormat;
 import org.semanticweb.owlapi.model.AddAxiom;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
@@ -326,7 +326,7 @@ public class OWLAlignmentFormat extends OutputMappingsFormat {
 	public void saveOutputFile() throws Exception{
 		
 		managerMappingsOnto.applyChanges(listAxioms2Add);		
-		managerMappingsOnto.saveOntology(mappingsOnto, new RDFXMLOntologyFormat(), IRI.create(output_file));
+		managerMappingsOnto.saveOntology(mappingsOnto, new RDFXMLDocumentFormat(), IRI.create(output_file));
 		
 	}
 	

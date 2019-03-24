@@ -27,8 +27,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.MissingImportHandlingStrategy;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
@@ -554,8 +556,11 @@ public class LogMap2_OAEI_BioPortal {
 
 		OWLOntologyManager managerOnto = SynchronizedOWLManager.createOWLOntologyManager();
 		
-		managerOnto.setSilentMissingImportsHandling(true);
-									
+		OWLOntologyLoaderConfiguration config = new OWLOntologyLoaderConfiguration();
+		config.setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT);
+		managerOnto.setOntologyLoaderConfiguration(config);
+		
+		
 		return managerOnto.loadOntology(IRI.create(iri_onto));
 		
 	}

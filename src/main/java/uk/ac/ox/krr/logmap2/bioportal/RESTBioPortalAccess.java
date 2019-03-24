@@ -16,8 +16,10 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.MissingImportHandlingStrategy;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 
@@ -840,9 +842,11 @@ public class RESTBioPortalAccess implements BioPortalAccess {
 		
 		// Get hold of an ontology manager 
 		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-		//Very important t avoid problems with ontologies
-		manager.setSilentMissingImportsHandling(true);
-
+		//Very important to avoid problems with ontologies
+		OWLOntologyLoaderConfiguration config = new OWLOntologyLoaderConfiguration();
+		config.setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT);
+		manager.setOntologyLoaderConfiguration(config);
+		
 		
 		OWLOntology MOOntology = null;
 		try {

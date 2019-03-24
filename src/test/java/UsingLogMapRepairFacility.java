@@ -2,8 +2,11 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.MissingImportHandlingStrategy;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.parameters.Imports;
 
 import uk.ac.ox.krr.logmap2.LogMap2_RepairFacility;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
@@ -49,13 +52,18 @@ public class UsingLogMapRepairFacility {
 			
 			
 			onto_manager = OWLManager.createOWLOntologyManager();
-			onto_manager.setSilentMissingImportsHandling(true);		
+			
+			//onto_manager.setSilentMissingImportsHandling(true);		
+			OWLOntologyLoaderConfiguration config = new OWLOntologyLoaderConfiguration();
+			config.setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT);
+			onto_manager.setOntologyLoaderConfiguration(config);
+			
 			
 			onto1 = onto_manager.loadOntology(IRI.create(onto1_iri));			
 			onto2 = onto_manager.loadOntology(IRI.create(onto2_iri));
 			
-			System.out.println("Ontology 1 size: " + onto1.getSignature(true).size());
-			System.out.println("Ontology 2 size: " + onto2.getSignature(true).size());
+			System.out.println("Ontology 1 size: " + onto1.getSignature(Imports.INCLUDED).size());
+			System.out.println("Ontology 2 size: " + onto2.getSignature(Imports.INCLUDED).size());
 			
 			
 			//Input from a file (RDF OAEI Alignment format)

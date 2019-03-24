@@ -20,15 +20,18 @@ package uk.ac.ox.krr.logmap_lite;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 
-import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
+import org.semanticweb.owlapi.formats.RDFXMLDocumentFormat;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.MissingImportHandlingStrategy;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.parameters.Imports;
 
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
@@ -68,6 +71,12 @@ public class OntologyLoader {
 		managerOnto = SynchronizedOWLManager.createOWLOntologyManager();
 		dataFactory=managerOnto.getOWLDataFactory();
 		
+		
+		//If import cannot be loaded
+		OWLOntologyLoaderConfiguration config = new OWLOntologyLoaderConfiguration();
+		config.setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT);
+		managerOnto.setOntologyLoaderConfiguration(config);
+		
 		loadOWLOntology(phy_iri_onto);
 			
 	}
@@ -87,9 +96,6 @@ public class OntologyLoader {
 	public void loadOWLOntology(String phy_iri_onto) throws OWLOntologyCreationException  {		
 
 		try {
-			//If import cannot be loaded
-			//TODO: deprecated??
-			managerOnto.setSilentMissingImportsHandling(true);
 			
 			onto = managerOnto.loadOntology(IRI.create(phy_iri_onto));
 			
@@ -103,8 +109,8 @@ public class OntologyLoader {
 			
 			LogOutput.print("IRI: " + iri_onto_str);
 			
-			size_signature = onto.getSignature(true).size();
-			size_classes = onto.getClassesInSignature(true).size();
+			size_signature = onto.getSignature(Imports.INCLUDED).size();
+			size_classes = onto.getClassesInSignature(Imports.INCLUDED).size();
 			
 			//LogOutput.print(iri_onto);
 			
@@ -172,7 +178,7 @@ public class OntologyLoader {
 	
 	public void saveOntology(String phy_iri_onto) throws Exception{
 		
-		managerOnto.saveOntology(onto, new RDFXMLOntologyFormat(), IRI.create(phy_iri_onto));
+		managerOnto.saveOntology(onto, new RDFXMLDocumentFormat(), IRI.create(phy_iri_onto));
 		
 	}
 	

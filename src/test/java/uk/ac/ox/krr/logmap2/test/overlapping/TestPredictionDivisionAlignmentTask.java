@@ -16,6 +16,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.parameters.Imports;
 
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.division.BasicDivision;
@@ -302,8 +303,8 @@ public class TestPredictionDivisionAlignmentTask {
 								alignment,
 								alignment,
 								partitioner.getComputationTime(), 
-								onto1.getSignature(true).size(), 
-								onto2.getSignature(true).size()); 
+								onto1.getSignature(Imports.INCLUDED).size(), 
+								onto2.getSignature(Imports.INCLUDED).size()); 
 						
 						
 						

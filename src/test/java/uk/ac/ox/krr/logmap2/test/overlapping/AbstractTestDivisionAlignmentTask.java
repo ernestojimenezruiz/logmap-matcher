@@ -12,6 +12,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.parameters.Imports;
 
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
@@ -285,8 +286,8 @@ public class AbstractTestDivisionAlignmentTask {
 		onto1 = loadOWLOntology(uri1);
 		onto2 = loadOWLOntology(uri2);
 		
-		size_onto1 = onto1.getSignature(true).size();
-		size_onto2 = onto2.getSignature(true).size();
+		size_onto1 = onto1.getSignature(Imports.INCLUDED).size();
+		size_onto2 = onto2.getSignature(Imports.INCLUDED).size();
 		
 		
 		//For snomed cases we use size of full ontology

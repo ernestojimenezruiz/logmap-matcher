@@ -13,8 +13,8 @@ max_ambiguity|4
 good_ambiguity|2
 use_overlapping|false
 min_size_overlapping|15000
-output_class_mappings|false
-output_prop_mappings|false
+output_class_mappings|true
+output_prop_mappings|true
 instance_matching|true
 output_instance_mappings|true
 #only for statistics

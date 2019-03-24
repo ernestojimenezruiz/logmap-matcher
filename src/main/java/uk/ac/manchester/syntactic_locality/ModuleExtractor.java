@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 //import org.mindswap.pellet.utils.MultiValueMap;
-import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
+import org.semanticweb.owlapi.formats.RDFXMLDocumentFormat;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.OWLEntityCollector;
 
@@ -35,7 +35,7 @@ public class ModuleExtractor {
 	
 	private boolean ignoreAssertions=false;
 	
-	private Set<OWLEntity> collectedEntities;
+	//private Set<OWLEntity> collectedEntities;
 	
 
 	private OWLDataFactory dataFactory;
@@ -77,11 +77,12 @@ public class ModuleExtractor {
 		moduleAxioms = new HashSet<OWLAxiom>();
 		
 		
-		collectedEntities=new HashSet<OWLEntity>();
-		axiomSignatureCollector = new OWLEntityCollector(collectedEntities);
 		
+		//Not Supported in OWL API 4
+		//collectedEntities=new HashSet<OWLEntity>();
+		//axiomSignatureCollector = new OWLEntityCollector(collectedEntities);
 		//From axioms we do not want to collect data types
-		axiomSignatureCollector.setCollectDatatypes(false);
+		//axiomSignatureCollector.setCollectDatatypes(false);
 		
 		
 		//Load Ontology/ies
@@ -122,11 +123,11 @@ public class ModuleExtractor {
 		moduleAxioms = new HashSet<OWLAxiom>();
 		
 		
-		collectedEntities=new HashSet<OWLEntity>();
-		axiomSignatureCollector = new OWLEntityCollector(collectedEntities);
-		
+		//Not Supported in OWL API 4
+		//collectedEntities=new HashSet<OWLEntity>();
+		//axiomSignatureCollector = new OWLEntityCollector(collectedEntities);
 		//From axioms we do not want to collect data types
-		axiomSignatureCollector.setCollectDatatypes(false);
+		//axiomSignatureCollector.setCollectDatatypes(false);
 		
 		
 		//Load Ontology/ies
@@ -165,11 +166,11 @@ public class ModuleExtractor {
 		moduleAxioms = new HashSet<OWLAxiom>();
 		
 		
-		collectedEntities=new HashSet<OWLEntity>();
-		axiomSignatureCollector = new OWLEntityCollector(collectedEntities);
-		
+		////Not Supported in OWL API 4
+		//collectedEntities=new HashSet<OWLEntity>();
+		//axiomSignatureCollector = new OWLEntityCollector(collectedEntities);
 		//From axioms we do not want to collect data types
-		axiomSignatureCollector.setCollectDatatypes(false);
+		//axiomSignatureCollector.setCollectDatatypes(false);
 		
 		
 		//Load Ontology/ies
@@ -201,11 +202,11 @@ public class ModuleExtractor {
 		
 		dataFactory = ontologyManager.getOWLDataFactory();
 		
-		collectedEntities=new HashSet<OWLEntity>();
-		axiomSignatureCollector = new OWLEntityCollector(collectedEntities);
-		
+		//Not Supported in OWL API 4
+		//collectedEntities=new HashSet<OWLEntity>();
+		//axiomSignatureCollector = new OWLEntityCollector(collectedEntities);
 		//From axioms we do not want to collect data types
-		axiomSignatureCollector.setCollectDatatypes(false);
+		//axiomSignatureCollector.setCollectDatatypes(false);
 		
 		//Load Ontology/ies
 		indexOntology(ontology);
@@ -304,6 +305,10 @@ public class ModuleExtractor {
 	
 	private Set<OWLEntity> getAxiomSignature(OWLAxiom ax) {
 		
+		return ax.getSignature();
+		
+		/*
+		Very old way to get signature. Probably from 2007!
 		collectedEntities.clear();
 		
 		axiomSignatureCollector.reset(collectedEntities);
@@ -315,6 +320,7 @@ public class ModuleExtractor {
 		
 		//return axiomSignatureCollector.getObjects();
 		return collectedEntities;
+		*/
 	}
 	
 	
@@ -714,7 +720,7 @@ public class ModuleExtractor {
 	    	//OWLOntologyManager ontologyModuleManager = OWLManager.createOWLOntologyManager();
 	    	
 	        try {
-	        	ontologyManager.saveOntology(module, new RDFXMLOntologyFormat(), IRI.create(physicalModuleURI));
+	        	ontologyManager.saveOntology(module, new RDFXMLDocumentFormat(), IRI.create(physicalModuleURI));
 	        }
 	        catch (Exception e) {
 	        	System.err.println("Error saving module\n" + e.getLocalizedMessage());
@@ -729,7 +735,7 @@ public class ModuleExtractor {
 	
 	public void clearStrutures(){
 
-		collectedEntities.clear();
+		//collectedEntities.clear();
 		ontologyAxioms.clear();
 
 		moduleAxioms.clear();

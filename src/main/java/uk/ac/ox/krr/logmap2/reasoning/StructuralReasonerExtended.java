@@ -30,7 +30,6 @@ import org.semanticweb.owlapi.reasoner.impl.OWLClassNodeSet;
  *
  */
 public class StructuralReasonerExtended extends StructuralReasoner{
-//public class StructuralReasonerExtended extends StructuralReasoner2{
 
 	public StructuralReasonerExtended(OWLOntology rootOntology) {
 		super(rootOntology,  new SimpleConfiguration(), BufferingMode.NON_BUFFERING);

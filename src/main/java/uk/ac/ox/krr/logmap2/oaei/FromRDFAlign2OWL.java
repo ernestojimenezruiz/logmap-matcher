@@ -25,10 +25,11 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 
-import org.semanticweb.owlapi.io.RDFXMLOntologyFormat;
+import org.semanticweb.owlapi.formats.RDFXMLDocumentFormat;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.AddAxiom;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.MissingImportHandlingStrategy;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -37,6 +38,7 @@ import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
+import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
@@ -169,7 +171,7 @@ public class FromRDFAlign2OWL {
 	private void saveOWLMappingsFile() throws Exception {
 
 		mappings_ontologyManager.applyChanges(owl_changes);		
-		mappings_ontologyManager.saveOntology(mappings_ontology, new RDFXMLOntologyFormat(), IRI.create(mappings_owl_file_name));
+		mappings_ontologyManager.saveOntology(mappings_ontology, new RDFXMLDocumentFormat(), IRI.create(mappings_owl_file_name));
 		
 	}
 	
@@ -480,7 +482,11 @@ public class FromRDFAlign2OWL {
 	
 	private static OWLOntology loadOntologyStatic(IRI uri) throws Exception{
 		OWLOntologyManager ontologyManager=OWLManager.createOWLOntologyManager();
-		ontologyManager.setSilentMissingImportsHandling(true);
+	
+		OWLOntologyLoaderConfiguration config = new OWLOntologyLoaderConfiguration();
+		config.setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT);
+		ontologyManager.setOntologyLoaderConfiguration(config);
+		
 		return ontologyManager.loadOntology(uri);
 		
 	}

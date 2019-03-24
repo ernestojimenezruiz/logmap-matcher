@@ -10,6 +10,8 @@ import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLAnonymousIndividual;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.search.EntitySearcher;
+import org.semanticweb.owlapi.search.Searcher;
 
 import uk.ac.ox.krr.logmap2.Parameters;
 
@@ -201,7 +203,7 @@ public class ExtractStringFromAnnotationAssertionAxiom {
 			namedIndiv=datafactory.getOWLNamedIndividual(namedIndivIRI);
 			
 			
-			for (OWLAnnotationAssertionAxiom annIdiv : namedIndiv.getAnnotationAssertionAxioms(onto)){
+			for (OWLAnnotationAssertionAxiom annIdiv : EntitySearcher.getAnnotationAssertionAxioms(namedIndiv, onto)){
 				
 				
 				if (annIdiv.getAnnotation().getProperty().getIRI().toString().equals(rdf_label_uri)){
@@ -234,7 +236,9 @@ public class ExtractStringFromAnnotationAssertionAxiom {
 			namedIndiv=datafactory.getOWLNamedIndividual(namedIndivIRI);
 			
 			//for (OWLAnnotation indivAnn : namedIndiv.getAnnotations(onto)){
-			for (OWLLiteral literal_syn : namedIndiv.getDataPropertyValues(datafactory.getOWLDataProperty(IRI.create(fma_name_uri)), onto)){
+			for (OWLLiteral literal_syn : Searcher.values(
+					onto.getDataPropertyAssertionAxioms(namedIndiv), datafactory.getOWLDataProperty(IRI.create(fma_name_uri)))){ 
+				
 			
 				return literal_syn.getLiteral().toLowerCase();
 			}

@@ -4,6 +4,8 @@
  *******************************************************************************/
 package uk.ac.ox.krr.logmap2.test.oaei;
 
+import uk.ac.ox.krr.logmap2.Parameters;
+
 /**
  *
  * @author ernesto
@@ -47,11 +49,18 @@ public class TestPhenotypeTrack extends TestOAEITrack{
 						"doid-ordo"
 				));
 		
+		
+
+		Parameters.output_class_mappings=true;
+		Parameters.output_prop_mappings=true;
+		
+		
 	}
 	
 	
 	
 	public static void main(String[] args){
+		
 		
 		TestPhenotypeTrack test = new TestPhenotypeTrack();
 		

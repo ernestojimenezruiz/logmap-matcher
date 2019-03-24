@@ -40,10 +40,15 @@ import java.util.Map.Entry;
 
 
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.impl.OWLClassNodeSet;
+import org.semanticweb.owlapi.search.EntitySearcher;
+import org.semanticweb.owlapi.search.Searcher;
+
+import com.google.common.collect.Multimap;
 
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.indexing.entities.ClassIndex;
@@ -357,7 +362,7 @@ public class OntologyProcessing {
 		//LogOutput.print(onto.getClassesInSignature().size());
 		
 		//CLASSES				
-		LogOutput.print("\nCLASSES: " + onto.getClassesInSignature(true).size());
+		LogOutput.print("\nCLASSES: " + onto.getClassesInSignature(Imports.INCLUDED).size());
 		
 		//TODO
 		//We need to add something
@@ -370,7 +375,7 @@ public class OntologyProcessing {
 		
 		//TODO For the OAEI campaign we do not translate bigger ontologies
 		//We have a limit in our google translate account
-		if (onto.getClassesInSignature(true).size()>300){
+		if (onto.getClassesInSignature(Imports.INCLUDED).size()>300){
 			Parameters.allow_multilingual=false;
 		}
 		
@@ -402,7 +407,7 @@ public class OntologyProcessing {
 		
 		 
 		
-		for (OWLClass cls : onto.getClassesInSignature(true)){ //we also add imports
+		for (OWLClass cls : onto.getClassesInSignature(Imports.INCLUDED)){ //we also add imports
 			
 						
 			if (!cls.isTopEntity() && !cls.isBottomEntity()){// && !ns_ent.equals(oboinowl)){
@@ -573,10 +578,10 @@ public class OntologyProcessing {
 		
 		String lang="";
 		
-		for (OWLClass cls : onto.getClassesInSignature(true)){ //we also add imports
+		for (OWLClass cls : onto.getClassesInSignature(Imports.INCLUDED)){ //we also add imports
 			if (!cls.isTopEntity() && !cls.isBottomEntity()){
 				
-				for (OWLAnnotationAssertionAxiom clsAnnAx : cls.getAnnotationAssertionAxioms(onto)){
+				for (OWLAnnotationAssertionAxiom clsAnnAx : EntitySearcher.getAnnotationAssertionAxioms(cls, onto)){
 					
 					lang = annotationExtractor.getAnntotationLanguage(clsAnnAx);
 					
@@ -720,7 +725,7 @@ public class OntologyProcessing {
 		String name;
 		
 		//DATA PROPERTIES
-		for (OWLDataProperty dProp : onto.getDataPropertiesInSignature(true)){ //also imports
+		for (OWLDataProperty dProp : onto.getDataPropertiesInSignature(Imports.INCLUDED)){ //also imports
 			
 			ns_ent=Utilities.getNameSpaceFromURI(dProp.getIRI().toString());
 			
@@ -785,7 +790,7 @@ public class OntologyProcessing {
 			
 			
 			
-			for (OWLAnnotationAssertionAxiom dPropAnnAx : dProp.getAnnotationAssertionAxioms(onto)){
+			for (OWLAnnotationAssertionAxiom dPropAnnAx : EntitySearcher.getAnnotationAssertionAxioms(dProp, onto)){
 				
 				//String label_value = annotationExtractor.getAnntotationString(dPropAnnAx);
 				
@@ -837,7 +842,7 @@ public class OntologyProcessing {
 			
 			//Process domain
 			//--------------------------------
-			for (OWLClassExpression clsexp : dProp.getDomains(onto)){
+			for (OWLClassExpression clsexp : EntitySearcher.getDomains(dProp, onto)){
 				if (!clsexp.isAnonymous()){
 					if (class2identifier.containsKey(clsexp.asOWLClass())){
 						index.addDomainClass4DataProperty(ident, class2identifier.get(clsexp.asOWLClass()));
@@ -858,14 +863,14 @@ public class OntologyProcessing {
 			
 			//Process data ranges
 			//--------------------------------
-			for (OWLDataRange type : dProp.getRanges(onto)){
+			for (OWLDataRange type : EntitySearcher.getRanges(dProp, onto)){
 				if (type.isDatatype()){
 					//LogOutput.print(type.asOWLDatatype() + " " + type.asOWLDatatype().getIRI() + " " + type.asOWLDatatype().isBuiltIn() +"  " +
 					//		Utilities.getEntityLabelFromURI(type.asOWLDatatype().getIRI().toString()));
 					
 					try{
 						if (type.asOWLDatatype().isBuiltIn()){
-							range_type = type.asOWLDatatype().getBuiltInDatatype().getShortName();
+							range_type = type.asOWLDatatype().getBuiltInDatatype().getShortForm();
 						}
 						else{//we extract name from iri
 							//range_type =  Utilities.getEntityLabelFromURI(Utilities.getEntityLabelFromURI(type.asOWLDatatype().getIRI().toString()));
@@ -909,7 +914,7 @@ public class OntologyProcessing {
 		
 		
 		//OBJECT PROPERTIES
-		for (OWLObjectProperty oProp : onto.getObjectPropertiesInSignature(true)){//also imports
+		for (OWLObjectProperty oProp : onto.getObjectPropertiesInSignature(Imports.INCLUDED)){//also imports
 			
 			ns_ent=Utilities.getNameSpaceFromURI(oProp.getIRI().toString());
 						
@@ -976,7 +981,7 @@ public class OntologyProcessing {
 			//Use rdf:label and others as alternative labels
 			//----------------------------
 			//TODO: labels might be in an annotation
-			for (OWLAnnotationAssertionAxiom oPropAnnAx : oProp.getAnnotationAssertionAxioms(onto)){
+			for (OWLAnnotationAssertionAxiom oPropAnnAx : EntitySearcher.getAnnotationAssertionAxioms(oProp, onto)){
 				
 				//String label_value = annotationExtractor.getAnntotationString(oPropAnnAx);
 				
@@ -1030,7 +1035,7 @@ public class OntologyProcessing {
 			//--------------------------------------------
 			String inverse_name;
 			List<String> cleanWordsInverse;
-			for (OWLObjectPropertyExpression propexp : oProp.getInverses(onto)){
+			for (OWLObjectPropertyExpression propexp : EntitySearcher.getInverses(oProp, onto)){
 				if (!propexp.isAnonymous()){
 					inverse_name = Utilities.getEntityLabelFromURI(
 							propexp.asOWLObjectProperty().getIRI().toString());
@@ -1057,7 +1062,7 @@ public class OntologyProcessing {
 			
 			//Process domains
 			//--------------------------------------------
-			for (OWLClassExpression clsexp : oProp.getDomains(onto)){
+			for (OWLClassExpression clsexp : EntitySearcher.getDomains(oProp, onto)){
 				
 				if (!clsexp.isAnonymous()){
 					if (class2identifier.containsKey(clsexp.asOWLClass())){
@@ -1079,7 +1084,7 @@ public class OntologyProcessing {
 			
 			//Process ranges
 			//--------------------------------------------
-			for (OWLClassExpression clsexp : oProp.getRanges(onto)){
+			for (OWLClassExpression clsexp : EntitySearcher.getRanges(oProp, onto)){
 				if (!clsexp.isAnonymous()){
 					if (class2identifier.containsKey(clsexp.asOWLClass())){
 						index.addRangeClass4ObjectProperty(ident, class2identifier.get(clsexp.asOWLClass()));
@@ -1135,7 +1140,7 @@ public class OntologyProcessing {
 		
 		
 			
-		for (OWLNamedIndividual indiv : onto.getIndividualsInSignature(true)){//also imports
+		for (OWLNamedIndividual indiv : onto.getIndividualsInSignature(Imports.INCLUDED)){//also imports
 			
 			ns_ent=Utilities.getNameSpaceFromURI(indiv.getIRI().toString());
 			
@@ -1370,7 +1375,7 @@ public class OntologyProcessing {
 		
 			OAEI2015InstanceProcessing oaei2015extractor = new OAEI2015InstanceProcessing();
 			
-			for (OWLNamedIndividual indiv : onto.getIndividualsInSignature(true)){//also imports
+			for (OWLNamedIndividual indiv : onto.getIndividualsInSignature(Imports.INCLUDED)){//also imports
 				
 				//We do not want to match dummy individuals!
 				if (dummyIndividualsSet.contains(indiv))
@@ -1391,7 +1396,8 @@ public class OntologyProcessing {
 				
 				//ADD REFERENCED INDIVIDUALS
 				//We extract the set of referenced individuals: Cities for lives_in, Paper for author_of, etc			
-				Map<OWLObjectPropertyExpression, Set<OWLIndividual>> objProp2values = indiv.getObjectPropertyValues(onto);
+				//Map<OWLObjectPropertyExpression, Set<OWLIndividual>> objProp2values = indiv.getObjectPropertyValues(onto);
+				Multimap<OWLObjectPropertyExpression,OWLIndividual> objProp2values = EntitySearcher.getObjectPropertyValues(indiv, onto);
 				
 				for (OWLObjectPropertyExpression objprop : objProp2values.keySet()){
 									
@@ -1501,8 +1507,8 @@ public class OntologyProcessing {
 		
 		for (String uri_indiv_ann : Parameters.accepted_data_assertion_URIs_for_individuals){
 		
-			for (OWLLiteral assertion_value : indiv.getDataPropertyValues(
-					index.getFactory().getOWLDataProperty(IRI.create(uri_indiv_ann)), onto)){
+			
+			for (OWLLiteral assertion_value : Searcher.values(onto.getDataPropertyAssertionAxioms(indiv), index.getFactory().getOWLDataProperty(IRI.create(uri_indiv_ann)))){
 				
 				label_value = assertion_value.getLiteral().toLowerCase();
 				
@@ -1529,7 +1535,7 @@ public class OntologyProcessing {
 		//	System.out.println(ann);
 		//}
 		
-		for (OWLAnnotationAssertionAxiom indivAnnAx : indiv.getAnnotationAssertionAxioms(onto)){
+		for (OWLAnnotationAssertionAxiom indivAnnAx : EntitySearcher.getAnnotationAssertionAxioms(indiv, onto)){
 		
 			//label_value = annotationExtractor.getAnntotationString(indivAnnAx);
 			//String uri_ann = indivAnnAx.getAnnotation().getProperty().getIRI().toString();
@@ -1884,7 +1890,7 @@ public class OntologyProcessing {
 		//if (obsolete_classes.contains(cls))
 		//	return true;
 		
-		for (OWLAnnotationAssertionAxiom annAx : cls.getAnnotationAssertionAxioms(onto)){
+		for (OWLAnnotationAssertionAxiom annAx : EntitySearcher.getAnnotationAssertionAxioms(cls, onto)){
 			
 			if (annAx.getAnnotation().getProperty().getIRI().toString().equals(deprecated_uri)){
 				
@@ -1946,7 +1952,7 @@ public class OntologyProcessing {
 			
 			//Otherwise We look for first non empty label (if no label we keepID)
 			//---------------------------------------------------------------------
-			for (OWLAnnotationAssertionAxiom annAx : cls.getAnnotationAssertionAxioms(onto)){
+			for (OWLAnnotationAssertionAxiom annAx : EntitySearcher.getAnnotationAssertionAxioms(cls, onto)){
 				
 				//listchanges.add(new RemoveAxiom(onto, annAx)); //We remove all annotations
 				
@@ -2144,7 +2150,7 @@ public class OntologyProcessing {
 		
 		//LogOutput.print("GENIEID");
 		
-		for (OWLAnnotationAssertionAxiom clsAnnAx : cls.getAnnotationAssertionAxioms(onto)){
+		for (OWLAnnotationAssertionAxiom clsAnnAx : EntitySearcher.getAnnotationAssertionAxioms(cls, onto)){
 			
 			//listchanges.add(new RemoveAxiom(onto, clsAnnAx)); //We remove all annotations
 			
@@ -2647,7 +2653,7 @@ public class OntologyProcessing {
 	
 	
 	/**
-	 * Structurla resoner
+	 * Structural reasoner
 	 */
 	private void setUpStructuralReasoner(){
 		
@@ -2735,7 +2741,7 @@ public class OntologyProcessing {
 				
 		try {
 		
-			if (Parameters.reason_datatypes || onto.getDatatypesInSignature(true).size()==0){
+			if (Parameters.reason_datatypes || onto.getDatatypesInSignature(Imports.INCLUDED).size()==0){
 			//if (true){
 				//hermitAccess = new HermiTReasonerAccess(onto, false);
 				hermitAccess = new HermiTAccess(
@@ -2767,12 +2773,13 @@ public class OntologyProcessing {
 		catch(Exception e){
 			
 			try {
-				LogOutput.print("Error/timeout setting up HermiT reasoner. Using 'structural' reasoner instead.");//\n\n" + e.getMessage() + "\n");
+				LogOutput.print("Error/timeout setting up HermiT reasoner. Using 'ELK' reasoner instead.");//\n\n" + e.getMessage() + "\n");
 				//e.printStackTrace();
 				setUpReasoner_ELK();
 			}
 			catch(Exception e2){
-				System.err.println("Error setting up Structural reasoner: " + e2.getMessage());
+				System.err.println("Error setting up ELK reasoner: " + e2.getMessage() + ". Using structural reasoner instead.");
+				setUpStructuralReasoner();
 			}
 			
 		}
@@ -2856,6 +2863,7 @@ public class OntologyProcessing {
 	
 	
 	private OWLReasoner getIncompleteReasoner() throws Exception{
+		
 		return new StructuralReasonerExtended(onto);
 		/*ELKAccess elk = new ELKAccess(
 				SynchronizedOWLManager.createOWLOntologyManager(),
@@ -2870,8 +2878,10 @@ public class OntologyProcessing {
 	 */
 	private void extractDangerousClasses(){
 		
+		//System.out.println(reasoner.getTopClassNode().getEntitiesMinusTop());
+		
 		for (OWLClass cls : reasoner.getTopClassNode().getEntitiesMinusTop()){
-			//System.out.println(cls.toString());
+			System.out.println(cls.toString());
 			dangerousClasses.add(class2identifier.get(cls));
 			index.addDangerousClasses(class2identifier.get(cls));
 		}
@@ -3571,7 +3581,7 @@ public class OntologyProcessing {
 			
 			String category_value;
 			
-			for (OWLAnnotationAssertionAxiom entityAnnAx : indiv.getAnnotationAssertionAxioms(onto)){
+			for (OWLAnnotationAssertionAxiom entityAnnAx : EntitySearcher.getAnnotationAssertionAxioms(indiv, onto)){
 				
 				String uri_ann = entityAnnAx.getAnnotation().getProperty().getIRI().toString();
 				
@@ -3603,8 +3613,8 @@ public class OntologyProcessing {
 			for (String uri_for_categories : Parameters.accepted_property_URIs_for_instance_categories){
 				
 				try{
-					for (OWLLiteral assertion_value : indiv.getDataPropertyValues(
-							index.getFactory().getOWLDataProperty(IRI.create(uri_for_categories)), onto)){
+					
+					for (OWLLiteral assertion_value : Searcher.values(onto.getDataPropertyAssertionAxioms(indiv), index.getFactory().getOWLDataProperty(IRI.create(uri_for_categories)))){
 						
 						
 						category_value = assertion_value.getLiteral().toLowerCase();
@@ -3622,8 +3632,9 @@ public class OntologyProcessing {
 				}
 				
 				try{
-					for (OWLIndividual assertion_value_indiv : indiv.getObjectPropertyValues(
-							index.getFactory().getOWLObjectProperty(IRI.create(uri_for_categories)), onto)){
+					
+					for (OWLIndividual assertion_value_indiv : Searcher.values(
+							onto.getObjectPropertyAssertionAxioms(indiv), index.getFactory().getOWLObjectProperty(IRI.create(uri_for_categories)))){
 						
 						if (assertion_value_indiv.isNamed()){
 							
@@ -3742,7 +3753,7 @@ public class OntologyProcessing {
 			//Check for oject property assertions deep 1 referenceing given individual
 			//-------------------------------------------------------------------------
 			//If referenced it is a dummy individual which should not be considered in the matching				
-			for (OWLAxiom refAx : onto.getReferencingAxioms(indiv, true)){
+			for (OWLAxiom refAx : onto.getReferencingAxioms(indiv, Imports.INCLUDED)){
 				
 				if (refAx instanceof OWLObjectPropertyAssertionAxiom){
 					
@@ -3792,7 +3803,7 @@ public class OntologyProcessing {
 			//We also add from rdfs:comments
 			//-----------------------------------------
 			//Since the comments may be long we need to pre-process them
-			for (OWLAnnotationAssertionAxiom indivAnnAx : indiv.getAnnotationAssertionAxioms(onto)){
+			for (OWLAnnotationAssertionAxiom indivAnnAx : EntitySearcher.getAnnotationAssertionAxioms(indiv, onto)){
 				
 								
 				String uri_ann = indivAnnAx.getAnnotation().getProperty().getIRI().toString();
@@ -3833,8 +3844,7 @@ public class OntologyProcessing {
 			//Datatype assertion
 			for (String uri_indiv_ann : Parameters.accepted_data_assertion_URIs_for_individuals){
 			
-				for (OWLLiteral assertion_value : indiv.getDataPropertyValues(
-						index.getFactory().getOWLDataProperty(IRI.create(uri_indiv_ann)), onto)){
+				for (OWLLiteral assertion_value : Searcher.values(onto.getDataPropertyAssertionAxioms(indiv), index.getFactory().getOWLDataProperty(IRI.create(uri_indiv_ann)))){
 					
 					
 					//LogOutput.print(indiv.getIRI().toString());
@@ -3864,9 +3874,9 @@ public class OntologyProcessing {
 			//OBject property assertions deep 1  (level 1 references a dummy individual)
 			//-------------------------------------
 			for (String uri_indiv_ann_deep1 : Parameters.accepted_object_assertion_URIs_for_individuals){
-				
-				for (OWLIndividual assertion_value_indiv : indiv.getObjectPropertyValues(
-						index.getFactory().getOWLObjectProperty(IRI.create(uri_indiv_ann_deep1)), onto)){
+								
+				for (OWLIndividual assertion_value_indiv : Searcher.values(
+						onto.getObjectPropertyAssertionAxioms(indiv), index.getFactory().getOWLObjectProperty(IRI.create(uri_indiv_ann_deep1)))){
 					
 					//We only consider named individuals
 					if (assertion_value_indiv.isNamed()){
@@ -3879,9 +3889,11 @@ public class OntologyProcessing {
 						//Datatype assertion deep 2: has_value and others
 						//----------------------------------------
 						for (String uri_indiv_ann_deep2 : Parameters.accepted_data_assertion_URIs_for_individuals_deep2){
+							
+							
 						
-							for (OWLLiteral assertion_value_deep2 : assertion_value_indiv.asOWLNamedIndividual().getDataPropertyValues(
-									index.getFactory().getOWLDataProperty(IRI.create(uri_indiv_ann_deep2)), onto)){
+							for (OWLLiteral assertion_value_deep2 : Searcher.values(
+									onto.getDataPropertyAssertionAxioms(assertion_value_indiv), index.getFactory().getOWLDataProperty(IRI.create(uri_indiv_ann_deep2)))){
 								
 								
 								label_value = processLabel(
@@ -3902,8 +3914,7 @@ public class OntologyProcessing {
 						
 						//Extract comment or label! level 2
 						//---------------------
-						for (OWLAnnotationAssertionAxiom indivAnnAx_level2 : assertion_value_indiv.asOWLNamedIndividual().getAnnotationAssertionAxioms(onto)){
-							
+						for (OWLAnnotationAssertionAxiom indivAnnAx_level2 : EntitySearcher.getAnnotationAssertionAxioms(assertion_value_indiv.asOWLNamedIndividual(), onto)){
 							
 							String uri_ann = indivAnnAx_level2.getAnnotation().getProperty().getIRI().toString();
 							
@@ -3962,7 +3973,8 @@ public class OntologyProcessing {
 			
 			String label_name;
 			
-			Map<OWLDataPropertyExpression, Set<OWLLiteral>> dataProp2values = indiv.getDataPropertyValues(onto);
+			//Map<OWLDataPropertyExpression, Set<OWLLiteral>> dataProp2values = indiv.getDataPropertyValues(onto);
+			Multimap<OWLDataPropertyExpression, OWLLiteral> dataProp2values = EntitySearcher.getDataPropertyValues(indiv, onto);
 			
 			
 			//We estract a data props lecicon like "date_12_12_2012", "age_18", etc...
@@ -3993,7 +4005,10 @@ public class OntologyProcessing {
 				
 			}//for dtata prop
 			
-			Map<OWLObjectPropertyExpression, Set<OWLIndividual>> objProp2values = indiv.getObjectPropertyValues(onto);
+			//Map<OWLObjectPropertyExpression, Set<OWLIndividual>> objProp2values = indiv.getObjectPropertyValues(onto);
+			Multimap<OWLObjectPropertyExpression, OWLIndividual> objProp2values = EntitySearcher.getObjectPropertyValues(indiv, onto);
+			
+			
 			int ident;
 			
 			//We estract a data props lexicon like "lives_in_city", "spoken_in_lesotho"
@@ -4032,7 +4047,7 @@ public class OntologyProcessing {
 						
 						//Deep 2
 						///
-						dataProp2values = indiv_deep2.getDataPropertyValues(onto);
+						dataProp2values = EntitySearcher.getDataPropertyValues(indiv_deep2, onto);
 						
 						//We estract a data props lecicon like "date_12_12_2012", "age_18", etc...
 						//in OAEI 2013 I this is not used much... since deep2 obj properties substitute another obj propertyes
@@ -4052,7 +4067,9 @@ public class OntologyProcessing {
 							
 						}
 						
-						Map<OWLObjectPropertyExpression, Set<OWLIndividual>> objProp2values_deep2 = indiv_deep2.getObjectPropertyValues(onto);
+						//Map<OWLObjectPropertyExpression, Set<OWLIndividual>> objProp2values_deep2 = indiv_deep2.getObjectPropertyValues(onto);
+						Multimap<OWLObjectPropertyExpression, OWLIndividual> objProp2values_deep2 = EntitySearcher.getObjectPropertyValues(indiv_deep2, onto);
+						
 						
 						for (OWLObjectPropertyExpression objectprop2 : objProp2values_deep2.keySet()){
 							

@@ -18,6 +18,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.parameters.Imports;
 
 import uk.ac.manchester.syntactic_locality.OntologyModuleExtractor;
 import uk.ac.ox.krr.logmap2.Parameters;
@@ -93,8 +94,8 @@ public class WordEmbeddingDivision extends AbstractDivision implements OntologyA
 		
 		
 		
-		size_source_ontology = source.getSignature(true).size();
-		size_target_ontology = target.getSignature(true).size();
+		size_source_ontology = source.getSignature(Imports.INCLUDED).size();
+		size_target_ontology = target.getSignature(Imports.INCLUDED).size();
 		
 		
 		
