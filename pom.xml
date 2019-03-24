@@ -22,7 +22,8 @@
   
   <dependencies>
   
-  
+  <!-- Note that newer OWL API 4 versions are in conflict  -->
+  <!-- HermiT for OWL API 4.1.3 -->
   <dependency>
     <groupId>net.sourceforge.owlapi</groupId>
     <artifactId>org.semanticweb.hermit</artifactId>
@@ -33,7 +34,7 @@
     <artifactId>owlapi-distribution</artifactId>
     <version>4.1.3</version>
   </dependency>
-  <!-- Test and tutorials -->
+  <!-- Test and tutorials. 4.1.3 -->
   <dependency>
     <groupId>net.sourceforge.owlapi</groupId>
     <artifactId>owlapi-contract</artifactId>

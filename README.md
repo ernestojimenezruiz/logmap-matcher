@@ -1,4 +1,8 @@
-(Check out the new material about the division of the ontology alignment task [here](#division). April 2018)
+**News:**
+
+1. LogMap is now relying on the [OWL API 4](https://github.com/owlcs/owlapi/wiki/Migrate-from-version-3.4-and-3.5-to-4.0). See here the (non-maintained) branch that uses [OWL API 3](https://github.com/ernestojimenezruiz/logmap-matcher/tree/logmap-owlapi-3)
+2. Check out the new material about the division of the ontology alignment task [here](#division).
+
 
 # LogMap: An Ontology Alignment and Alignment Repair System
 
