@@ -2661,7 +2661,7 @@ public class OntologyProcessing {
 			reasoner = getIncompleteReasoner();
 		}
 		catch(Exception e){
-			System.err.println("Error setting up Structural reasoner: " + e.getMessage());
+			LogOutput.printError("Error setting up Structural reasoner: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -2778,7 +2778,7 @@ public class OntologyProcessing {
 				setUpReasoner_ELK();
 			}
 			catch(Exception e2){
-				System.err.println("Error setting up ELK reasoner: " + e2.getMessage() + ". Using structural reasoner instead.");
+				LogOutput.printError("Error setting up ELK reasoner: " + e2.getMessage() + ". Using structural reasoner instead.");
 				setUpStructuralReasoner();
 			}
 			
@@ -2849,7 +2849,7 @@ public class OntologyProcessing {
 				reasoner = getIncompleteReasoner();
 			}
 			catch(Exception e2){
-				System.err.println("Error setting up Structural reasoner: " + e2.getMessage());
+				LogOutput.printError("Error setting up Structural reasoner: " + e2.getMessage());
 			}
 			
 		}
