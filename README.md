@@ -1,4 +1,4 @@
-(Check out the new material about the division of the ontology alignment task [here](#division). April 2018)
+**News:** LogMap for OWL API 3. This branch is not maintained.
 
 # LogMap: An Ontology Alignment and Alignment Repair System
 
