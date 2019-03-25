@@ -167,12 +167,20 @@ public class MappingObjectStr {
 	}
 	
 	
+	/**
+	 * Gets lexical score of a mapping. Based on ISUB algorithm
+	 * @return
+	 */
 	public double getLexicalConfidenceMapping(){
 		return lexical_conf;
 		
 	}
 	
-	public double getScopeConfidenceMapping(){
+	/**
+	 * Gets scope/structural score of a mapping
+	 * @return
+	 */
+	public double getStruturalConfidenceMapping(){
 		return scope_conf;
 		
 	}
