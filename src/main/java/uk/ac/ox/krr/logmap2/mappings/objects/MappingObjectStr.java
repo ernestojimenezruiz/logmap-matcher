@@ -180,7 +180,7 @@ public class MappingObjectStr {
 	 * Gets scope/structural score of a mapping
 	 * @return
 	 */
-	public double getStruturalConfidenceMapping(){
+	public double getStructuralConfidenceMapping(){
 		return scope_conf;
 		
 	}
