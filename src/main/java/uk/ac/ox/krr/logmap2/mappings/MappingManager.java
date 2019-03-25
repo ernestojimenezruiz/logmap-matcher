@@ -1813,6 +1813,16 @@ public abstract class MappingManager {
 		
 	}
 
+	
+	public double getLexicalScore(int ide1, int ide2) {
+		return getISUB4Mapping(ide1, ide2);
+	}
+	
+	
+	public double getStructuralScore(int ide1, int ide2) {
+		return getScopeAnchors4Mapping(ide1, ide2);
+	}
+	
 
 	public double getConfidence4Mapping(int ide1, int ide2){
 		

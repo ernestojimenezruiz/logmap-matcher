@@ -167,6 +167,17 @@ public class MappingObjectStr {
 	}
 	
 	
+	public double getLexicalConfidenceMapping(){
+		return lexical_conf;
+		
+	}
+	
+	public double getScopeConfidenceMapping(){
+		return scope_conf;
+		
+	}
+	
+	
 	
 	
 	public boolean equals(Object o){

@@ -303,6 +303,9 @@ public class LogMap2_Matcher {
 								representative_labels.add(logmap2.getLabel4ConceptIdentifier(ide1));
 							
 							
+							MappingObjectStr mapping;
+							
+							
 							if (dir_mapping!=Utilities.R2L){						
 							
 								//GSs in OAIE only contains, in general, equivalence mappings
@@ -311,13 +314,12 @@ public class LogMap2_Matcher {
 								}
 									
 								
-								logmap2_mappings.add(
-										new MappingObjectStr(
+								mapping = new MappingObjectStr(
 												logmap2.getIRI4ConceptIdentifier(ide1), 
 												logmap2.getIRI4ConceptIdentifier(ide2), 
 												logmap2.getConfidence4ConceptMapping(ide1, ide2), 
 												dir_mapping,
-												Utilities.CLASSES));
+												Utilities.CLASSES);
 								
 							}
 							else{
@@ -326,14 +328,20 @@ public class LogMap2_Matcher {
 									dir_mapping=Utilities.EQ;
 								}
 								
-								logmap2_mappings.add(
-										new MappingObjectStr(								
+								mapping = new MappingObjectStr(								
 										logmap2.getIRI4ConceptIdentifier(ide2),
 										logmap2.getIRI4ConceptIdentifier(ide1),										
 										logmap2.getConfidence4ConceptMapping(ide1, ide2),
 										dir_mapping,
-										Utilities.CLASSES));
+										Utilities.CLASSES);
 							}
+							
+							mapping.setLexicalConfidenceMapping(logmap2.getLexicalScore4ConceptMapping(ide1, ide2));
+							mapping.setScopeConfidenceMapping(logmap2.getStrutcuralScore4ConceptMapping(ide1, ide2));
+							
+							logmap2_mappings.add(mapping);
+							
+							
 						}
 					} //for ide2
 				}//for ide1
@@ -348,13 +356,23 @@ public class LogMap2_Matcher {
 					if (logmap2.getIRI4DataPropIdentifier(ide1).equals(logmap2.getIRI4DataPropIdentifier(logmap2.getDataPropMappings().get(ide1))))
 						continue;
 					
-					logmap2_mappings.add(
+					double conf = logmap2.getConfidence4DataPropConceptMapping(ide1, logmap2.getDataPropMappings().get(ide1));
+					
+					MappingObjectStr mapping = 
 							new MappingObjectStr(			
 								logmap2.getIRI4DataPropIdentifier(ide1),
 								logmap2.getIRI4DataPropIdentifier(logmap2.getDataPropMappings().get(ide1)),
-								logmap2.getConfidence4DataPropConceptMapping(ide1, logmap2.getDataPropMappings().get(ide1)),
+								conf,
 								Utilities.EQ,  
-								Utilities.DATAPROPERTIES));
+								Utilities.DATAPROPERTIES);
+					
+					//Same confidence so far
+					mapping.setLexicalConfidenceMapping(conf);
+					mapping.setScopeConfidenceMapping(conf);
+					
+					logmap2_mappings.add(mapping);
+					
+					
 				}
 				
 				for (int ide1 : logmap2.getObjectPropMappings().keySet()){
@@ -363,13 +381,22 @@ public class LogMap2_Matcher {
 					if (logmap2.getIRI4ObjectPropIdentifier(ide1).equals(logmap2.getIRI4ObjectPropIdentifier(logmap2.getObjectPropMappings().get(ide1))))
 						continue;
 					
-					logmap2_mappings.add(
+					double conf = logmap2.getConfidence4ObjectPropConceptMapping(ide1, logmap2.getObjectPropMappings().get(ide1));
+					
+					MappingObjectStr mapping =
 							new MappingObjectStr(
 								logmap2.getIRI4ObjectPropIdentifier(ide1),
 								logmap2.getIRI4ObjectPropIdentifier(logmap2.getObjectPropMappings().get(ide1)),
-								logmap2.getConfidence4ObjectPropConceptMapping(ide1, logmap2.getObjectPropMappings().get(ide1)),
+								conf,
 								Utilities.EQ,
-								Utilities.OBJECTPROPERTIES));
+								Utilities.OBJECTPROPERTIES);
+					
+					//Same confidence so far
+					mapping.setLexicalConfidenceMapping(conf);
+					mapping.setScopeConfidenceMapping(conf);
+					
+					logmap2_mappings.add(mapping);
+					
 				}
 			}
 			
@@ -385,13 +412,20 @@ public class LogMap2_Matcher {
 						if (logmap2.getIRI4InstanceIdentifier(ide1).equals(logmap2.getIRI4InstanceIdentifier(ide2)))
 							continue;
 					
-						logmap2_mappings.add(
+						MappingObjectStr mapping =
 								new MappingObjectStr(
 								logmap2.getIRI4InstanceIdentifier(ide1), 
 								logmap2.getIRI4InstanceIdentifier(ide2), 
 								logmap2.getConfidence4InstanceMapping(ide1, ide2),
 								Utilities.EQ,
-								Utilities.INSTANCES));
+								Utilities.INSTANCES);
+						
+						
+						mapping.setLexicalConfidenceMapping(logmap2.getLexicalScore4InstanceMapping(ide1, ide2));
+						mapping.setScopeConfidenceMapping(logmap2.getStructuralScore4InstanceMapping(ide1, ide2));
+						
+						logmap2_mappings.add(mapping);
+						
 						
 					}
 				}
@@ -467,129 +501,159 @@ public class LogMap2_Matcher {
 			//TODO revise direction of mapping
 			
 			
+			
 			//For statistics. They may also be reusable since sometimes are border-line cases
 			//We also create here discarded mappings
+			//DISCARDED
 			for (int ide1 : logmap2.getDiscardedClassMappings().keySet()){
 				for (int ide2 : logmap2.getDiscardedClassMappings().get(ide1)){
 					
 					
-					if (ide1<ide2){						
-						
-							logmap2_discarded_mappings.add(
-									new MappingObjectStr(
+					//We do not split discarded mappings	
+					MappingObjectStr mapping = new MappingObjectStr(
 											logmap2.getIRI4ConceptIdentifier(ide1), 
 											logmap2.getIRI4ConceptIdentifier(ide2), 
 											logmap2.getConfidence4ConceptMapping(ide1, ide2), 
 											Utilities.EQ,
-											Utilities.CLASSES));
+											Utilities.CLASSES);
 							
-					}
-					else{
-							
-						logmap2_discarded_mappings.add(
-									new MappingObjectStr(								
-									logmap2.getIRI4ConceptIdentifier(ide2),
-									logmap2.getIRI4ConceptIdentifier(ide1),										
-									logmap2.getConfidence4ConceptMapping(ide1, ide2),
-									Utilities.EQ,
-									Utilities.CLASSES));
-						
-					}
+					
+					
+					mapping.setLexicalConfidenceMapping(logmap2.getLexicalScore4ConceptMapping(ide1, ide2));
+					mapping.setScopeConfidenceMapping(logmap2.getStrutcuralScore4ConceptMapping(ide1, ide2));
+					
+					logmap2_discarded_mappings.add(mapping);
+					
+					
+					
+					
 				} //for ide2
 			}//for ide1
 			
 			
+			
+			//HARD DISCARDED
 			for (int ide1 : logmap2.getHardDiscardedClassMappings().keySet()){
 				for (int ide2 : logmap2.getHardDiscardedClassMappings().get(ide1)){
 					
 					
-					if (ide1<ide2){						
-						
-							logmap2_hard_discarded_mappings.add(
-									new MappingObjectStr(
+					//We do not split discarded mappings
+					MappingObjectStr mapping = new MappingObjectStr(
 											logmap2.getIRI4ConceptIdentifier(ide1), 
 											logmap2.getIRI4ConceptIdentifier(ide2), 
 											logmap2.getConfidence4ConceptMapping(ide1, ide2), 
 											Utilities.EQ,
-											Utilities.CLASSES));
+											Utilities.CLASSES);
+					
+					
+					mapping.setLexicalConfidenceMapping(logmap2.getLexicalScore4ConceptMapping(ide1, ide2));
+					mapping.setScopeConfidenceMapping(logmap2.getStrutcuralScore4ConceptMapping(ide1, ide2));
+					
+					logmap2_hard_discarded_mappings.add(mapping);
 							
-					}
-					else{
-							
-						logmap2_hard_discarded_mappings.add(
-									new MappingObjectStr(								
-									logmap2.getIRI4ConceptIdentifier(ide2),
-									logmap2.getIRI4ConceptIdentifier(ide1),										
-									logmap2.getConfidence4ConceptMapping(ide1, ide2),
-									Utilities.EQ,
-									Utilities.CLASSES));
-						
-					}
+					
 				} //for ide2
 			}//for ide1
 			
 			
+			
+			
+			//CONFLICTIVE MAPPINGS
+			//Split mapping
 			for (int ide1 : logmap2.getConflictiveAnchors().keySet()){
 				for (int ide2 : logmap2.getConflictiveAnchors().get(ide1)){
 					
 					
+					MappingObjectStr mapping;
+					
 					if (ide1<ide2){						
 						
-							logmap2_conflictive_mappings.add(
-									new MappingObjectStr(
+							mapping = new MappingObjectStr(
 											logmap2.getIRI4ConceptIdentifier(ide1), 
 											logmap2.getIRI4ConceptIdentifier(ide2), 
 											logmap2.getConfidence4ConceptMapping(ide1, ide2), 
-											Utilities.EQ,
-											Utilities.CLASSES));
+											Utilities.L2R,
+											Utilities.CLASSES);
 							
 					}
 					else{
 							
-						logmap2_conflictive_mappings.add(
-									new MappingObjectStr(								
+						mapping = new MappingObjectStr(								
 									logmap2.getIRI4ConceptIdentifier(ide2),
 									logmap2.getIRI4ConceptIdentifier(ide1),										
 									logmap2.getConfidence4ConceptMapping(ide1, ide2),
-									Utilities.EQ,
-									Utilities.CLASSES));
+									Utilities.R2L,
+									Utilities.CLASSES);
 						
 					}
+					
+					
+					
+					mapping.setLexicalConfidenceMapping(logmap2.getLexicalScore4ConceptMapping(ide1, ide2));
+					mapping.setScopeConfidenceMapping(logmap2.getStrutcuralScore4ConceptMapping(ide1, ide2));
+					
+					logmap2_conflictive_mappings.add(mapping);
+					
+					
 				} //for ide2
 			}//for ide1
 			
 			
+			
+			
+			
+			//ANCHORS
 			for (int ide1 : logmap2.getAnchors().keySet()){
 				for (int ide2 : logmap2.getAnchors().get(ide1)){
 					
 					
-					if (ide1<ide2){						
+					MappingObjectStr mapping;
+					
+					
+					//Avoid same URI mappings
+					if (logmap2.getIRI4ConceptIdentifier(ide1).equals(logmap2.getIRI4ConceptIdentifier(ide2)))
+						continue;
+					
+					
+					dir_mapping = logmap2.getDirClassMapping(ide1, ide2);
+					
+					if (dir_mapping!=Utilities.NoMap){
 						
-							logmap2_anchors.add(
-									new MappingObjectStr(
+						
+						if (dir_mapping!=Utilities.R2L){						
+						
+							mapping = new MappingObjectStr(
 											logmap2.getIRI4ConceptIdentifier(ide1), 
 											logmap2.getIRI4ConceptIdentifier(ide2), 
 											logmap2.getConfidence4ConceptMapping(ide1, ide2), 
-											Utilities.EQ,
-											Utilities.CLASSES));
+											dir_mapping,
+											Utilities.CLASSES);
 							
-					}
-					else{
+						}
+						else{
 							
-						logmap2_anchors.add(
-									new MappingObjectStr(								
+							
+							mapping = new MappingObjectStr(								
 									logmap2.getIRI4ConceptIdentifier(ide2),
 									logmap2.getIRI4ConceptIdentifier(ide1),										
 									logmap2.getConfidence4ConceptMapping(ide1, ide2),
-									Utilities.EQ,
-									Utilities.CLASSES));
+									dir_mapping,
+									Utilities.CLASSES);
+						}
+					
+					
+						mapping.setLexicalConfidenceMapping(logmap2.getLexicalScore4ConceptMapping(ide1, ide2));
+						mapping.setScopeConfidenceMapping(logmap2.getStrutcuralScore4ConceptMapping(ide1, ide2));
 						
+						logmap2_anchors.add(mapping);
+						
+					
 					}
+					
+					
 				} //for ide2
 			}//for ide1
 			
-			
-			//logmap2.ge
 			
 			
 			
