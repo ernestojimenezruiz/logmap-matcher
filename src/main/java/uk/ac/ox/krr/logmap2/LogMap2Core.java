@@ -1123,6 +1123,7 @@ public class LogMap2Core {
 		mapping_extractor.createCandidates();
 		
 		
+		//TODO
 		//Delete Alt labels in class index
 		//We won't extract more mappings
 		//TODO Remove later on to extract lexical scores
