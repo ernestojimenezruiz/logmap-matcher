@@ -522,7 +522,9 @@ public class LogMap2_Matcher {
 					mapping.setLexicalConfidenceMapping(logmap2.getLexicalScore4ConceptMapping(ide1, ide2));
 					mapping.setScopeConfidenceMapping(logmap2.getStrutcuralScore4ConceptMapping(ide1, ide2));
 					
-					logmap2_discarded_mappings.add(mapping);
+					
+					if (!logmap2_mappings.contains(mapping)) //safety check
+						logmap2_discarded_mappings.add(mapping);
 					
 					
 					
@@ -549,7 +551,8 @@ public class LogMap2_Matcher {
 					mapping.setLexicalConfidenceMapping(logmap2.getLexicalScore4ConceptMapping(ide1, ide2));
 					mapping.setScopeConfidenceMapping(logmap2.getStrutcuralScore4ConceptMapping(ide1, ide2));
 					
-					logmap2_hard_discarded_mappings.add(mapping);
+					if (!logmap2_mappings.contains(mapping)) //safety check
+						logmap2_hard_discarded_mappings.add(mapping);
 							
 					
 				} //for ide2
