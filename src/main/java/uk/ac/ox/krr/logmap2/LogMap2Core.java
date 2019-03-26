@@ -2472,13 +2472,18 @@ public class LogMap2Core {
 	
 	//TODO
 	public double getLexicalScore4ConceptMapping(int ide1, int ide2){
-		return mapping_extractor.getLexicalScore(ide1, ide2);
+		//return mapping_extractor.getLexicalScore(ide1, ide2);
+		//In case it was not extracted
+		return mapping_extractor.extractISUB4Mapping(ide1, ide2);
+		
 	}
 	
 	
 	//TODO
 	public double getStrutcuralScore4ConceptMapping(int ide1, int ide2){
-		return mapping_extractor.getStructuralScore(ide1, ide2);
+		//return mapping_extractor.getStructuralScore(ide1, ide2);
+		//In case it was not extracted
+		return mapping_extractor.extractScopeAnchors4Mapping(ide1, ide2);
 	}
 	
 	
@@ -2500,11 +2505,15 @@ public class LogMap2Core {
 	
 	
 	public double getLexicalScore4InstanceMapping(int ide1, int ide2){
-		return mapping_extractor.getISUB4InstanceMapping(ide1, ide2);
+		//return mapping_extractor.getISUB4InstanceMapping(ide1, ide2);
+		//In case it was not extracted
+		return mapping_extractor.extractISUB4InstanceMapping(ide1, ide2);
 	}
 	
 	public double getStructuralScore4InstanceMapping(int ide1, int ide2){
-		return mapping_extractor.getScope4InstanceMapping(ide1, ide2);
+		//return mapping_extractor.getScope4InstanceMapping(ide1, ide2);
+		//In case it was not extracted
+		return mapping_extractor.extractScope4InstanceMapping(ide1, ide2);
 	}
 	
 	
