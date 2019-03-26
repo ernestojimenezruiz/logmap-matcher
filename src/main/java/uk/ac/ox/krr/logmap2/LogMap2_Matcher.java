@@ -74,7 +74,7 @@ public class LogMap2_Matcher {
 
 	private void saveMappings(String output_path) throws Exception {
 		
-		//saveMappings(getLogmap2_Mappings(), output_path, "logmap_mappings.txt"); ALready created
+		saveMappings(getLogmap2_Mappings(), output_path, "logmap_mappings.txt"); //Already created?
 		saveMappings(getLogmap2_DiscardedMappings(), output_path, "logmap_discarded_mappings.txt");
 		saveMappings(getLogmap2_HardDiscardedMappings(), output_path, "logmap_hard_discarded_mappings.txt");
 		saveMappings(getLogmap2_ConflictiveMappings(), output_path, "logmap_logically_conflicting_mappings.txt");
