@@ -1125,7 +1125,8 @@ public class LogMap2Core {
 		
 		//Delete Alt labels in class index
 		//We won't extract more mappings
-		index.clearAlternativeLabels4Classes();
+		//TODO Remove later on to extract lexical scores
+		//index.clearAlternativeLabels4Classes();
 		
 		
 		LogOutput.printAlways("Time creating candidates (s): " + StatisticsTimeMappings.getRunningTime(init));
@@ -2541,6 +2542,7 @@ public class LogMap2Core {
 	
 	
 	public void clearIndexStructures(){
+		index.clearAlternativeLabels4Classes();
 		index.clearTaxonomicalStructures();
 	}
 	
