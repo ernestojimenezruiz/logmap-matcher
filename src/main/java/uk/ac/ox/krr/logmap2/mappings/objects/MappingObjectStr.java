@@ -88,6 +88,11 @@ public class MappingObjectStr {
 		dir_mappings=dir_mapping;
 		typeMappings = typeMapping;		
 	}
+    
+    
+    public MappingObjectStr(MappingObjectStr m){		
+		this(m.getIRIStrEnt1(), m.getIRIStrEnt2(), m.getConfidence(), m.getMappingDirection(), m.getTypeOfMapping());		
+	}
 	
 
 	public int getMappingDirection(){

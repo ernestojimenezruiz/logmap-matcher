@@ -34,7 +34,8 @@ import org.semanticweb.owlapi.model.OWLOntology;
 
 public class LogMap2_Matcher {
 	
-	LogMap2Core logmap2;	
+	LogMap2Core logmap2;
+	
 	Set<MappingObjectStr> logmap2_mappings = new HashSet<MappingObjectStr>();
 	Set<MappingObjectStr> logmap2_discarded_mappings = new HashSet<MappingObjectStr>();
 	Set<MappingObjectStr> logmap2_hard_discarded_mappings = new HashSet<MappingObjectStr>();
@@ -79,6 +80,9 @@ public class LogMap2_Matcher {
 		saveMappings(getLogmap2_HardDiscardedMappings(), output_path, "logmap_hard_discarded_mappings.txt");
 		saveMappings(getLogmap2_ConflictiveMappings(), output_path, "logmap_logically_conflicting_mappings.txt");
 		saveMappings(getLogmap2_anchors(), output_path, "logmap_anchors.txt");
+		
+		//Includes all the mappings with scores according to set they belong: anchor, discarded, etc.
+		saveMappings(getOverEstimationOfMappings(), output_path, "logmap_overestimation.txt");
 		
 	}
 	
@@ -668,6 +672,83 @@ public class LogMap2_Matcher {
 			//e.printStackTrace();
 		}
 		
+		
+	}
+	
+	
+	
+	
+	/**
+	 * Include all mappings:
+	 * Approximation of similarity (this can be adapted)
+	 * Anchors: confidence 1.0
+	 * LogMap mappings: confidence 0.8
+	 * LogMap Discarded: confidence 0.6
+	 * LogMap Hard Discarded: confidence 0.4
+	 * LogMap conflictive: confidence 0.2  (there may still be some sort of similarity)
+	 * @return
+	 */
+	public Set<MappingObjectStr> getOverEstimationOfMappings(){
+		
+		Set<MappingObjectStr> overEstimationMappings = new HashSet<MappingObjectStr>();
+		
+		for (MappingObjectStr m : getLogmap2_anchors()) {
+		
+			if (!overEstimationMappings.contains(m)) {
+				MappingObjectStr m_new = new MappingObjectStr(m); //we create new to avoid changing the other structures
+				m_new.setConfidenceMapping(1.0);
+				
+				overEstimationMappings.add(m_new);
+			}
+		}
+		
+		
+		for (MappingObjectStr m : getLogmap2_Mappings()) {
+			
+			if (!overEstimationMappings.contains(m)) {
+				MappingObjectStr m_new = new MappingObjectStr(m);
+				m_new.setConfidenceMapping(0.8);
+				
+				overEstimationMappings.add(m_new);
+			}
+		}
+		
+		for (MappingObjectStr m : getLogmap2_DiscardedMappings()) {
+			
+			if (!overEstimationMappings.contains(m)) {
+				MappingObjectStr m_new = new MappingObjectStr(m);
+				m_new.setConfidenceMapping(0.6);
+				
+				overEstimationMappings.add(m_new);
+			}
+		}
+
+		
+		for (MappingObjectStr m : getLogmap2_HardDiscardedMappings()) {
+			
+			if (!overEstimationMappings.contains(m)) {
+				MappingObjectStr m_new = new MappingObjectStr(m);
+				m_new.setConfidenceMapping(0.4);
+				
+				overEstimationMappings.add(m_new);
+			}
+		}
+		
+		
+		for (MappingObjectStr m : getLogmap2_ConflictiveMappings()) {
+			
+			if (!overEstimationMappings.contains(m)) {
+				MappingObjectStr m_new = new MappingObjectStr(m);
+				m_new.setConfidenceMapping(0.2);
+				
+				overEstimationMappings.add(m_new);
+			}
+		}
+		
+		
+		
+		
+		return overEstimationMappings;
 		
 	}
 	
