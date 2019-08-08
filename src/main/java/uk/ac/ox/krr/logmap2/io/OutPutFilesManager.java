@@ -18,7 +18,10 @@
  ******************************************************************************/
 package uk.ac.ox.krr.logmap2.io;
 
+import java.util.Set;
 import java.util.Vector;
+
+import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 
 /**
  *  
@@ -66,6 +69,30 @@ public class OutPutFilesManager {
 		//	file_formats.get(i).setOutput();
 		//}
 		
+	}
+	
+	
+	public void addMappings(Set<MappingObjectStr> mappings) throws Exception {
+		
+		for (MappingObjectStr mapping : mappings) {
+			
+			if (mapping.isClassMapping()){
+				addClassMapping2Files(mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			}
+			else if(mapping.isObjectPropertyMapping()) {
+				addObjPropMapping2Files(mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			}
+			else if(mapping.isDataPropertyMapping()) {
+				addDataPropMapping2Files(mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			}
+			else if(mapping.isInstanceMapping()) {	
+				addInstanceMapping2Files(mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getConfidence());
+			}
+			else {
+				addClassMapping2Files(mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			}
+			
+		}
 	}
 	
 	
