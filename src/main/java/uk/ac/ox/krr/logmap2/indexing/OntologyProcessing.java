@@ -4143,11 +4143,18 @@ public class OntologyProcessing {
 			//To remove non ascii spaces
 			processedLabel =  processedLabel.replaceAll(String.valueOf((char) 160), " ");
 			
+			//System.out.println(processedLabel + " '"+processedLabel.indexOf(reg_ex_split)+"' " + processedLabel.split(reg_ex_split).length);
+			if (processedLabel.split(reg_ex_split).length==0)
+				return "";
+			
 			//short data assertion strings
 			if (processedLabel.length()<=manegeable_lenght && !processedLabel.contains("<p>") && !processedLabel.contains("</p>")){
 				
 				//We still want to split and trim
 				//we keep/split string up to the given character (twice in case mroe than one character)
+				
+				
+				
 				processedLabel = processedLabel.split(reg_ex_split)[0];
 				processedLabel = processedLabel.split(reg_ex_split)[0];
 				//we remove white spaces at the end and begining of label

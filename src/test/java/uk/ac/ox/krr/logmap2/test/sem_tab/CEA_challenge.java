@@ -84,7 +84,7 @@ public class CEA_challenge {
 		String row;
 		for (MappingObjectStr m : mappings) {
 			//Split accordingly: ns:tab-8468806_0_4382447409703007384-col-1-row-1
-			if (m.getIRIStrEnt1().indexOf("tab-")<0) {
+			if (m.getIRIStrEnt1().indexOf("tab-")<0 || m.getIRIStrEnt1().indexOf("-col-")<0 || m.getIRIStrEnt1().indexOf("-row-")<0) {
 				System.out.println(m.getIRIStrEnt1() + " " + m.getIRIStrEnt2());
 				continue;
 			}
@@ -140,6 +140,9 @@ public class CEA_challenge {
 			//t.pause();
 			
 			
+			//TODO keep 1-1 mapping!! CEA only expects the best match
+			//1 cell -> 1 dbpedia entity
+			//Low Precision may also be due to missing redirections in GT (round 1) 
 			mappings.addAll(logmap.getLogmap2_Mappings());
 	    	
 	    	
@@ -161,17 +164,23 @@ public class CEA_challenge {
 		String out_file;
 		
 		int round=1;
+		boolean types=true;
 		
 		if (round==1) {
-			folder = base_path + "/Round1/CEA_RDF_tables_r1/";
+			folder = base_path + "/Round1/CEA_RDF_tables_r1";
 			dbpedia_onto = "file:" + base_path + "/Round1/dbpedia_round1.ttl";
 			out_file = base_path + "/Round1/logmap/logmap_mappings_round1.csv";
 		}
 		else {
-			folder = base_path + "/Round2/CEA_RDF_tables_r2/";
+			folder = base_path + "/Round2/CEA_RDF_tables_r2";
 			dbpedia_onto =  "file:" + base_path + "/Round2/dbpedia_round2.ttl";
 			out_file = base_path + "/Round2/logmap/logmap_mappings_round2.csv";
 		}
+		
+		if (types)
+			folder+="_types/";
+		else
+			folder+="/";
 		
 		new CEA_challenge(folder, dbpedia_onto, out_file);
 		

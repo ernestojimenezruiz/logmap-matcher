@@ -71,6 +71,7 @@ annotation_URI|http://www.w3.org/2004/02/skos/core#altLabel
 annotation_URI|http://xmlns.com/foaf/0.1/name
 annotation_URI|http://dbpedia.org/ontology/synonym
 annotation_URI|http://dbpedia.org/property/title
+annotation_URI|http://dbpedia.org/property/name
 #Doremus annotation
 #annotation_URI|http://erlangen-crm.org/current/P3_has_note
 #In case only a subset of the individuals should be matched
@@ -85,6 +86,7 @@ path_mappings_categories|mappings/categories
 data_assertion_URI_Indiv|http://xmlns.com/foaf/0.1/name
 data_assertion_URI_Indiv|http://dbpedia.org/ontology/synonym
 data_assertion_URI_Indiv|http://dbpedia.org/property/title
+data_assertion_URI_Indiv|http://dbpedia.org/property/name
 data_assertion_URI_Indiv|http://dbkwik.webdatacommons.org/oldschoolrunescape/property/name
 data_assertion_URI_Indiv|http://dkm.fbk.eu/index.php/BPMN2_Ontology#name
 data_assertion_URI_Indiv|http://dkm.fbk.eu/index.php/BPMN2_Ontology#id
