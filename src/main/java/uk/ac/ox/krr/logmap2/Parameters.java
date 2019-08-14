@@ -155,6 +155,7 @@ public class Parameters {
 	public static int min_size_overlapping = 15000; //5000
 	
 	//set to false by default?
+	public static boolean perform_property_matching = true; //true;
 	public static boolean perform_instance_matching = false; //true;
 	public static boolean output_instance_mappings = false; //true;
 	
@@ -273,6 +274,8 @@ public class Parameters {
 	private static final String min_size_overlapping_str = "min_size_overlapping";
 	
 	private static final String instance_matching_str = "instance_matching";
+	
+	private static final String property_matching_str = "property_matching";
 	
 	private static final String annotation_URI_str = "annotation_URI";
 	
@@ -540,6 +543,13 @@ public class Parameters {
 				else if (elements[0].equals(instance_matching_str)){
 					perform_instance_matching = Boolean.valueOf(elements[1]);
 				}
+				
+				
+				else if (elements[0].equals(property_matching_str)){
+					perform_property_matching = Boolean.valueOf(elements[1]);
+				}
+				
+				
 				
 				else if (elements[0].equals(output_class_mappings_str)){
 					output_class_mappings = Boolean.valueOf(elements[1]);

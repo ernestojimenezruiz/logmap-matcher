@@ -302,29 +302,33 @@ public class LogMap2Core {
 		
 		//EXTRACT, CLEAN ANCHORS and INDEX INTLABELLING
 		createAndCleanAnchors(are_input_mappings_validated);
+		//System.out.println("Anchors completed");
 		
 		if (!only_anchors){
 			//Extract new candidates (Level 1), clean them and index labelling
 			createCandidateMappings();
+			//System.out.println("Candidate mappings completed");
 			
 			
 			//Extract more candidates Level 2 (If interactivity is active then those are the mappings to ask)
 			createCandidateMappingsLevel2();
+			//System.out.println("Candidate mappings level 2 completed");
 			
 			//Last Cleaning
 			//lastLogicalCleaning();
 			
 			
-			createAndAssessPropertyMappings();
 			
+			if (Parameters.perform_property_matching){
+				createAndAssessPropertyMappings();
+			}			
+			//System.out.println("Property mappings completed.");
 			
 			//Optional (see parameters file)
 			if (Parameters.perform_instance_matching){
-				
-				
 				createAndAssessInstanceMappings();
 			}
-			
+			//System.out.println("Instance mappings completed.");
 			
 			
 			//System.out.println("TOTAL MATCHING TIME (s): " + StatisticsTimeMappings.getTotalRunningTime());
@@ -475,8 +479,9 @@ public class LogMap2Core {
 		//lastLogicalCleaning();
 		
 		
-		
-		createAndAssessPropertyMappings();
+		if (Parameters.perform_property_matching){
+			createAndAssessPropertyMappings();
+		}
 		
 		
 		//Optional (see parameters file)
@@ -924,6 +929,7 @@ public class LogMap2Core {
 		mapping_extractor.intersectInvertedFiles();
 		
 		LogOutput.print("Time intersecting IF and extracting IF weak (s): " + StatisticsTimeMappings.getRunningTime(init));
+		//System.out.println("Time intersecting IF and extracting IF weak (s): " + StatisticsTimeMappings.getRunningTime(init));
 		
 		//Clear ontology stemmed labels 
 		onto_process1.clearStemmedLabels();
@@ -1632,6 +1638,7 @@ public class LogMap2Core {
 			if (type_id>=0)				
 				index.addAllowedInstanceType(type_id);
 		}
+		//System.out.println("Checcking allowed types completed.");
 		
 		
 		mapping_extractor.createInstanceAnchors();

@@ -14,7 +14,8 @@ good_ambiguity|2
 use_overlapping|false
 min_size_overlapping|15000
 output_class_mappings|true
-output_prop_mappings|true
+property_matching|false
+output_prop_mappings|false
 instance_matching|true
 output_instance_mappings|true
 #only for statistics
@@ -23,7 +24,7 @@ reason_datatypes|false
 reasoner|HermiT
 #reasoner|ELK
 #Repair
-perform_repair|true
+perform_repair|false
 #Global information for Downling and Gallier
 glogal_info|true
 timeout|25

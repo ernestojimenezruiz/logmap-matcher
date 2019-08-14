@@ -46,6 +46,7 @@ import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
 import uk.ac.ox.krr.logmap2.reasoning.profiles.CheckOWL2Profile;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.List;
 import java.util.HashSet;
@@ -103,6 +104,23 @@ public class OntologyLoader {
 		//managerOnto = OWLManager.createOWLOntologyManager();
 		this(phy_iri_onto, false);		
 	}
+	
+	
+	
+	public OntologyLoader(File file, boolean keepLogicalAxiomsOnly) throws OWLOntologyCreationException{
+		//managerOnto = OWLManager.createOWLOntologyManager();
+		managerOnto = SynchronizedOWLManager.createOWLOntologyManager();
+		
+		dataFactory=managerOnto.getOWLDataFactory();
+		this.keepLogicalAxiomsOnly=keepLogicalAxiomsOnly;
+		loadOWLOntologyFromFile(file);		
+	}
+	
+	public OntologyLoader(File file) throws OWLOntologyCreationException{
+		//managerOnto = OWLManager.createOWLOntologyManager();
+		this(file, false);		
+	}
+	
 	
 	
 	public OntologyLoader(OWLOntology given_onto) throws OWLOntologyCreationException{
@@ -193,6 +211,25 @@ public class OntologyLoader {
 		
 	}
 	
+	public void loadOWLOntologyFromFile(File file) throws OWLOntologyCreationException {
+		
+		try {
+			//If import cannot be loaded
+			setSilentMissingImportStrategy();
+									
+			//System.out.println(phy_iri_onto);
+			onto = managerOnto.loadOntologyFromOntologyDocument(file);
+			
+			loadOntologyInformation();
+		}
+		catch(Exception e){
+			System.err.println("Error loading OWL ontology: " + e.getMessage());
+			//e.printStackTrace();
+			throw new OWLOntologyCreationException();
+		}
+		
+	}
+	
 	
 	public void loadOWLOntology(String phy_iri_onto) throws OWLOntologyCreationException{		
 
@@ -205,67 +242,7 @@ public class OntologyLoader {
 			onto = managerOnto.loadOntology(IRI.create(phy_iri_onto));
 			
 			
-			//The preclassification with condor has no ontology id
-			if (onto.getOntologyID().getOntologyIRI()!=null){
-				iri_onto_str=onto.getOntologyID().getOntologyIRI().toString(); //Give this iri to module
-			}
-			else {
-				iri_onto_str=getURIFromClasses(onto);
-			}
-			
-			
-			LogOutput.print("IRI: " + iri_onto_str);
-			
-					
-			
-			
-			size_signature = onto.getSignature(Imports.INCLUDED).size();
-			size_classes = onto.getClassesInSignature(Imports.INCLUDED).size();
-			
-			
-			//We add dummy axiom
-			if (size_classes==0){
-				addDummyAxiom2Ontology();
-			}
-			
-			
-			//Important when reasoning with the integrated ontology from LogMap webservice
-			if (keepLogicalAxiomsOnly){				
-				Set<OWLAxiom> filteredAxioms = new HashSet<OWLAxiom>();
-				filteredAxioms.addAll(onto.getTBoxAxioms(Imports.INCLUDED));
-				filteredAxioms.addAll(onto.getRBoxAxioms(Imports.INCLUDED));
-				filteredAxioms.addAll(onto.getABoxAxioms(Imports.INCLUDED));
-				managerOnto.removeOntology(onto);
-				onto = managerOnto.createOntology(filteredAxioms,
-						IRI.create(iri_onto_str));				
-			}
-			
-			//LogOutput.print(iri_onto);
-			
-			//EXPRESSIVITY ontology			
-			//Used in webservice
-			try{
-				Set<OWLOntology> importsClosure = managerOnto.getImportsClosure(onto);        
-		        DLExpressivityChecker checker = new DLExpressivityChecker(importsClosure);
-		        DLNameOnto = checker.getDescriptionLogicName();
-	
-				profileChecker = new CheckOWL2Profile(onto);
-				
-				owl2DLProfileReport = profileChecker.getReport4OWL2DL();
-				
-				if (!owl2DLProfileReport.isInProfile()){
-					inOWL2DL=false;
-					inOWL2EL=false;
-				}
-				else{
-					inOWL2DL=true;
-					//In DL but may be not in EL
-					inOWL2EL = profileChecker.getReport4OWL2EL().isInProfile();
-				}
-			}
-			catch (Exception e){
-				LogOutput.printError("Error checking DL expressivity: " + e.getMessage());
-			}
+			loadOntologyInformation();
 			
 			
 			
@@ -274,6 +251,72 @@ public class OntologyLoader {
 			System.err.println("Error loading OWL ontology: " + e.getMessage());
 			//e.printStackTrace();
 			throw new OWLOntologyCreationException();
+		}
+	}
+	
+	
+	protected void loadOntologyInformation() throws OWLOntologyCreationException {
+		
+		//The preclassification with condor has no ontology id
+		if (onto.getOntologyID().getOntologyIRI()!=null){
+			iri_onto_str=onto.getOntologyID().getOntologyIRI().toString(); //Give this iri to module
+		}
+		else {
+			iri_onto_str=getURIFromClasses(onto);
+		}
+		
+		
+		LogOutput.print("IRI: " + iri_onto_str);
+		
+				
+		
+		
+		size_signature = onto.getSignature(Imports.INCLUDED).size();
+		size_classes = onto.getClassesInSignature(Imports.INCLUDED).size();
+		
+		
+		//We add dummy axiom
+		if (size_classes==0){
+			addDummyAxiom2Ontology();
+		}
+		
+		
+		//Important when reasoning with the integrated ontology from LogMap webservice
+		if (keepLogicalAxiomsOnly){				
+			Set<OWLAxiom> filteredAxioms = new HashSet<OWLAxiom>();
+			filteredAxioms.addAll(onto.getTBoxAxioms(Imports.INCLUDED));
+			filteredAxioms.addAll(onto.getRBoxAxioms(Imports.INCLUDED));
+			filteredAxioms.addAll(onto.getABoxAxioms(Imports.INCLUDED));
+			managerOnto.removeOntology(onto);
+			onto = managerOnto.createOntology(filteredAxioms,
+					IRI.create(iri_onto_str));				
+		}
+		
+		//LogOutput.print(iri_onto);
+		
+		//EXPRESSIVITY ontology			
+		//Used in webservice
+		try{
+			Set<OWLOntology> importsClosure = managerOnto.getImportsClosure(onto);        
+	        DLExpressivityChecker checker = new DLExpressivityChecker(importsClosure);
+	        DLNameOnto = checker.getDescriptionLogicName();
+
+			profileChecker = new CheckOWL2Profile(onto);
+			
+			owl2DLProfileReport = profileChecker.getReport4OWL2DL();
+			
+			if (!owl2DLProfileReport.isInProfile()){
+				inOWL2DL=false;
+				inOWL2EL=false;
+			}
+			else{
+				inOWL2DL=true;
+				//In DL but may be not in EL
+				inOWL2EL = profileChecker.getReport4OWL2EL().isInProfile();
+			}
+		}
+		catch (Exception e){
+			LogOutput.printError("Error checking DL expressivity: " + e.getMessage());
 		}
 	}
 	

@@ -146,6 +146,7 @@ public class CandidateMappingManager extends MappingManager {
 		if_exact_intersection4obj_prop.retainAll(onto_process2.getInvertedFileExactMatching4ObjProp().keySet());
 		onto_process2.getInvertedFileExactMatching4ObjProp().keySet().retainAll(if_exact_intersection4obj_prop);
 		
+		
 		//INDIVIDUALS IF exact
 		if_exact_intersection4individuals = onto_process1.getInvertedFileMatching4Individuals().keySet();
 		if_exact_intersection4individuals.retainAll(onto_process2.getInvertedFileMatching4Individuals().keySet());
@@ -2080,6 +2081,7 @@ public class CandidateMappingManager extends MappingManager {
 		
 		//EXACT IF
 		LogOutput.print("Size IF intersection exact: " + if_exact_intersection4individuals.size());
+		//System.out.println("Size IF intersection exact: " + if_exact_intersection4individuals.size());
 		
 		boolean ambiguity;
 		for (Set<String> if_entry : if_exact_intersection4individuals){
@@ -2163,6 +2165,7 @@ public class CandidateMappingManager extends MappingManager {
 		}//for if exact
 		
 		LogOutput.print("\nNUmber of Instance mappings exact IF: " + getInstanceMappings().keySet().size() + " - " + getSizeOfInstanceMappings());
+		//System.out.println("\nNUmber of Instance mappings exact IF: " + getInstanceMappings().keySet().size() + " - " + getSizeOfInstanceMappings());
 		
 		LogOutput.print("NUM INCOMPATIBLE INDIV MAPPINGS: " + num_incompatible_instances + "\n");
 		
@@ -2275,7 +2278,9 @@ public class CandidateMappingManager extends MappingManager {
 		}
 		
 		LogOutput.print("\nNUmber of Instance mappings exact+weak IF: " + getInstanceMappings().keySet().size() + " - " + getSizeOfInstanceMappings());
+		//System.out.println("\nNUmber of Instance mappings exact+weak IF: " + getInstanceMappings().keySet().size() + " - " + getSizeOfInstanceMappings());
 		LogOutput.print("NUM INCOMPATIBLE INDIV MAPPINGS: " + num_incompatible_instances);
+		
 		
 		if_weak_intersection4individuals.clear();
 		
@@ -2371,6 +2376,8 @@ public class CandidateMappingManager extends MappingManager {
 		}
 		
 		LogOutput.print("\nNUmber of Instance mappings exact+weak+roleass IF: " + getInstanceMappings().keySet().size() + " - " + getSizeOfInstanceMappings());
+		//System.out.println("\nNUmber of Instance mappings exact+weak+roleass IF: " + getInstanceMappings().keySet().size() + " - " + getSizeOfInstanceMappings());
+		
 		LogOutput.print("NUM INCOMPATIBLE INDIV MAPPINGS: " + num_incompatible_instances);
 		
 		if_roleassertions_intersection4individuals.clear();

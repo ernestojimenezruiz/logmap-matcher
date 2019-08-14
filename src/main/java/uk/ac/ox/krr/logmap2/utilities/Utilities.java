@@ -345,9 +345,15 @@ public class Utilities {
 		//LogOutput.print(uriStr + "  " + uriStr.indexOf("#") + "  " + uriStr.split("#").length);
 		
 		if (uriStr.indexOf("#")>=0){// && uriStr.indexOf("#")<uriStr.length()-1){
+			
 			if (uriStr.split("#").length>1){
 				//LogOutput.print(uriStr.split("#")[1]);
-				return uriStr.split("#")[1];
+				//Problem if there are several "#"
+				//return uriStr.split("#")[1];
+				
+				int index = uriStr.indexOf("#"); //First occurrence
+				return uriStr.substring(index+1);
+				
 			}
 			else{
 				LogOutput.print("Empty label: " + uriStr);
@@ -455,7 +461,14 @@ public class Utilities {
 	
 	
 	public static void main(String[] args) {
+		String uriStr = "http://www.semanticweb.org/challenge/sem-tab#tab-2._Bundesliga_South_(1974%E2%80%9381)#4-col-0-row-36";
 		
+		int index = uriStr.indexOf("#"); //First occurrence
+		System.out.println(uriStr.substring(index+1));
+		
+		
+		if (true)
+			return;
 		
 		OntologyIRIShortFormProvider xutils = new OntologyIRIShortFormProvider();
 		

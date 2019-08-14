@@ -150,6 +150,14 @@
     <systemPath>${basedir}/lib/seals-omt-client.jar</systemPath>
 </dependency-->
 
+<!-- Version 4 has some incompatibilities with other libraries -->
+<dependency>
+    <groupId>com.opencsv</groupId>
+    <artifactId>opencsv</artifactId>
+    <version>3.10</version>
+</dependency>
+
+
 </dependencies>
 
 <!-- Important to add stopwords and lexicon files -->
