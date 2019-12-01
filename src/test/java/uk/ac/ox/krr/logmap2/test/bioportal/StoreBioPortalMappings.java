@@ -19,6 +19,7 @@ import uk.ac.ox.krr.logmap2.bioportal.BioPortalMapping;
  */
 public class StoreBioPortalMappings {
 		
+	String base_path = "/home/ernesto/Documents/";
 		
 	
 	public StoreBioPortalMappings() throws Exception{
@@ -68,7 +69,7 @@ public class StoreBioPortalMappings {
 		ontologyPairs.get("EP").add("FMA");
 		
 		//"/home/ejimenez-ruiz/Documents/BioPortal/Mappings/";
-		return "/home/ernesto/Documents/BioPortalMappings/EP/EP_all_mappings.txt";
+		return base_path + "BioPortalMappings/EP/EP_all_mappings.txt";
 	}
 	
 	private void setUpExperiment(Map<String, Set<String>> ontologyPairs) {
@@ -105,8 +106,8 @@ public class StoreBioPortalMappings {
 		//ontologyPairs.get("UBERON").add("FMA");
 		
 		
-		
-		ontologyPairs.put("CMR-QA", new HashSet<String>());
+		//CMR-QA
+		/*ontologyPairs.put("CMR-QA", new HashSet<String>());
 		ontologyPairs.get("CMR-QA").add("SNOMEDCT");
 		ontologyPairs.get("CMR-QA").add("UBERON");
 		ontologyPairs.get("CMR-QA").add("FMA");
@@ -124,7 +125,58 @@ public class StoreBioPortalMappings {
 		ontologyPairs.get("CMR-QA").add("NCIT");
 		ontologyPairs.get("CMR-QA").add("MESH");
 		ontologyPairs.get("CMR-QA").add("LOINC");
+		*/
 		
+		
+		
+		//PISTOIA EXPERIMENTS 2019
+		ontologyPairs.put("EFO", new HashSet<String>());
+		ontologyPairs.get("EFO").add("NCIT");
+		ontologyPairs.get("EFO").add("MESH");
+		
+		ontologyPairs.put("AFO", new HashSet<String>());
+		ontologyPairs.get("AFO").add("NCIT");
+		ontologyPairs.get("AFO").add("MESH");
+		ontologyPairs.get("AFO").add("CHMO");
+		
+		//ontologyPairs.put("BAO", new HashSet<String>());
+		//ontologyPairs.get("BAO").add("NCIT");
+		//ontologyPairs.get("BAO").add("MESH");
+		
+		ontologyPairs.put("CHMO", new HashSet<String>());
+		ontologyPairs.get("CHMO").add("NCIT");
+		ontologyPairs.get("CHMO").add("MESH");
+		ontologyPairs.get("CHMO").add("AFO");
+		
+		ontologyPairs.put("OBI", new HashSet<String>());
+		ontologyPairs.get("OBI").add("NCIT");
+		
+		ontologyPairs.put("MS", new HashSet<String>());
+		ontologyPairs.get("MS").add("NCIT");
+		
+		ontologyPairs.put("ERO", new HashSet<String>());
+		ontologyPairs.get("ERO").add("NCIT");
+		ontologyPairs.get("ERO").add("MESH");
+		
+		
+		
+		ontologyPairs.put("MESH", new HashSet<String>());
+		ontologyPairs.get("MESH").add("EFO");
+		ontologyPairs.get("MESH").add("AFO");
+		ontologyPairs.get("MESH").add("BAO");
+		ontologyPairs.get("MESH").add("CHMO");
+		ontologyPairs.get("MESH").add("ERO");
+		
+		
+		
+		ontologyPairs.put("NCIT", new HashSet<String>());
+		ontologyPairs.get("NCIT").add("EFO");
+		ontologyPairs.get("NCIT").add("AFO");
+		ontologyPairs.get("NCIT").add("BAO");
+		ontologyPairs.get("NCIT").add("CHMO");
+		ontologyPairs.get("NCIT").add("OBI");
+		ontologyPairs.get("NCIT").add("MS");
+		ontologyPairs.get("NCIT").add("ERO");
 		
 		
 		
@@ -179,7 +231,7 @@ public class StoreBioPortalMappings {
 		
 		init = Calendar.getInstance().getTimeInMillis();
 		
-		WriteFile writer = new WriteFile("/home/ejimenez-ruiz/Documents/BioPortal/Mappings/" + source_onto + "_all_mappings.txt", false);
+		WriteFile writer = new WriteFile(base_path + "BioPortal/Mappings/" + source_onto + "_all_mappings.txt", false);
 		
 		Set<BioPortalMapping> mapping_set = new HashSet<BioPortalMapping>();
 		
@@ -224,7 +276,7 @@ public class StoreBioPortalMappings {
 		for (String target_onto : target_ontos){
 		
 			outPutFilesManager.createOutFiles(
-						"/home/ejimenez-ruiz/Documents/BioPortal/Mappings/" + source_onto + "_" + target_onto,
+						base_path + "BioPortal/Mappings/" + source_onto + "_" + target_onto,
 						OutPutFilesManager.AllFormats,
 						"http://data.bioontology.org/ontologies/"+source_onto,
 						"http://data.bioontology.org/ontologies/"+target_onto);

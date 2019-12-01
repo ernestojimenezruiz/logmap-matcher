@@ -607,14 +607,14 @@ public class RESTBioPortalAccess implements BioPortalAccess {
 			}
 			catch (Exception e){
 				//In case of error, continue with next one
-				e.printStackTrace();
+				//e.printStackTrace();
 				numErroneous_mappings++;
 			}	
 			
 		}//end mapping
 		
 		if (numErroneous_mappings>0){
-			System.out.println("\tNumber of mappings which led to an error: " + numErroneous_mappings + " in page brefore of " + nextPage);
+			System.out.println("\tNumber of mappings which led to an error: " + numErroneous_mappings + " in page before of " + nextPage);
 		}
 		
 		//Recursivity till no more pages
@@ -680,26 +680,35 @@ public class RESTBioPortalAccess implements BioPortalAccess {
 	
 	private Set<String> getMappingSources(JsonNode mapping){
 		
-		//List of mappings sources
-		JsonNode mappings_sources = mapping.get(PROCESS);		
-		
 		Set<String> source_list= new HashSet<String>();
 		
-		for (JsonNode source : mappings_sources){		
+		try {
+		
+			//List of mappings sources
+			JsonNode mappings_sources = mapping.get(PROCESS);		
 			
-			if (source.get(NAME).asText().equals(NULL))
+			for (JsonNode source : mappings_sources){		
+				
+				if (source.get(NAME).asText().equals(NULL))
+					source_list.add(NOSOURCE);
+				else
+					source_list.add(source.get(NAME).asText());						
+			}
+			
+			//May 2016: Now it appears directly under "source" and in capitals
+			source_list.add(mapping.get(SOURCE).asText().toLowerCase());		
+			
+			//Detected a few cases without source
+			if (source_list.isEmpty()){
 				source_list.add(NOSOURCE);
-			else
-				source_list.add(source.get(NAME).asText());						
+			}
+		}
+		catch(Exception e) {
+			System.err.println("Error accessing mapping sources.");
 		}
 		
-		//May 2016: Now it appears directly under "source" and in capitals
-		source_list.add(mapping.get(SOURCE).asText().toLowerCase());		
-		
-		//Detected a few cases without source
-		if (source_list.isEmpty()){
+		if (source_list.isEmpty())
 			source_list.add(NOSOURCE);
-		}
 		
 		return source_list;
 	}
