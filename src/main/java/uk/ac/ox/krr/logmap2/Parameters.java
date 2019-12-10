@@ -66,8 +66,12 @@ public class Parameters {
 	
 
 
-	
-	
+	//NIVA USE CASE
+	private static String ecotox_latin_name = "https://cfpub.epa.gov/ecotox#latinName";
+	private static String ecotox_common_name = "https://cfpub.epa.gov/ecotox#commonName";
+	private static String ncbi_synonym = "https://www.ncbi.nlm.nih.gov/taxonomy#synonym";
+	private static String ncbi_scientific_name = "https://www.ncbi.nlm.nih.gov/taxonomy#scientific_name";
+
 	
 	
 		
@@ -154,10 +158,13 @@ public class Parameters {
 	
 	public static int min_size_overlapping = 15000; //5000
 	
+	public static boolean use_stemming = false;
+	
+	
 	//set to false by default?
 	public static boolean perform_property_matching = true; //true;
-	public static boolean perform_instance_matching = false; //true;
-	public static boolean output_instance_mappings = false; //true;
+	public static boolean perform_instance_matching = true; //true;
+	public static boolean output_instance_mappings = true; //true;
 	
 	public static boolean output_instance_mapping_files = false; //for statistics
 	
@@ -316,6 +323,8 @@ public class Parameters {
 	private static final String output_equivalences_only_str = "output_equivalences_only";
 	
 	private static final String use_umls_lexicon_str = "use_umls_lexicon";
+	
+	private static final String use_stemming_str = "use_stemming";
 
 	private static final String allow_bioportal_str = "allow_bioportal";
 	
@@ -378,6 +387,11 @@ public class Parameters {
 		
 		accepted_annotation_URIs_for_classes.add(BIRNLEX_synonym);
 		accepted_annotation_URIs_for_classes.add(BIRNLEX_prefLabel);
+		
+		accepted_annotation_URIs_for_classes.add(ecotox_common_name);
+		accepted_annotation_URIs_for_classes.add(ecotox_latin_name);
+		accepted_annotation_URIs_for_classes.add(ncbi_scientific_name);
+		accepted_annotation_URIs_for_classes.add(ncbi_synonym);
 		
 		
 		
@@ -677,7 +691,9 @@ public class Parameters {
 				else if (elements[0].equals(max_mediating_ontologies_str)){
 					max_mediating_ontologies = Integer.valueOf(elements[1]);
 				}
-				
+				else if (elements[0].equals(use_stemming_str)){
+					use_stemming = Boolean.valueOf(elements[1]);
+				}
 				
 				
 				

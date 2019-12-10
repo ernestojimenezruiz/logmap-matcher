@@ -420,7 +420,7 @@ public class OntologyProcessing {
 		
 		
 		//DETECT HIGH REDUNDANCY ON EXACT IF
-		//Added August 30
+		//Added August 30, 2018
 		if (Parameters.avoid_redundant_labels){
 			Set<Integer> redundant_ids = new HashSet<Integer>();
 			for (Set<String> entry : invertedFileExact.keySet()){
@@ -2461,6 +2461,10 @@ public class OntologyProcessing {
 		
 		//Set<Set<Integer>> combination_set = getIdentifierCombination(cleanWords.size(), missing_words);
 		Set<Set<Integer>> combination_set = precomputeIndexCombination.getIdentifierCombination(cleanWords.size(), missing_words);
+		
+		//if (combination_set.size()>10)
+		//	System.out.println(cleanWords);
+			
 		
 		for(Set<Integer> toExclude : combination_set){
 			

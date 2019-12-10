@@ -203,6 +203,7 @@ furthers
 gave
 #general
 #generally
+genus
 get
 gets
 give
@@ -503,6 +504,7 @@ somewhat
 somewhere
 soon
 sorry
+sp
 specified
 specify
 specifying
@@ -777,3 +779,16 @@ vu
 étions
 été
 être
+var. 
+sp.
+variant
+species
+f.
+ssp.
+mar.
+X
+x
+mill.
+s.f.
+l.
+trin.

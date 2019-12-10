@@ -251,6 +251,9 @@ public class CandidateMappingManager extends MappingManager {
 	 */
 	public void extractAllWeakMappings() {
 		
+		//if (true)
+		//return;
+		
 		for (Set<String> set_str : if_exact_intersection){			
 			for (int ide1 : onto_process1.getInvertedFileExactMatching().get(set_str)){
 				for (int ide2 : onto_process2.getInvertedFileExactMatching().get(set_str)){
@@ -259,10 +262,12 @@ public class CandidateMappingManager extends MappingManager {
 			}
 		}
 		
-		for (Set<String> set_str : if_stemming_intersection){
-			for (int ide1 : onto_process1.getInvertedFileWeakLabelsStemming().get(set_str)){
-				for (int ide2 : onto_process2.getInvertedFileWeakLabelsStemming().get(set_str)){
-					addEquivMapping2ListOfWeakAnchors(ide1, ide2);
+		if (Parameters.use_stemming) {
+			for (Set<String> set_str : if_stemming_intersection){
+				for (int ide1 : onto_process1.getInvertedFileWeakLabelsStemming().get(set_str)){
+					for (int ide2 : onto_process2.getInvertedFileWeakLabelsStemming().get(set_str)){
+						addEquivMapping2ListOfWeakAnchors(ide1, ide2);
+					}
 				}
 			}
 		}

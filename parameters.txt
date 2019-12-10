@@ -8,6 +8,7 @@ min_conf_pro_map|0.80
 confidence_composed_mappings1|0.8
 confidence_composed_mappings2|0.7
 avoid_redundant_labels|true
+use_stemming|false
 max_redundancy_labels|3
 max_ambiguity|4
 good_ambiguity|2
@@ -24,7 +25,7 @@ reason_datatypes|false
 reasoner|HermiT
 #reasoner|ELK
 #Repair
-perform_repair|false
+perform_repair|true
 #Global information for Downling and Gallier
 glogal_info|true
 timeout|25
@@ -73,6 +74,19 @@ annotation_URI|http://xmlns.com/foaf/0.1/name
 annotation_URI|http://dbpedia.org/ontology/synonym
 annotation_URI|http://dbpedia.org/property/title
 annotation_URI|http://dbpedia.org/property/name
+annotation_URI|https://cfpub.epa.gov/ecotox#latinName
+annotation_URI|https://cfpub.epa.gov/ecotox#commonName
+annotation_URI|https://www.ncbi.nlm.nih.gov/taxonomy#scientific_name
+annotation_URI|https://www.ncbi.nlm.nih.gov/taxonomy#synonym
+#annotation_URI|https://www.ncbi.nlm.nih.gov/taxonomy#authority
+#genbank_common_name, in_blast, includes, in-part bring ambiguity
+#annotation_URI|https://www.ncbi.nlm.nih.gov/taxonomy#genbank_common_name
+#annotation_URI|https://www.ncbi.nlm.nih.gov/taxonomy#blast_name
+#annotation_URI|https://www.ncbi.nlm.nih.gov/taxonomy#in-part
+annotation_URI|https://www.ncbi.nlm.nih.gov/taxonomy#equivalent_name
+#annotation_URI|https://www.ncbi.nlm.nih.gov/taxonomy#includes
+annotation_URI|https://www.ncbi.nlm.nih.gov/taxonomy#genbank_synonym
+annotation_URI|https://www.ncbi.nlm.nih.gov/taxonomy#common_name
 #Doremus annotation
 #annotation_URI|http://erlangen-crm.org/current/P3_has_note
 #In case only a subset of the individuals should be matched

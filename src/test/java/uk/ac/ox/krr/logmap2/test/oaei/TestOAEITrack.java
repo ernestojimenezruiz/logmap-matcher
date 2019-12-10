@@ -33,8 +33,9 @@ public abstract class TestOAEITrack {
 	
 	Timer t;
 	
-	protected boolean SAVE_MAPPINGS = false;
-	protected String OUTPUT_FILE_TEMPLATE = "/tmp/logmap-alignment";
+	protected boolean SAVE_MAPPINGS = true;
+	protected String PATH = "/tmp/logmap-alignment";
+	protected String OUTPUT_FILE_TEMPLATE;
 	
 	
 	
@@ -104,6 +105,8 @@ public abstract class TestOAEITrack {
 		System.out.println("Size conflicting: "+ logmap.getLogmap2_ConflictiveMappings().size());*/
 		
 		if (SAVE_MAPPINGS){
+			//TODO
+			OUTPUT_FILE_TEMPLATE+=PATH + "-"+task.getTaskName();
 			saveLogMapMappings(logmap.getLogmap2_Mappings());
 		}
 		
