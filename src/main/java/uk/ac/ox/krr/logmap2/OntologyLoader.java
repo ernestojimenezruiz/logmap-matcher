@@ -142,7 +142,7 @@ public class OntologyLoader {
 	
 	
 	private String getURIFromClasses(OWLOntology ontology){
-		for (OWLClass cls : ontology.getClassesInSignature()){
+		for (OWLClass cls : ontology.getClassesInSignature(Imports.INCLUDED)){
 			return Utilities.getNameSpaceFromURI(cls.getIRI().toString());
 		}
 		
@@ -173,12 +173,12 @@ public class OntologyLoader {
 			}
 			
 			Set<OWLAxiom> axioms = new HashSet<OWLAxiom>();
-			axioms.addAll(given_onto.getAxioms());
+			axioms.addAll(given_onto.getAxioms(Imports.INCLUDED));
 			
 			try{
 				//Get import closure
 				for (OWLOntology imported_onto : given_onto.getImportsClosure()){
-					axioms.addAll(imported_onto.getAxioms());
+					axioms.addAll(imported_onto.getAxioms(Imports.INCLUDED));
 				}
 			}
 			catch (Exception e){}
@@ -410,7 +410,7 @@ public class OntologyLoader {
 	
 	
 	public Set<OWLClass> getClassesInSignature(){
-		return onto.getClassesInSignature(true);//With imports!!
+		return onto.getClassesInSignature(Imports.INCLUDED);//With imports!!
 	}
 	
 	public int getSignatureSize(){

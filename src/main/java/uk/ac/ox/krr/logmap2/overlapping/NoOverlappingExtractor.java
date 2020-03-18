@@ -24,6 +24,7 @@ import java.util.Set;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.parameters.Imports;
 
 import uk.ac.ox.krr.logmap2.OntologyLoader;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
@@ -78,7 +79,7 @@ public class NoOverlappingExtractor extends OverlappingExtractor {
 
 	@Override
 	public Set<OWLEntity> getBaseOverlappedEntities1() {
-		return module1.getSignature();
+		return module1.getSignature(Imports.INCLUDED);
 	}
 
 
@@ -86,7 +87,7 @@ public class NoOverlappingExtractor extends OverlappingExtractor {
 
 	@Override
 	public Set<OWLEntity> getBaseOverlappedEntities2() {
-		return module2.getSignature();
+		return module2.getSignature(Imports.INCLUDED);
 	}
 
 }

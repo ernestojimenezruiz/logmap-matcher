@@ -3337,7 +3337,7 @@ public class OntologyProcessing {
 		
 		
 		//Meaningful roots. Might be different to the real ones
-		if (onto.getClassesInSignature(true).size()<500)
+		if (onto.getClassesInSignature(Imports.INCLUDED).size()<500)
 			minNumberOfRoots=4;
 		else
 			minNumberOfRoots=8;

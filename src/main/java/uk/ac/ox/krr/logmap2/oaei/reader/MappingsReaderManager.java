@@ -73,5 +73,6 @@ public class MappingsReaderManager {
 	public int getMappingObjectsSize(){
 		return mappingsReader.getMappingObjectsSize();
 	}
-
+	
+	
 }

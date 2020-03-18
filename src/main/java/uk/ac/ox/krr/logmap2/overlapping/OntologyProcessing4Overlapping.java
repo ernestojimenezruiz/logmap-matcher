@@ -32,6 +32,7 @@ import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.parameters.Imports;
 import org.semanticweb.owlapi.search.EntitySearcher;
 
 import uk.ac.ox.krr.logmap2.lexicon.LexicalUtilities;
@@ -141,7 +142,7 @@ public class OntologyProcessing4Overlapping {
 		
 		//CLASSES
 		//First we give a identifier to each class
-		for (OWLClass cls : onto.getClassesInSignature()){
+		for (OWLClass cls : onto.getClassesInSignature(Imports.INCLUDED)){
 			
 			if (!cls.isTopEntity() && !cls.isBottomEntity()){
 				
