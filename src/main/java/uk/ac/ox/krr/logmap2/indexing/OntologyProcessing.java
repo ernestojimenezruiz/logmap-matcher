@@ -2954,9 +2954,9 @@ public class OntologyProcessing {
 			
 			clsRepresentative=node.getRepresentativeElement();
 			
-			//Important to avoid non-class nodes like "DIRECTED-BINARY-RELATION"
+			//Important to avoid non-class nodes like "DIRECTED-BINARY-RELATION" and also deprecated classes
 			if (!class2identifier.containsKey(clsRepresentative)){
-				//LogOutput.print("NO: " + clsRepresentative);
+				//System.out.println("No id for class representative: " + clsRepresentative);
 				continue;
 			}
 			
@@ -2991,7 +2991,7 @@ public class OntologyProcessing {
 			if (node.isBottomNode() || node.isTopNode())
 				continue;
 			
-			if (!node2identifier.containsKey(node))
+			if (!node2identifier.containsKey(node)) //Possibly deprecated class
 				continue;
 			
 			
@@ -3041,9 +3041,13 @@ public class OntologyProcessing {
 				for (Node<OWLClass> nodeSup : reasoner.getSuperClasses(clsRepresentative, true).getNodes()){
 					if (nodeSup.isTopNode() || nodeSup.isBottomNode())
 						continue;
-
+					
 					//identifier2directparents.get(identRepresentative).add(node2identifier.get(nodeSup));  //direct parents
 					//System.out.println(identRepresentative + "  " + nodeSup + "  " + node2identifier.get(nodeSup));
+					//Required if filtered obsolete classes
+					if (!node2identifier.containsKey(nodeSup))
+						continue;
+					
 					index.getClassIndex(identRepresentative).addDirectSuperClass(node2identifier.get(nodeSup));
 					
 					
@@ -3079,6 +3083,10 @@ public class OntologyProcessing {
 							
 							//Avoid top or nothing
 							if (disjcls.isTopEntity() || disjcls.isBottomEntity())
+								continue;
+							
+							//To avoid non indexed, obsolete classes
+							if (!class2identifier.containsKey(disjcls))
 								continue;
 							
 							//TODO To avoid classes being disjoint with themselves

@@ -135,7 +135,9 @@ public class OntologyLoader {
 	private void setSilentMissingImportStrategy() {
 		//In case an import is broken
 		OWLOntologyLoaderConfiguration config = new OWLOntologyLoaderConfiguration();
-		config.setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT);
+		
+		//Important to reasign value, see https://github.com/owlcs/owlapi/issues/503
+		config = config.setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT);
 		managerOnto.setOntologyLoaderConfiguration(config);
 	}
 

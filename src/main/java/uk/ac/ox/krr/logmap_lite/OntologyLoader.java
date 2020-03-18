@@ -74,7 +74,9 @@ public class OntologyLoader {
 		
 		//If import cannot be loaded
 		OWLOntologyLoaderConfiguration config = new OWLOntologyLoaderConfiguration();
-		config.setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT);
+		//Important to reasign value, see https://github.com/owlcs/owlapi/issues/503
+		config = config.setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT);
+		
 		managerOnto.setOntologyLoaderConfiguration(config);
 		
 		loadOWLOntology(phy_iri_onto);

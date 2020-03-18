@@ -35,7 +35,7 @@ public abstract class TestOAEITrack {
 	
 	protected boolean SAVE_MAPPINGS = true;
 	protected String PATH = "/tmp/logmap-alignment";
-	protected String OUTPUT_FILE_TEMPLATE;
+	protected String OUTPUT_FILE_TEMPLATE="";
 	
 	
 	
