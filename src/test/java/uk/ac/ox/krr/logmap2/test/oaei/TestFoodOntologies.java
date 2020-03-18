@@ -5,16 +5,17 @@ public class TestFoodOntologies extends TestOAEITrack{
 	@Override
 	protected void setUp() {
 		SAVE_MAPPINGS = true;
-		//OUTPUT_FILE_TEMPLATE
+		//OUTPUT_FILE_TEMPLATE: will generate files logmap-alignment-food.owl, logmap-alignment-food.txt
 		PATH = "/home/ernesto/Documents/Datasets/Food/logmap-alignment";
 		
 		String uri_path = "file:/home/ernesto/Documents/Datasets/Food/";
 		
 		tasks.add(
 				new OAEITask(
-						uri_path + "foodon-helis.owl",
-						uri_path + "foodon-merged.owl",
-						uri_path + "empty.rdf",
+						uri_path + "foodon-helis.owl",  //source
+						uri_path + "foodon-merged.owl",  //target
+						//uri_path + "reference.rdf",   //reference mappings if any
+						"", //no reference
 						"food"
 				));
 		

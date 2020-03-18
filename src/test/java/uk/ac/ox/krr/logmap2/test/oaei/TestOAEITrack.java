@@ -107,6 +107,7 @@ public abstract class TestOAEITrack {
 		if (SAVE_MAPPINGS){
 			//TODO
 			OUTPUT_FILE_TEMPLATE+=PATH + "-"+task.getTaskName();
+			System.out.println("Saving mappings to " + OUTPUT_FILE_TEMPLATE);
 			saveLogMapMappings(logmap.getLogmap2_Mappings());
 		}
 		
@@ -114,26 +115,32 @@ public abstract class TestOAEITrack {
 		t.pause();
 		
 		
-		RDFAlignReader readerReference = 
-				new RDFAlignReader(new URL(task.getReference()));
+		if (task.getReference()!=null && !task.getReference().equals("")) {
+			
+			RDFAlignReader readerReference = 
+					new RDFAlignReader(new URL(task.getReference()));
+			
+			
+			/*for (MappingObjectStr m : logmap.getLogmap2_DiscardedMappings()){
+				if (m.getIRIStrEnt1().toLowerCase().contains("reservoir") || m.getIRIStrEnt2().contains("Reservoir"))
+					System.out.println(m.getIRIStrEnt1() + "  " + m.getIRIStrEnt2() + "  " + m.getConfidence());
+			}*/
+			
+			
+			//printMissedCasses(logmap.getLogmap2_Mappings(), readerReference.getMappingObjects());
+			//printIntersection(logmap.getLogmap2_Mappings(), readerReference.getMappingObjects());
+			
+			StandardMeasures.computeStandardMeasures(logmap.getLogmap2_Mappings(), readerReference.getMappingObjects());
+			//System.out.println(readerReference.getMappingObjects().size());
+			
+			
+			System.out.println(task.getTaskName() + "\t" + matching_time + "\t" + logmap.getLogmap2_Mappings().size() + "\t" + StandardMeasures.getPrecision()  + "\t" + StandardMeasures.getRecall()  + "\t" + StandardMeasures.getFscore());
+		}
+		else {
+			System.out.println("No reference alignment given.");
+		}
 		
-		
-		/*for (MappingObjectStr m : logmap.getLogmap2_DiscardedMappings()){
-			if (m.getIRIStrEnt1().toLowerCase().contains("reservoir") || m.getIRIStrEnt2().contains("Reservoir"))
-				System.out.println(m.getIRIStrEnt1() + "  " + m.getIRIStrEnt2() + "  " + m.getConfidence());
-		}*/
-		
-		
-		//printMissedCasses(logmap.getLogmap2_Mappings(), readerReference.getMappingObjects());
-		//printIntersection(logmap.getLogmap2_Mappings(), readerReference.getMappingObjects());
-		
-		StandardMeasures.computeStandardMeasures(logmap.getLogmap2_Mappings(), readerReference.getMappingObjects());
-		//System.out.println(readerReference.getMappingObjects().size());
-		
-		
-		System.out.println(task.getTaskName() + "\t" + matching_time + "\t" + logmap.getLogmap2_Mappings().size() + "\t" + StandardMeasures.getPrecision()  + "\t" + StandardMeasures.getRecall()  + "\t" + StandardMeasures.getFscore());
-		
-		
+			
 		
 	}
 
