@@ -38,11 +38,11 @@ use_umls_lexicon|true
 allow_bioportal|false
 #Number of mediating ontologies to use from BioPortal
 max_mediating_ontologies|10
-allow_interactivity|true
-allow_multilingual|true
+allow_interactivity|false
+allow_multilingual|false
 #false for tests
 is_test_mode_multilingual|false
-use_local_dict|true
+use_local_dict|false
 call_online_translator|false
 path_chinese_segmenter_dict|multilingual/dict_ictclas4j
 #on-the-fly dictionaries if translation is not available in local dict or if local dict is not allowed

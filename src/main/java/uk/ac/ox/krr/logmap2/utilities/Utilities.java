@@ -461,6 +461,18 @@ public class Utilities {
 	
 	
 	public static void main(String[] args) {
+		
+		String[] words2 = splitStringByCapitalLetter("SoyBean");
+		
+		for (String w : words2) {
+			System.out.println(w);
+		}
+		
+		
+		if (true)
+			return;
+		
+		
 		String uriStr = "http://www.semanticweb.org/challenge/sem-tab#tab-2._Bundesliga_South_(1974%E2%80%9381)#4-col-0-row-36";
 		
 		int index = uriStr.indexOf("#"); //First occurrence

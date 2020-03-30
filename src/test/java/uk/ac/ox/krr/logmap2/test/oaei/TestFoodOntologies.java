@@ -12,10 +12,10 @@ public class TestFoodOntologies extends TestOAEITrack{
 		
 		tasks.add(
 				new OAEITask(
-						uri_path + "foodon-helis.owl",  //source
+						uri_path + "helis_v1.00.owl",  //source
 						uri_path + "foodon-merged.owl",  //target
-						//uri_path + "reference.rdf",   //reference mappings if any
-						"", //no reference
+						uri_path + "AML-food.rdf",   //reference mappings if any
+						//"", //no reference
 						"food"
 				));
 		
