@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import uk.ac.ox.krr.logmap2.io.FlatAlignmentFormat;
+import uk.ac.ox.krr.logmap2.io.OutPutFilesManagerStatic;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
 
@@ -75,7 +76,12 @@ public class LogMap2_Matcher {
 
 	private void saveMappings(String output_path) throws Exception {
 		
-		saveMappings(getLogmap2_Mappings(), output_path, "logmap_mappings.txt"); //Already created?
+		//Output
+		saveLogMapMappings(getLogmap2_Mappings(), output_path, "logmap_mappings");
+		
+		
+		//saveMappings(getLogmap2_Mappings(), output_path, "logmap_mappings.txt"); //Already created above
+		//Discarded
 		saveMappings(getLogmap2_DiscardedMappings(), output_path, "logmap_discarded_mappings.txt");
 		saveMappings(getLogmap2_HardDiscardedMappings(), output_path, "logmap_hard_discarded_mappings.txt");
 		saveMappings(getLogmap2_ConflictiveMappings(), output_path, "logmap_logically_conflicting_mappings.txt");
@@ -83,6 +89,34 @@ public class LogMap2_Matcher {
 		
 		//Includes all the mappings with scores according to set they belong: anchor, discarded, etc.
 		saveMappings(getOverEstimationOfMappings(), output_path, "logmap_overestimation.txt");
+		
+	}
+	
+	
+	private void saveLogMapMappings(Set<MappingObjectStr> mappings, String output_path, String name) throws Exception {
+		
+
+		OutPutFilesManagerStatic.createOutFiles(output_path + name, OutPutFilesManagerStatic.AllFormats, "http://logmap-tests/oaei/source.owl", "http://logmap-tests/oaei/target.owl");
+		
+		for (MappingObjectStr mapping : mappings) {
+			
+			if (mapping.isClassMapping())
+				OutPutFilesManagerStatic.addClassMapping2Files(
+						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			else if (mapping.isObjectPropertyMapping())
+				OutPutFilesManagerStatic.addObjPropMapping2Files(
+						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			else if (mapping.isDataPropertyMapping())
+				OutPutFilesManagerStatic.addDataPropMapping2Files(
+						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			else if (mapping.isInstanceMapping())
+				OutPutFilesManagerStatic.addInstanceMapping2Files(
+						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getConfidence());
+			
+		}
+		
+		OutPutFilesManagerStatic.closeAndSaveFiles();
+		
 		
 	}
 	
