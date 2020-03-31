@@ -664,7 +664,8 @@ public class LogMap2Core {
 		//OWLManager.createOWLOntologyManager().saveOntology(mappings_owl_onto, new RDFXMLOntologyFormat(),
 				//IRI.create("file:/usr/local/data/MappingsConferenceBenchmark/ontologies/mappings-cmt-confof.owl"));
 		//		IRI.create("file:/usr/local/data/MappingsConferenceBenchmark/ontologies/mappings-edas-ekaw.owl"));
-		LogOutput.printAlways("\nNum unsat classes after integration: " + sat_checker.getNumUnsatClasses());
+		System.out.println("\nNum unsat classes after integration: " + sat_checker.getNumUnsatClasses());
+		//LogOutput.printAlways
 	}
 	
 	

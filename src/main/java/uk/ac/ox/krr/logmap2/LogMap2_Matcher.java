@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import uk.ac.ox.krr.logmap2.io.FlatAlignmentFormat;
 import uk.ac.ox.krr.logmap2.io.OutPutFilesManagerStatic;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
+import uk.ac.ox.krr.logmap2.oaei.reader.MappingsReaderManager;
+import uk.ac.ox.krr.logmap2.utilities.StandardMeasures;
 import uk.ac.ox.krr.logmap2.utilities.Utilities;
 
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -63,6 +65,36 @@ public class LogMap2_Matcher {
 			
 			//TODO save mappings
 			saveMappings(output_path);
+			
+			
+			
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * LogMap access from command line + comparison with reference
+	 * See uk.ac.ox.krr.logmap2.Parameters.java to adapt LogMap 2
+	 * 
+	 */
+	public LogMap2_Matcher(String iri_onto1, String iri_onto2, String reference, String output_path, boolean eval_impact){
+		
+		this(iri_onto1, iri_onto2, output_path, eval_impact);
+		
+		try {
+			
+			MappingsReaderManager reader = new MappingsReaderManager(reference, MappingsReaderManager.OAEIFormat);
+			
+			StandardMeasures.computeStandardMeasures(
+					getLogmap2_Mappings(), //System 
+					reader.getMappingObjects()   //Reference
+					);
+			
+			System.out.println("Precision\tRecall\tF-score");
+			System.out.format("%.3f\t%.3f\t%.3f", StandardMeasures.getPrecision(), StandardMeasures.getRecall(), StandardMeasures.getFscore());
 			
 			
 			
