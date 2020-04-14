@@ -26,7 +26,7 @@ LogMap standalone distributions and OAEI packages can be downloaded from [Source
 
 Development requires a clone of this git repository. You can use the pre-configured Eclipse (Maven) project. Dependencies are automatically downloaded with the exception of google translate which needs to be manually added to the maven local repository (see [lib/readme_mvn_install_google_translate.txt](./lib/readme_mvn_install_google_translate.txt)).
  
-To generate a JAR file for LogMap from the command line using Maven, run: `mvn package` or `mvn clean install` 
+To generate a JAR file for LogMap from the command line using Maven, run: `mvn package` or `mvn clean install`. This will also generate a folder *java-dependencies* with all the necessary libraries. This folder together with the *parameters.txt* file should be placed in the same path as the generated "logmap-matcher-3.0.jar" file. 
 
 
 

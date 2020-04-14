@@ -12,7 +12,7 @@ use_stemming|false
 max_redundancy_labels|3
 max_ambiguity|4
 good_ambiguity|2
-use_overlapping|false
+use_overlapping|true
 min_size_overlapping|15000
 output_class_mappings|true
 property_matching|true
