@@ -33,11 +33,21 @@ public abstract class TestOAEITrack {
 	
 	Timer t;
 	
-	protected boolean SAVE_MAPPINGS = true;
+	protected boolean SAVE_MAPPINGS = false;
 	protected String PATH = "/tmp/logmap-alignment";
 	protected String OUTPUT_FILE_TEMPLATE="";
 	
 	
+	
+	public TestOAEITrack(String output_folder_mappings){
+		
+		//with partial output path to save mappings
+		PATH = output_folder_mappings;
+		SAVE_MAPPINGS = true;
+
+		setUp();
+		
+	}
 	
 	public TestOAEITrack(){
 		
@@ -106,7 +116,7 @@ public abstract class TestOAEITrack {
 		
 		if (SAVE_MAPPINGS){
 			//TODO
-			OUTPUT_FILE_TEMPLATE+=PATH + "-"+task.getTaskName();
+			OUTPUT_FILE_TEMPLATE=PATH + "-"+task.getTaskName();
 			System.out.println("Saving mappings to " + OUTPUT_FILE_TEMPLATE);
 			saveLogMapMappings(logmap.getLogmap2_Mappings());
 		}
