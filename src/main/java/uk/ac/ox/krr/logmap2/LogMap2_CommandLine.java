@@ -41,10 +41,10 @@ public class LogMap2_CommandLine {
 				"\t1. EVALUATION. To use the matching + evaluation functionality against reference mappings.\n" +
 				"\t2. IRI ontology 1. e.g.: http://myonto1.owl  or  file:/C://myonto1.owl  or  file:/usr/local/myonto1.owl\n" +
 				"\t3. IRI ontology 2. e.g.: http://myonto2.owl  or  file:/C://myonto2.owl  or  file:/usr/local/myonto2.owl\n" +
-				"\t3. Reference mappings (RDF alignment format). e.g.: /usr/local/reference_mappings.rdf\n" +
-				"\t4. Full output path for mapping files and overlapping modules/fragments. e.g. /usr/local/output_path/ or C://output_path/\n" +
-				"\t5. Classify the input ontologies together with the mappings. e.g. true or false\n\n" +
-				"\tFor example: java -jar logmap2_standalone.jar MATCHER file:/home/ontos/cmt.owl file:/home/ontos/ekaw.owl /home/refs/ref-cmt-ekaw.rdf /home/mappings/output true\n\n\n" +
+				"\t4. Reference mappings (RDF alignment format). e.g.: /usr/local/reference_mappings.rdf\n" +
+				"\t5. Full output path for mapping files and overlapping modules/fragments. e.g. /usr/local/output_path/ or C://output_path/\n" +
+				"\t6. Classify the input ontologies together with the mappings. e.g. true or false\n\n" +
+				"\tFor example: java -jar logmap2_standalone.jar EVALUATION file:/home/ontos/cmt.owl file:/home/ontos/ekaw.owl /home/refs/ref-cmt-ekaw.rdf /home/mappings/output true\n\n\n" +
 				
 				"LogMap 2 DEBUGGER facility requires 8 parameters:\n" +
 				"\t1. DEBUGGER. To use the debugging facility.\n" +
