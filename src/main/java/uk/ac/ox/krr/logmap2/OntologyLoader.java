@@ -167,8 +167,8 @@ public class OntologyLoader {
 			
 			//managerOnto.setSilentMissingImportsHandling(true);
 			
-			if (given_onto.getOntologyID().getOntologyIRI()!=null){
-				iri_onto_str=given_onto.getOntologyID().getOntologyIRI().toString(); //Give this iri to module
+			if (given_onto.getOntologyID().getOntologyIRI()!=null && given_onto.getOntologyID().getOntologyIRI().isPresent()){
+					iri_onto_str=given_onto.getOntologyID().getOntologyIRI().get().toString(); //Give this iri to module
 			}
 			else {
 				iri_onto_str=getURIFromClasses(given_onto);
@@ -189,7 +189,7 @@ public class OntologyLoader {
 			onto = managerOnto.createOntology(axioms, IRI.create(iri_onto_str));
 			
 			
-			LogOutput.print("IRI: " + iri_onto_str);
+			//LogOutput.print("IRI: " + iri_onto_str);
 			
 					
 			
@@ -260,15 +260,15 @@ public class OntologyLoader {
 	protected void loadOntologyInformation() throws OWLOntologyCreationException {
 		
 		//The preclassification with condor has no ontology id
-		if (onto.getOntologyID().getOntologyIRI()!=null){
-			iri_onto_str=onto.getOntologyID().getOntologyIRI().toString(); //Give this iri to module
+		if (onto.getOntologyID().getOntologyIRI()!=null && onto.getOntologyID().getOntologyIRI().isPresent()){
+				iri_onto_str=onto.getOntologyID().getOntologyIRI().get().toString(); //Give this iri to module
 		}
 		else {
 			iri_onto_str=getURIFromClasses(onto);
 		}
 		
 		
-		LogOutput.print("IRI: " + iri_onto_str);
+		//LogOutput.print("IRI: " + iri_onto_str);
 		
 				
 		
@@ -437,6 +437,20 @@ public class OntologyLoader {
 		managerOnto.saveOntology(onto, new RDFXMLDocumentFormat(), IRI.create(phy_iri_onto));
 		
 	}
+	
+	
+	/*public static void main(String[] args) {
+	
+		try {
+			OntologyLoader loader = new OntologyLoader("file:/home/ernesto/Documents/ImageAnnotation-SIRIUS/Images_annotations_snapshot/last_version_onto/Geological_annotation_ontology_v0.90.owl");
+			System.out.println(loader.getDLNameOntology());
+			
+		} catch (OWLOntologyCreationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}*/
 	
 	
 	
