@@ -40,6 +40,8 @@ public class ReasonerManager {
 	public static int FACTpp = 3;
 	public static int TrOWL = 4;
 	public static int MORe = 5;
+	public static int STRUCTURAL = 6;
+	
 	
 	//public enum reasoners { HERMIT, PELLET }
 	
