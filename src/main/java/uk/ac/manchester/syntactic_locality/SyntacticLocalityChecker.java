@@ -809,7 +809,8 @@ public class SyntacticLocalityChecker implements OWLAxiomVisitor {
 		//Bottom locality R^(bottom) subOf R
 		if(!dualRoles){
 			for (OWLObjectPropertyExpression propExp : axiom.getPropertyChain()){
-				if (!foreignSignature.contains(propExp.asOWLObjectProperty())){
+				
+				if (!propExp.isAnonymous() && !foreignSignature.contains(propExp.asOWLObjectProperty())){
 					local = true;
 					return;
 				}

@@ -157,7 +157,7 @@ public class LogMap2_OAEI_BioPortal {
 		MO_extractor = 
 				new MediatingOntologyExtractor(logmap2.getRepresentativeLabelsForMappings());
 		
-		print("Time extracting Mediating Ontologies (s): " + StatisticsTimeMappings.getRunningTime());
+		print("Time extracting Mediating Ontologies (s): " + StatisticsTimeMappings.getRunningTime() + "\n");
 		//print("Necessary number of calls to BioPortal: " + MO_extractor.getNumCallsBioPortal());
 		
 		//We make sure we repair
@@ -169,6 +169,8 @@ public class LogMap2_OAEI_BioPortal {
 		int num_used_MO = 0;
 		
 		for (String ontoAcronym : MO_extractor.getSelectedMediatingOntologies()){
+			
+			print("\n\n" + num_used_MO + ". MO ONTOLOGY: " + ontoAcronym);
 			
 			StatisticsTimeMappings.setCurrentInitTime();
 			//It also updates the mapping2votes inside
@@ -238,9 +240,15 @@ public class LogMap2_OAEI_BioPortal {
 	
 	
 	public URL returnAlignmentFile() throws Exception{
+		
+		return returnAlignmentFile("alignment");
+		
+	}
+	
+	public URL returnAlignmentFile(String file_name) throws Exception{
 
 		
-		alignment_output = new OAEIAlignmentOutput("alignment", str_uri_onto1, str_uri_onto2);
+		alignment_output = new OAEIAlignmentOutput(file_name, str_uri_onto1, str_uri_onto2);
 		
 		int dir_mapping;
 		
@@ -725,13 +733,13 @@ public class LogMap2_OAEI_BioPortal {
 	
 	public static void main(String[] args){
 		
-		String iri1, iri2, ref;
+		String iri1, iri2, ref, file_out;
 		
+		iri1= "file:/home/ernesto/Documents/OAEI_Datasets-revise/mouse/mouse2012.owl";
+		iri2= "file:/home/ernesto/Documents/OAEI_Datasets-revise/mouse/human2012.owl";
+		ref = "/home/ernesto/Documents/OAEI_Datasets-revise/mouse/reference2012.rdf"; // Reference ontology
+		file_out= "/home/ernesto/Documents/OAEI_Datasets-revise/mouse/logmapbio-test";
 		
-		iri1= "file:/home/ernesto/Documents/OAEI_datasets/mouse.owl";
-		iri2= "file:/home/ernesto/Documents/OAEI_datasets/human.owl";
-		ref = "/home/ernesto/Documents/OAEI_datasets/reference.rdf"; // Reference ontology
-				
 		/*iri1= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_FMA_small_overlapping_nci.owl";
 		iri2= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_NCI_small_overlapping_fma.owl";
 		
@@ -756,6 +764,17 @@ public class LogMap2_OAEI_BioPortal {
 		
 		SatisfiabilityIntegration.setReasoner(ReasonerManager.ELK);
 		*/
+
+		
+		
+		
+		//iri1= "";
+		//iri2= "";
+		//file_out = "";  //no extension
+		
+		
+		
+		
 		
 
 		reference = loadReference(ref);
@@ -765,6 +784,7 @@ public class LogMap2_OAEI_BioPortal {
 		
 		try {
 			logmap_Bio.align(iri1, iri2);
+			logmap_Bio.returnAlignmentFile(file_out);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

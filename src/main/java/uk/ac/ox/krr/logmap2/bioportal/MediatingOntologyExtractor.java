@@ -171,7 +171,7 @@ public class MediatingOntologyExtractor {
 					else{
 						
 						//We call bioportal about metrics
-						
+						//System.out.println(acronym);
 						BioPortalOntologyInfo onto_bio = bioportal.getMetricInfo4Onto(acronym);
 						
 						///if (onto_bio.getClasses()<=MAX_SIZE_ONTOLOGY){

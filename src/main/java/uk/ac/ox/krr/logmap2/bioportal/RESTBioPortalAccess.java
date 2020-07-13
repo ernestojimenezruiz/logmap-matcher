@@ -290,8 +290,11 @@ public class RESTBioPortalAccess implements BioPortalAccess {
 				
 				//Only if 				
 				if (ontologyNode.size() != 0){
-					classes = ontologyNode.get(CLASSES).asInt();
-					depth = ontologyNode.get(MAXDEPTH).asInt();
+					if (ontologyNode.has(CLASSES))
+						classes = ontologyNode.get(CLASSES).asInt();
+					
+					if (ontologyNode.has(MAXDEPTH))
+						depth = ontologyNode.get(MAXDEPTH).asInt();
 					
 					//Only for small ontologies (we save then a call)?
 					//if (classes <= MAX_SIZE_ONTOLOGY){
