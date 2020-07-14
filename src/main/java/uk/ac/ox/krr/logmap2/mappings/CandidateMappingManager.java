@@ -876,6 +876,7 @@ public class CandidateMappingManager extends MappingManager {
 	private void createCandidates4StemmingLikeAnchors() throws Exception{
 		
 		int candidates=0;
+		int ambiguity, size1, size2;
 		
 		//System.out.println(if_stemming_intersection.size());
 		//System.out.println(onto_process1.getInvertedFileWeakLabelsStemming().values().size());
@@ -887,6 +888,22 @@ public class CandidateMappingManager extends MappingManager {
 			
 			if (set_str.isEmpty()){
 				LogOutput.print("EMPTY SET IN STEMMING IF: " + onto_process1.getInvertedFileWeakLabelsStemming().get(set_str).size() + " - " +  + onto_process2.getInvertedFileWeakLabelsStemming().get(set_str).size());
+				continue;
+			}
+			
+			size1=onto_process1.getInvertedFileWeakLabelsStemming().get(set_str).size();
+			size2=onto_process2.getInvertedFileWeakLabelsStemming().get(set_str).size();
+			
+			
+			
+			//Only Low amabiguity
+			ambiguity=size1*size2;
+			if (ambiguity>=7 || size1>=4 || size2>=4){//Max cases 3*2  (for FMA-NCI-SNOMED)
+			//if (ambiguity>=13 && size1>=5 && size2>=5){//Max cases 3*2 (Mosue?)
+				
+				if (ambiguity>20)
+					LogOutput.print("High ambiguity stemming: "+ ambiguity);
+				
 				continue;
 			}
 			
@@ -916,7 +933,7 @@ public class CandidateMappingManager extends MappingManager {
 		
 		
 		//printStatisticsMappingEvaluation();
-		//LogOutput.print("Candidates STEMING: " + candidates);
+		LogOutput.print("Candidates STEMING: " + candidates);
 		
 	
 		
@@ -1307,25 +1324,36 @@ public class CandidateMappingManager extends MappingManager {
 			
 			
 			if (set_str.isEmpty()){
-				LogOutput.print("EMPTY SET IN STEMMING IF: " + onto_process1.getInvertedFileWeakLabels().get(set_str).size() + " - " +  + onto_process2.getInvertedFileWeakLabels().get(set_str).size());
+				LogOutput.print("EMPTY SET IN WEAK IF: " + onto_process1.getInvertedFileWeakLabels().get(set_str).size() + " - " +  + onto_process2.getInvertedFileWeakLabels().get(set_str).size());
 				continue;
 			}
 			
+			
+			size1=onto_process1.getInvertedFileWeakLabels().get(set_str).size();
+			size2=onto_process2.getInvertedFileWeakLabels().get(set_str).size();
+			
+			//Only Low amabiguity
+			ambiguity=size1*size2;
+			//if (ambiguity>=7 || size1>=4 || size2>=4){//Max cases 3*2  (for FMA-NCI-SNOMED)
+			if (ambiguity>=13 && size1>=5 && size2>=5){//Max cases 3*2 (Mosue?)
+				continue;
+			}
+			
+			
+			
 			for (int ide1 : onto_process1.getInvertedFileWeakLabels().get(set_str)){
 				
-				size1=onto_process1.getInvertedFileWeakLabels().get(set_str).size();
+				if (onto_process1.getDangerousClasses().contains(ide1))
+					continue;
+				
 				
 				for (int ide2 : onto_process2.getInvertedFileWeakLabels().get(set_str)){
 
-					size2=onto_process2.getInvertedFileWeakLabels().get(set_str).size();
+					if (onto_process2.getDangerousClasses().contains(ide2))
+						continue;
 					
 					
-					//Only Low amabiguity
-					ambiguity=size1*size2;
-					if (ambiguity<7 && size1<4 && size2<4){//Max cases 3*2  (for FMA-NCI-SNOMED)
-					//if (ambiguity<13 && size1<5 && size2<5){//Max cases 3*2 (Mosue?)
-						addEquivMapping2ListOfWeakCandidateAnchors(ide1, ide2);
-					}
+					addEquivMapping2ListOfWeakCandidateAnchors(ide1, ide2);
 					
 				}
 			}
