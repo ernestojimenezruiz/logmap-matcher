@@ -89,7 +89,7 @@ LogMap is free software: you can redistribute it and/or modify it under the term
 - Ernesto Jiménez-Ruiz, Christian Meilicke, Bernardo Cuenca Grau and Ian Horrocks. **Evaluating Mapping Repair Systems with Large Biomedical Ontologies**. In 26th International Workshop on Description Logics (DL 2013). ([PDF](http://ceur-ws.org/Vol-1014/paper_63.pdf))
 
 - Ernesto Jiménez-Ruiz, Asan Agibetov, Jiaoyan Chen, Matthias Samwald, Valerie Cross. **Dividing the Ontology Alignment Task with Semantic Embeddings and Logic-based Modules**. In the 24th European Conference on Artificial Intelligence (ECAI 2020). 
-([PDF](https://arxiv.org/abs/2003.05370))
+([PDF](https://arxiv.org/abs/2003.05370)) ([Slides](https://drive.google.com/file/d/1zWkRWmk7Jo-p9QJr1ZGdk5HFJse_1pmv/view?usp=sharing)) ([Slides with Video](https://drive.google.com/file/d/1-DDNurn_xmgMQkVWnUU3CT_q6Aokjhru/view?usp=sharing))
 
 - Ernesto Jiménez-Ruiz, Asan Agibetov, Matthias Samwald, Valerie Cross. **Breaking-down the Ontology Alignment Task with a Lexical Index and Neural Embeddings**. arXiv:1805.12402. ([PDF](https://arxiv.org/pdf/1805.12402.pdf))
 
