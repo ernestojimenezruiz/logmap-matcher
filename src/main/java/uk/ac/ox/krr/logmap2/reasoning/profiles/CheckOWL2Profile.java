@@ -56,29 +56,34 @@ public class CheckOWL2Profile {
 	
 	public boolean isInOWL2ELProfile(OWLOntology onto){
 		
-		report = owl2elchecker.checkOntology(onto);
-							
-		for (OWLProfileViolation violation : report.getViolations()) {
+		try {
+			report = owl2elchecker.checkOntology(onto);
+								
+			for (OWLProfileViolation violation : report.getViolations()) {
+				
+				//Ignore dummy violations
+				if (violation.toString().startsWith("Use of undeclared class") ||
+					violation.toString().startsWith("Use of undeclared object property") ||
+					violation.toString().startsWith("Use of undeclared data property") ||
+					violation.toString().startsWith("Use of data range not in profile: xsd:") ||
+					//violation.toString().startsWith("Cannot pun between properties") ||
+					violation.toString().startsWith("Not enough operands; at least two needed:") ||
+					violation.toString().startsWith("Use of reserved vocabulary for class IRI: rdf:List"))
+				
+					continue;
+				
+				//System.out.println("Violations: " + violation.toString());
+				return false;
+				
+				
+			}
 			
-			//Ignore dummy violations
-			if (violation.toString().startsWith("Use of undeclared class") ||
-				violation.toString().startsWith("Use of undeclared object property") ||
-				violation.toString().startsWith("Use of undeclared data property") ||
-				violation.toString().startsWith("Use of data range not in profile: xsd:") ||
-				//violation.toString().startsWith("Cannot pun between properties") ||
-				violation.toString().startsWith("Not enough operands; at least two needed:") ||
-				violation.toString().startsWith("Use of reserved vocabulary for class IRI: rdf:List"))
-			
-				continue;
-			
-			//System.out.println("Violations: " + violation.toString());
-			return false;
-			
-			
+			return true;
 		}
-		
-		return true;
-		
+		catch (Exception e) {
+			//Detected error in some cases: No current axiom; is the walker being used outside of an ontology visit?
+			return false;
+		}
 		
 	}
 		
