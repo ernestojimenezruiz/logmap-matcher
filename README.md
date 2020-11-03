@@ -56,7 +56,7 @@ We have also implemented a variant of LogMap to minimize the violations of the c
 
 LogMap also includes a novel module to divide the ontology alignment task into manageable subtasks.
 
-Resources: [source classes](https://github.com/ernestojimenezruiz/logmap-matcher/tree/master/src/main/java/uk/ac/ox/krr/logmap2/division), [test classes](https://github.com/ernestojimenezruiz/logmap-matcher/tree/master/src/test/java/uk/ac/ox/krr/logmap2/test/overlapping), [neural embeddings](https://github.com/plumdeq/neuro-onto-part), [datasets](https://doi.org/10.5281/zenodo.1214148), [paper](https://arxiv.org/abs/2003.05370), [Slides](https://drive.google.com/file/d/1zWkRWmk7Jo-p9QJr1ZGdk5HFJse_1pmv/view?usp=sharing), [Slides with Video](https://drive.google.com/file/d/1-DDNurn_xmgMQkVWnUU3CT_q6Aokjhru/view?usp=sharing)
+Resources: [source classes](https://github.com/ernestojimenezruiz/logmap-matcher/tree/master/src/main/java/uk/ac/ox/krr/logmap2/division), [test classes](https://github.com/ernestojimenezruiz/logmap-matcher/tree/master/src/test/java/uk/ac/ox/krr/logmap2/test/overlapping), [neural embeddings](https://github.com/plumdeq/neuro-onto-part), [datasets](https://doi.org/10.5281/zenodo.1214148), [paper](https://arxiv.org/abs/2003.05370), [slides](https://drive.google.com/file/d/1zWkRWmk7Jo-p9QJr1ZGdk5HFJse_1pmv/view?usp=sharing), [slides with Video](https://drive.google.com/file/d/1-DDNurn_xmgMQkVWnUU3CT_q6Aokjhru/view?usp=sharing)
 
 
 
