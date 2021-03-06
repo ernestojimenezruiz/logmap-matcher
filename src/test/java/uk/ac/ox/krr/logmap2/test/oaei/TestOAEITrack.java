@@ -101,7 +101,21 @@ public abstract class TestOAEITrack {
 		double matching_time;
 		
 		t = new Timer();
-		LogMap2_Matcher logmap = new LogMap2_Matcher(task.getSource(), task.getTarget());
+		
+		LogMap2_Matcher logmap;
+		
+		if (SAVE_MAPPINGS){
+			//TODO
+			OUTPUT_FILE_TEMPLATE=PATH;
+			System.out.println("Saving mappings to " + OUTPUT_FILE_TEMPLATE);
+			//saveLogMapMappings(logmap.getLogmap2_Mappings());
+			//Save all formats and also discarded
+			logmap = new LogMap2_Matcher(task.getSource(), task.getTarget(), OUTPUT_FILE_TEMPLATE, false);
+		}
+		else {
+			logmap = new LogMap2_Matcher(task.getSource(), task.getTarget());
+		}
+		
 		
 		//TEST LogMap Lite
 		//LogMap_Lite logmap_lite = new LogMap_Lite();
@@ -114,12 +128,7 @@ public abstract class TestOAEITrack {
 		System.out.println("Size hard discarded: "+ logmap.getLogmap2_HardDiscardedMappings().size());
 		System.out.println("Size conflicting: "+ logmap.getLogmap2_ConflictiveMappings().size());*/
 		
-		if (SAVE_MAPPINGS){
-			//TODO
-			OUTPUT_FILE_TEMPLATE=PATH + "-"+task.getTaskName();
-			System.out.println("Saving mappings to " + OUTPUT_FILE_TEMPLATE);
-			saveLogMapMappings(logmap.getLogmap2_Mappings());
-		}
+		
 		
 		matching_time = t.durationMilisecons();
 		t.pause();

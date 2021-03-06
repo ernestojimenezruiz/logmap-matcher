@@ -108,19 +108,23 @@ public class LogMap2_Matcher {
 
 	private void saveMappings(String output_path) throws Exception {
 		
-		//Output
-		saveLogMapMappings(getLogmap2_Mappings(), output_path, "logmap_mappings");
-		
+		//Output: saved by default
+		//saveLogMapMappings(getLogmap2_Mappings(), output_path, "logmap_mappings");
+	
+		//We save anchors in all formats too
+		saveLogMapMappings(getLogmap2_anchors(), output_path, "logmap_anchors");
 		
 		//saveMappings(getLogmap2_Mappings(), output_path, "logmap_mappings.txt"); //Already created above
 		//Discarded
-		saveMappings(getLogmap2_DiscardedMappings(), output_path, "logmap_discarded_mappings.txt");
-		saveMappings(getLogmap2_HardDiscardedMappings(), output_path, "logmap_hard_discarded_mappings.txt");
-		saveMappings(getLogmap2_ConflictiveMappings(), output_path, "logmap_logically_conflicting_mappings.txt");
-		saveMappings(getLogmap2_anchors(), output_path, "logmap_anchors.txt");
+		saveMappingsFlatFormat(getLogmap2_DiscardedMappings(), output_path, "logmap_discarded_mappings.txt");
+		saveMappingsFlatFormat(getLogmap2_HardDiscardedMappings(), output_path, "logmap_hard_discarded_mappings.txt");
+		saveMappingsFlatFormat(getLogmap2_ConflictiveMappings(), output_path, "logmap_logically_conflicting_mappings.txt");
 		
+		//saveMappingsFlatFormat(getLogmap2_anchors(), output_path, "logmap_anchors.txt");
+	
+				
 		//Includes all the mappings with scores according to set they belong: anchor, discarded, etc.
-		saveMappings(getOverEstimationOfMappings(), output_path, "logmap_overestimation.txt");
+		saveMappingsFlatFormat(getOverEstimationOfMappings(), output_path, "logmap_overestimation.txt");
 		
 	}
 	
@@ -153,7 +157,7 @@ public class LogMap2_Matcher {
 	}
 	
 	
-	private void saveMappings(Set<MappingObjectStr> mappings, String output_path, String name) throws Exception {
+	private void saveMappingsFlatFormat(Set<MappingObjectStr> mappings, String output_path, String name) throws Exception {
 		
 		FlatAlignmentFormat flat_format = new FlatAlignmentFormat(output_path + name);
 		

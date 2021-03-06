@@ -6,7 +6,8 @@ public class TestFoodOntologies extends TestOAEITrack{
 	protected void setUp() {
 		SAVE_MAPPINGS = true;
 		//OUTPUT_FILE_TEMPLATE: will generate files logmap-alignment-food.owl, logmap-alignment-food.txt
-		PATH = "/home/ernesto/Documents/Datasets/Food/logmap-alignment";
+		//PATH = "/home/ernesto/Documents/Datasets/Food/logmap-alignment"; +  + "-"+task.getTaskName();
+		PATH = "/home/ernesto/Documents/Datasets/Food/";
 		
 		String uri_path = "file:/home/ernesto/Documents/Datasets/Food/";
 		

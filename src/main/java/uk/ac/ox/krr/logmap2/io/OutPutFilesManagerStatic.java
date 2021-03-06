@@ -32,7 +32,8 @@ public class OutPutFilesManagerStatic {
 	public static final int OWLFormat=0;
 	public static final int OAEIFormat=1;
 	public static final int FlatFormat=2;
-	public static final int AllFormats=3;
+	public static final int FlatTSVFormat=3;
+	public static final int AllFormats=4;
 	
 	private static Vector<OutputMappingsFormat> file_formats = new Vector<OutputMappingsFormat>(); 
 	
@@ -50,10 +51,15 @@ public class OutPutFilesManagerStatic {
 		else if (file_type==FlatFormat){
 			file_formats.add(new FlatAlignmentFormat(output_file+".txt"));
 		}
+		else if (file_type==FlatTSVFormat){
+			file_formats.add(new FlatAlignmentFormat(output_file+".tsv"));
+		}
 		else { //if (file_type==AllFormat){
 			file_formats.add(new OWLAlignmentFormat("file:"+output_file+".owl"));
 			file_formats.add(new OAEIRDFAlignmentFormat(output_file+".rdf", oiri1, oiri2));
 			file_formats.add(new FlatAlignmentFormat(output_file+".txt"));
+			file_formats.add(new FlatTSVAlignmentFormat(output_file+".tsv"));
+
 		}
 		
 		//Already in constructor
