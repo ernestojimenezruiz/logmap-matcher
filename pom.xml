@@ -174,7 +174,7 @@
 
 </dependencies>
 
-<!-- Important to add stopwords and lexicon files -->
+<!-- Important to add stopwords and lexicon files-->
   <build>
     <resources>
       <resource>
@@ -183,7 +183,7 @@
           <include>**/*.txt</include>
           <include>**/*.gz</include>
         </includes>
-      </resource>
+      </resource>      
     </resources>
   
   
@@ -225,6 +225,32 @@
           </execution>
         </executions>
       </plugin>
+      
+      
+      
+    <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-antrun-plugin</artifactId>
+    <version>1.8</version>
+    <executions>
+        <execution>
+            <phase>test</phase>
+            <goals>
+                <goal>run</goal>
+            </goals>
+            <configuration>
+                <tasks>
+                    <echo>Using env.test.properties</echo>
+                    <copy file="parameters.txt" tofile="${basedir}/target/parameters.txt"/>
+                    </tasks>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+
+      
+      
+      
        
     </plugins>
   
