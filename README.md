@@ -3,7 +3,7 @@
 **News:**
 
 1. LogMap is now relying on the [OWL API 4](https://github.com/owlcs/owlapi/wiki/Migrate-from-version-3.4-and-3.5-to-4.0). See here the (non-maintained) branch that uses [OWL API 3](https://github.com/ernestojimenezruiz/logmap-matcher/tree/logmap-owlapi-3)
-2. Check out the new material about integrating machine leaning withion the ontology alignment task [here](#division-of-the-ontology-alignment-task).
+2. Check out the new material about integrating machine leaning techniques within the ontology alignment task [here](https://github.com/KRR-Oxford/OntoAlign).
 3. Check out the new material about the division of the ontology alignment task [here](#division-of-the-ontology-alignment-task).
 
 ## About
@@ -61,7 +61,6 @@ Resources: [source classes](https://github.com/ernestojimenezruiz/logmap-matcher
 
 
 
-
 ## Contact
 Ernesto Jiménez-Ruiz (ernesto [.] jimenez [.] ruiz [at] gmail.com)
 
@@ -85,6 +84,7 @@ LogMap is free software: you can redistribute it and/or modify it under the term
 - Ernesto Jiménez-Ruiz et al. **LogMap family results for OAEI 2014**. 9th International Workshop on Ontology Matching (OM 2014). ([PDF](http://disi.unitn.it/~p2p/OM-2014/oaei14_paper4.pdf))
 
 **Combination with Machine Learning**
+
 Jiaoyan Chen, Ernesto Jimenez-Ruiz, Ian Horrocks, Denvar Antonyrajah, Ali Hadian, Jaehun Lee. **Augmenting Ontology Alignment by Semantic Embedding and Distant Supervision**. European Semantic Web Conference, ESWC 2021. ([PDF](https://openaccess.city.ac.uk/id/eprint/25810/1/ESWC2021_ontology_alignment_LogMap_ML.pdf))
 
 
