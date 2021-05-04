@@ -68,11 +68,6 @@ Please report any issue related to LogMap in our <a href="https://groups.google.
 or in our <a href="https://github.com/ernestojimenezruiz/logmap-matcher/issues" target="_blank">issue tracker</a>.
 
 
-## License
-
-LogMap is free software: you can redistribute it and/or modify it under the terms of the [GNU Lesser General Public License (LGPL) version 3](http://www.gnu.org/licenses/lgpl-3.0.en.html).
-
-
 ## Main Publications
 
 **Matching System**
@@ -121,4 +116,21 @@ Development has been supported by The Royal Society, the EPSRC project LogMap, t
 We would like to thank Alessandro Solimando, Valerie Cross, Anton Morant, Yujiao Zhou, Weiguo Xia, Xi Chen, Yuan Gong and Shuo Zhang, who have contributed to the LogMap project in the past.
 
 We also thank the organisers of the [OAEI evaluation campaigns](http://oaei.ontologymatching.org/) for providing test data and infrastructure.
+
+
+## License
+LogMap Matcher is Copyright (c) 2021 - 2022
+Department of Computer Science, University of Oxford
+Department of Computer Science, City, University of London
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
