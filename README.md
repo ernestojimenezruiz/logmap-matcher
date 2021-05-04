@@ -119,7 +119,7 @@ We also thank the organisers of the [OAEI evaluation campaigns](http://oaei.onto
 
 
 ## License
-LogMap Matcher is Copyright (c) 2021 - 2022
+Copyright 2022 
 Department of Computer Science, University of Oxford
 Department of Computer Science, City, University of London
 
