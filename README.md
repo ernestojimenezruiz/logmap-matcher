@@ -95,6 +95,8 @@ or in our <a href="https://github.com/ernestojimenezruiz/logmap-matcher/issues" 
 
 - Ernesto Jiménez-Ruiz, Christian Meilicke, Bernardo Cuenca Grau and Ian Horrocks. **Evaluating Mapping Repair Systems with Large Biomedical Ontologies**. In 26th International Workshop on Description Logics (DL 2013). ([PDF](http://ceur-ws.org/Vol-1014/paper_63.pdf))([Slides](https://www.slideshare.net/ernestojimenezruiz/evaluating-mapping-repair-systems-with-large-biomedical-ontologies))
 
+- Ernesto Jiménez-Ruiz, Bernardo Cuenca Grau, Ian Horrocks and Rafael Berlanga. **Logic-based assessment of the compatibility of UMLS ontology sources**. Journal of Biomedical Semantics,  volume 2, 2011 ([PDF](https://jbiomedsem.biomedcentral.com/track/pdf/10.1186/2041-1480-2-S1-S2.pdf)) ([HTML](https://jbiomedsem.biomedcentral.com/articles/10.1186/2041-1480-2-S1-S2)). Preliminary repair work that led to LogMap's repair.
+
 
 **Division Matching Task**
 
