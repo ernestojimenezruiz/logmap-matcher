@@ -1,25 +1,8 @@
-/*******************************************************************************
- * Copyright 2012 by the Department of Computer Science (University of Oxford)
- * 
- *    This file is part of LogMap.
- * 
- *    LogMap is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU Lesser General Public License as published by
- *    the Free Software Foundation, either version 3 of the License, or
- *    (at your option) any later version.
- * 
- *    LogMap is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU Lesser General Public License for more details.
- * 
- *    You should have received a copy of the GNU Lesser General Public License
- *    along with LogMap.  If not, see <http://www.gnu.org/licenses/>.
- ******************************************************************************/
 package uk.ac.ox.krr.logmap_lite;
 
 
 import java.net.URL;
+
 
 
 
@@ -38,12 +21,15 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import uk.ac.manchester.syntactic_locality.OntologyModuleExtractor;
 
 import uk.ac.ox.krr.logmap2.io.LogOutput;
+import uk.ac.ox.krr.logmap2.io.OutPutFilesManager;
 import uk.ac.ox.krr.logmap2.owlapi.SynchronizedOWLManager;
 import uk.ac.ox.krr.logmap2.reasoning.SatisfiabilityIntegration;
 import uk.ac.ox.krr.logmap_lite.io.ReadFile;
 import uk.ac.ox.krr.logmap_lite.io.OAEIAlignmentOutput;
 import uk.ac.ox.krr.logmap_lite.io.OWLAlignmentFormat;
 import uk.ac.ox.krr.logmap_lite.io.RDFAlignmentFormat;
+
+
 
 
 /**
@@ -246,9 +232,38 @@ public class LogMap_Lite {
 		}
 			
 		
+	}
+	
+	
+	public LogMap_Lite(
+			String iri1_str, 
+			String iri2_str,
+			String output_path) {
+		
+		try {
+			
+			align(iri1_str, iri2_str);
+			
+			
+			
+			
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 		
 		
 	}
+	
+		
+	
+	
+	
 	
 	
 	/**
@@ -368,6 +383,71 @@ public class LogMap_Lite {
 		alignment_output.saveOutputFile();
 		
 		return alignment_output.returnAlignmentFile();
+		
+	}
+	
+	
+	
+	public void saveMapping(String output_folder) throws Exception{
+
+		OutPutFilesManager ouput_manager =  new OutPutFilesManager();
+		
+		ouput_manager.createOutFiles(output_folder+"logmap-lite-mappings", OutPutFilesManager.AllFormats, onto_loader1.getOntologyIRIStr(), onto_loader2.getOntologyIRIStr());
+		
+		
+		for (int ide1 : mappings.keySet()){
+			for (int ide2 : mappings.get(ide1)){
+				
+				ouput_manager.addClassMapping2Files(
+						onto_proc1.getIRI4identifier(ide1),
+						onto_proc2.getIRI4identifier(ide2),
+						LogMap_Lite.EQ, 
+						1.0
+						);					
+			}
+		}
+		
+		for (int ide1 : mappingsDProp.keySet()){
+			for (int ide2 : mappingsDProp.get(ide1)){
+				
+				ouput_manager.addDataPropMapping2Files(
+						onto_proc1.getIRI4DPropIdentifier(ide1),
+						onto_proc2.getIRI4DPropIdentifier(ide2),
+						LogMap_Lite.EQ, 
+						1.0
+						);					
+			}
+		}
+		
+		for (int ide1 : mappingsOProp.keySet()){
+			for (int ide2 : mappingsOProp.get(ide1)){
+				
+				ouput_manager.addObjPropMapping2Files(
+						onto_proc1.getIRI4OPropIdentifier(ide1),
+						onto_proc2.getIRI4OPropIdentifier(ide2),
+						LogMap_Lite.EQ, 
+						1.0
+						);					
+			}
+		}
+		
+		for (int ide1 : mappingsIndiv.keySet()){
+			for (int ide2 : mappingsIndiv.get(ide1)){
+				ouput_manager.addInstanceMapping2Files(
+						onto_proc1.getIRI4Individual(ide1),
+						onto_proc2.getIRI4Individual(ide2),
+						1.0
+						);					
+			}
+		}
+		
+		
+	
+		
+		
+		ouput_manager.closeAndSaveFiles();
+		
+		
 		
 	}
 	

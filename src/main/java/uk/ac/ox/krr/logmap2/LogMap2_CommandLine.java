@@ -1,21 +1,3 @@
-/*******************************************************************************
- * Copyright 2012 by the Department of Computer Science (University of Oxford)
- * 
- *    This file is part of LogMap.
- * 
- *    LogMap is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU Lesser General Public License as published by
- *    the Free Software Foundation, either version 3 of the License, or
- *    (at your option) any later version.
- * 
- *    LogMap is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU Lesser General Public License for more details.
- * 
- *    You should have received a copy of the GNU Lesser General Public License
- *    along with LogMap.  If not, see <http://www.gnu.org/licenses/>.
- ******************************************************************************/
 package uk.ac.ox.krr.logmap2;
 
 import uk.ac.ox.krr.logmap2.oaei.reader.MappingsReaderManager;
@@ -35,7 +17,7 @@ public class LogMap2_CommandLine {
 				"\t3. IRI ontology 2. e.g.: http://myonto2.owl  or  file:/C://myonto2.owl  or  file:/usr/local/myonto2.owl\n" +
 				"\t4. Full output path for mapping files and overlapping modules/fragments. e.g. /usr/local/output_path/ or C://output_path/\n or /C://output_path/\\n" +
 				"\t5. Classify the input ontologies together with the mappings. e.g. true or false\n\n" +
-				"\tFor example: java -jar logmap2_standalone.jar MATCHER file:/home/ontos/cmt.owl file:/home/ontos/ekaw.owl /home/mappings/output true\n\n\n" +
+				"\tFor example: java -jar logmap2_standalone.jar MATCHER file:/home/ontos/cmt.owl file:/home/ontos/ekaw.owl /home/mappings/output/ true\n\n\n" +
 				
 				"LogMap 2 EVALUATION facility requires 6 parameters:\n" +
 				"\t1. EVALUATION. To use the matching + evaluation functionality against reference mappings.\n" +
@@ -44,7 +26,7 @@ public class LogMap2_CommandLine {
 				"\t4. Reference mappings (RDF alignment format). e.g.: /usr/local/reference_mappings.rdf\n" +
 				"\t5. Full output path for mapping files and overlapping modules/fragments. e.g. /usr/local/output_path/ or C://output_path/\n or /C://output_path/\\n" +
 				"\t6. Classify the input ontologies together with the mappings. e.g. true or false\n\n" +
-				"\tFor example: java -jar logmap2_standalone.jar EVALUATION file:/home/ontos/cmt.owl file:/home/ontos/ekaw.owl /home/refs/ref-cmt-ekaw.rdf /home/mappings/output true\n\n\n" +
+				"\tFor example: java -jar logmap2_standalone.jar EVALUATION file:/home/ontos/cmt.owl file:/home/ontos/ekaw.owl /home/refs/ref-cmt-ekaw.rdf /home/mappings/output/ true\n\n\n" +
 				
 				"LogMap 2 DEBUGGER facility requires 8 parameters:\n" +
 				"\t1. DEBUGGER. To use the debugging facility.\n" +
@@ -59,7 +41,15 @@ public class LogMap2_CommandLine {
 				"\t8. Check satisfiability after repair using HermiT? true or false\n\n" +
 				"\tFor example: java -jar logmap2_standalone.jar DEBUGGER file:/home/ontos/cmt.owl file:/home/ontos/ekaw.owl " +
 				"RDF /usr/local/mymappings.rdf /home/mappings/output false true\n\n\n" + 
-
+				
+				
+				"LogMap 2 LITE facility requires 4 parameters:\n" +
+				"\t1. MATCHER. To use the matching functionality.\n" +
+				"\t2. IRI ontology 1. e.g.: http://myonto1.owl  or  file:/C://myonto1.owl  or  file:/usr/local/myonto1.owl\n" +
+				"\t3. IRI ontology 2. e.g.: http://myonto2.owl  or  file:/C://myonto2.owl  or  file:/usr/local/myonto2.owl\n" +
+				"\t4. Full output path for mapping files and overlapping modules/fragments. e.g. /usr/local/output_path/ or C://output_path/\n or /C://output_path/\\n" +
+				"\tFor example: java -jar logmap2_standalone.jar LITE file:/home/ontos/cmt.owl file:/home/ontos/ekaw.owl /home/mappings/output/ \n\n\n" +
+								
 				
 				"The RDF2OWL converter facility requires 4 parameters:\n" +
 				"\t1. RDF2OWL. To transform from RDF-OAEI format to OWL. Note that the input ontologies are required to check the type of entity of the mapped IRIs.\n" +
@@ -123,6 +113,16 @@ public class LogMap2_CommandLine {
 				
 				
 			}
+			
+			else if (args[0].equals("LITE")){
+				
+				if (args.length!=4){
+					System.out.println(getHelpMessage());				
+				}
+				else {				
+					new LogMap_Lite(args[1], args[2], args[3]);
+					
+				}
 			
 			
 			

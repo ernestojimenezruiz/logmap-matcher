@@ -1,24 +1,5 @@
-/*******************************************************************************
- * Copyright 2012 by the Department of Computer Science (University of Oxford)
- * 
- *    This file is part of LogMap.
- * 
- *    LogMap is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU Lesser General Public License as published by
- *    the Free Software Foundation, either version 3 of the License, or
- *    (at your option) any later version.
- * 
- *    LogMap is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU Lesser General Public License for more details.
- * 
- *    You should have received a copy of the GNU Lesser General Public License
- *    along with LogMap.  If not, see <http://www.gnu.org/licenses/>.
- ******************************************************************************/
 package uk.ac.ox.krr.logmap2.indexing;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -28,13 +9,11 @@ import java.util.HashSet;
 
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
-import java.util.Map.Entry;
 
 //import org.apache.commons.lang3.StringUtils;
 
@@ -53,7 +32,6 @@ import com.google.common.collect.Multimap;
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.indexing.entities.ClassIndex;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
-import uk.ac.ox.krr.logmap2.io.WriteFile;
 import uk.ac.ox.krr.logmap2.lexicon.LexicalUtilities;
 import uk.ac.ox.krr.logmap2.lexicon.NormalizeDate;
 import uk.ac.ox.krr.logmap2.lexicon.NormalizeNumbers;

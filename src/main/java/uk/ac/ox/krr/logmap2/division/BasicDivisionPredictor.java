@@ -1,9 +1,3 @@
-/*******************************************************************************
- * Copyright 2017 by the Department of Informatics (University of Oslo)
- * 
- *    This file is part of the Ontology Services Toolkit 
- *
- *******************************************************************************/
 package uk.ac.ox.krr.logmap2.division;
 
 import java.util.ArrayList;
@@ -23,7 +17,7 @@ import uk.ac.ox.krr.logmap2.statistics.StatisticsTimeMappings;
 
 /**
  *
- * This class aims at predicting the number of partitions (i.e. mathcing tasks) given a desired module size.
+ * This class aims at predicting the number of partitions (i.e. matching tasks) given a desired module size.
  * It may be the case the desired module size is not possible or very expensive to get 
  * (large number or partitions) 
  *

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package uk.ac.ox.krr.logmap2.division;
 
 import java.util.List;
