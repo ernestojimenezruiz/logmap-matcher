@@ -243,8 +243,7 @@ public class LogMap_Lite {
 		try {
 			
 			align(iri1_str, iri2_str);
-			
-			
+			saveMapping(output_path);
 			
 			
 			
