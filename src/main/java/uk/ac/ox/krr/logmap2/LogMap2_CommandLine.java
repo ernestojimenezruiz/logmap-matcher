@@ -1,6 +1,7 @@
 package uk.ac.ox.krr.logmap2;
 
 import uk.ac.ox.krr.logmap2.oaei.reader.MappingsReaderManager;
+import uk.ac.ox.krr.logmap_lite.LogMap_Lite;
 import uk.ac.ox.krr.logmap2.oaei.FromRDFAlign2OWL;
 
 
@@ -123,6 +124,7 @@ public class LogMap2_CommandLine {
 					new LogMap_Lite(args[1], args[2], args[3]);
 					
 				}
+			}
 			
 			
 			
