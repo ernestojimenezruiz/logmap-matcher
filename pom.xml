@@ -77,6 +77,12 @@
 	<groupId>commons-logging</groupId>
 	<artifactId>commons-logging</artifactId>
 	<version>1.1</version>
+	<exclusions>
+   		<exclusion>
+   			<groupId>javax.servlet</groupId>
+        	<artifactId>servlet-api</artifactId>    		
+    	</exclusion>
+  	</exclusions>
   </dependency>
   <dependency>		
 	<groupId>commons-lang</groupId>
@@ -169,6 +175,24 @@
     <groupId>com.opencsv</groupId>
     <artifactId>opencsv</artifactId>
     <version>3.10</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>4.0.1</version>
+    <scope>provided</scope>
+</dependency>
+-->
+
+<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+<!-- exclude old one from commons-loggin -->
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>3.1.0</version>
+    <scope>provided</scope>
 </dependency>
 
 

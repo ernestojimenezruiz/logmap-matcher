@@ -142,3 +142,5 @@ allowed_individual_type|http://erlangen-crm.org/efrbroo/F22_Self-Contained_Expre
 filter_entity|http://xmlns.com/foaf/
 filter_entity|http://www.w3.org/1999/02/22-rdf-syntax-ns
 filter_entity|http://purl.org/dc/elements/
+filter_entity|http://mouse.owl#UNDEFINED_part_of
+filter_entity|http://human.owl#UNDEFINED_part_of

@@ -1,14 +1,20 @@
 package uk.ac.ox.krr.logmap2;
 
-
 import uk.ac.ox.krr.logmap2.io.ReadFile;
 import uk.ac.ox.krr.logmap2.multilingual.TranslatorManager;
 
 import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashSet;
 import java.io.File;
 
 public class Parameters {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(Parameters.class);
+
 
 	public static String deprecated_uri = "http://www.w3.org/2002/07/owl#deprecated";
 	
@@ -455,19 +461,26 @@ public class Parameters {
 	
 	
 	public static void readParameters(){
+		readParameters("");
+	}
+	
+	public static void readParameters(String path){
 		
 		try{
 			
 			//File file = new File("thresholds.txt");
 			//System.out.println(file.getAbsolutePath() + "  " + file.exists());
 			
-			File file = new File ("parameters.txt");
+			File file = new File (path + "parameters.txt");
 			
 			if (!file.exists()){
 				//LogOutput.printAlways("Error reading LogMap parameters. File 'parameters.txt' is not available. Using default parameters.");
+				LOGGER.info("Using default LogMap parameters");
 				System.err.println("Error reading LogMap parameters. File 'parameters.txt' is not available. Using default parameters.");
 				return;
 			}
+			
+			LOGGER.info("Reading LogMap parameters from file.");
 			
 			
 			//We reinit with URIs in file
@@ -476,7 +489,7 @@ public class Parameters {
 			allowed_instance_types.clear();
 			filter_entities.clear();
 			
-			ReadFile reader = new ReadFile("parameters.txt");
+			ReadFile reader = new ReadFile(path + "parameters.txt");
 			//ReadFile reader = new ReadFile("/home/ernesto/OM_OAEI/logmap2_package/conf/thresholds.txt");
 			
 			String line;

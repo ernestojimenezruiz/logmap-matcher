@@ -209,6 +209,50 @@ public class LogMap2_Matcher {
 	
 	
 	/**
+	 * LogMap access from MELT
+	 * See uk.ac.ox.krr.logmap2.Parameters.java to adapt LogMap 2
+	 * @param iri_onto1 Strig with IRI ontology 1 (source)
+	 * @param iri_onto2 Strig with IRI ontology 2 (target)
+	 */
+	public LogMap2_Matcher(OWLOntology onto1, OWLOntology onto2, String path_parameters){
+		
+		//LogOutput.showOutpuLog(true);
+		Parameters.readParameters(path_parameters);
+		
+		try {
+			logmap2 = new LogMap2Core(onto1, onto2);
+			createObjectMappings();
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	/**
+	 * LogMap access from MELT
+	 * See uk.ac.ox.krr.logmap2.Parameters.java to adapt LogMap 2
+	 * @param iri_onto1 Strig with IRI ontology 1 (source)
+	 * @param iri_onto2 Strig with IRI ontology 2 (target)
+	 */
+	public LogMap2_Matcher(String onto_uri1, String onto_uri2, String path_parameters){
+		
+		//LogOutput.showOutpuLog(true);
+		Parameters.readParameters(path_parameters);
+		
+		try {
+			logmap2 = new LogMap2Core(onto_uri1, onto_uri2);
+			createObjectMappings();
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	/**
 	 * LogMap access from java application
 	 * See uk.ac.ox.krr.logmap2.Parameters.java to adapt LogMap 2
 	 * @param iri_onto1 Strig with IRI ontology 1 (source)
