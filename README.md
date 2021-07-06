@@ -27,26 +27,32 @@ Development requires a clone of this git repository. You can use the pre-configu
  
 To generate a JAR file for LogMap from the command line using Maven, run: `mvn package` or `mvn clean install`. This will also generate a folder *java-dependencies* with all the necessary libraries. This folder together with the *parameters.txt* file should be placed in the same path as the generated "logmap-matcher-3.0.jar" file. 
 
-Old LogMap standalone distributions and OAEI packages can also be downloaded from [SourceForge](https://sourceforge.net/projects/logmap-matcher/).  
+Releases:
+- Latest standalone release available [here](https://github.com/ernestojimenezruiz/logmap-matcher/releases/tag/logmap-matcher-july-2021)
+- Latest OAEI package available [here](https://github.com/ernestojimenezruiz/logmap-melt)
+- Old packages can also be downloaded from [SourceForge](https://sourceforge.net/projects/logmap-matcher/).  
 
 
 ## Using LogMap
 
 LogMap accepts the same ontology formats as the OWL API: e.g., RDF/XML, OWL/XML, OWL Functional, OBO, KRSS, and Turtle (n3).
 
-**As an Ontology Matching System**
+### As an Ontology Matching System 
 
-LogMap can be used from the command line with the [standalone distribution](https://sourceforge.net/projects/logmap-matcher/files/Standalone%20distribution/) or 
-the [OAEI packages](https://sourceforge.net/projects/logmap-matcher/files/OAEI%20packages/), or directly from its [Web interface](http://krrwebtools.cs.ox.ac.uk/logmap/)
-
-It has recently been implemented support to be run in the [HOBBIT platform](https://project-hobbit.eu/outcomes/hobbit-platform/). See details [here](https://gitlab.com/ernesto.jimenez.ruiz/logmap-hobbit).
+LogMap can be used from the command line with the [standalone distribution](https://github.com/ernestojimenezruiz/logmap-matcher/releases/) or directly from its [Web interface](http://krrwebtools.cs.ox.ac.uk/logmap/).
 
 LogMap can also be easily integrated in other Java applications. See [wiki](https://code.google.com/archive/p/logmap-matcher/wikis) for additional information.
 
+**OAEI:**
+For the OAEI campaign LogMap implements an interface to communicate with the [MELT platform](https://github.com/dwslab/melt). See wrapping [here](https://github.com/ernestojimenezruiz/logmap-melt).
 
-**As a Mapping Debugging System**
+**HOBBIT:**
+It has recently been implemented support to be run in the [HOBBIT platform](https://project-hobbit.eu/outcomes/hobbit-platform/). See details [here](https://gitlab.com/ernesto.jimenez.ruiz/logmap-hobbit).
 
-LogMap can also be used as a mapping debugging system from the command line or integrated in a Java application. See [wiki](https://code.google.com/archive/p/logmap-matcher/wikis) for additional information.
+
+### As a Mapping Debugging System
+
+LogMap can also be used as a mapping debugging system from the command line ([standalone distribution](https://github.com/ernestojimenezruiz/logmap-matcher/releases/)) or integrated in a Java application. See [wiki](https://code.google.com/archive/p/logmap-matcher/wikis) for additional information.
 
 We have also implemented a variant of LogMap to minimize the violations of the conservativity principle. Check details [here](https://github.com/ernestojimenezruiz/logmap-conservativity).
 
