@@ -76,7 +76,7 @@ public class LogMap2_Matcher {
 					);
 			
 			System.out.println("Precision\tRecall\tF-score");
-			System.out.format("%.3f\t%.3f\t%.3f", StandardMeasures.getPrecision(), StandardMeasures.getRecall(), StandardMeasures.getFscore());
+			System.out.format("%.3f\t%.3f\t%.3f\n", StandardMeasures.getPrecision(), StandardMeasures.getRecall(), StandardMeasures.getFscore());
 			
 			
 			

@@ -16,7 +16,7 @@ public class LogMap2_CommandLine {
 				"\t1. MATCHER. To use the matching functionality.\n" +
 				"\t2. IRI ontology 1. e.g.: http://myonto1.owl  or  file:/C://myonto1.owl  or  file:/usr/local/myonto1.owl\n" +
 				"\t3. IRI ontology 2. e.g.: http://myonto2.owl  or  file:/C://myonto2.owl  or  file:/usr/local/myonto2.owl\n" +
-				"\t4. Full output path for mapping files and overlapping modules/fragments. e.g. /usr/local/output_path/ or C://output_path/\n or /C://output_path/\\n" +
+				"\t4. Full output path for mapping files and overlapping modules/fragments. e.g. /usr/local/output_path/ or (windows) C://output_path/ or /C://output_path/\n" +
 				"\t5. Classify the input ontologies together with the mappings. e.g. true or false\n\n" +
 				"\tFor example: java -jar logmap2_standalone.jar MATCHER file:/home/ontos/cmt.owl file:/home/ontos/ekaw.owl /home/mappings/output/ true\n\n\n" +
 				
@@ -25,7 +25,7 @@ public class LogMap2_CommandLine {
 				"\t2. IRI ontology 1. e.g.: http://myonto1.owl  or  file:/C://myonto1.owl  or  file:/usr/local/myonto1.owl\n" +
 				"\t3. IRI ontology 2. e.g.: http://myonto2.owl  or  file:/C://myonto2.owl  or  file:/usr/local/myonto2.owl\n" +
 				"\t4. Reference mappings (RDF alignment format). e.g.: /usr/local/reference_mappings.rdf\n" +
-				"\t5. Full output path for mapping files and overlapping modules/fragments. e.g. /usr/local/output_path/ or C://output_path/\n or /C://output_path/\\n" +
+				"\t5. Full output path for mapping files and overlapping modules/fragments. e.g. /usr/local/output_path/ or (windows) C://output_path/ or /C://output_path/\n" +
 				"\t6. Classify the input ontologies together with the mappings. e.g. true or false\n\n" +
 				"\tFor example: java -jar logmap2_standalone.jar EVALUATION file:/home/ontos/cmt.owl file:/home/ontos/ekaw.owl /home/refs/ref-cmt-ekaw.rdf /home/mappings/output/ true\n\n\n" +
 				
@@ -36,8 +36,8 @@ public class LogMap2_CommandLine {
 				"\t4. Format mappings e.g.: OWL  or  RDF  or  TXT\n" +
 				"\t5. Full IRI or full Path:\n" +
 				"\t\ta. Full IRI of input mappings if OWL format. e.g.: file:/C://mymappings.owl  or  file:/usr/local/mymappings.owl  or http://mymappings.owl\n" +
-				"\t\tb. or Full path of input mappings if formats RDF or TXT. e.g.: C://mymappings.rdf  or  /usr/local/mymappings.txt\n" +
-				"\t6. Full output path for the repaired mappings: e.g. /usr/local/output_path or C://output_path\n or /C://output_path/\\n" +
+				"\t\tb. or Full path of input mappings if formats RDF or TXT. e.g.: C://mymappings.rdf  or /usr/local/mymappings.txt\n" +
+				"\t6. Full output path for the repaired mappings: e.g. /usr/local/output_path or (windows) C://output_path or /C://output_path/\n" +
 				"\t7. Extract modules for repair?: true or false\n" +
 				"\t8. Check satisfiability after repair using HermiT? true or false\n\n" +
 				"\tFor example: java -jar logmap2_standalone.jar DEBUGGER file:/home/ontos/cmt.owl file:/home/ontos/ekaw.owl " +
@@ -48,7 +48,7 @@ public class LogMap2_CommandLine {
 				"\t1. MATCHER. To use the matching functionality.\n" +
 				"\t2. IRI ontology 1. e.g.: http://myonto1.owl  or  file:/C://myonto1.owl  or  file:/usr/local/myonto1.owl\n" +
 				"\t3. IRI ontology 2. e.g.: http://myonto2.owl  or  file:/C://myonto2.owl  or  file:/usr/local/myonto2.owl\n" +
-				"\t4. Full output path for mapping files and overlapping modules/fragments. e.g. /usr/local/output_path/ or C://output_path/\n or /C://output_path/\\n" +
+				"\t4. Full output path for mapping files and overlapping modules/fragments. e.g. /usr/local/output_path/ or (windows) C://output_path/ or /C://output_path/\n" +
 				"\tFor example: java -jar logmap2_standalone.jar LITE file:/home/ontos/cmt.owl file:/home/ontos/ekaw.owl /home/mappings/output/ \n\n\n" +
 								
 				
