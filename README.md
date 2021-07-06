@@ -27,7 +27,7 @@ Development requires a clone of this git repository. You can use the pre-configu
  
 To generate a JAR file for LogMap from the command line using Maven, run: `mvn package` or `mvn clean install`. This will also generate a folder *java-dependencies* with all the necessary libraries. This folder together with the *parameters.txt* file should be placed in the same path as the generated "logmap-matcher-3.0.jar" file. 
 
-Releases:
+**Releases**:
 - Latest standalone release available [here](https://github.com/ernestojimenezruiz/logmap-matcher/releases/tag/logmap-matcher-july-2021)
 - Latest OAEI package available [here](https://github.com/ernestojimenezruiz/logmap-melt)
 - Old packages can also be downloaded from [SourceForge](https://sourceforge.net/projects/logmap-matcher/).  
