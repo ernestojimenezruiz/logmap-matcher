@@ -18,18 +18,16 @@ To the best of our knowledge, LogMap is one of the few matching systems that:
 
 3. provides support for user intervention during the matching process (see [Web interface](http://krrwebtools.cs.ox.ac.uk/logmap/)). 
 
-Please refer to the [OAIE campaign](http://oaei.ontologymatching.org/) for official results about LogMap.
+Please refer to the [OAEI campaign](http://oaei.ontologymatching.org/) for official results about LogMap.
 
 
 ## Downloading and Development
-
-LogMap standalone distributions and OAEI packages can be downloaded from [SourceForge](https://sourceforge.net/projects/logmap-matcher/).  
 
 Development requires a clone of this git repository. You can use the pre-configured Eclipse (Maven) project. Dependencies are automatically downloaded with the exception of google translate which needs to be manually added to the maven local repository (see [lib/readme_mvn_install_google_translate.txt](./lib/readme_mvn_install_google_translate.txt)).
  
 To generate a JAR file for LogMap from the command line using Maven, run: `mvn package` or `mvn clean install`. This will also generate a folder *java-dependencies* with all the necessary libraries. This folder together with the *parameters.txt* file should be placed in the same path as the generated "logmap-matcher-3.0.jar" file. 
 
-
+Old LogMap standalone distributions and OAEI packages can also be downloaded from [SourceForge](https://sourceforge.net/projects/logmap-matcher/).  
 
 
 ## Using LogMap
