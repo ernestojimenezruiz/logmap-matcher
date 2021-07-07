@@ -2,10 +2,11 @@
 
 **News (July 2021):**
 
-1. Check out the new interface with the MELT platform [here](https://github.com/ernestojimenezruiz/logmap-melt).
-2. Check out the new material based on [OWL2Vec\*](https://github.com/KRR-Oxford/OWL2Vec-Star) about integrating machine leaning techniques within the ontology alignment task [here](https://github.com/KRR-Oxford/OntoAlign).
-3. LogMap is now relying on the [OWL API 4](https://github.com/owlcs/owlapi/wiki/Migrate-from-version-3.4-and-3.5-to-4.0). See here the (non-maintained) branch that uses [OWL API 3](https://github.com/ernestojimenezruiz/logmap-matcher/tree/logmap-owlapi-3)
-4. Check out the new material about the division of the ontology alignment task [here](#division-of-the-ontology-alignment-task). 
+1. LogMap reached **500 citations** according to [Google Scholar](https://scholar.google.com/citations?user=07ioke0AAAAJ&hl=en)!
+2. Check out... 
+    - The new interface with the MELT platform [here](https://github.com/ernestojimenezruiz/logmap-melt).
+    - The new extension based on [OWL2Vec\*](https://github.com/KRR-Oxford/OWL2Vec-Star) to integrate machine leaning techniques within the ontology alignment task [here](https://github.com/KRR-Oxford/OntoAlign).
+    - The new material about the division of the ontology alignment task [here](#division-of-the-ontology-alignment-task). 
 
 ## About
 
@@ -25,6 +26,8 @@ Please refer to the [OAEI campaign](http://oaei.ontologymatching.org/) for offic
 ## Downloading and Development
 
 Development requires a clone of this git repository. You can use the pre-configured Eclipse (Maven) project. Dependencies are automatically downloaded with the exception of google translate which needs to be manually added to the maven local repository (see [lib/readme_mvn_install_google_translate.txt](./lib/readme_mvn_install_google_translate.txt)).
+
+LogMap relies on the [OWL API 4](https://github.com/owlcs/owlapi/wiki/Migrate-from-version-3.4-and-3.5-to-4.0). There is a (non-maintained) branch that uses the [OWL API 3](https://github.com/ernestojimenezruiz/logmap-matcher/tree/logmap-owlapi-3)
  
 To generate a JAR file for LogMap from the command line using Maven, run: `mvn package` or `mvn clean install`. This will also generate a folder *java-dependencies* with all the necessary libraries. This folder together with the *parameters.txt* file should be placed in the same path as the generated "logmap-matcher.jar" file. 
 
@@ -39,7 +42,7 @@ To generate a JAR file for LogMap from the command line using Maven, run: `mvn p
 
 ## Using LogMap
 
-LogMap accepts the same ontology formats as the OWL API: e.g., RDF/XML, OWL/XML, OWL Functional, OBO, KRSS, and Turtle (n3).
+LogMap accepts the same ontology formats as the OWL API: e.g., RDF/XML, OWL/XML, OWL Functional, OBO, KRSS, and Turtle (n3). 
 
 ### As an Ontology Matching System 
 
