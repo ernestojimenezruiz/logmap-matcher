@@ -82,8 +82,8 @@ public class OntologyLoader {
 			onto = managerOnto.loadOntology(IRI.create(phy_iri_onto));
 			
 			//The preclassification with condor has no ontology id
-			if (onto.getOntologyID().getOntologyIRI()!=null){
-				iri_onto_str=onto.getOntologyID().getOntologyIRI().toString(); //Give this iri to module
+			if (onto.getOntologyID().getOntologyIRI().isPresent()){
+				iri_onto_str=onto.getOntologyID().getOntologyIRI().get().toString(); //Give this iri to module
 			}
 			else {
 				iri_onto_str=getURIFromClasses();

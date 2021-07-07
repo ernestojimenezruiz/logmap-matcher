@@ -114,10 +114,14 @@ public class OverlappingExtractor4Mappings {
 
 		if (is_overlapping_onto1){
 			
+			String uri_onto1 = "http://module/ontology1";
+			if (onto1.getOntologyID().getOntologyIRI().isPresent())
+				uri_onto1 = onto1.getOntologyID().getOntologyIRI().get().toString(); 
+			
 			ModuleExtractor module_extractor1 = new ModuleExtractor(
 					onto1.getAxioms(), SynchronizedOWLManager.createOWLOntologyManager(), false, false, true, true, false);
 			module1 = module_extractor1.getLocalityModuleForSignatureGroup(
-					entities1, onto1.getOntologyID().getOntologyIRI().toString(), false);		
+					entities1, uri_onto1, false);		
 			
 			module_extractor1.clearStrutures();
 			
@@ -130,11 +134,15 @@ public class OverlappingExtractor4Mappings {
 		
 		
 		if (is_overlapping_onto2){
+			
+			String uri_onto2 = "http://module/ontology2";
+			if (onto2.getOntologyID().getOntologyIRI().isPresent())
+				uri_onto2 = onto2.getOntologyID().getOntologyIRI().get().toString();
 		
 			ModuleExtractor module_extractor2 = new ModuleExtractor(
 					onto2.getAxioms(), SynchronizedOWLManager.createOWLOntologyManager(), false, false, true, true, false);
 			module2 = module_extractor2.getLocalityModuleForSignatureGroup(
-					entities2, onto2.getOntologyID().getOntologyIRI().toString(), false);
+					entities2, uri_onto2, false);
 			
 			module_extractor2.clearStrutures();
 			

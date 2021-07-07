@@ -222,8 +222,8 @@ public class OntologyProcessing {
 		
 		
 		//The preclassification with condor has no ontology id
-		if (onto.getOntologyID().getOntologyIRI()!=null){
-			iri_onto=onto.getOntologyID().getOntologyIRI().toString();
+		if (onto.getOntologyID().getOntologyIRI()!=null && onto.getOntologyID().getOntologyIRI().isPresent()){
+			iri_onto=onto.getOntologyID().getOntologyIRI().get().toString();
 		}
 		//System.out.println(onto.getOntologyID());
 		
@@ -2785,7 +2785,7 @@ public class OntologyProcessing {
 		//We identified some logical errors when using ELK, it seems the classification that provides is less complete than the structural reasoner
 		//when the ontology is not EL!!!
 		if (!profileChecker.isInOWL2ELProfile(onto)){
-			LogOutput.printAlways(onto.getOntologyID().getOntologyIRI() + " NOT in OWL 2 EL profile. Using structural reasoner.");
+			LogOutput.printAlways(onto.getOntologyID().getOntologyIRI().get() + " NOT in OWL 2 EL profile. Using structural reasoner.");
 			setUpStructuralReasoner();
 			return;
 		}

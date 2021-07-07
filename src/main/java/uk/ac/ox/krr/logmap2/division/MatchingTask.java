@@ -186,7 +186,12 @@ public class MatchingTask {
 	
 	public String toString(){
 		
-		return "Matching task between : <" + sourceOntology.getOntologyID().getOntologyIRI() + "> and <" + targetOntology.getOntologyID().getOntologyIRI() + ">";
+		try {
+			return "Matching task between : <" + sourceOntology.getOntologyID().getOntologyIRI().get() + "> and <" + targetOntology.getOntologyID().getOntologyIRI().get() + ">";
+		}
+		catch (Exception e) {
+			return "Matching task between: one of the ontology URIs is Null";
+		}
 		
 	}
 	

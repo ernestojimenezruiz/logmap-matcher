@@ -186,7 +186,9 @@ public class WordEmbeddingDivision extends AbstractDivision implements OntologyA
 		//SOme ontologies does not include an (explicit) URI....
 		String uri_onto1;		
 		try	{
-			uri_onto1 = source.getOntologyID().getOntologyIRI().toString();
+			uri_onto1 = "http://logmap-partitioning/ontology1";
+			if (source.getOntologyID().getOntologyIRI().isPresent())
+				uri_onto1 = source.getOntologyID().getOntologyIRI().get().toString();
 		}
 		catch (Exception e){
 			uri_onto1 = "http://logmap-partitioning/ontology1";
@@ -194,7 +196,9 @@ public class WordEmbeddingDivision extends AbstractDivision implements OntologyA
 		String uri_onto2;
 		
 		try{
-			uri_onto2 = target.getOntologyID().getOntologyIRI().toString();
+			uri_onto2 = "http://logmap-partitioning/ontology2";
+			if (target.getOntologyID().getOntologyIRI().isPresent())
+				uri_onto2 = target.getOntologyID().getOntologyIRI().get().toString();
 		}
 		catch (Exception e){
 			uri_onto2 = "http://logmap-partitioning/ontology2";

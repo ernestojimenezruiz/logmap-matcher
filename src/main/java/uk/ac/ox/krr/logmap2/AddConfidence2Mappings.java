@@ -330,8 +330,8 @@ public class AddConfidence2Mappings {
 					//outPutFileName + "/" + "repaired_mappings",
 					ouput_file,
 					OutPutFilesManager.AllFormats,
-					onto1.getOntologyID().getOntologyIRI().toString(),
-					onto2.getOntologyID().getOntologyIRI().toString());
+					onto1.getOntologyID().getOntologyIRI().get().toString(),
+					onto2.getOntologyID().getOntologyIRI().get().toString());
 			
 			
 			
