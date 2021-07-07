@@ -1,11 +1,11 @@
 # LogMap: An Ontology Alignment and Alignment Repair System
 
-**News:**
+**News (July 2021):**
 
-1. LogMap is now relying on the [OWL API 4](https://github.com/owlcs/owlapi/wiki/Migrate-from-version-3.4-and-3.5-to-4.0). See here the (non-maintained) branch that uses [OWL API 3](https://github.com/ernestojimenezruiz/logmap-matcher/tree/logmap-owlapi-3)
+1. Check out the new interface with the MELT platform [here](https://github.com/ernestojimenezruiz/logmap-melt).
 2. Check out the new material based on [OWL2Vec\*](https://github.com/KRR-Oxford/OWL2Vec-Star) about integrating machine leaning techniques within the ontology alignment task [here](https://github.com/KRR-Oxford/OntoAlign).
-3. Check out the new material about the division of the ontology alignment task [here](#division-of-the-ontology-alignment-task).
-4. Check out the new interface with the MELT platform [here](https://github.com/ernestojimenezruiz/logmap-melt).
+3. LogMap is now relying on the [OWL API 4](https://github.com/owlcs/owlapi/wiki/Migrate-from-version-3.4-and-3.5-to-4.0). See here the (non-maintained) branch that uses [OWL API 3](https://github.com/ernestojimenezruiz/logmap-matcher/tree/logmap-owlapi-3)
+4. Check out the new material about the division of the ontology alignment task [here](#division-of-the-ontology-alignment-task). 
 
 ## About
 
