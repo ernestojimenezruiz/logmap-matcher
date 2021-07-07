@@ -5,6 +5,7 @@
 1. LogMap is now relying on the [OWL API 4](https://github.com/owlcs/owlapi/wiki/Migrate-from-version-3.4-and-3.5-to-4.0). See here the (non-maintained) branch that uses [OWL API 3](https://github.com/ernestojimenezruiz/logmap-matcher/tree/logmap-owlapi-3)
 2. Check out the new material based on [OWL2Vec\*](https://github.com/KRR-Oxford/OWL2Vec-Star) about integrating machine leaning techniques within the ontology alignment task [here](https://github.com/KRR-Oxford/OntoAlign).
 3. Check out the new material about the division of the ontology alignment task [here](#division-of-the-ontology-alignment-task).
+4. Check out the new interface with the MELT platform [here](https://github.com/ernestojimenezruiz/logmap-melt).
 
 ## About
 
@@ -27,11 +28,14 @@ Development requires a clone of this git repository. You can use the pre-configu
  
 To generate a JAR file for LogMap from the command line using Maven, run: `mvn package` or `mvn clean install`. This will also generate a folder *java-dependencies* with all the necessary libraries. This folder together with the *parameters.txt* file should be placed in the same path as the generated "logmap-matcher-3.0.jar" file. 
 
-**Releases**:
+**Releases and packages**:
 - Latest standalone release available [here](https://github.com/ernestojimenezruiz/logmap-matcher/releases/tag/logmap-matcher-july-2021)
-- Latest OAEI package available [here](https://github.com/ernestojimenezruiz/logmap-melt)
-- Old packages can also be downloaded from [SourceForge](https://sourceforge.net/projects/logmap-matcher/).  
-
+- OAEI:
+  - Latest LogMap's OAEI package available [here](https://github.com/ernestojimenezruiz/logmap-melt).
+  - Public OAEI packages available [here](https://tinyurl.com/public-oaei-systems) (using [MELT](https://github.com/dwslab/melt) since OAEI 2021, SEALS packages in OAEI 2020 and earlier).
+- HOBBIT: 
+  - LogMap also implemented support to be run in the [HOBBIT platform](https://project-hobbit.eu/outcomes/hobbit-platform/). See details [here](https://gitlab.com/ernesto.jimenez.ruiz/logmap-hobbit).  
+- Old packages can also be downloaded from [SourceForge](https://sourceforge.net/projects/logmap-matcher/).
 
 ## Using LogMap
 
@@ -44,11 +48,10 @@ LogMap can be used from the command line with the [standalone distribution](http
 LogMap can also be easily integrated in other Java applications. See [wiki](https://code.google.com/archive/p/logmap-matcher/wikis) for additional information.
 
 **OAEI:**
-For the OAEI campaign LogMap implements an interface to communicate with the [MELT platform](https://github.com/dwslab/melt). See wrapping [here](https://github.com/ernestojimenezruiz/logmap-melt).
+For the OAEI campaign, since 2021, LogMap implements an interface to communicate with the [MELT platform](https://github.com/dwslab/melt). See wrapping [here](https://github.com/ernestojimenezruiz/logmap-melt).
 
-**HOBBIT:**
-It has recently been implemented support to be run in the [HOBBIT platform](https://project-hobbit.eu/outcomes/hobbit-platform/). See details [here](https://gitlab.com/ernesto.jimenez.ruiz/logmap-hobbit).
-
+**LogMap-ML:**
+Recent research to augment LogMap with semantic embeddings and distant supervision. See details [here](https://github.com/KRR-Oxford/OntoAlign) (under development).
 
 ### As a Mapping Debugging System
 
@@ -114,12 +117,12 @@ Additional list of [LogMap-related publications](http://www.cs.ox.ac.uk/projects
 
 ## Acknowledgements
 
-LogMap has been created in the [Knowledge Representation and Reasoning group](http://www.cs.ox.ac.uk/isg/krr/) at the [Department of Computer Science](http://www.cs.ox.ac.uk/) of 
-the [University of Oxford](http://www.ox.ac.uk/) by Ernesto Jiménez-Ruiz, Bernardo Cuenca Grau and Ian Horrocks. 
+LogMap was originally designed and developed in the [Knowledge Representation and Reasoning group](http://www.cs.ox.ac.uk/isg/krr/) at the [Department of Computer Science](http://www.cs.ox.ac.uk/) of 
+the [University of Oxford](http://www.ox.ac.uk/) by Ernesto Jiménez-Ruiz, Bernardo Cuenca Grau and Ian Horrocks. LogMap is currently maintained by Ernesto Jiménez-Ruiz at the [Department of Computer Science](https://www.city.ac.uk/about/people/academics/ernesto-jimenez-ruiz) (City, University of London]).
 
 Development has been supported by The Royal Society, the EPSRC project LogMap, the EU FP7 projects SEALS and Optique, the [AIDA project](https://www.turing.ac.uk/research/research-projects/artificial-intelligence-data-analytics-aida), and the [SIRIUS Centre for Scalable Data Access](http://sirius-labs.no/).
 
-We would like to thank Alessandro Solimando, Valerie Cross, Anton Morant, Yujiao Zhou, Weiguo Xia, Xi Chen, Yuan Gong and Shuo Zhang, who have contributed to the LogMap project in the past.
+We would like to thank Jiaoyan Chen, Alessandro Solimando, Valerie Cross, Anton Morant, Yujiao Zhou, Weiguo Xia, Xi Chen, Yuan Gong and Shuo Zhang, who have also contributed to the LogMap project.
 
 We also thank the organisers of the [OAEI evaluation campaigns](http://oaei.ontologymatching.org/) for providing test data and infrastructure.
 
