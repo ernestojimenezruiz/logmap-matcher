@@ -2,8 +2,9 @@
 
 **News (July 2021):**
 
-1. LogMap reached **500 citations** according to [Google Scholar](https://scholar.google.com/citations?user=07ioke0AAAAJ&hl=en)!
-2. Check out... 
+1. Follow us in [twitter](https://twitter.com/LogmapMatcher).
+2. LogMap reached **500 citations** according to [Google Scholar](https://scholar.google.com/citations?user=07ioke0AAAAJ&hl=en)!
+3. Check out... 
     - The new interface with the MELT platform [here](https://github.com/ernestojimenezruiz/logmap-melt).
     - The new extension based on [OWL2Vec\*](https://github.com/KRR-Oxford/OWL2Vec-Star) to integrate machine leaning techniques within the ontology alignment task [here](https://github.com/KRR-Oxford/OntoAlign).
     - The new material about the division of the ontology alignment task [here](#division-of-the-ontology-alignment-task). 
