@@ -78,6 +78,10 @@ private void getPrecisionRecall(Set<MappingObjectStr> mappingsToTest){
 		
 		String iri1, iri2, ref, file_out;
 		
+		if (true)
+			return;
+		
+		
 		iri1= "file:/home/ernesto/Documents/OAEI_Datasets-revise/mouse/mouse2012.owl";
 		iri2= "file:/home/ernesto/Documents/OAEI_Datasets-revise/mouse/human2012.owl";
 		ref = "/home/ernesto/Documents/OAEI_Datasets-revise/mouse/reference2012.rdf"; // Reference ontology

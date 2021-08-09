@@ -4,6 +4,9 @@ public class TestFoodOntologies extends TestOAEITrack{
 
 	@Override
 	protected void setUp() {
+		
+		
+	
 		SAVE_MAPPINGS = true;
 		//OUTPUT_FILE_TEMPLATE: will generate files logmap-alignment-food.owl, logmap-alignment-food.txt
 		//PATH = "/home/ernesto/Documents/Datasets/Food/logmap-alignment"; +  + "-"+task.getTaskName();
@@ -25,10 +28,11 @@ public class TestFoodOntologies extends TestOAEITrack{
 	
 	public static void main(String[] args){
 		
-		TestFoodOntologies test = new TestFoodOntologies();
+		//TestFoodOntologies test = new TestFoodOntologies();
 		
 		try {
-			test.evaluateTasks();
+			//test.evaluateTasks();
+			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

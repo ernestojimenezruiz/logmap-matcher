@@ -14,6 +14,11 @@ public class TestSnomedPunning {
 	
 	public TestSnomedPunning(){
 		
+		if (true)
+			return; 
+		
+		
+		
 		String uri = "file:/home/ernesto/Documents/Datasets/LargeBio/snomed20090131_replab.owl";
 		
 		try {
