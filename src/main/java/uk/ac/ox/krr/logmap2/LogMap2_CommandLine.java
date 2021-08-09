@@ -20,6 +20,15 @@ public class LogMap2_CommandLine {
 				"\t5. Classify the input ontologies together with the mappings. e.g. true or false\n\n" +
 				"\tFor example: java -jar logmap2_standalone.jar MATCHER file:/home/ontos/cmt.owl file:/home/ontos/ekaw.owl /home/mappings/output/ true\n\n\n" +
 				
+				
+				"LogMap 2 MATCHER-BIO facility requires 4 parameters:\n" +
+				"\t1. MATCHER-BIO. To use the matching functionality and using BioPortal to extract mediating ontologies.\n" +
+				"\t2. IRI ontology 1. e.g.: http://myonto1.owl  or  file:/C://myonto1.owl  or  file:/usr/local/myonto1.owl\n" +
+				"\t3. IRI ontology 2. e.g.: http://myonto2.owl  or  file:/C://myonto2.owl  or  file:/usr/local/myonto2.owl\n" +
+				"\t4. Full output path for mapping files. e.g. /usr/local/output_path/ or (windows) C://output_path/ or /C://output_path/\n" +
+				"\tFor example: java -jar logmap2_standalone.jar MATCHER file:/home/ontos/cmt.owl file:/home/ontos/ekaw.owl /home/mappings/output/ true\n\n\n" +
+				
+				
 				"LogMap 2 EVALUATION facility requires 6 parameters:\n" +
 				"\t1. EVALUATION. To use the matching + evaluation functionality against reference mappings.\n" +
 				"\t2. IRI ontology 1. e.g.: http://myonto1.owl  or  file:/C://myonto1.owl  or  file:/usr/local/myonto1.owl\n" +
@@ -100,6 +109,24 @@ public class LogMap2_CommandLine {
 				
 				
 			}
+			else if (args[0].equals("MATCHER-BIO")){
+				
+				if (args.length!=5){
+					System.out.println(getHelpMessage());				
+				}
+				else {
+					
+					LogMap2_OAEI_BioPortal logmap_bio = new LogMap2_OAEI_BioPortal();
+					
+					logmap_bio.align(args[1], args[2]);
+					logmap_bio.saveLogMapBioMappings(args[3]);
+					
+				}
+				
+				
+			}
+			
+			
 			
 			
 			else if (args[0].equals("EVALUATION")){

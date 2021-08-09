@@ -10,8 +10,9 @@ import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.io.OAEIAlignmentOutput;
 
 /**
- * This classes manages the required wrapper of LogMap 2 in order to be accept and provided the required input and output data. 
- * @author root
+ * This classes manages the required wrapper of LogMap 2 in order to be accept and provide the required input and output data for the SEALS OAEI client.
+ * Since 2021 we are using the MELT platform in the OAEI: https://github.com/ernestojimenezruiz/logmap-melt 
+ * @author Ernesto
  *
  */
 public class LogMap2_OAEI {

@@ -421,26 +421,62 @@ public class OntologyProcessing {
 				try{
 									
 					//It is an individual
-					geneid_value=((OWLAnonymousIndividual)annAx.getAnnotation().getValue()).asOWLAnonymousIndividual();//.getID()
 					
-					for (OWLAnnotationAssertionAxiom annGeneidAx : onto.getAnnotationAssertionAxioms(geneid_value)){
-	
+					if (annAx.getAnnotation().getValue() instanceof OWLAnonymousIndividual) {
+									
+					
+						geneid_value=((OWLAnonymousIndividual)annAx.getAnnotation().getValue()).asOWLAnonymousIndividual();//.getID()
 						
-						if (annGeneidAx.getAnnotation().getProperty().getIRI().toString().equals(rdf_label_uri)){
+						//System.out.println(annAx.getAnnotation().getValue());
+						
+						for (OWLAnnotationAssertionAxiom annGeneidAx : onto.getAnnotationAssertionAxioms(geneid_value)){
+		
 							
-							labels.add(((OWLLiteral)annGeneidAx.getAnnotation().getValue()).getLiteral().toString());//.toLowerCase();
-							
-													
+							if (annGeneidAx.getAnnotation().getProperty().getIRI().toString().equals(rdf_label_uri)){
+								
+								labels.add(((OWLLiteral)annGeneidAx.getAnnotation().getValue()).getLiteral().toString());//.toLowerCase();
+								
+														
+							}
+						
 						}
 					}
+					//Named indiv
+					else if (annAx.getAnnotation().getValue() instanceof IRI) {
+						
+						
+						//It is an individual
+						IRI namedIndivIRI=(IRI)annAx.getAnnotation().getValue();				
+						OWLNamedIndividual namedIndiv=onto.getOWLOntologyManager().getOWLDataFactory().getOWLNamedIndividual(namedIndivIRI);
+						
+						
+						for (OWLAnnotationAssertionAxiom annIdiv : EntitySearcher.getAnnotationAssertionAxioms(namedIndiv, onto)){
+							
+							
+							if (annIdiv.getAnnotation().getProperty().getIRI().toString().equals(rdf_label_uri)){
+								
+								labels.add(((OWLLiteral)annIdiv.getAnnotation().getValue()).getLiteral().toLowerCase());
+							}
+						}
+					
+					}								
+					
+					
+					
 				}
 			
-				//Consider other cases with direct value
+				//Consider other cases with direct value or named individual
 				catch (Exception e){
+					
+					//e.printStackTrace();
 					try {
+						
+						//System.out.println(annAx.getAnnotation().getValue());
+						
 						labels.add(((OWLLiteral)annAx.getAnnotation().getValue()).getLiteral()); //No lower case yet
 					}
 					catch (Exception e1) {
+						//e1.printStackTrace();
 						System.err.println("Error accessing annotation: hasRelatedSynonym_uri or hasExactSynonym_uri");
 					}
 				}

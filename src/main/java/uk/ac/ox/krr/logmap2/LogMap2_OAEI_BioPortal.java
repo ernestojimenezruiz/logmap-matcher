@@ -27,10 +27,13 @@ import uk.ac.ox.krr.logmap2.bioportal.MediatingOntologyExtractor;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.io.OAEIAlignmentOutput;
 import uk.ac.ox.krr.logmap2.io.OWLAlignmentFormat;
+import uk.ac.ox.krr.logmap2.io.OutPutFilesManagerStatic;
 
 /**
- * This classes manages the required wrapper of LogMap 2 in order to be accept and provided the required input and output data. 
- * @author root
+ * This classes manages the required wrapper of LogMap 2 in order to be accept and provide 
+ * the required input and output data for the SEALS OAEI client.
+ * Since 2021 we are using the MELT platform in the OAEI: https://github.com/ernestojimenezruiz/logmap-melt 
+ * @author Ernesto
  *
  */
 public class LogMap2_OAEI_BioPortal {
@@ -53,18 +56,26 @@ public class LogMap2_OAEI_BioPortal {
 	//voted mappings in composition
 	Map<MappingObjectStr, Integer> mappings2votes = new HashMap<MappingObjectStr, Integer>();
 	
-	
-	
+		
 	private final int MIN_VOTES=2;
 	
+	String path_parameters = null;
 	
+	
+	public LogMap2_OAEI_BioPortal(String path_parameters){
+		
+		//Required for MELT
+		this.path_parameters = path_parameters;
+		
+	}
 	
 	public LogMap2_OAEI_BioPortal(){
 		
 		//LogOutput.showOutpuLog(false);
 		//Oraculo.unsetStatusOraculo();
 				
-		//TODO call logmap matcher and use MO test in LogMap Bioportal project...
+		//LOgMap-Bio in a Nutshell
+		//Call logmap matcher and use MO test in LogMap Bioportal project...
 		//1. tests that the relevant/representative labels are ok (Done)
 		//2. Check extraction of MO for mouse and largebio (Done)
 		//3. Evaluate download times... (Done)
@@ -119,11 +130,15 @@ public class LogMap2_OAEI_BioPortal {
 		//Mappings between O1 and O2 will be considered as the same level as composed mappings 
 		StatisticsTimeMappings.setCurrentInitTime();
 		//Parameters.ratio_second_chance_discarded=100;
-		logmap2 = new LogMap2_Matcher(O1, O2);
+		if (path_parameters!=null && !path_parameters.isEmpty())
+			logmap2 = new LogMap2_Matcher(O1, O2, path_parameters);
+		else
+			logmap2 = new LogMap2_Matcher(O1, O2);
 		//for (MappingObjectStr mapping : logmap2.getLogmap2_Mappings()){
 			//addVote2Mappings(mapping, 2);//we start with vote 1 to guarantee they are in the output	
 		//}
-		getPrecisionRecall(logmap2.getLogmap2_Mappings());
+		
+		//getPrecisionRecall(logmap2.getLogmap2_Mappings());
 		//getPrecisionRecall(mappings2votes.keySet());
 		print("Representative elements: " + logmap2.getRepresentativeLabelsForMappings().size());
 		print("Time performing matching with input ontologies O1 and O2 (s): " + StatisticsTimeMappings.getRunningTime());
@@ -160,8 +175,8 @@ public class LogMap2_OAEI_BioPortal {
 			
 			print("\nTime performing composed matching with MO '" + ontoAcronym +"' (s): " + StatisticsTimeMappings.getRunningTime());
 			print("Composed mappings: " + composed_mappings.size());
-			getPrecisionRecall(composed_mappings);
-			getPrecisionRecall(mappings2votes.keySet());
+			//getPrecisionRecall(composed_mappings);
+			//getPrecisionRecall(mappings2votes.keySet());
 			
 			//We perform MO matching with a asubset of the selected ontologies and for those contribute to the composed mappings
 			if (composed_mappings.size()>0)
@@ -174,6 +189,7 @@ public class LogMap2_OAEI_BioPortal {
 		
 				
 		
+		/*
 		print("\nResults Composed mappings: ");
 		getComposedMappings(1);
 		getComposedMappings(2);
@@ -185,6 +201,7 @@ public class LogMap2_OAEI_BioPortal {
 		getComposedMappings3();
 		getComposedMappings4();
 		print("\n");
+		*/
 		
 		//4 (composed). Perform LogMap matching using composed mappings as input
 		/*StatisticsTimeMappings.setCurrentInitTime();
@@ -213,11 +230,16 @@ public class LogMap2_OAEI_BioPortal {
 		
 		//print("Number of original computed mappings: " + logmap2_exact.getLogmap2_Mappings().size());
 		print("Number of total computed mappings: " + mappings.size());
-		getPrecisionRecall(mappings);
+		//getPrecisionRecall(mappings);
 		print("LogMap 2 (with BioPortal) total matching time (s): " + StatisticsTimeMappings.getRunningTime(init_global));
 		
 		
 		
+	}
+	
+	
+	public Set<MappingObjectStr> getLogMapBio_Mappings(){
+		return mappings;
 	}
 	
 	
@@ -327,6 +349,85 @@ public class LogMap2_OAEI_BioPortal {
 	}
 	
 	
+	
+	public String getURISourceOntology() {
+		
+		String source_uri="http://logmap-tests/oaei/source.owl";		
+		
+		try {
+			
+			if (O1.getOntologyID().getOntologyIRI().isPresent()) {
+				source_uri = O1.getOntologyID().getOntologyIRI().get().toString();
+			}			
+		}
+		catch (Exception e) {
+			
+		}
+		
+		return source_uri;
+		
+	}
+	
+	
+	public String getURITargetOntology() {
+		
+		String target_uri="http://logmap-tests/oaei/target.owl";
+		
+		try {			
+			
+			if (O2.getOntologyID().getOntologyIRI().isPresent()) {
+				target_uri = O2.getOntologyID().getOntologyIRI().get().toString();
+			}
+		}
+		catch (Exception e) {
+			
+		}
+		
+		return target_uri;
+	}
+	
+	
+	
+	
+	public void saveLogMapBioMappings(String output_path) throws Exception {
+		
+		
+		OutPutFilesManagerStatic.createOutFiles(output_path + "logmap-bio-mappings", 
+				OutPutFilesManagerStatic.AllFormats, 
+				getURISourceOntology(), getURITargetOntology());
+		
+		for (MappingObjectStr mapping : mappings) {
+			
+			if (mapping.isClassMapping())
+				OutPutFilesManagerStatic.addClassMapping2Files(
+						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			else if (mapping.isObjectPropertyMapping())
+				OutPutFilesManagerStatic.addObjPropMapping2Files(
+						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			else if (mapping.isDataPropertyMapping())
+				OutPutFilesManagerStatic.addDataPropMapping2Files(
+						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
+			else if (mapping.isInstanceMapping())
+				OutPutFilesManagerStatic.addInstanceMapping2Files(
+						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getConfidence());
+			
+		}
+		
+		OutPutFilesManagerStatic.closeAndSaveFiles();
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Downloads ontology from BioPortal, Performs matching with mediating ontology and returns composed mappings
 	 * @param onto_acronym
@@ -345,12 +446,20 @@ public class LogMap2_OAEI_BioPortal {
 			
 			//Matching O1 with MO
 			StatisticsTimeMappings.setCurrentInitTime();
-			LogMap2_Matcher logmap2_matcher_mo1 = new LogMap2_Matcher(O1, MO);
+			LogMap2_Matcher logmap2_matcher_mo1;
+			if (path_parameters!=null && !path_parameters.isEmpty())
+				logmap2_matcher_mo1 = new LogMap2_Matcher(O1, MO, path_parameters);
+			else
+				logmap2_matcher_mo1 = new LogMap2_Matcher(O1, MO);
 			print("Time matching O1 with MO '" + ontoAcronym +"' (s): " + StatisticsTimeMappings.getRunningTime());
 			
 			//Matching O2 with MO
 			StatisticsTimeMappings.setCurrentInitTime();
-			LogMap2_Matcher logmap2_matcher_mo2 = new LogMap2_Matcher(MO, O2);
+			LogMap2_Matcher logmap2_matcher_mo2;
+			if (path_parameters!=null && !path_parameters.isEmpty())
+				logmap2_matcher_mo2 = new LogMap2_Matcher(MO, O2, path_parameters);
+			else
+				logmap2_matcher_mo2 = new LogMap2_Matcher(MO, O2);
 			print("Time matching O2 with MO '" + ontoAcronym +"' (s): " + StatisticsTimeMappings.getRunningTime());
 			
 			//Compose mappings
@@ -435,7 +544,7 @@ public class LogMap2_OAEI_BioPortal {
 			
 		}
 		
-		getPrecisionRecall(composed_mappings);
+		//getPrecisionRecall(composed_mappings);
 		
 		return composed_mappings;
 	}
@@ -460,7 +569,7 @@ public class LogMap2_OAEI_BioPortal {
 			
 		}
 		
-		getPrecisionRecall(composed_mappings);
+		//getPrecisionRecall(composed_mappings);
 		
 		return composed_mappings;
 	}
@@ -489,7 +598,7 @@ public class LogMap2_OAEI_BioPortal {
 			
 		}
 		
-		getPrecisionRecall(composed_mappings);
+		//getPrecisionRecall(composed_mappings);
 		
 		return composed_mappings;
 	}
@@ -514,7 +623,7 @@ public class LogMap2_OAEI_BioPortal {
 			
 		}
 		
-		getPrecisionRecall(composed_mappings);
+		//getPrecisionRecall(composed_mappings);
 		
 		return composed_mappings;
 	}
@@ -536,7 +645,7 @@ public class LogMap2_OAEI_BioPortal {
 			
 		}
 		
-		getPrecisionRecall(composed_mappings);
+		//getPrecisionRecall(composed_mappings);
 		
 		return composed_mappings;
 	}
@@ -641,68 +750,6 @@ public class LogMap2_OAEI_BioPortal {
 	}
 	
 	
-
-	
-	
-	
-	private void getPrecisionRecall(Set<MappingObjectStr> mappingsToTest){
-		
-		boolean printPR = false;
-		
-		try{
-			
-			if (printPR){
-			
-			double p;
-			double r;
-			double f;
-			
-			int size_mappings=mappingsToTest.size();
-			
-			Set<MappingObjectStr> mappings = new HashSet<MappingObjectStr>(mappingsToTest);
-			
-			
-			mappings.retainAll(reference);
-			
-			int good_mappings = mappings.size();
-			
-			p = (double)good_mappings/(double) size_mappings;
-			r = (double)good_mappings/(double) reference.size();
-			f = 2*r*p/(r+p);
-			
-			
-			print("P: "+ p + ", R: " + r +", F: "+ f +", Num: "+ mappingsToTest.size());
-			}
-		}
-		catch(Exception e){
-			//do nothing
-		}
-		
-	}
-	
-	
-	
-	private static Set<MappingObjectStr> loadReference(String ref){
-		
-		try {
-			
-			RDFAlignReader readerref;
-			
-			readerref = new RDFAlignReader(ref);
-			
-			return readerref.getMappingObjects();
-			
-			
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}			
-		
-		return null;
-		
-	}
-	
 	
 	private void print(String text){
 		//if (Parameters.print_output_always)
@@ -710,68 +757,9 @@ public class LogMap2_OAEI_BioPortal {
 		
 	}
 	
+
 	
-	public static Set<MappingObjectStr> reference = new HashSet<MappingObjectStr>();
 	
-	public static void main(String[] args){
-		
-		String iri1, iri2, ref, file_out;
-		
-		iri1= "file:/home/ernesto/Documents/OAEI_Datasets-revise/mouse/mouse2012.owl";
-		iri2= "file:/home/ernesto/Documents/OAEI_Datasets-revise/mouse/human2012.owl";
-		ref = "/home/ernesto/Documents/OAEI_Datasets-revise/mouse/reference2012.rdf"; // Reference ontology
-		file_out= "/home/ernesto/Documents/OAEI_Datasets-revise/mouse/logmapbio-test";
-		
-		/*iri1= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_FMA_small_overlapping_nci.owl";
-		iri2= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_NCI_small_overlapping_fma.owl";
-		
-		iri1= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_FMA_whole_ontology.owl";
-		iri2= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_NCI_whole_ontology.owl";
-		ref = "/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_FMA2NCI_repaired_UMLS_mappings.rdf";
-		
-		/*iri1= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_FMA_small_overlapping_snomed.owl";
-		iri2= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_SNOMED_small_overlapping_fma.owl";
-		
-		iri1= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_FMA_whole_ontology.owl";
-		iri2= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_SNOMED_extended_overlapping_fma_nci.owl";
-		
-		ref = "/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_FMA2SNOMED_repaired_UMLS_mappings.rdf";
-		
-		/*iri1= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_SNOMED_small_overlapping_nci.owl";
-		iri2= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_NCI_small_overlapping_snomed.owl";
-		
-		iri1= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_SNOMED_extended_overlapping_fma_nci.owl";
-		iri2= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_NCI_whole_ontology.owl";
-		ref = "/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_SNOMED2NCI_repaired_UMLS_mappings.rdf";
-		
-		SatisfiabilityIntegration.setReasoner(ReasonerManager.ELK);
-		*/
-
-		
-		
-		
-		//iri1= "";
-		//iri2= "";
-		//file_out = "";  //no extension
-		
-		
-		
-		
-		
-
-		reference = loadReference(ref);
-		
-		LogMap2_OAEI_BioPortal logmap_Bio = new LogMap2_OAEI_BioPortal();
-		
-		
-		try {
-			logmap_Bio.align(iri1, iri2);
-			logmap_Bio.returnAlignmentFile(file_out);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-
+	
+	
 }
