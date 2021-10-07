@@ -116,6 +116,23 @@ or in our <a href="https://github.com/ernestojimenezruiz/logmap-matcher/issues" 
 
 - Ernesto Jiménez-Ruiz, Asan Agibetov, Matthias Samwald, Valerie Cross. **Breaking-down the Ontology Alignment Task with a Lexical Index and Neural Embeddings**. arXiv:1805.12402. ([PDF](https://arxiv.org/pdf/1805.12402.pdf))
 
+
+**Evaluation**
+
+- Huanyu Li, Zlatan Dragisic, Daniel Faria, Valentina Ivanova, Ernesto Jiménez-Ruiz, Patrick Lambrix and Catia Pesquita. **User validation in ontology alignment: functional assessment and impact**. Knowledge Engineering Review journal, Volume 34 , 2019. ([PDF](https://sws.ifi.uio.no/oaei/interactive/ker-2019-user-validation-ontology-alignment.pdf)) ([HTML](https://www.cambridge.org/core/journals/knowledge-engineering-review/article/user-validation-in-ontology-alignment-functional-assessment-and-impact/F68413CC283DAC0F3DF36C46000EC593))
+
+- Ian Harrow, Ernesto Jiménez-Ruiz, Andrea Splendiani, Martin Romacker, Peter Woollard, Scott Markel, Yasmin Alam-Faruque, Martin Koch, James Malone, and Arild Waaler. **Matching Disease and Phenotype Ontologies in the Ontology Alignment Evaluation Initiative**. Journal of Biomedical Semantics 8, 55, 2017. ([PDF](https://sws.ifi.uio.no/oaei/phenotype/matching-disease-phenotype-jbs-2018.pdf)) ([HTML](https://jbiomedsem.biomedcentral.com/articles/10.1186/s13326-017-0162-9))
+
+
+**Applications**
+
+- Ian Harrow, Rama Balakrishnan, Ernesto Jimenez-Ruiz, Simon Jupp, Jane Lomax, Jane Reed, Martin Romacker, Christian Senger, Andrea Splendiani, Jabe Wilson, Peter Woollard. **Ontology mapping for semantically enabled applications**. Drug Discovery Today, Volume 24, 2019 ([HTML](https://doi.org/10.1016/j.drudis.2019.05.020))
+
+- Erik B. Myklebust, Ernesto Jimenez Ruiz, Jiaoyan Chen, Raoul Wolf, Knut Erik Tollefsen. **Prediction of Adverse Biological Effects of Chemicals Using Knowledge Graph Embeddings** (Under review). ([HTML](http://www.semantic-web-journal.net/content/prediction-adverse-biological-effects-chemicals-using-knowledge-graph-embeddings-0)) ([GitHub](https://github.com/NIVA-Knowledge-Graph))
+
+
+
+
 Additional list of [LogMap-related publications](http://www.cs.ox.ac.uk/projects/publications/date/LogMap.html).
 
 
