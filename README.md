@@ -64,7 +64,7 @@ LogMap can also be used as a mapping debugging system from the command line ([st
 We have also implemented a variant of LogMap to minimize the violations of the conservativity principle. Check details [here](https://github.com/ernestojimenezruiz/logmap-conservativity).
 
 
-## Division of the Ontology Alignment Task
+### Division of the Ontology Alignment Task
 
 LogMap also includes a novel module to divide the ontology alignment task into manageable subtasks.
 
