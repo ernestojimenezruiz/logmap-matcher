@@ -21,7 +21,7 @@ To the best of our knowledge, LogMap is one of the few matching systems that:
 
 3. provides support for user intervention during the matching process (see [Web interface](http://krrwebtools.cs.ox.ac.uk/logmap/)). 
 
-Please refer to the [OAEI campaign](http://oaei.ontologymatching.org/) for official results about LogMap.
+Please refer to the [Ontology Alignment Evaluation Initiative (OAEI)](http://oaei.ontologymatching.org/) for official results about LogMap.
 
 
 ## Downloading and Development
