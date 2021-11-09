@@ -1,9 +1,8 @@
 # LogMap: An Ontology Alignment and Alignment Repair System
 
-**News (July 2021):**
+**News (October 2021):**
 
-1. Follow us in [twitter](https://twitter.com/LogmapMatcher).
-2. LogMap reached **500 citations** according to [Google Scholar](https://scholar.google.com/citations?user=07ioke0AAAAJ&hl=en)!
+1. LogMap was awarded the [SWSA Ten-Year Award](http://swsa.semanticweb.org/content/swsa-ten-year-award) that recognizes the highest impact papers from the [International Semantic Web Conference](http://swsa.semanticweb.org/content/international-semantic-web-conference-iswc) (ISWC) proceedings ten years prior. LogMap reached **>500 citations** according to [Google Scholar](https://scholar.google.com/citations?user=07ioke0AAAAJ&hl=en)!
 3. Check out... 
     - The new interface with the MELT platform [here](https://github.com/ernestojimenezruiz/logmap-melt).
     - The new extension based on [OWL2Vec\*](https://github.com/KRR-Oxford/OWL2Vec-Star) to integrate machine leaning techniques within the ontology alignment task [here](https://github.com/KRR-Oxford/OntoAlign).
@@ -74,6 +73,8 @@ Resources: [source classes](https://github.com/ernestojimenezruiz/logmap-matcher
 
 ## Contact
 Ernesto Jiménez-Ruiz (ernesto [.] jimenez [.] ruiz [at] gmail.com)
+
+Follow us in [twitter](https://twitter.com/LogmapMatcher).
 
 Please report any issue related to LogMap in our <a href="https://groups.google.com/forum/#!forum/logmap-matcher-discussion" target="_blank">discussion group</a> 
 or in our <a href="https://github.com/ernestojimenezruiz/logmap-matcher/issues" target="_blank">issue tracker</a>.
