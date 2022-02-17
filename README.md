@@ -129,7 +129,7 @@ or in our <a href="https://github.com/ernestojimenezruiz/logmap-matcher/issues" 
 
 - Ian Harrow, Rama Balakrishnan, Ernesto Jimenez-Ruiz, Simon Jupp, Jane Lomax, Jane Reed, Martin Romacker, Christian Senger, Andrea Splendiani, Jabe Wilson, Peter Woollard. **Ontology mapping for semantically enabled applications**. Drug Discovery Today, Volume 24, 2019 ([HTML](https://doi.org/10.1016/j.drudis.2019.05.020))
 
-- Erik B. Myklebust, Ernesto Jimenez Ruiz, Jiaoyan Chen, Raoul Wolf, Knut Erik Tollefsen. **Prediction of Adverse Biological Effects of Chemicals Using Knowledge Graph Embeddings** (Under review). ([HTML](http://www.semantic-web-journal.net/content/prediction-adverse-biological-effects-chemicals-using-knowledge-graph-embeddings-0)) ([GitHub](https://github.com/NIVA-Knowledge-Graph))
+- Erik B. Myklebust, Ernesto Jimenez Ruiz, Jiaoyan Chen, Raoul Wolf, Knut Erik Tollefsen. **Prediction of Adverse Biological Effects of Chemicals Using Knowledge Graph Embeddings**. Accepted for publication in the Semantic Web Journal. ([arXiv](https://arxiv.org/abs/2112.04605)) ([HTML](http://www.semantic-web-journal.net/content/prediction-adverse-biological-effects-chemicals-using-knowledge-graph-embeddings-0)) ([GitHub](https://github.com/NIVA-Knowledge-Graph))
 
 
 
