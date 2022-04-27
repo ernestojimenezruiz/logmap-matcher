@@ -1,23 +1,4 @@
-/*******************************************************************************
- * Copyright 2012 by the Department of Computer Science (University of Oxford)
- * 
- *    This file is part of LogMap.
- * 
- *    LogMap is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU Lesser General Public License as published by
- *    the Free Software Foundation, either version 3 of the License, or
- *    (at your option) any later version.
- * 
- *    LogMap is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU Lesser General Public License for more details.
- * 
- *    You should have received a copy of the GNU Lesser General Public License
- *    along with LogMap.  If not, see <http://www.gnu.org/licenses/>.
- ******************************************************************************/
 package uk.ac.ox.krr.logmap2.mappings;
-
 
 import java.util.LinkedList;
 
@@ -2212,10 +2193,12 @@ public class CandidateMappingManager extends MappingManager {
 		for (String if_entry : if_weak_intersection4individuals){
 			
 			ambiguity=false;
+			//max ambiguity for these cases
+			int max_amb=1; ///TODO this also changed!
 			
 			//Only those individuals uniquely identified or almost!!
-			 if (onto_process1.getInvertedFileWeakMatching4Individuals().get(if_entry).size()>1 ||
-			     onto_process2.getInvertedFileWeakMatching4Individuals().get(if_entry).size()>1){
+			 if (onto_process1.getInvertedFileWeakMatching4Individuals().get(if_entry).size()>max_amb ||
+			     onto_process2.getInvertedFileWeakMatching4Individuals().get(if_entry).size()>max_amb){
 				ambiguity=true; 
 			 }
 			
@@ -2232,15 +2215,20 @@ public class CandidateMappingManager extends MappingManager {
 						continue;
 					}
 					
+				
+					
 					//New candidate mapping
-					
 					required_confidence = instanceMappingAssessment.getConfidence4Compatibility(ident1, ident2);
-					compatibility_factor = instanceMappingAssessment.getCompatibilityFactor(ident1, ident2);
+					compatibility_factor = instanceMappingAssessment.getCompatibilityFactor(ident1, ident2);									
 					
+					if (ambiguity){
 					
-					//TODO Categories, only for ambiguouss mappings
-					if (!instanceMappingAssessment.haveInstancesCompatibleCategories(ident1, ident2) & ambiguity){
 						required_confidence=3.0;
+						
+						//TODO Categories, only for ambiguouss mappings
+						if (instanceMappingAssessment.haveInstancesCompatibleCategories(ident1, ident2)){
+							
+						}
 					}
 					
 					
@@ -2325,7 +2313,7 @@ public class CandidateMappingManager extends MappingManager {
 		
 		
 		//max ambiguity for these cases
-		int max_amb=2; ///TODO this also changed!
+		int max_amb=1; ///TODO this also changed!
 		
 		for (String if_entry : if_roleassertions_intersection4individuals){
 			
@@ -2441,13 +2429,15 @@ public class CandidateMappingManager extends MappingManager {
 				
 				
 				if (sim>required_sim){
-					addInstanceMapping(index1, index2);
+					//TODO probably not good for  precision
+					//addInstanceMapping(index1, index2);
 				}
 								
 				//We give another chance to the individuals using their characteristics (e.g. publication count, numb of brothers, num directed films etc.)
 				//Charactersitics are a list of values
-				if (haveIndividualsSameCharacteristics(index1, index2))
-					addInstanceMapping(index1, index2);
+				//TODO probably not good for precision
+				//if (haveIndividualsSameCharacteristics(index1, index2))
+				//	addInstanceMapping(index1, index2);
 			}
 			
 		}
@@ -3252,18 +3242,5 @@ public class CandidateMappingManager extends MappingManager {
 	}//en anchor expansion
 
 
-
-	
-	
-
-	
-	
-	
-	
-	
-
-	
-	
-	
 
 }

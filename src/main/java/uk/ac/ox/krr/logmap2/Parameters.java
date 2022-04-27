@@ -122,12 +122,13 @@ public class Parameters {
 	
 	public static double min_conf_pro_map = 0.75;
 	
+		
+	public static double min_isub_instances = 0.80; //Updted 2021
+
 	
-	public static double min_isub_instances = 0.75;
 	
 	
-	
-	public static double good_sim_coocurrence = 0.08; //Tested one 0.09
+	public static double good_sim_coocurrence = 0.08; //Tested one originally 0.09
 	
 	public static boolean avoid_redundant_labels = true;
 	
@@ -399,7 +400,9 @@ public class Parameters {
 		filter_entities.add("http://xmlns.com/foaf/");
 		filter_entities.add("http://www.w3.org/1999/02/22-rdf-syntax-ns");
 		filter_entities.add("http://purl.org/dc/elements/");
-		
+		filter_entities.add("http://mouse.owl#UNDEFINED_part_of");
+		filter_entities.add("http://human.owl#UNDEFINED_part_of");
+
 
 
 		

@@ -41,7 +41,7 @@ public class OAEIAlignmentOutput extends OutputMappingsFormat {
 	
 	/**
 	 * Same format than OAEIRDFAlignmentFormat, but with different ouput.
-	 * SEALS requires the creation of a temporal file and returning its URL
+	 * SEALS and MELT require the creation of a temporal file and returning its URL
 	 * @param name
 	 */
 	public OAEIAlignmentOutput(String name, String oiri1, String oiri2) throws Exception{

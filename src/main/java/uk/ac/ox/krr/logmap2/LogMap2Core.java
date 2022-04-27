@@ -3,6 +3,7 @@ package uk.ac.ox.krr.logmap2;
 
 import java.io.*;
 
+
 import java.util.HashMap;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -15,8 +16,9 @@ import java.util.HashSet;
 
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.semanticweb.owlapi.model.OWLDataFactory;
-
 
 import uk.ac.manchester.syntactic_locality.ModuleExtractor;
 import uk.ac.ox.krr.logmap2.background.CategoryMappingsLoader;
@@ -44,8 +46,6 @@ import uk.ac.ox.krr.logmap2.mappings.CandidateMappingManager;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 
 import uk.ac.ox.krr.logmap2.statistics.*;
-
-
 
 
 /**
@@ -104,6 +104,7 @@ public class LogMap2Core {
 	//String interactivityFile;
 	
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(LogMap2Core.class);
 
 	
 	/**
@@ -391,6 +392,8 @@ public class LogMap2Core {
 		InitLogMap();
 		
 		
+		LOGGER.info("LogMap: ontology loading and overlapping extraction");
+		
 		//Overlapping estimation
 		OverlappingEstimation(iri1_str, iri2_str);
 		//OverlappingEstimation(iri1_str, iri2_str, iri1_str_out, iri2_str_out);//test
@@ -398,6 +401,7 @@ public class LogMap2Core {
 		//	return;
 		
 		
+		LOGGER.info("LogMap indexation");
 		
 		//Indexes lexicon (IF creation) and structure
 		IndexLexiconAndStructure();
@@ -416,10 +420,12 @@ public class LogMap2Core {
 		
 		
 		//EXTRACT, CLEAN ANCHORS and INDEX INTLABELLING
+		LOGGER.info("LogMap anchor extraction");
 		createAndCleanAnchors();
 		
 		
 		//Extract new candidates (Level 1), clean them and index labelling
+		LOGGER.info("LogMap class mapping extraction");
 		createCandidateMappings();
 		//mapping_extractor.printStatisticsMappingEvaluation();
 		
@@ -462,6 +468,7 @@ public class LogMap2Core {
 		
 		
 		if (Parameters.perform_property_matching){
+			LOGGER.info("LogMap property mapping extraction");
 			createAndAssessPropertyMappings();
 		}
 		
@@ -469,7 +476,7 @@ public class LogMap2Core {
 		//Optional (see parameters file)
 		if (Parameters.perform_instance_matching){
 			
-			
+			LOGGER.info("LogMap instance mapping extraction");
 			
 			createAndAssessInstanceMappings();
 			
