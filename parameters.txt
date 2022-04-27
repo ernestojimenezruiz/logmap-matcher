@@ -87,6 +87,9 @@ annotation_URI|https://www.ncbi.nlm.nih.gov/taxonomy#equivalent_name
 #annotation_URI|https://www.ncbi.nlm.nih.gov/taxonomy#includes
 annotation_URI|https://www.ncbi.nlm.nih.gov/taxonomy#genbank_synonym
 annotation_URI|https://www.ncbi.nlm.nih.gov/taxonomy#common_name
+annotation_URI|http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#P90
+annotation_URI|http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#P107
+annotation_URI|http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#P108
 #Doremus annotation
 #annotation_URI|http://erlangen-crm.org/current/P3_has_note
 #In case only a subset of the individuals should be matched
