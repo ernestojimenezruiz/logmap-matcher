@@ -90,6 +90,10 @@ annotation_URI|https://www.ncbi.nlm.nih.gov/taxonomy#common_name
 annotation_URI|http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#P90
 annotation_URI|http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#P107
 annotation_URI|http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#P108
+annotation_URI|http://purl.org/sig/ont/fma/slot_synonym
+annotation_URI|http://purl.org/sig/ont/fma/synonym
+annotation_URI|http://purl.org/sig/ont/fma/non-English_equivalent
+annotation_URI|http://purl.org/sig/ont/fma/preferred_name
 #Doremus annotation
 #annotation_URI|http://erlangen-crm.org/current/P3_has_note
 #In case only a subset of the individuals should be matched
