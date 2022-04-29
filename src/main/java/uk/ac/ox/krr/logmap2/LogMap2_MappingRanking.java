@@ -302,6 +302,12 @@ public class LogMap2_MappingRanking {
 				if (mapping_manager.isMappingInConflictWithFixedMappings(ide1, ide2)){					
 					map.setConfidenceMapping(-1.0);					
 				}
+				
+				//System.out.println(mapping_manager.isMappingInferred(ide1, ide2));
+				if (mapping_manager.isMappingInferred(ide1, ide2))
+					map.setConfidenceMapping(1.0);
+				
+				
 			}
 			
 			//Otherwise
