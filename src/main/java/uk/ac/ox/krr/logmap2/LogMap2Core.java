@@ -319,7 +319,7 @@ public class LogMap2Core {
 			
 			
 			//Clean index structures and others...
-			//Not here because OAEI and call fro other application
+			//Not here because OAEI and call from other application
 			//index.clearTaxonomicalStructures();		
 		}
 		
@@ -2400,6 +2400,9 @@ public class LogMap2Core {
 		
 		
 	}
+	
+	
+	
 
 
 	
@@ -2465,8 +2468,41 @@ public class LogMap2Core {
 	}
 	
 	public Map<Integer, Map<Integer, Integer>> getInstanceMappings4OutputType(){
-		return mapping_extractor.getInstanceMappings4OutputType();	
+		return mapping_extractor.getInstanceMappings4OutputType();
 	}
+	
+	
+	
+	/*public double getConfidence4ClassMappingStr(MappingObjectStr map) {
+		
+		int ide1 = onto_process1.getIdentifier4ConceptIRI(map.getIRIStrEnt1());
+		int ide2 = onto_process2.getIdentifier4ConceptIRI(map.getIRIStrEnt2());
+		
+				
+		return getConfidence4ConceptMapping(ide1, ide2);
+		
+		
+	}
+	
+	
+	public int getId4ClassURIOnto1(String uri1) {		
+		return onto_process1.getIdentifier4ConceptIRI(uri1);
+	}
+	public int getId4ClassURIOnto2(String uri2) {		
+		return onto_process2.getIdentifier4ConceptIRI(uri2);
+	}
+	
+	
+	
+	
+	public AnchorAssessment getMappingAssessmentObject() {
+		return mappings_assessment;
+	}
+	
+	public MappingManager getMappingExtractorObject() {
+		return mapping_extractor;
+	}
+*/
 	
 	
 	//TODO
