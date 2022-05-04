@@ -160,6 +160,9 @@ public class LogMap2_MappingRanking {
 	 */
 	public TreeSet<MappingObjectStr> rankedMappings(Set<MappingObjectStr> input_mappings) {
 		
+		this.ordered_mappings.clear();
+		this.input_mappings.clear();
+		
 		this.input_mappings = input_mappings;
 		
 		//Associate type in case type is missing + LogMap confidence
