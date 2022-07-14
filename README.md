@@ -1,9 +1,10 @@
 # LogMap: An Ontology Alignment and Alignment Repair System
 
-**News (October 2021):**
+**News (July 2022):**
 
 1. LogMap was awarded the [SWSA Ten-Year Award](http://swsa.semanticweb.org/content/swsa-ten-year-award) that recognizes the highest impact papers from the [International Semantic Web Conference](http://swsa.semanticweb.org/content/international-semantic-web-conference-iswc) (ISWC) proceedings ten years prior. LogMap reached **>500 citations** according to [Google Scholar](https://scholar.google.com/citations?user=07ioke0AAAAJ&hl=en)!
-3. Check out... 
+3. Check out...
+    - A proof-of-concept interface to offer LogMap as a service: [KGAS documentation and codes](https://github.com/rupson/knowledge-graph-alignment-as-a-service), [Web app](https://kgas-web.azurewebsites.net/), [REST API](http://kgas-api.azurewebsites.net/)
     - The new interface with the MELT platform [here](https://github.com/ernestojimenezruiz/logmap-melt).
     - The new extension based on [OWL2Vec\*](https://github.com/KRR-Oxford/OWL2Vec-Star) to integrate machine leaning techniques within the ontology alignment task [here](https://github.com/KRR-Oxford/OntoAlign).
     - The new material about the division of the ontology alignment task [here](#division-of-the-ontology-alignment-task). 
