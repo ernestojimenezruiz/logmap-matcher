@@ -1,4 +1,4 @@
-package uk.ac.ox.krr.logmap2.test.oaei;
+/*package uk.ac.ox.krr.logmap2.test.oaei;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -51,6 +51,7 @@ public class TestNewOAEILargeBio2022 {
 		TreeSet<MappingObjectStr> ranked_mappings = logmap_ranker.rankedMappings(input_mappings);
 		
 		
+	
 		
 		Iterator<MappingObjectStr> it = ranked_mappings.descendingIterator();		
 		MappingObjectStr map;
@@ -81,3 +82,4 @@ public class TestNewOAEILargeBio2022 {
 	
 	
 }
+*/
