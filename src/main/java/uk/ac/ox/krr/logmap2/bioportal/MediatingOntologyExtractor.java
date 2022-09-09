@@ -75,6 +75,8 @@ public class MediatingOntologyExtractor {
 			bad_ontologies.add("EP");//Basically it only contaisn terms from the Imported FMA, but is is imported from outside bioPortal (error downloading)
 			bad_ontologies.add("GO-PLUS"); //Error accessing metadata
 			bad_ontologies.add("DINTO"); //Error accessing importing ontology
+			bad_ontologies.add("HHEAR"); //Error accessing importing ontology
+			
 			
 			this.representative_labels=representative_labels;
 			

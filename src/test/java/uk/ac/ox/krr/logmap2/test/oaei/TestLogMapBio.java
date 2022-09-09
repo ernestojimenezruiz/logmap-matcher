@@ -78,8 +78,8 @@ private void getPrecisionRecall(Set<MappingObjectStr> mappingsToTest){
 		
 		String iri1, iri2, ref, file_out;
 		
-		if (true)
-			return;
+		//if (true)
+		//	return;
 		
 		
 		iri1= "file:/home/ernesto/Documents/OAEI_Datasets-revise/mouse/mouse2012.owl";
