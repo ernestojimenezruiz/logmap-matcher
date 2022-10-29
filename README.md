@@ -147,7 +147,7 @@ the [University of Oxford](http://www.ox.ac.uk/) by Ernesto Jiménez-Ruiz, Berna
 
 Development has been supported by The Royal Society, the EPSRC project LogMap, the EU FP7 projects SEALS and Optique, the [AIDA project](https://www.turing.ac.uk/research/research-projects/artificial-intelligence-data-analytics-aida), and the [SIRIUS Centre for Scalable Data Access](http://sirius-labs.no/).
 
-We would like to thank Jiaoyan Chen, Alessandro Solimando, Valerie Cross, Anton Morant, Yujiao Zhou, Weiguo Xia, Xi Chen, Yuan Gong and Shuo Zhang, who have also contributed to the LogMap project.
+We would like to thank Jiaoyan Chen, Alessandro Solimando, Valerie Cross, Anton Morant, Yujiao Zhou, Weiguo Xia, Xi Chen, Yuan Gong, Shuo Zhang and Rob Upson, who have also contributed to the LogMap project.
 
 We also thank the organisers of the [OAEI evaluation campaigns](http://oaei.ontologymatching.org/) for providing test data and infrastructure.
 
