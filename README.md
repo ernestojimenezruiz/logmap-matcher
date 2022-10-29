@@ -121,6 +121,8 @@ or in our <a href="https://github.com/ernestojimenezruiz/logmap-matcher/issues" 
 
 **Evaluation**
 
+- Yuan He, Jiaoyan Chen, Hang Dong, Ernesto Jiménez-Ruiz, Ali Hadian, Ian Horrocks. **Machine Learning-Friendly Biomedical Datasets for Equivalence and Subsumption Ontology Matching**. International Semantic Web Conference (ISWC) 2022, Resource paper. ([PDF](https://arxiv.org/abs/2205.03447)) ([Video](https://drive.google.com/file/d/1qENaOADEPpigYrmO8qOkOE6ycy0jiyNt/view)) ([OAEI track](https://www.cs.ox.ac.uk/isg/projects/ConCur/oaei/)) 
+
 - Huanyu Li, Zlatan Dragisic, Daniel Faria, Valentina Ivanova, Ernesto Jiménez-Ruiz, Patrick Lambrix and Catia Pesquita. **User validation in ontology alignment: functional assessment and impact**. Knowledge Engineering Review journal, Volume 34 , 2019. ([PDF](https://sws.ifi.uio.no/oaei/interactive/ker-2019-user-validation-ontology-alignment.pdf)) ([HTML](https://www.cambridge.org/core/journals/knowledge-engineering-review/article/user-validation-in-ontology-alignment-functional-assessment-and-impact/F68413CC283DAC0F3DF36C46000EC593))
 
 - Ian Harrow, Ernesto Jiménez-Ruiz, Andrea Splendiani, Martin Romacker, Peter Woollard, Scott Markel, Yasmin Alam-Faruque, Martin Koch, James Malone, and Arild Waaler. **Matching Disease and Phenotype Ontologies in the Ontology Alignment Evaluation Initiative**. Journal of Biomedical Semantics 8, 55, 2017. ([PDF](https://sws.ifi.uio.no/oaei/phenotype/matching-disease-phenotype-jbs-2018.pdf)) ([HTML](https://jbiomedsem.biomedcentral.com/articles/10.1186/s13326-017-0162-9))
@@ -130,7 +132,7 @@ or in our <a href="https://github.com/ernestojimenezruiz/logmap-matcher/issues" 
 
 - Ian Harrow, Rama Balakrishnan, Ernesto Jimenez-Ruiz, Simon Jupp, Jane Lomax, Jane Reed, Martin Romacker, Christian Senger, Andrea Splendiani, Jabe Wilson, Peter Woollard. **Ontology mapping for semantically enabled applications**. Drug Discovery Today, Volume 24, 2019 ([HTML](https://doi.org/10.1016/j.drudis.2019.05.020))
 
-- Erik B. Myklebust, Ernesto Jimenez Ruiz, Jiaoyan Chen, Raoul Wolf, Knut Erik Tollefsen. **Prediction of Adverse Biological Effects of Chemicals Using Knowledge Graph Embeddings**. Accepted for publication in the Semantic Web Journal. ([arXiv](https://arxiv.org/abs/2112.04605)) ([HTML](http://www.semantic-web-journal.net/content/prediction-adverse-biological-effects-chemicals-using-knowledge-graph-embeddings-0)) ([GitHub](https://github.com/NIVA-Knowledge-Graph))
+- Erik B. Myklebust, Ernesto Jimenez Ruiz, Jiaoyan Chen, Raoul Wolf, Knut Erik Tollefsen. **Prediction of Adverse Biological Effects of Chemicals Using Knowledge Graph Embeddings**. Semantic Web Journal. ([arXiv](https://arxiv.org/abs/2112.04605)) ([HTML](http://www.semantic-web-journal.net/content/prediction-adverse-biological-effects-chemicals-using-knowledge-graph-embeddings-0)) ([GitHub](https://github.com/NIVA-Knowledge-Graph))
 
 
 
