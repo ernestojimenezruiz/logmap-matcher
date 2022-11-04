@@ -13,3 +13,5 @@ Select group id, artifact id and version as it appears in LogMap's pom file:
 e.g.:
 mvn install:install-file -Dfile=/home/ernesto/git/logmap3-matcher/lib/google-api-translate-java-0.97.jar -DgroupId=com.googlecode -DartifactId=google-api-translate-java -Dversion=0.97 -Dpackaging=jar
 
+In Windows you may need to add quotes fior the groupId and version:
+mvn install:install-file -Dfile=/home/ernesto/git/logmap3-matcher/lib/google-api-translate-java-0.97.jar -DgroupId="com.googlecode" -DartifactId=google-api-translate-java -Dversion="0.97" -Dpackaging=jar
