@@ -24,7 +24,6 @@ public class OverlappingEstimation implements OntologyAlignmentDivision{
 		
 		//if (num_tasks>1)
 		//	System.out.println("INFO: This partitioning algorithm only creates one matching task");
-		
 		Parameters.use_overlapping=true;
 		Parameters.min_size_overlapping=0;
 		
@@ -54,6 +53,7 @@ public class OverlappingEstimation implements OntologyAlignmentDivision{
 		//if (num_tasks>1)
 		//	System.out.println("INFO: This partitioning algorithm only creates one matching task");
 		
+		Parameters.print_output=true;
 		Parameters.use_overlapping=true;
 		Parameters.min_size_overlapping=0;
 		

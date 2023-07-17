@@ -5,14 +5,13 @@ public class TestFoodOntologies extends TestOAEITrack{
 	@Override
 	protected void setUp() {
 		
-		
-	
-		SAVE_MAPPINGS = true;
+		SAVE_MAPPINGS = true; 
 		//OUTPUT_FILE_TEMPLATE: will generate files logmap-alignment-food.owl, logmap-alignment-food.txt
 		//PATH = "/home/ernesto/Documents/Datasets/Food/logmap-alignment"; +  + "-"+task.getTaskName();
 		PATH = "/home/ernesto/Documents/Datasets/Food/";
 		
 		String uri_path = "file:/home/ernesto/Documents/Datasets/Food/";
+		
 		
 		tasks.add(
 				new OAEITask(
@@ -20,7 +19,15 @@ public class TestFoodOntologies extends TestOAEITrack{
 						uri_path + "foodon-merged.owl",  //target
 						uri_path + "AML-food.rdf",   //reference mappings if any
 						//"", //no reference
-						"food"
+						"food-ontos"
+				));
+		tasks.add(
+				new OAEITask(
+						uri_path + "flat_ontology_food_terms_based_on_piyathilake_dataset.ttl",  //source
+						uri_path + "foodon-merged.owl",  //target
+						//uri_path + "AML-food.rdf",   //reference mappings if any
+						"", //no reference
+						"food-terms"
 				));
 		
 	}
@@ -28,10 +35,10 @@ public class TestFoodOntologies extends TestOAEITrack{
 	
 	public static void main(String[] args){
 		
-		//TestFoodOntologies test = new TestFoodOntologies();
+		TestFoodOntologies test = new TestFoodOntologies();
 		
 		try {
-			//test.evaluateTasks();
+			test.evaluateTasks();
 			
 			
 		} catch (Exception e) {

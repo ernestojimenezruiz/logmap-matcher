@@ -91,7 +91,7 @@ public class LogMap2_Matcher {
 	private void saveMappings(String output_path) throws Exception {
 		
 		//Output: saved by default
-		//saveLogMapMappings(getLogmap2_Mappings(), output_path, "logmap_mappings");
+		saveLogMapMappings(getLogmap2_Mappings(), output_path, "logmap_mappings");
 	
 		//We save anchors in all formats too
 		saveLogMapMappings(getLogmap2_anchors(), output_path, "logmap_anchors");
