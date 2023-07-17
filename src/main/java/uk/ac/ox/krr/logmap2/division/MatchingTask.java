@@ -1,9 +1,11 @@
 package uk.ac.ox.krr.logmap2.division;
 
 import java.util.HashSet;
+
 import java.util.Set;
 
 import org.semanticweb.owlapi.formats.RDFXMLDocumentFormat;
+import org.semanticweb.owlapi.formats.FunctionalSyntaxDocumentFormat;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -146,9 +148,12 @@ public class MatchingTask {
 		
 		//sourceOntology.getOWLOntologyManager().saveOntology(sourceOntology, new RDFXMLOntologyFormat(), IRI.create(uri_file1));
 		//sourceOntology.getOWLOntologyManager().saveOntology(sourceOntology, new OWLFunctionalSyntaxOntologyFormat(), IRI.create(uri_file1));
-		manager.saveOntology(sourceOntology, new RDFXMLDocumentFormat(), IRI.create(uri_file1));
 		
-		manager.saveOntology(targetOntology, new RDFXMLDocumentFormat(), IRI.create(uri_file2));
+		manager.saveOntology(sourceOntology, new RDFXMLDocumentFormat(), IRI.create(uri_file1));
+		manager.saveOntology(targetOntology, new RDFXMLDocumentFormat(), IRI.create(uri_file2));		
+		//manager.saveOntology(sourceOntology, new FunctionalSyntaxDocumentFormat(), IRI.create(uri_file1));
+		//manager.saveOntology(targetOntology, new FunctionalSyntaxDocumentFormat(), IRI.create(uri_file2));
+		
 		//targetOntology.getOWLOntologyManager().saveOntology(targetOntology, new RDFXMLOntologyFormat(), IRI.create(uri_file2));
 		//targetOntology.getOWLOntologyManager().saveOntology(targetOntology, new OWLFunctionalSyntaxOntologyFormat(), IRI.create(uri_file2));
 		
