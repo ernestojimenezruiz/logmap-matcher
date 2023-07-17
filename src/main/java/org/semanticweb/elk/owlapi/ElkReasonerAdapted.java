@@ -12,7 +12,7 @@ public class ElkReasonerAdapted extends ElkReasoner{
 
 	
 	public ElkReasonerAdapted(OWLOntology rootOntology){
-		super(rootOntology, false);
+		super(rootOntology, false, new ElkReasonerConfiguration());
 	}
 	
 	/**
