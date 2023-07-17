@@ -47,6 +47,15 @@
 	<artifactId>elk-owlapi</artifactId>
 	<version>0.4.3</version>
   </dependency>
+  <!-- Not in maven central. One need to git clone ELK repo and mvn insall -->
+  <!-- Requires a newer OWL API 4 version -->
+  <!-- dependency>
+  		<groupId>org.semanticweb.elk</groupId>
+        <artifactId>elk-owlapi4</artifactId>
+        <version>0.5.0-SNAPSHOT</version>
+  </dependency-->
+ 
+  
   
   
   <!--OWLAPI 3: Already with HermiT
