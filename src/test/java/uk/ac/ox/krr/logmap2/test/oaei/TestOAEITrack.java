@@ -106,8 +106,8 @@ public abstract class TestOAEITrack {
 		
 		if (SAVE_MAPPINGS){
 			//TODO
-			OUTPUT_FILE_TEMPLATE=PATH;
-			System.out.println("Saving mappings to " + OUTPUT_FILE_TEMPLATE);
+			OUTPUT_FILE_TEMPLATE=PATH + task.getTaskName() + "-";
+			System.out.println("Saving mappings to " + PATH);
 			//saveLogMapMappings(logmap.getLogmap2_Mappings());
 			//Save all formats and also discarded
 			logmap = new LogMap2_Matcher(task.getSource(), task.getTarget(), OUTPUT_FILE_TEMPLATE, false);
