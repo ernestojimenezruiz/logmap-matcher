@@ -172,13 +172,17 @@
 	<artifactId>google-api-translate-java</artifactId>
 	<version>0.92</version>
 </dependency-->
-<dependency>
+<!--dependency>
     <groupId>com.googlecode</groupId>
     <artifactId>google-api-translate-java</artifactId>
     <version>0.97</version>
-    <!--scope>system</scope>
-    <systemPath>${basedir}/lib/google-api-translate-java-0.97.jar</systemPath-->
-</dependency>
+</dependency-->
+	<dependency>
+	    <groupId>com.github.richmidwinter</groupId>
+	    <artifactId>google-api-translate-java</artifactId>
+	    <version>421c3f637b</version> <!-- should correspond to version 0.97-->
+	</dependency>
+
 <!--dependency>
 	<groupId>eu.sealsproject.omt</groupId>
 	<artifactId>omt-client</artifactId>
@@ -214,6 +218,13 @@
 
 
 </dependencies>
+
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
 
 <!-- Important to add stopwords and lexicon files-->
   <build>
