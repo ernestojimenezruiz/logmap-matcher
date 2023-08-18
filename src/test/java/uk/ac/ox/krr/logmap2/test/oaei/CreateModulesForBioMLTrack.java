@@ -42,7 +42,7 @@ public class CreateModulesForBioMLTrack {
 	private OWLOntology createModule(OWLOntology onto, Set<OWLEntity> signature) {
 		
 		//In case the ontology does not have an URI
-		String uri_onto = "http://oaei.ontologymatching.org/bio-ml/module-" + Calendar.getInstance().toString();
+		String uri_onto = "http://oaei.ontologymatching.org/bio-ml/module-" + Calendar.getInstance().getTimeInMillis();
 		if (onto.getOntologyID().getOntologyIRI().isPresent())
 			uri_onto = onto.getOntologyID().getOntologyIRI().get().toString(); 
 		

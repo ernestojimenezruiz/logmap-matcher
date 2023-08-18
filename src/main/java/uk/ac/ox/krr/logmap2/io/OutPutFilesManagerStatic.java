@@ -43,7 +43,10 @@ public class OutPutFilesManagerStatic {
 		file_formats.clear();
 		
 		if (file_type==OWLFormat){
-			file_formats.add(new OWLAlignmentFormat("file:"+output_file+".owl"));
+			if (output_file.startsWith("/"))
+				file_formats.add(new OWLAlignmentFormat("file:"+output_file+".owl"));
+			else
+				file_formats.add(new OWLAlignmentFormat("file:/"+output_file+".owl"));
 		}
 		else if (file_type==OAEIFormat){
 			file_formats.add(new OAEIRDFAlignmentFormat(output_file+".rdf", oiri1, oiri2));
@@ -55,7 +58,10 @@ public class OutPutFilesManagerStatic {
 			file_formats.add(new FlatAlignmentFormat(output_file+".tsv"));
 		}
 		else { //if (file_type==AllFormat){
-			file_formats.add(new OWLAlignmentFormat("file:"+output_file+".owl"));
+			if (output_file.startsWith("/"))
+				file_formats.add(new OWLAlignmentFormat("file:"+output_file+".owl"));
+			else
+				file_formats.add(new OWLAlignmentFormat("file:/"+output_file+".owl"));
 			file_formats.add(new OAEIRDFAlignmentFormat(output_file+".rdf", oiri1, oiri2));
 			file_formats.add(new FlatAlignmentFormat(output_file+".txt"));
 			file_formats.add(new FlatTSVAlignmentFormat(output_file+".tsv"));
