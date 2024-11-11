@@ -93,7 +93,7 @@ or in our <a href="https://github.com/ernestojimenezruiz/logmap-matcher/issues" 
 
 **Combination with Machine Learning**
 
-- Jiaoyan Chen, Ernesto Jimenez-Ruiz, Ian Horrocks, Denvar Antonyrajah, Ali Hadian, Jaehun Lee. **Augmenting Ontology Alignment by Semantic Embedding and Distant Supervision**. European Semantic Web Conference, ESWC 2021. ([PDF](https://openaccess.city.ac.uk/id/eprint/25810/1/ESWC2021_ontology_alignment_LogMap_ML.pdf)) ([OWL2Vec\* work](https://github.com/KRR-Oxford/OWL2Vec-Star))
+- Jiaoyan Chen, Ernesto Jimenez-Ruiz, Ian Horrocks, Denvar Antonyrajah, Ali Hadian, Jaehun Lee. **Augmenting Ontology Alignment by Semantic Embedding and Distant Supervision**. European Semantic Web Conference, ESWC 2021. ([PDF](https://openaccess.city.ac.uk/id/eprint/25810/1/ESWC2021_ontology_alignment_LogMap_ML.pdf)) ([Slides](https://docs.google.com/presentation/d/1Kx-JWunROAjscM1GqXeFvOVrDM7BFQiw/edit?usp=sharing&ouid=107320364354662189717&rtpof=true&sd=true)) ([OWL2Vec\* work](https://github.com/KRR-Oxford/OWL2Vec-Star))
 
 
 **Repair**
