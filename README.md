@@ -95,6 +95,8 @@ or in our <a href="https://github.com/ernestojimenezruiz/logmap-matcher/issues" 
 
 - Jiaoyan Chen, Ernesto Jimenez-Ruiz, Ian Horrocks, Denvar Antonyrajah, Ali Hadian, Jaehun Lee. **Augmenting Ontology Alignment by Semantic Embedding and Distant Supervision**. European Semantic Web Conference, ESWC 2021. ([PDF](https://openaccess.city.ac.uk/id/eprint/25810/1/ESWC2021_ontology_alignment_LogMap_ML.pdf)) ([Slides](https://docs.google.com/presentation/d/1Kx-JWunROAjscM1GqXeFvOVrDM7BFQiw/edit?usp=sharing&ouid=107320364354662189717&rtpof=true&sd=true)) ([OWL2Vec\* work](https://github.com/KRR-Oxford/OWL2Vec-Star))
 
+- Sevinj Teymurova, Ernesto Jiménez-Ruiz, Tillman Weyde, Jiaoyan Chen. **OWL2Vec4OA: Tailoring Knowledge Graph Embeddings for Ontology Alignment**. In 6th Knowledge Graph and Semantic Web Conference (long paper) & 19th Ontology Matching Workshop (poster paper). ([PDF](https://arxiv.org/abs/2408.06310)) ([GitHub](https://github.com/Sevinjt/OWL2Vec4OA))
+
 
 **Repair**
 
