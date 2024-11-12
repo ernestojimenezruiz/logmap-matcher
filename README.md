@@ -1,13 +1,16 @@
 # LogMap: An Ontology Alignment and Alignment Repair System
 
-**News (July 2022):**
+**Highlights (Updated November 2024):**
 
-1. LogMap was awarded the [SWSA Ten-Year Award](http://swsa.semanticweb.org/content/swsa-ten-year-award) that recognizes the highest impact papers from the [International Semantic Web Conference](http://swsa.semanticweb.org/content/international-semantic-web-conference-iswc) (ISWC) proceedings ten years prior. LogMap reached **>500 citations** according to [Google Scholar](https://scholar.google.com/citations?user=07ioke0AAAAJ&hl=en)!
+1. LogMap was awarded the [SWSA Ten-Year Award](http://swsa.semanticweb.org/content/swsa-ten-year-award) that recognizes the highest impact papers from the [International Semantic Web Conference](http://swsa.semanticweb.org/content/international-semantic-web-conference-iswc) (ISWC) proceedings ten years prior. LogMap reached **>700 citations** according to [Google Scholar](https://scholar.google.com/citations?user=07ioke0AAAAJ&hl=en)!
 3. Check out...
-    - A proof-of-concept interface to offer LogMap as a service: [KGAS documentation and codes](https://github.com/rupson/knowledge-graph-alignment-as-a-service), [Web app](http://krrwebtools.cs.ox.ac.uk:3000/), [REST API](http://krrwebtools.cs.ox.ac.uk:4000/)
-    - The new interface with the MELT platform [here](https://github.com/ernestojimenezruiz/logmap-melt).
+    - OWL2Vec4OA embedings for Ontology Alignment ([PDF](https://arxiv.org/abs/2408.06310)) ([Slides](https://drive.google.com/file/d/1HhRqY2R1w0bz-svgTKCXEP7vYZySDVK8/view?usp=sharing)) ([GitHub](https://github.com/Sevinjt/OWL2Vec4OA))
     - The new extension based on [OWL2Vec\*](https://github.com/KRR-Oxford/OWL2Vec-Star) to integrate machine leaning techniques within the ontology alignment task [here](https://github.com/KRR-Oxford/OntoAlign).
-    - The new material about the division of the ontology alignment task [here](#division-of-the-ontology-alignment-task). 
+    - The new material about the division of the ontology alignment task [here](#division-of-the-ontology-alignment-task).
+    - A proof-of-concept interface to offer LogMap as a service: [KGAS documentation and codes](https://github.com/rupson/knowledge-graph-alignment-as-a-service) (old web-interface is not functional but we are trying to build a new one).
+    - The new interface with the MELT platform [here](https://github.com/ernestojimenezruiz/logmap-melt).
+    
+<!--[Web app](http://krrwebtools.cs.ox.ac.uk:3000/), [REST API](http://krrwebtools.cs.ox.ac.uk:4000/) -->
 
 ## About
 
