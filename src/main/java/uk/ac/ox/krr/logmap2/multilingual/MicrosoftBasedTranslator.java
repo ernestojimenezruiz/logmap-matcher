@@ -6,28 +6,31 @@ import java.util.Map;
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 
-import com.memetix.mst.language.Language;
-import com.memetix.mst.translate.Translate;
+//import com.memetix.mst.language.Language;
+//import com.memetix.mst.translate.Translate;
 
+/**
+ * @deprecated
+ */
 public class MicrosoftBasedTranslator extends Translator{
 
 	
 	//This structure maps the language in rdf:label to language of Microsoft API translation 
-	public final static Map<String, Language> LanguageMap = new HashMap<String, Language>() {
+	/*public final static Map<String, Language> LanguageMap = new HashMap<String, Language>() {
 		{
 		
-			/*put("cn", Language.CHINESE_SIMPLIFIED);
-			put("en", Language.ENGLISH);
-			put("de", Language.GERMAN);
-			put("es", Language.SPANISH);
-			put("fr", Language.FRENCH);
-			put("nl", Language.DUTCH);
-			put("pt", Language.PORTUGUESE);
-			put("ru", Language.RUSSIAN);
-			put("cz", Language.CZECH);
-			put("it", Language.ITALIAN);
-			put("ar", Language.ARABIC);
-			*/
+			///put("cn", Language.CHINESE_SIMPLIFIED);
+			//put("en", Language.ENGLISH);
+			//put("de", Language.GERMAN);
+			//put("es", Language.SPANISH);
+			//put("fr", Language.FRENCH);
+			//put("nl", Language.DUTCH);
+			//put("pt", Language.PORTUGUESE);
+			//put("ru", Language.RUSSIAN);
+			//put("cz", Language.CZECH);
+			//put("it", Language.ITALIAN);
+			//put("ar", Language.ARABIC);
+			//
 			
 			for (Language lang : Language.values()){
 				if (lang.toString().length()==2) //we avoid zh-CHS and zh-CHT					
@@ -41,6 +44,7 @@ public class MicrosoftBasedTranslator extends Translator{
 			put("cn", Language.CHINESE_SIMPLIFIED);
 			put("cz", Language.CZECH);
 			
+			
 			//for (String key : keySet()){
 			//	System.out.println(key + "  " + get(key).name());
 			//}
@@ -48,7 +52,7 @@ public class MicrosoftBasedTranslator extends Translator{
 					
 		}
 
-	};
+	};*/
 	
 
 	@Override
@@ -73,12 +77,12 @@ public class MicrosoftBasedTranslator extends Translator{
 		else if(Parameters.call_online_translator){		
 		
 			//Set credential
-	        Translate.setClientId("LogMapMultilingualOntologyMatcher");
-	        Translate.setClientSecret("YMWwAB7c3qRQ+QoBnH/dtZx8C9kFqQObhqZpmGGdE4E=");
+	        //Translate.setClientId("LogMapMultilingualOntologyMatcher");
+	        //Translate.setClientSecret("YMWwAB7c3qRQ+QoBnH/dtZx8C9kFqQObhqZpmGGdE4E=");
 	
 	        
-	        Language originLang = LanguageMap.get(originLangStr);
-			Language targetLang = LanguageMap.get(targetLangStr);
+	        //Language originLang = LanguageMap.get(originLangStr);
+			//Language targetLang = LanguageMap.get(targetLangStr);
 			
 			num_tranlated_characters+=text.length();
 			num_calls++;
@@ -88,7 +92,7 @@ public class MicrosoftBasedTranslator extends Translator{
 	
 			
 			//Microsoft call
-			if (!Parameters.is_test_mode_multilingual){
+			/*if (!Parameters.is_test_mode_multilingual){
 				try{
 					translatedText = Translate.execute(text, originLang, targetLang);
 				}
@@ -100,7 +104,7 @@ public class MicrosoftBasedTranslator extends Translator{
 			}
 			else{		//This is for test only!
 				translatedText=text + "_" + num_tranlated_characters + "_m";
-			}
+			}*/
 			
 			
 		    //System.out.println(translatedText);
@@ -138,7 +142,7 @@ public class MicrosoftBasedTranslator extends Translator{
 	public static void main(String[] args) {
 	
 		
-		MicrosoftBasedTranslator translator = new MicrosoftBasedTranslator();
+		/*MicrosoftBasedTranslator translator = new MicrosoftBasedTranslator();
 		
 		System.out.println("'"+translator.getTranslation("MedicoCabecera", "es", "en")+"'");
 		//System.out.println("'"+translator.getTranslation("MedicoCabecera", "es", "ar")+"'");
@@ -152,7 +156,7 @@ public class MicrosoftBasedTranslator extends Translator{
 		System.out.println(Language.CHINESE_SIMPLIFIED.toString());
 		System.out.println(Language.CHINESE_TRADITIONAL.toString());
 		System.out.println(Language.CZECH);
-		
+		*/
 			
 	}
 

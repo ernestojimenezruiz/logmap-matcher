@@ -6,33 +6,37 @@ import java.util.Map;
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.io.LogOutput;
 
-import com.google.api.GoogleAPI;
-import com.google.api.GoogleAPIException;
-import com.google.api.translate.Language;
-import com.google.api.translate.Translate;
+//
+//import com.google.api.GoogleAPI;
+//import com.google.api.GoogleAPIException;
+//import com.google.api.translate.Language;
+//import com.google.api.translate.Translate;
 
 /**
  * Translator based on google translate. It only translates to English
  * @author yuan gong and ernesto
+ * @deprecated
  *
  */
 public class GoogleBasedTranslator extends Translator{
 	
 
 	//This structure maps the language in rdf:label to language of Google translation 
-	public final static Map<String, Language> LanguageMap = new HashMap<String, Language>() {
+	/*
+	  public final static Map<String, Language> LanguageMap = new HashMap<String, Language>() {
+	 
 			{
-				/*put("cn", Language.CHINESE_SIMPLIFIED);
-				put("en", Language.ENGLISH);
-				put("de", Language.GERMAN);
-				put("es", Language.SPANISH);
-				put("fr", Language.FRENCH);
-				put("nl", Language.DUTCH);
-				put("pt", Language.PORTUGUESE);
-				put("ru", Language.RUSSIAN);
-				put("cz", Language.CZECH);
-				put("it", Language.ITALIAN);
-				put("ar", Language.ARABIC);*/
+				//put("cn", Language.CHINESE_SIMPLIFIED);
+				//put("en", Language.ENGLISH);
+				//put("de", Language.GERMAN);
+				//put("es", Language.SPANISH);
+				//put("fr", Language.FRENCH);
+				//put("nl", Language.DUTCH);
+				//put("pt", Language.PORTUGUESE);
+				//put("ru", Language.RUSSIAN);
+				//put("cz", Language.CZECH);
+				//put("it", Language.ITALIAN);
+				//put("ar", Language.ARABIC);
 				
 				for (Language lang : Language.values()){
 					if (lang.toString().length()==2) //we avoid zh-CHS and zh-CHT					
@@ -52,6 +56,7 @@ public class GoogleBasedTranslator extends Translator{
 				
 			}
 	};
+	*/
 	
 	
 	
@@ -74,7 +79,7 @@ public class GoogleBasedTranslator extends Translator{
 
 
 
-	private String getGoogleTranslation(String text, String originLangStr, String targetLangStr) throws GoogleAPIException {
+	private String getGoogleTranslation(String text, String originLangStr, String targetLangStr) { // throws GoogleAPIException {
 		
 		if (text.equals("") || text.equals(" ")) //avoid empty text
 			return "";
@@ -88,15 +93,13 @@ public class GoogleBasedTranslator extends Translator{
 		
 		else if(Parameters.call_online_translator){		
 			// Set Google key here
-			//GoogleAPI.setHttpReferrer("http://code.google.com/p/google-api-translate-java/");
-			//GoogleAPI.setKey("AIzaSyALd_XsjljQ0U0n8SB_3q6Iocc8kPeLsCo"); //api yuan gong
-			GoogleAPI.setHttpReferrer("https://code.google.com/p/logmap-matcher/");
-			//GoogleAPI.setKey("AIzaSyCXIH0M0Ya4WpnbHYIqNrRC4wXOqtszQuU"); //university of oxford api, max 100,000. Old key
-			GoogleAPI.setKey("AIzaSyCOXm6fqYcqJtpFSrlMsgAy1VPkgNcrD2k"); //New key
+			
+			//GoogleAPI.setHttpReferrer("https://code.google.com/p/logmap-matcher/");
+			//GoogleAPI.setKey("AIzaSyCOXm6fqYcqJtpFSrlMsgAy1VPkgNcrD2k"); //New key
 			
 			
-			Language originLang = LanguageMap.get(originLangStr);
-			Language targetLang = LanguageMap.get(targetLangStr);
+			//Language originLang = LanguageMap.get(originLangStr);
+			//Language targetLang = LanguageMap.get(targetLangStr);
 			
 			num_tranlated_characters+=text.length();
 			num_calls++;
@@ -104,7 +107,7 @@ public class GoogleBasedTranslator extends Translator{
 			LogOutput.printAlways("Translating: '" + text + "' from " + originLangStr + " to " + targetLangStr + " using Google API. Num chars translated so far: " + num_tranlated_characters);
 			
 			//Google call
-			if (!Parameters.is_test_mode_multilingual){
+			/*if (!Parameters.is_test_mode_multilingual){
 				try{
 					translatedText = Translate.DEFAULT.execute(text, originLang, targetLang);
 				}
@@ -118,7 +121,7 @@ public class GoogleBasedTranslator extends Translator{
 			else{ //This is for test only!
 				translatedText=text + "_" + num_tranlated_characters + "_g";
 			}
-			
+			*/
 			
 		    //System.out.println(translatedText);
 			
