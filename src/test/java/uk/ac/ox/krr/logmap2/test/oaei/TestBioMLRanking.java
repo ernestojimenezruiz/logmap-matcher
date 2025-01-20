@@ -1,4 +1,4 @@
-/*package uk.ac.ox.krr.logmap2.test.oaei;
+package uk.ac.ox.krr.logmap2.test.oaei;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10,15 +10,15 @@ import uk.ac.ox.krr.logmap2.LogMap2_MappingRanking;
 import uk.ac.ox.krr.logmap2.OntologyLoader;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 
-public class TestNewOAEILargeBio2022 {
+public class TestBioMLRanking {
 	
 	
-	//Read Json file?
-	
+	//TODO	
+	//Read Json file?	
 	//Read Onto
 	
 	
-	public TestNewOAEILargeBio2022() throws Exception {
+	public TestBioMLRanking() throws Exception {
 	
 		
 		String URIPath = "file:/home/ernesto/Documents/OAEI2022/subs_data/UMLS/snomed2ncit.pharm/";
@@ -72,7 +72,7 @@ public class TestNewOAEILargeBio2022 {
 	public static void main(String[] args){
 		
 		try {
-			new TestNewOAEILargeBio2022();
+			new TestBioMLRanking();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,4 +82,3 @@ public class TestNewOAEILargeBio2022 {
 	
 	
 }
-*/

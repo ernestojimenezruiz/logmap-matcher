@@ -26,8 +26,9 @@ public class OAEIOracle extends Oraculo{
 	@Override
 	public boolean isMappingValid(String uri1, String uri2) {
 		
-		//Commend for OAEI
+		//Comment for OAEI
 		return false;
+		
 		//TODO
 		///Uncomment for OAEI		
 		/*try{
@@ -112,7 +113,8 @@ public class OAEIOracle extends Oraculo{
 		//return Oracle.isInteractive();						
 		
 		//Comment for OAEI
-		return false;
+		//return false;
+		return true;  //For simulations only
 	}
 
 }

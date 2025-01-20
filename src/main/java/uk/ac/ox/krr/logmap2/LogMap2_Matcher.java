@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 
+import uk.ac.ox.krr.logmap2.interactive.objects.MappingObjectInteractivity;
 import uk.ac.ox.krr.logmap2.io.FlatAlignmentFormat;
 import uk.ac.ox.krr.logmap2.io.OutPutFilesManagerStatic;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
@@ -26,6 +27,7 @@ public class LogMap2_Matcher {
 	Set<MappingObjectStr> logmap2_hard_discarded_mappings = new HashSet<MappingObjectStr>();
 	Set<MappingObjectStr> logmap2_conflictive_mappings = new HashSet<MappingObjectStr>();	
 	Set<MappingObjectStr> logmap2_anchors = new HashSet<MappingObjectStr>();
+	Set<MappingObjectStr> logmap2_mappings4user = new HashSet<MappingObjectStr>();
 	
 	Set<String> representative_labels = new HashSet<String>();
 	
@@ -101,6 +103,11 @@ public class LogMap2_Matcher {
 		saveMappingsFlatFormat(getLogmap2_DiscardedMappings(), output_path, "logmap_discarded_mappings.txt");
 		saveMappingsFlatFormat(getLogmap2_HardDiscardedMappings(), output_path, "logmap_hard_discarded_mappings.txt");
 		saveMappingsFlatFormat(getLogmap2_ConflictiveMappings(), output_path, "logmap_logically_conflicting_mappings.txt");
+		
+		saveMappingsFlatFormat(getLogmap2_mappings4user(), output_path, "logmap_mappings_to_ask_oracle_user_llm.txt");
+		
+		System.out.println("MAPPINSG TO ASK: " + getLogmap2_mappings4user().size());
+
 		
 		//saveMappingsFlatFormat(getLogmap2_anchors(), output_path, "logmap_anchors.txt");
 	
@@ -349,6 +356,10 @@ public class LogMap2_Matcher {
 		return logmap2_anchors;
 	}
 	
+	
+	public Set<MappingObjectStr> getLogmap2_mappings4user(){
+		return logmap2_mappings4user;
+	}
 	
 	
 	
@@ -756,6 +767,33 @@ public class LogMap2_Matcher {
 					
 				} //for ide2
 			}//for ide1
+			
+			
+			for (MappingObjectInteractivity mapping_interact : logmap2.getMappingsToAskUser()){
+			
+				MappingObjectStr mapping;
+				
+				int ide1 = mapping_interact.getIdentifierOnto1();
+				int ide2 = mapping_interact.getIdentifierOnto2();
+				
+				//Avoid same URI mappings
+				if (logmap2.getIRI4ConceptIdentifier(ide1).equals(logmap2.getIRI4ConceptIdentifier(ide2)))
+					continue;
+				
+				
+				
+				//TODO there may be mappings to ask from properties or instances			
+				mapping = new MappingObjectStr(
+										logmap2.getIRI4ConceptIdentifier(ide1), 
+										logmap2.getIRI4ConceptIdentifier(ide2), 
+										logmap2.getConfidence4ConceptMapping(ide1, ide2),
+										mapping_interact.getDirMapping(),
+										Utilities.CLASSES); //most of them
+				
+				logmap2_mappings4user.add(mapping);
+								
+			}
+			
 			
 			
 			

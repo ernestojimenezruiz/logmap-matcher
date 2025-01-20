@@ -1256,7 +1256,7 @@ public class LogMap2Core {
 		InteractiveProcessOAEI interactivityOAEI = 
 				new InteractiveProcessOAEI(index, mapping_extractor, true, false); //we ask everything to OAEI tests
 		
-		//We strat asking to oracle and we also try to apply automatic decisions 
+		//We start asking to oracle and we also try to apply automatic decisions 
 		interactivityOAEI.startInteractiveProcess();
 		
 		//We add to list of accepted mappings the validated mappings
@@ -1313,9 +1313,10 @@ public class LogMap2Core {
 	 * Automatic decisions to mappings to ask if interactivity is not active
 	 */
 	private void performAutomaticDecisions(){
-
-		for (MappingObjectInteractivity mapping : mapping_extractor.getListOfMappingsToAskUser()){
+		
 			
+		for (MappingObjectInteractivity mapping : mapping_extractor.getListOfMappingsToAskUser()){
+						
 			
 			//See createMappings2AskUser in mapping_extractor for more information about the use of this filter
 			if (!mapping_extractor.isFilterWithHeuristicsSecondLevelMappings() 
@@ -1340,6 +1341,7 @@ public class LogMap2Core {
 	
 	private void createCandidateMappingsLevel2() throws Exception{
 		
+		//System.out.println("MAPPINSG TO ASK: " + mapping_extractor.getListOfMappingsToAskUser().size());
 		
 		LogOutput.printAlways("\nCANDIDATE DIAGNOSIS 2");
 					
@@ -2443,6 +2445,11 @@ public class LogMap2Core {
 	
 	public int getDirClassMapping(int ide1, int ide2){
 		return mapping_extractor.getDirMapping(ide1, ide2);
+	}
+	
+	
+	public Set<MappingObjectInteractivity> getMappingsToAskUser(){
+		return mapping_extractor.getListOfMappingsToAskUser();
 	}
 	
 	

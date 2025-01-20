@@ -37,6 +37,7 @@ public class OutPutFilesManager {
 	public static final int FlatFormat=2;
 	public static final int FlatTSVFormat=3;
 	public static final int AllFormats=4;
+	public static final int AllFlatFormats=5;
 	
 	private Vector<OutputMappingsFormat> file_formats = new Vector<OutputMappingsFormat>(); 
 	
@@ -58,7 +59,12 @@ public class OutPutFilesManager {
 			file_formats.add(new FlatAlignmentFormat(output_file+".txt"));
 		}
 		else if (file_type==FlatTSVFormat){
-			file_formats.add(new FlatAlignmentFormat(output_file+".tsv"));
+			file_formats.add(new FlatTSVAlignmentFormat(output_file+".tsv"));
+		}
+		else if (file_type==AllFlatFormats){
+			file_formats.add(new FlatTSVAlignmentFormat(output_file+".tsv"));
+			file_formats.add(new FlatAlignmentFormat(output_file+".txt"));
+
 		}
 		else { //if (file_type==AllFormat){
 			if (output_file.startsWith("/"))

@@ -18,8 +18,12 @@
  ******************************************************************************/
 package uk.ac.ox.krr.logmap2.io;
 
+/**
+ * @deprecated
+ */
 public class FlatFormat2OAEIRDFAlignment {
 
+	
 	
 	public FlatFormat2OAEIRDFAlignment(){
 		

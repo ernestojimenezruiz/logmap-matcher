@@ -80,7 +80,7 @@ public class InteractiveProcessOAEI extends InteractiveProcess {
 		
 		//applyFeedback
 		//For all elements in the list of mappings to ask!
-		//Ask oarculo is not decission yet in mapping
+		//Ask oraculo if not decision yet in mapping
 		//Count assessed directly and by means of conflict
 		//Exploit method!
 		for (MappingObjectInteractivity mapping : listOrderedMappings2Ask) {

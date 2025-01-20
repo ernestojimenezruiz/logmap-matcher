@@ -1,4 +1,4 @@
-print_output|true
+print_output|false
 bad_score_scope|0.0
 good_isub_anchors|0.98
 good_isub_candidates|0.95
@@ -38,7 +38,7 @@ use_umls_lexicon|true
 allow_bioportal|false
 #Number of mediating ontologies to use from BioPortal
 max_mediating_ontologies|10
-allow_interactivity|false
+allow_interactivity|true
 allow_multilingual|false
 #false for tests
 is_test_mode_multilingual|false

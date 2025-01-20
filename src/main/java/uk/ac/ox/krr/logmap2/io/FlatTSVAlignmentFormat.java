@@ -66,9 +66,20 @@ public class FlatTSVAlignmentFormat extends OutputMappingsFormat {
 	
 	
 	private void addMapping2Output(String iri_str1, String iri_str2, int dir_mapping, double conf, String typeMapping)  throws Exception{
+	
+		String rel;
+		if (dir_mapping==Utilities.EQ){
+			rel="=";
+		}
+		else if (dir_mapping==Utilities.L2R){
+			rel="<";
+		}
+		else{ //if (dir_mapping==Utilities.R2L){
+			rel=">";
+		}
 		
-		String line = iri_str1 + "\t" + iri_str2 + "\t" + getRoundConfidence(conf);
-		
+		String line = iri_str1 + "\t" + iri_str2 + "\t" + rel + "\t" + getRoundConfidence(conf) + "\t" + typeMapping;		
+	
 		writer.writeLine(line);
 
 	}
