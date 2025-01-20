@@ -48,9 +48,11 @@ To generate a JAR file for LogMap from the command line using Maven, run: `mvn p
 
 LogMap accepts the same ontology formats as the OWL API: e.g., RDF/XML, OWL/XML, OWL Functional, OBO, KRSS, and Turtle (n3). 
 
+There is an easy to solve issue when running LogMap with the newer versions of Java. See solution [here](https://github.com/ernestojimenezruiz/logmap-matcher/issues/39). 
+
 ### As an Ontology Matching System 
 
-LogMap can be used from the command line with the [standalone distribution](https://github.com/ernestojimenezruiz/logmap-matcher/releases/) or directly from its [Web interface](http://krrwebtools.cs.ox.ac.uk/logmap/).
+LogMap can be used from the command line with the [standalone distribution](https://github.com/ernestojimenezruiz/logmap-matcher/releases/). <!-- or directly from its [Web interface](http://krrwebtools.cs.ox.ac.uk/logmap/).-->
 
 LogMap can also be easily integrated in other Java applications. See [wiki](https://code.google.com/archive/p/logmap-matcher/wikis) for additional information.
 
