@@ -26,7 +26,14 @@ public class testRDF2TXTMappings {
 	
 	public static void main(String[] args){
 		
-		String path = "C:/Users/Ernes/OneDrive/Documents/OAEI/anatomy-dataset/reference.rdf";
+		String path;
+		
+		//path = "C:/Users/Ernes/OneDrive/Documents/OAEI/anatomy-dataset/reference.rdf";
+		
+		path = "C:/Users/Ernes/OneDrive/Documents/OAEI/largebio/fma-nci/oaei_FMA2NCI_UMLS_mappings_with_flagged_repairs.rdf";
+		//path = "C:/Users/Ernes/OneDrive/Documents/OAEI/largebio/fma-snomed/oaei_FMA2SNOMED_UMLS_mappings_with_flagged_repairs.rdf";
+		//path = "C:/Users/Ernes/OneDrive/Documents/OAEI/largebio/snomed-nci/oaei_SNOMED2NCI_UMLS_mappings_with_flagged_repairs.rdf";
+		
 		
 		try {
 			new testRDF2TXTMappings(path);
