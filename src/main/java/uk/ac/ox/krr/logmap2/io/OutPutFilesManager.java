@@ -74,6 +74,8 @@ public class OutPutFilesManager {
 			file_formats.add(new OAEIRDFAlignmentFormat(output_file+".rdf", oiri1, oiri2));
 			file_formats.add(new FlatAlignmentFormat(output_file+".txt"));
 			file_formats.add(new FlatTSVAlignmentFormat(output_file+".tsv"));
+			file_formats.add(new TurtleAlignmentFormat(output_file+".ttl"));
+
 		}
 		
 		//Already in constructor

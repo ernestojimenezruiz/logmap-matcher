@@ -66,6 +66,7 @@ public abstract class TestOAEITrack {
 	public void evaluateTasks() throws MalformedURLException, Exception{
 	
 		for (OAEITask task : tasks){
+			System.out.println(task.getTaskName());
 			evaluateTask(task);
 		}
 		

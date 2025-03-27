@@ -38,7 +38,7 @@ use_umls_lexicon|true
 allow_bioportal|false
 #Number of mediating ontologies to use from BioPortal
 max_mediating_ontologies|10
-allow_interactivity|true
+allow_interactivity|false
 allow_multilingual|false
 #false for tests
 is_test_mode_multilingual|false
