@@ -53,6 +53,10 @@ public class TurtleAlignmentFormat extends OutputMappingsFormat {
 	private void addMapping2Output(String iri_str1, String iri_str2, String typeMapping)  throws Exception{
 		
 		//double rounded_conf = (double)Math.round(conf*100.0)/100.0;
+		
+		
+		//TODO Take into account direction to create a different subsumption!!
+		
 				
 		String line = "<" + iri_str1 + "> "+ typeMapping + " <" + iri_str2 + "> .";
 		

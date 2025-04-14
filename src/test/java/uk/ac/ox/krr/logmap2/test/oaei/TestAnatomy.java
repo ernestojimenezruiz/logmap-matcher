@@ -1,5 +1,7 @@
 package uk.ac.ox.krr.logmap2.test.oaei;
 
+import uk.ac.ox.krr.logmap2.Parameters;
+
 public class TestAnatomy extends TestOAEITrack{
 	
 	public TestAnatomy(){
@@ -8,6 +10,8 @@ public class TestAnatomy extends TestOAEITrack{
 
 	@Override
 	protected void setUp() {
+		
+		Parameters.readParameters();
 		
 		SAVE_MAPPINGS = true; 
 		//OUTPUT_FILE_TEMPLATE: will generate files logmap-alignment-food.owl, logmap-alignment-food.txt
@@ -19,8 +23,8 @@ public class TestAnatomy extends TestOAEITrack{
 		
 		tasks.add(
 				new OAEITask(
-						uri_path + "human.owl",  //source
-						uri_path + "mouse.owl",  //target
+						uri_path + "mouse.owl", //source
+						uri_path + "human.owl",   //target
 						uri_path + "reference.rdf",   //reference mappings if any
 						//"", //no reference
 						"anatomy"

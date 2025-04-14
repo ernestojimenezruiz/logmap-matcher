@@ -113,8 +113,8 @@ public class OAEIOracle extends Oraculo{
 		//return Oracle.isInteractive();						
 		
 		//Comment for OAEI
-		//return false;
-		return true;  //For simulations only
+		return false;
+		//return true;  //TODO For simulations only
 	}
 
 }

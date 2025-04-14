@@ -74,6 +74,10 @@ public class FlatAlignmentReader extends MappingsReader {
 					//System.out.println(elements[0] + "--" + elements[1]);
 					mappings.add(new MappingObjectStr(elements[0], elements[1], 1.0, Utilities.EQ));
 				}
+				else if (elements.length==3) {
+					//System.out.println(elements[0] + "--" + elements[1]);					
+					mappings.add(new MappingObjectStr(elements[0], elements[1], Double.valueOf(elements[2]), Utilities.EQ));					
+				}
 				else {
 					if (elements[2].equals(">")){
 						dir = Utilities.R2L;

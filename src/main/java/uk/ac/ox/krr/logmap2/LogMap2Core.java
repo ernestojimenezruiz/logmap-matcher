@@ -1313,8 +1313,7 @@ public class LogMap2Core {
 	 * Automatic decisions to mappings to ask if interactivity is not active
 	 */
 	private void performAutomaticDecisions(){
-		
-			
+					
 		for (MappingObjectInteractivity mapping : mapping_extractor.getListOfMappingsToAskUser()){
 						
 			
@@ -1346,6 +1345,7 @@ public class LogMap2Core {
 		LogOutput.printAlways("\nCANDIDATE DIAGNOSIS 2");
 					
 		if (OracleManager.isActive()){
+			System.out.println("Oracle!!");
 			LogOutput.printAlways("Oracle is active for interactivity.");
 			createCandidateMappingsInteractiveProcess();
 		}

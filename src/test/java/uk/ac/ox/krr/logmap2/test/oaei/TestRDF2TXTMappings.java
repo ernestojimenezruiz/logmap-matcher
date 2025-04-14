@@ -3,10 +3,10 @@ package uk.ac.ox.krr.logmap2.test.oaei;
 import uk.ac.ox.krr.logmap2.io.OutPutFilesManager;
 import uk.ac.ox.krr.logmap2.oaei.reader.MappingsReaderManager;
 
-public class testRDF2TXTMappings {
+public class TestRDF2TXTMappings {
 	
 	
-	public testRDF2TXTMappings(String input_file) throws Exception{
+	public TestRDF2TXTMappings(String input_file) throws Exception{
 		
 		//1. Load mappings
 		MappingsReaderManager reader = new MappingsReaderManager(input_file, MappingsReaderManager.OAEIFormat);
@@ -36,7 +36,7 @@ public class testRDF2TXTMappings {
 		
 		
 		try {
-			new testRDF2TXTMappings(path);
+			new TestRDF2TXTMappings(path);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
