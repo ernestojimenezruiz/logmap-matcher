@@ -19,7 +19,7 @@ public class TestBioML_NCIT_DOID extends TestOAEITrack{
 						uri_path + "ncit.owl",  //source
 						uri_path + "doid.owl",  //target
 						//uri_path + "reference.rdf",   //reference mappings if any
-						"", //no reference
+						uri_path + "refs_equiv/ncit-doid-ref.rdf", //no reference
 						"bioml-ncit-doid"
 				));
 		/*tasks.add(

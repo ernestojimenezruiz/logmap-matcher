@@ -19,8 +19,10 @@ public class TestLargeBio_FMA_SNOMED extends TestOAEITrack{
 		//TODO: modify back the interactive bit? allow_interactivity|true or the oracle set up to true?
 		tasks.add(
 				new OAEITask(
-						uri_path + "oaei_FMA_small_overlapping_snomed.owl",  //source
-						uri_path + "oaei_SNOMED_small_overlapping_fma.owl",  //target
+						//uri_path + "oaei_FMA_small_overlapping_snomed.owl",  //source
+						uri_path + "oaei_FMA_whole_ontology.owl",
+						//uri_path + "oaei_SNOMED_small_overlapping_fma.owl",  //target
+						uri_path + "oaei_SNOMED_extended_overlapping_fma_nci.owl",
 						uri_path + "oaei_FMA2SNOMED_UMLS_mappings_with_flagged_repairs.rdf",   //reference mappings if any
 						//"", //no reference
 						"largebio-fma-snomed"

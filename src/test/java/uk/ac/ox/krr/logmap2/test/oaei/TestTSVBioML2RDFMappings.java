@@ -34,17 +34,17 @@ public class TestTSVBioML2RDFMappings {
 		iri1 = "http://logmap-tests/oaei/source.owl";
 		iri2 = "http://logmap-tests/oaei/target.owl";
 		
-		//path_in = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/omim-ordo/refs_equiv/full.tsv";
-		//path_out = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/omim-ordo/refs_equiv/omim-ordo-ref";
+		path_in = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/omim-ordo/refs_equiv/full.tsv";
+		path_out = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/omim-ordo/refs_equiv/omim-ordo-ref";
 		
-		//path_in = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-fma.body/refs_equiv/full.tsv";
-		//path_out = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-fma.body/refs_equiv/snomed-fma.body-ref";
+		path_in = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-fma.body/refs_equiv/full.tsv";
+		path_out = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-fma.body/refs_equiv/snomed-fma.body-ref";
 				
-		//path_in = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-ncit.neoplas/refs_equiv/full.tsv";
-		//path_out = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-ncit.neoplas/refs_equiv/snomed-ncit.neoplas-ref";
+		path_in = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-ncit.neoplas/refs_equiv/full.tsv";
+		path_out = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-ncit.neoplas/refs_equiv/snomed-ncit.neoplas-ref";
 		
-		//path_in = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-ncit.pharm/refs_equiv/full.tsv";
-		//path_out = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-ncit.pharm/refs_equiv/snomed-ncit.pharm-ref";
+		path_in = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-ncit.pharm/refs_equiv/full.tsv";
+		path_out = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-ncit.pharm/refs_equiv/snomed-ncit.pharm-ref";
 		
 		
 		try {

@@ -19,7 +19,7 @@ public class TestBioML_SNOMED_NCIT_Pharma extends TestOAEITrack{
 						uri_path + "snomed.pharm.owl",  //source
 						uri_path + "ncit.pharm.owl",  //target
 						//uri_path + "reference.rdf",   //reference mappings if any
-						"", //no reference
+						uri_path + "refs_equiv/snomed-ncit.pharm-ref.rdf", //no reference
 						"bioml-snomed-ncit-pharm"
 				));
 		

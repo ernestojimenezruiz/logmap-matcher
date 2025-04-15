@@ -114,7 +114,7 @@ public class OAEIOracle extends Oraculo{
 		
 		//Comment for OAEI
 		return false;
-		//return true;  //TODO For simulations only
+		//return true;  //TODO For simulations only (to store mappings to ask)
 	}
 
 }

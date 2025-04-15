@@ -19,7 +19,7 @@ public class TestBioML_SNOMED_NCIT_Neoplas extends TestOAEITrack{
 						uri_path + "snomed.neoplas.owl",  //source
 						uri_path + "ncit.neoplas.owl",  //target
 						//uri_path + "reference.rdf",   //reference mappings if any
-						"", //no reference
+						uri_path + "refs_equiv/snomed-ncit.neoplas-ref.rdf", //no reference
 						"bioml-snomed-ncit-neoplas"
 				));
 		

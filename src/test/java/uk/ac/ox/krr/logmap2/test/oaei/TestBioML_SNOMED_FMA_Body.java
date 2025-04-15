@@ -19,7 +19,7 @@ public class TestBioML_SNOMED_FMA_Body extends TestOAEITrack{
 						uri_path + "snomed.body.owl",  //source
 						uri_path + "fma.body.owl",  //target
 						//uri_path + "reference.rdf",   //reference mappings if any
-						"", //no reference
+						uri_path + "refs_equiv/snomed-fma.body-ref.rdf", //no reference
 						"bioml-snomed-fma-body"
 				));
 		

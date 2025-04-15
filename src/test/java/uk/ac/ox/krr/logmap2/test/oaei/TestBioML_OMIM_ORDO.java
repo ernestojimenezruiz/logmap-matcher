@@ -19,7 +19,7 @@ public class TestBioML_OMIM_ORDO extends TestOAEITrack{
 						uri_path + "omim.owl",  //source
 						uri_path + "ordo.owl",  //target
 						//uri_path + "reference.rdf",   //reference mappings if any
-						"", //no reference
+						uri_path + "refs_equiv/omim-ordo-ref.rdf", //no reference
 						"bioml-omim-ordo"
 				));
 		/*tasks.add(
