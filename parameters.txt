@@ -1,4 +1,4 @@
-print_output|true
+print_output|false
 bad_score_scope|0.0
 good_isub_anchors|0.98
 good_isub_candidates|0.95

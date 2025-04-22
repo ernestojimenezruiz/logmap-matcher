@@ -1345,7 +1345,7 @@ public class LogMap2Core {
 		LogOutput.printAlways("\nCANDIDATE DIAGNOSIS 2");
 					
 		if (OracleManager.isActive()){
-			System.out.println("Oracle!!");
+			//System.out.println("Oracle!!");
 			LogOutput.printAlways("Oracle is active for interactivity.");
 			createCandidateMappingsInteractiveProcess();
 		}

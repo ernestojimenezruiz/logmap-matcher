@@ -2,7 +2,7 @@
  * Copyright 2018 by The Alan Turing Institute
  * 
  *******************************************************************************/
-package uk.ac.ox.krr.logmap2.test.oaei;
+package uk.ac.ox.krr.logmap2.test.oaei.interactivity;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,18 +15,22 @@ import uk.ac.ox.krr.logmap2.LogMap2_Matcher;
 import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.io.OutPutFilesManagerStatic;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
+import uk.ac.ox.krr.logmap2.oaei.oracle.LocalOracle;
+import uk.ac.ox.krr.logmap2.oaei.oracle.OracleManager;
 import uk.ac.ox.krr.logmap2.oaei.reader.MappingsReaderManager;
 import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
+import uk.ac.ox.krr.logmap2.test.oaei.OAEITask;
+import uk.ac.ox.krr.logmap2.test.oaei.StandardMeasures;
 import uk.ac.ox.krr.logmap2.utilities.Timer;
 import uk.ac.ox.krr.logmap_lite.LogMap_Lite;
 
 /**
  *
  * @author ernesto
- * Created on 6 Sep 2018
+ * Created on 22 April 2022
  *
  */
-public abstract class TestOAEITrack {
+public abstract class TestOAEITrackWithOracle {
 	
 	
 	List<OAEITask> tasks = new ArrayList<OAEITask>();
@@ -36,10 +40,12 @@ public abstract class TestOAEITrack {
 	protected boolean SAVE_MAPPINGS = false;
 	protected String PATH = "/tmp/logmap-alignment";
 	protected String OUTPUT_FILE_TEMPLATE="";
+	protected String PATH_TO_ORACLE="";
 	
 	
 	
-	public TestOAEITrack(String output_folder_mappings){
+	
+	public TestOAEITrackWithOracle(String output_folder_mappings){
 		
 		//with partial output path to save mappings
 		PATH = output_folder_mappings;
@@ -49,7 +55,7 @@ public abstract class TestOAEITrack {
 		
 	}
 	
-	public TestOAEITrack(){
+	public TestOAEITrackWithOracle(){
 		
 		//Parameters.print_output_always=true;
 		//Parameters.use_overlapping=false;
@@ -102,6 +108,11 @@ public abstract class TestOAEITrack {
 		double matching_time;
 		
 		t = new Timer();
+		
+		//Setting up oracle
+		OracleManager.setLocalOracle(true);		
+		LocalOracle.loadLocalOraculoLLM(PATH_TO_ORACLE);
+		
 		
 		LogMap2_Matcher logmap;
 		
@@ -165,33 +176,6 @@ public abstract class TestOAEITrack {
 	}
 
 
-	private void saveLogMapMappings(Set<MappingObjectStr> mappings) throws Exception {
-		
-
-		OutPutFilesManagerStatic.createOutFiles(OUTPUT_FILE_TEMPLATE, OutPutFilesManagerStatic.AllFormats, "http://logmap-tests/oaei/source.owl", "http://logmap-tests/oaei/target.owl");
-		
-		for (MappingObjectStr mapping : mappings) {
-			
-			if (mapping.isClassMapping())
-				OutPutFilesManagerStatic.addClassMapping2Files(
-						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
-			else if (mapping.isObjectPropertyMapping())
-				OutPutFilesManagerStatic.addObjPropMapping2Files(
-						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
-			else if (mapping.isDataPropertyMapping())
-				OutPutFilesManagerStatic.addDataPropMapping2Files(
-						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getMappingDirection(), mapping.getConfidence());
-			else if (mapping.isInstanceMapping())
-				OutPutFilesManagerStatic.addInstanceMapping2Files(
-						mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2(), mapping.getConfidence());
-			
-		}
-		
-		OutPutFilesManagerStatic.closeAndSaveFiles();
-		
-		
-	}
-	
 	
 	
 	

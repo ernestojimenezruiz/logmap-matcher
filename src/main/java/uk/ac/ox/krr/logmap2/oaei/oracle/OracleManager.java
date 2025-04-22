@@ -28,6 +28,15 @@ public class OracleManager {
 	private static OAEIOracle oaeiOracle = new OAEIOracle();
 	
 	
+	
+	/**
+	 * To ask extended questions to the Oracle if active
+	 * @return
+	 */
+	public static void setExtendedQuestions(boolean active) {
+		extended_questions=active;
+	}
+	
 	/**
 	 * To ask extended questions to the Oracle if active
 	 * @return

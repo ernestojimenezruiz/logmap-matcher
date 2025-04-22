@@ -30,15 +30,7 @@ public class TestAnatomy extends TestOAEITrack{
 						//"", //no reference
 						"anatomy"
 				));
-		/*tasks.add(
-				new OAEITask(
-						uri_path + "flat_ontology_food_terms_based_on_piyathilake_dataset.ttl",  //source
-						uri_path + "foodon-merged.owl",  //target
-						//uri_path + "AML-food.rdf",   //reference mappings if any
-						"", //no reference
-						"food-terms"
-				));
-		*/
+		
 	}
 	
 	
