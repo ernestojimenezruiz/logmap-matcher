@@ -1750,7 +1750,9 @@ public class CandidateMappingManager extends MappingManager {
 						
 						
 						//Otherwise we were asking almost nothing in interactive conference track
-						if (OracleManager.isActive()){
+						//if (OracleManager.isActive()){
+						if (OracleManager.isActive() && OracleManager.keepExtendedQuestions()){
+						//if (OracleManager.keepExtendedQuestions()){
 							addEquivMapping2ListOfAnchors2AskUser(ide1, ide2);
 							
 							LogOutput.printAlways("New Added 2 ask: " +

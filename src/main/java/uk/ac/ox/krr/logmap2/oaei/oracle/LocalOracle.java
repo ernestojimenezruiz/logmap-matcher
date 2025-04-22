@@ -54,7 +54,10 @@ public class LocalOracle extends Oraculo{
 	
 	
 	
-	
+	/**
+	 * Classic TXT format entiti1|entitity2|other_fields
+	 * @param base_path
+	 */
 	public static void loadLocalOraculo(String base_path) {
 		
 		try {
@@ -106,15 +109,95 @@ public class LocalOracle extends Oraculo{
 	}
 	
 	
-	public static void main(String[] args) {
-		String base_path = "/usr/local/data/MappingsConferenceBenchmark/reference-alignment-subset2012/";
-		loadLocalOraculo(base_path);
+	
+	/**
+	 * Load Oracle from LLM input
+	 * Format: 
+	 * Source,Target,Prediction,Confidence
+	 * http://human.owl#NCI_C49191,http://mouse.owl#MA_0000702,False,0.9399113610439951
+	 * @param base_path
+	 */
+	public static void loadLocalOraculoLLM(String base_path) {
+		
+		try {
+			int countTrue=0;
+			int countFalse=0;
+			String pattern = ".csv";
+			
+			File directory = new File(base_path);
+			String filenames[] = directory.list();
+			
+			for(int i=0; i<filenames.length; i++){
+				
+				if (!filenames[i].contains(pattern)) 
+					continue;
+				
+				
+			
+				ReadFile reader = new ReadFile(base_path + filenames[i]);
+				
+				String line;
+				String[] elements;
+				
+				line=reader.readLine();
+				
+				while (line!=null) {
+					
+					if (line.startsWith("#")){ //comments
+						line=reader.readLine();
+						continue;
+					}
+					
+					if (line.indexOf(",")<0){
+						line=reader.readLine();
+						continue;
+					}
+					
+					elements=line.split(",");
+					
+					//System.out.println(elements[0] + "  " + elements[1]  + "  " + elements[2]);
+					
+					if (Boolean.parseBoolean(elements[2].toLowerCase())) {
+					
+						addMapping2LocalOracle(elements[0], elements[1]);
+						addMapping2LocalOracle(elements[1], elements[0]);
+												
+						countTrue++;
+					}
+					else {
+						countFalse++;
+					}
+					
+					line=reader.readLine();
+				}
+				
+				reader.closeBuffer();
+				//System.out.println("Num mapping in oracle: " + countTrue +  "  " + oracle_mappings.size());
+				//System.out.println("Num mapping NOT in oracle: " + countFalse);
+			}
+		} 
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 	}
-
-
+	
+	
 
 	@Override
 	public boolean isActive() {
 		return true;
 	}
+	
+	
+
+	
+	
+	public static void main(String[] args) {
+		String base_path = "C:/Users/Ernes/OneDrive/Documents/OAEI/oracle/anatomy/";
+		loadLocalOraculoLLM(base_path);
+	}
+
+	
+	
 }

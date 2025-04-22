@@ -5,6 +5,7 @@ import uk.ac.ox.krr.logmap2.io.LogOutput;
 
 /**
  * Interface to query an Oracle
+ * Modified April 2024 
  * @author Ernesto
  *
  */
@@ -20,9 +21,20 @@ public class OracleManager {
 	private static final int LOCAL = 3;
 	private static int status_oraculo = NOTSET;
 	
+	private static boolean extended_questions = false;
+	
 	private static LocalOracle localOracle = new LocalOracle();
 	
 	private static OAEIOracle oaeiOracle = new OAEIOracle();
+	
+	
+	/**
+	 * To ask extended questions to the Oracle if active
+	 * @return
+	 */
+	public static boolean keepExtendedQuestions() {
+		return extended_questions;
+	}
 	
 	
 	public static void allowOracle(boolean allow){

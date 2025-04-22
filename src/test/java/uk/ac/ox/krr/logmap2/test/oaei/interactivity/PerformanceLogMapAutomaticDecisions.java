@@ -16,7 +16,7 @@ public class PerformanceLogMapAutomaticDecisions {
 	Set<MappingObjectStr> reference_mappings;
 	Set<MappingObjectStr> mappings4oracle;
 	
-	boolean reduced_set = false;
+	boolean reduced_set = true;
 	
 	public PerformanceLogMapAutomaticDecisions() {
 		
@@ -96,14 +96,14 @@ public class PerformanceLogMapAutomaticDecisions {
 	public void TestSNOMED2FMA_BODY() {
 		
 		String path = "C:/Users/Ernes/OneDrive/Documents/OAEI/oracle/bioml-snomed-fma.body/";
-		String logmap_mappings_file = path + "bioml-snomed-fma.body-logmap_mappings.txt";
+		String logmap_mappings_file = path + "bioml-snomed-fma-body-logmap_mappings.txt";
 		String reference_mappings_file = path + "snomed-fma.body-ref.txt";
 		
 		String mappings4oracle_file;
 		if (reduced_set)
-			mappings4oracle_file = path + "bioml-snomed-fma.body-logmap_mappings_to_ask_oracle_user_llm_reduced.txt";
+			mappings4oracle_file = path + "bioml-snomed-fma-body-logmap_mappings_to_ask_oracle_user_llm_reduced.txt";
 		else
-			mappings4oracle_file = path + "bioml-snomed-fma.body-logmap_mappings_to_ask_oracle_user_llm.txt";
+			mappings4oracle_file = path + "bioml-snomed-fma-body-logmap_mappings_to_ask_oracle_user_llm.txt";
 		
 		logmap_mappings = loadMappings(logmap_mappings_file);
 		reference_mappings = loadMappings(reference_mappings_file);
@@ -277,7 +277,7 @@ public class PerformanceLogMapAutomaticDecisions {
 		//preformance_logmap_automatic.TestNCIT2DOID();
 		//preformance_logmap_automatic.TestOMIM2ORDO();
 		
-		//preformance_logmap_automatic.TestSNOMED2FMA_BODY(); //TODO
+		preformance_logmap_automatic.TestSNOMED2FMA_BODY(); //TODO
 		
 		//preformance_logmap_automatic.TestSNOMED2NCIT_NEO();
 		//preformance_logmap_automatic.TestSNOMED2NCIT_PHARM();
@@ -286,7 +286,7 @@ public class PerformanceLogMapAutomaticDecisions {
 		//TODO
 		//preformance_logmap_automatic.TestFMA2NCI();
 		//preformance_logmap_automatic.TestFMA2SNOMED();
-		preformance_logmap_automatic.TestSNOMED2NCI();
+		//preformance_logmap_automatic.TestSNOMED2NCI();
 		
 		
 	}
