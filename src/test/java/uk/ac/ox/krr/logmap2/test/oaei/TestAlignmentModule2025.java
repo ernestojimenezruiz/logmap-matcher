@@ -17,6 +17,20 @@ public class TestAlignmentModule2025 extends TestOAEITrack{
 		String uri_path_targets = "file:/" + path_targets;
 		
 		
+		
+		tasks.add(
+				new OAEITask(
+						uri_path_students + "ashish-pokemon.ttl",  //source
+						uri_path_targets + "pokemon.ttl",  //target
+						//uri_path + "reference.rdf",   //reference mappings if any
+						"", //no reference
+						"ashish-pokemon-reference"
+				));
+		
+		
+		
+		
+		
 		/*
 		
 		tasks.add(
@@ -113,7 +127,7 @@ public class TestAlignmentModule2025 extends TestOAEITrack{
 						"abdalaziz-music-reference"
 				));
 		
-		*/
+		
 		
 		tasks.add(
 				new OAEITask(
@@ -125,7 +139,7 @@ public class TestAlignmentModule2025 extends TestOAEITrack{
 				));
 		
 		
-		/*
+		
 		
 		
 		tasks.add(

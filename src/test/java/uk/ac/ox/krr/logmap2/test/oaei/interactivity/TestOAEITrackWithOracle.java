@@ -42,6 +42,9 @@ public abstract class TestOAEITrackWithOracle {
 	protected String OUTPUT_FILE_TEMPLATE="";
 	protected String PATH_TO_ORACLE="";
 	
+	protected String URI_PATH="";
+	
+	
 	
 	
 	
@@ -61,6 +64,38 @@ public abstract class TestOAEITrackWithOracle {
 		//Parameters.use_overlapping=false;
 		
 		setUp();
+		
+	}
+	
+	
+	protected void setIputOutputFiles(String task_name, String task_name_oracle, boolean extended_questions) {
+		
+		
+		Parameters.readParameters();
+		
+		//SAVE_MAPPINGS = false;
+		SAVE_MAPPINGS = true;
+		
+		
+		
+		
+		//Reads any .csv file with the right format in the given folder
+		PATH_TO_ORACLE = "C:/Users/Ernes/OneDrive/Documents/OAEI/oracle/" + task_name_oracle + "/"; //Will look for an available csv file
+				
+		PATH = "C:/Users/Ernes/OneDrive/Documents/OAEI/" + task_name + "/logmap_with_oracle";   //for output mappings (the folder must exist)
+				
+		
+		if (extended_questions)	//Extended set of questions to Oracle
+			PATH += "_extended/";
+			
+		else //Reduced set of questions to Oracle
+			PATH += "_reduced/";
+			
+		OracleManager.setExtendedQuestions(extended_questions); 
+			
+		
+		String path_task = "C:/Users/Ernes/OneDrive/Documents/OAEI/"+ task_name + "/";
+		URI_PATH = "file:/" + path_task;
 		
 	}
 	

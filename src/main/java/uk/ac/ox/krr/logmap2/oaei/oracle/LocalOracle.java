@@ -9,6 +9,9 @@ import java.util.Set;
 
 import uk.ac.ox.krr.logmap2.io.ReadFile;
 
+/**
+ * with the collaboration of Diego Jimenez Carapella
+ */
 public class LocalOracle extends Oraculo{
 	
 	
@@ -92,6 +95,7 @@ public class LocalOracle extends Oraculo{
 					
 					addMapping2LocalOracle(elements[0], elements[1]);
 					
+					
 					//System.out.println(elements[0] + "  " + elements[1]);
 					count++;
 					
@@ -172,8 +176,8 @@ public class LocalOracle extends Oraculo{
 				}
 				
 				reader.closeBuffer();
-				//System.out.println("Num mapping in oracle: " + countTrue +  "  " + oracle_mappings.size());
-				//System.out.println("Num mapping NOT in oracle: " + countFalse);
+				System.out.println("Num mapping in oracle: " + countTrue +  "  " + oracle_mappings.size());
+				System.out.println("Num mapping NOT in oracle: " + countFalse);
 			}
 		} 
 		catch (FileNotFoundException e) {

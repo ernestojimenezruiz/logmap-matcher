@@ -1,9 +1,6 @@
 package uk.ac.ox.krr.logmap2.test.oaei.interactivity;
 
-import uk.ac.ox.krr.logmap2.Parameters;
-import uk.ac.ox.krr.logmap2.oaei.oracle.OracleManager;
 import uk.ac.ox.krr.logmap2.test.oaei.OAEITask;
-import uk.ac.ox.krr.logmap2.test.oaei.TestOAEITrack;
 
 
 public class TestAnatomyWithLocalOracle extends TestOAEITrackWithOracle{
@@ -15,28 +12,17 @@ public class TestAnatomyWithLocalOracle extends TestOAEITrackWithOracle{
 	@Override
 	protected void setUp() {
 		
-		Parameters.readParameters();
-		
-		SAVE_MAPPINGS = false;
-		//SAVE_MAPPINGS = true;	
-		//PATH = "C:/Users/Ernes/OneDrive/Documents/OAEI/anatomy-dataset/logmap_with_oracle/";  //for output mappings (the folder must exist)
-		
-		//Reads any .csv file with the right format in the given folder
-		PATH_TO_ORACLE = "C:/Users/Ernes/OneDrive/Documents/OAEI/oracle/anatomy/";
-		//OracleManager.setExtendedQuestions(true); //Extended set of questions to Oracle
-		OracleManager.setExtendedQuestions(false);  //Reduced set of questions to Oracle
+		boolean extended_questions = true;		
+
+		setIputOutputFiles("anatomy", "anatomy", extended_questions);		
 		
 		
-		
-		String path_task = "C:/Users/Ernes/OneDrive/Documents/OAEI/anatomy-dataset/";
-		String uri_path = "file:" + path_task;
-		 
 		
 		tasks.add(
 				new OAEITask(
-						uri_path + "mouse.owl", //source
-						uri_path + "human.owl",   //target
-						uri_path + "reference.rdf",   //reference mappings if any						
+						URI_PATH + "mouse.owl", //source
+						URI_PATH + "human.owl",   //target
+						URI_PATH + "reference.rdf",   //reference mappings if any						
 						"anatomy"
 				));
 		
