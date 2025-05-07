@@ -11,9 +11,11 @@ public class TestBioML_OMIM_ORDO_WithLocalOracle extends TestOAEITrackWithOracle
 	protected void setUp() {
 		
 		
-		boolean extended_questions = true;		
+		boolean extended_questions = false;
+		boolean llm_oracle = false;
+		int error_rate = 20;	
 
-		setIputOutputFiles("bio-ml/omim-ordo", "bioml-omim-ordo",  extended_questions);		
+		setIputOutputFiles("bio-ml/omim-ordo", "bioml-omim-ordo",  extended_questions, llm_oracle, error_rate);		
 			 
 				
 		tasks.add(

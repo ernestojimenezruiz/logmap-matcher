@@ -8,9 +8,11 @@ public class TestLargeBio_FMA_NCI_WithLocalOracle extends TestOAEITrackWithOracl
 	protected void setUp() {
 		
 		
-		boolean extended_questions = false;		
+		boolean extended_questions = false;
+		boolean llm_oracle = false;
+		int error_rate = 20;
 
-		setIputOutputFiles("largebio/fma-nci", "largebio-fma-nci",  extended_questions);
+		setIputOutputFiles("largebio/fma-nci", "largebio-fma-nci",  extended_questions, llm_oracle, error_rate);
 		
 				
 		tasks.add(

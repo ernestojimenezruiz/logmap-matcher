@@ -2,6 +2,7 @@ package uk.ac.ox.krr.logmap2.oaei.oracle;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -16,13 +17,44 @@ public class LocalOracle extends Oraculo{
 	
 	
 		
-	private static Map<String, Set<String>> oracle_mappings = new HashMap<String, Set<String>>();  
+	private static Map<String, Set<String>> oracle_mappings = new HashMap<String, Set<String>>();
+	private static int error_rate = 0;
+	
+	
+	/**
+	 * For local simulations: 0 to 100
+	 */
+	public static void setErrorRate(int error) {
+		error_rate=error;
+	}
+	
+	
+	/**
+	 * Random number between 1 and 100
+	 * @return
+	 */
+	private static int generateRandomNumber() {
+	        SecureRandom secureRandom = new SecureRandom();
+	       return secureRandom.nextInt(100) + 1; // Generates a number between 1 and 100
+	        //System.out.println("Random number: " + randomNumber);
+	}
+	
+	
 	
 	
 	@Override
 	public boolean isMappingValid(String uri1, String uri2) {
 		
-		return isMappingInLocalOracle(uri1, uri2);
+		int random = generateRandomNumber();
+		
+		boolean isInOracle = isMappingInLocalOracle(uri1, uri2);
+		
+		if (random>error_rate) 
+			return isInOracle;
+		else
+			return !isInOracle;  //negation
+				
+			
 	}
 	
 	
@@ -65,7 +97,7 @@ public class LocalOracle extends Oraculo{
 		
 		try {
 			int count=0;			
-			String pattern = ".txt";
+			String pattern = "ref.txt";
 			
 			File directory = new File(base_path);
 			String filenames[] = directory.list();
@@ -94,6 +126,8 @@ public class LocalOracle extends Oraculo{
 					elements=line.split("\\|");
 					
 					addMapping2LocalOracle(elements[0], elements[1]);
+					addMapping2LocalOracle(elements[1], elements[0]);
+
 					
 					
 					//System.out.println(elements[0] + "  " + elements[1]);
@@ -104,6 +138,8 @@ public class LocalOracle extends Oraculo{
 				
 				reader.closeBuffer();
 				//System.out.println("Num mapping in oracle: " + count +  "  " + oracle_mappings.size());
+				System.out.println("Num mapping in oracle: " + count +  "  " + oracle_mappings.size());
+				
 			}
 		} 
 		catch (FileNotFoundException e) {

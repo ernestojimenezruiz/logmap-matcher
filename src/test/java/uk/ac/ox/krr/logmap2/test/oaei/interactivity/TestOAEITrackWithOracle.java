@@ -47,7 +47,6 @@ public abstract class TestOAEITrackWithOracle {
 	
 	
 	
-	
 	public TestOAEITrackWithOracle(String output_folder_mappings){
 		
 		//with partial output path to save mappings
@@ -68,21 +67,23 @@ public abstract class TestOAEITrackWithOracle {
 	}
 	
 	
-	protected void setIputOutputFiles(String task_name, String task_name_oracle, boolean extended_questions) {
-		
+	protected void setIputOutputFiles(String task_name, String task_name_oracle, boolean extended_questions, boolean llm_oracle, int error_rate) {
 		
 		Parameters.readParameters();
 		
 		//SAVE_MAPPINGS = false;
 		SAVE_MAPPINGS = true;
 		
-		
-		
+			
 		
 		//Reads any .csv file with the right format in the given folder
 		PATH_TO_ORACLE = "C:/Users/Ernes/OneDrive/Documents/OAEI/oracle/" + task_name_oracle + "/"; //Will look for an available csv file
 				
 		PATH = "C:/Users/Ernes/OneDrive/Documents/OAEI/" + task_name + "/logmap_with_oracle";   //for output mappings (the folder must exist)
+		
+		if (!llm_oracle) {
+			PATH+= "_simulated_error_" + error_rate;
+		}
 				
 		
 		if (extended_questions)	//Extended set of questions to Oracle
@@ -96,6 +97,20 @@ public abstract class TestOAEITrackWithOracle {
 		
 		String path_task = "C:/Users/Ernes/OneDrive/Documents/OAEI/"+ task_name + "/";
 		URI_PATH = "file:/" + path_task;
+		
+		
+		
+		//Setting up oracle. Move to setUp
+		OracleManager.setLocalOracle(true);
+		
+		if (llm_oracle) //loads csv file
+			LocalOracle.loadLocalOraculoLLM(PATH_TO_ORACLE);
+		else //loads classing txt file
+			LocalOracle.loadLocalOraculo(PATH_TO_ORACLE);
+		
+		
+		//Error rate
+		LocalOracle.setErrorRate(error_rate);
 		
 	}
 	
@@ -144,9 +159,6 @@ public abstract class TestOAEITrackWithOracle {
 		
 		t = new Timer();
 		
-		//Setting up oracle
-		OracleManager.setLocalOracle(true);		
-		LocalOracle.loadLocalOraculoLLM(PATH_TO_ORACLE);
 		
 		
 		LogMap2_Matcher logmap;

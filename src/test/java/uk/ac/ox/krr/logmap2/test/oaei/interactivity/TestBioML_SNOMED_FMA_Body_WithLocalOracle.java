@@ -7,9 +7,11 @@ public class TestBioML_SNOMED_FMA_Body_WithLocalOracle extends TestOAEITrackWith
 	@Override
 	protected void setUp() {
 		
-		boolean extended_questions = false;		
+		boolean extended_questions = false;
+		boolean llm_oracle = false;
+		int error_rate = 20;
 
-		setIputOutputFiles("bio-ml/snomed-fma.body", "bioml-snomed-fma.body",  extended_questions);
+		setIputOutputFiles("bio-ml/snomed-fma.body", "bioml-snomed-fma.body",  extended_questions, llm_oracle, error_rate);
 		
 		tasks.add(
 				new OAEITask(

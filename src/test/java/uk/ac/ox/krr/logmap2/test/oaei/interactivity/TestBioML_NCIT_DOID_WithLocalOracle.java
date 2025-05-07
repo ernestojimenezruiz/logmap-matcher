@@ -7,9 +7,11 @@ public class TestBioML_NCIT_DOID_WithLocalOracle extends TestOAEITrackWithOracle
 	@Override
 	protected void setUp() {
 		
-		boolean extended_questions = true;		
+		boolean extended_questions = false;
+		boolean llm_oracle = false;
+		int error_rate = 20;
 
-		setIputOutputFiles("bio-ml/ncit-doid", "bioml-ncit-doid",  extended_questions);
+		setIputOutputFiles("bio-ml/ncit-doid", "bioml-ncit-doid",  extended_questions, llm_oracle, error_rate);
 		
 		
 		tasks.add(

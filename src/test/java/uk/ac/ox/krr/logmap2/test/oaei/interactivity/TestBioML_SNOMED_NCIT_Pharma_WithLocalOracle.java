@@ -7,9 +7,11 @@ public class TestBioML_SNOMED_NCIT_Pharma_WithLocalOracle extends TestOAEITrackW
 	@Override
 	protected void setUp() {
 		
-		boolean extended_questions = false;		
+		boolean extended_questions = false;
+		boolean llm_oracle = false;
+		int error_rate = 20;
 
-		setIputOutputFiles("bio-ml/snomed-ncit.pharm", "bioml-snomed-ncit.pharm",  extended_questions);
+		setIputOutputFiles("bio-ml/snomed-ncit.pharm", "bioml-snomed-ncit.pharm",  extended_questions, llm_oracle, error_rate);
 		
 		
 		

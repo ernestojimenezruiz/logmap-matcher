@@ -8,9 +8,11 @@ public class TestLargeBio_SNOMED_NCI_WithLocalOracle extends TestOAEITrackWithOr
 	@Override
 	protected void setUp() {
 		
-		boolean extended_questions = false;		
+		boolean extended_questions = false;
+		boolean llm_oracle = false;
+		int error_rate = 20;
 
-		setIputOutputFiles("largebio/snomed-nci", "largebio-snomed-nci",  extended_questions);
+		setIputOutputFiles("largebio/snomed-nci", "largebio-snomed-nci",  extended_questions, llm_oracle, error_rate);
 		
 		tasks.add(
 				new OAEITask(

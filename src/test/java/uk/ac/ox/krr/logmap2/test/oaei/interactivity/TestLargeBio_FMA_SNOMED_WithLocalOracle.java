@@ -8,9 +8,11 @@ public class TestLargeBio_FMA_SNOMED_WithLocalOracle extends TestOAEITrackWithOr
 	protected void setUp() {
 		
 		
-		boolean extended_questions = false;		
+		boolean extended_questions = false;
+		boolean llm_oracle = false;
+		int error_rate = 20;
 
-		setIputOutputFiles("largebio/fma-snomed", "largebio-fma-snomed",  extended_questions);
+		setIputOutputFiles("largebio/fma-snomed", "largebio-fma-snomed",  extended_questions, llm_oracle, error_rate);
 		
 		
 		

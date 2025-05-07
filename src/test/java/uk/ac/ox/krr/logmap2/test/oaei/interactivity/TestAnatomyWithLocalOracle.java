@@ -12,10 +12,13 @@ public class TestAnatomyWithLocalOracle extends TestOAEITrackWithOracle{
 	@Override
 	protected void setUp() {
 		
-		boolean extended_questions = true;		
+		boolean extended_questions = false;		
+		boolean llm_oracle = false;
+		int error_rate = 30;
 
-		setIputOutputFiles("anatomy", "anatomy", extended_questions);		
+		setIputOutputFiles("anatomy", "anatomy", extended_questions, llm_oracle, error_rate);
 		
+		SAVE_MAPPINGS = false; //overrides if saving mappings
 		
 		
 		tasks.add(

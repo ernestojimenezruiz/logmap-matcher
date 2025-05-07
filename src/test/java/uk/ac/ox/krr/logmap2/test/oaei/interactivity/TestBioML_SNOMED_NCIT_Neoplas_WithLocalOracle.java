@@ -8,9 +8,11 @@ public class TestBioML_SNOMED_NCIT_Neoplas_WithLocalOracle extends TestOAEITrack
 	protected void setUp() {
 		
 		
-		boolean extended_questions = false;		
+		boolean extended_questions = false;
+		boolean llm_oracle = false;
+		int error_rate = 20;		
 
-		setIputOutputFiles("bio-ml/snomed-ncit.neoplas", "bioml-snomed-ncit.neoplas",  extended_questions);
+		setIputOutputFiles("bio-ml/snomed-ncit.neoplas", "bioml-snomed-ncit.neoplas",  extended_questions, llm_oracle, error_rate);
 		
 				
 		tasks.add(
