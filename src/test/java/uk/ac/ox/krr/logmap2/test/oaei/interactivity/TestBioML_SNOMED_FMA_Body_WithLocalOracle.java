@@ -4,14 +4,11 @@ import uk.ac.ox.krr.logmap2.test.oaei.OAEITask;
 
 public class TestBioML_SNOMED_FMA_Body_WithLocalOracle extends TestOAEITrackWithOracle{
 
-	@Override
-	protected void setUp() {
+	protected void setUp(boolean extended_questions, boolean llm_oracle, int error_rate) {
 		
-		boolean extended_questions = false;
-		boolean llm_oracle = false;
-		int error_rate = 20;
-
 		setIputOutputFiles("bio-ml/snomed-fma.body", "bioml-snomed-fma.body",  extended_questions, llm_oracle, error_rate);
+		SAVE_MAPPINGS = false; //overrides if saving mappings	 
+
 		
 		tasks.add(
 				new OAEITask(
@@ -27,18 +24,32 @@ public class TestBioML_SNOMED_FMA_Body_WithLocalOracle extends TestOAEITrackWith
 	
 	public static void main(String[] args){
 		
-		TestBioML_SNOMED_FMA_Body_WithLocalOracle test = new TestBioML_SNOMED_FMA_Body_WithLocalOracle();
+		boolean extended_questions = false;
+		boolean llm_oracle = false;
+		int min_err = 0;
+		int max_err = 30;
 		
 		
-		try {
-			test.evaluateTasks();
+		for (int error_rate=min_err; error_rate<=max_err; error_rate+=10) {
+			
+			System.out.println("Error rate: "+ error_rate);
+		
+			TestBioML_SNOMED_FMA_Body_WithLocalOracle test = new TestBioML_SNOMED_FMA_Body_WithLocalOracle();
 			
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				test.setUp(extended_questions, llm_oracle, error_rate);
+				test.evaluateTasks();
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+
+			System.out.println("");
 		}
-		
 		
 	}
 

@@ -138,7 +138,7 @@ public class LocalOracle extends Oraculo{
 				
 				reader.closeBuffer();
 				//System.out.println("Num mapping in oracle: " + count +  "  " + oracle_mappings.size());
-				System.out.println("Num mapping in oracle: " + count +  "  " + oracle_mappings.size());
+				//System.out.println("Num mapping in oracle: " + count +  "  " + oracle_mappings.size());
 				
 			}
 		} 
@@ -212,8 +212,8 @@ public class LocalOracle extends Oraculo{
 				}
 				
 				reader.closeBuffer();
-				System.out.println("Num mapping in oracle: " + countTrue +  "  " + oracle_mappings.size());
-				System.out.println("Num mapping NOT in oracle: " + countFalse);
+				//System.out.println("Num mapping in oracle: " + countTrue +  "  " + oracle_mappings.size());
+				//System.out.println("Num mapping NOT in oracle: " + countFalse);
 			}
 		} 
 		catch (FileNotFoundException e) {

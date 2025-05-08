@@ -9,12 +9,9 @@ public class TestAnatomyWithLocalOracle extends TestOAEITrackWithOracle{
 		super();
 	}
 
-	@Override
-	protected void setUp() {
+	
+	protected void setUp(boolean extended_questions, boolean llm_oracle, int error_rate) {
 		
-		boolean extended_questions = false;		
-		boolean llm_oracle = false;
-		int error_rate = 30;
 
 		setIputOutputFiles("anatomy", "anatomy", extended_questions, llm_oracle, error_rate);
 		
@@ -34,17 +31,32 @@ public class TestAnatomyWithLocalOracle extends TestOAEITrackWithOracle{
 	
 	public static void main(String[] args){
 		
-		TestAnatomyWithLocalOracle test = new TestAnatomyWithLocalOracle();
+		boolean extended_questions = false;		
+		boolean llm_oracle = false;
+		int min_err = 0;
+		int max_err = 30;
 		
 		
-		try {
-			test.evaluateTasks();
+		for (int err=min_err; err<=max_err; err+=10) {
 			
+			System.out.println("Error rate: "+ err);
+		
+			TestAnatomyWithLocalOracle test = new TestAnatomyWithLocalOracle();
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				test.setUp(extended_questions, llm_oracle, err);
+				test.evaluateTasks();
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			System.out.println("");
 		}
+		
+		
 		
 		
 	}

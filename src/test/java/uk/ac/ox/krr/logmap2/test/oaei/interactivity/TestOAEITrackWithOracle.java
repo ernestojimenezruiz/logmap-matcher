@@ -53,7 +53,7 @@ public abstract class TestOAEITrackWithOracle {
 		PATH = output_folder_mappings;
 		SAVE_MAPPINGS = true;
 
-		setUp();
+		//setUp();
 		
 	}
 	
@@ -62,7 +62,7 @@ public abstract class TestOAEITrackWithOracle {
 		//Parameters.print_output_always=true;
 		//Parameters.use_overlapping=false;
 		
-		setUp();
+		//setUp();
 		
 	}
 	
@@ -115,7 +115,7 @@ public abstract class TestOAEITrackWithOracle {
 	}
 	
 	
-	protected abstract void setUp(); 
+	//protected abstract void setUp(); 
 	
 	
 	

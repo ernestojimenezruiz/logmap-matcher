@@ -4,16 +4,12 @@ import uk.ac.ox.krr.logmap2.test.oaei.OAEITask;
 
 public class TestLargeBio_FMA_NCI_WithLocalOracle extends TestOAEITrackWithOracle{
 
-	@Override
-	protected void setUp() {
+	protected void setUp(boolean extended_questions, boolean llm_oracle, int error_rate) {
 		
 		
-		boolean extended_questions = false;
-		boolean llm_oracle = false;
-		int error_rate = 20;
-
 		setIputOutputFiles("largebio/fma-nci", "largebio-fma-nci",  extended_questions, llm_oracle, error_rate);
-		
+		SAVE_MAPPINGS = false; //overrides if saving mappings	 
+
 				
 		tasks.add(
 				new OAEITask(
@@ -30,17 +26,32 @@ public class TestLargeBio_FMA_NCI_WithLocalOracle extends TestOAEITrackWithOracl
 	
 	
 	public static void main(String[] args){
+	
 		
-		TestLargeBio_FMA_NCI_WithLocalOracle test = new TestLargeBio_FMA_NCI_WithLocalOracle();
+		boolean extended_questions = false;
+		boolean llm_oracle = false;
+		int min_err = 0;
+		int max_err = 30;
 		
 		
-		try {
-			test.evaluateTasks();
+		for (int error_rate=min_err; error_rate<=max_err; error_rate+=10) {
+			
+			System.out.println("Error rate: "+ error_rate);
+		
+			TestLargeBio_FMA_NCI_WithLocalOracle test = new TestLargeBio_FMA_NCI_WithLocalOracle();
 			
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				test.setUp(extended_questions, llm_oracle, error_rate);
+				test.evaluateTasks();
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			System.out.println("");
 		}
 		
 		
