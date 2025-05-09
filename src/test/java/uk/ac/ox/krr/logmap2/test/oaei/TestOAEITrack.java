@@ -101,13 +101,14 @@ public abstract class TestOAEITrack {
 	public void evaluateTask(OAEITask task) throws MalformedURLException, Exception{
 		
 		
-		OntologyLoader onto_loader1 = new OntologyLoader(task.getSource());
+		//To compute size ontos
+		/*OntologyLoader onto_loader1 = new OntologyLoader(task.getSource());
 		OntologyLoader onto_loader2 = new OntologyLoader(task.getTarget());
 		System.out.println(onto_loader1.getSignatureSize() + "\t" + onto_loader2.getSignatureSize());
 			
 		if (true)
 			return;
-		
+		*/
 		
 		
 		double matching_time;

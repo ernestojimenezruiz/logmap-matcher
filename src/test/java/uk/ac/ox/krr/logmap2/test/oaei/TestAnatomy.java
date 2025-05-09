@@ -18,8 +18,8 @@ public class TestAnatomy extends TestOAEITrack{
 		//PATH = "/home/ernesto/Documents/Datasets/Food/logmap-alignment"; +  + "-"+task.getTaskName();
 		PATH = "C:/Users/Ernes/OneDrive/Documents/OAEI/anatomy-dataset/logmap_to_ask/";  //for output mappings
 		
-		String base_path = "/home/ernesto/Documents/OAEI/";
-		//String base_path = "C:/Users/Ernes/OneDrive/Documents/OAEI/";
+		//String base_path = "/home/ernesto/Documents/OAEI/";
+		String base_path = "C:/Users/Ernes/OneDrive/Documents/OAEI/";
 		String dataset = "anatomy-dataset/";
 
 		String path_task = base_path + dataset; 
