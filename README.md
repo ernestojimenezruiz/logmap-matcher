@@ -1,9 +1,11 @@
 # LogMap: An Ontology Alignment and Alignment Repair System
 
-**Highlights (Updated November 2024):**
+**Highlights (Updated August 2025):**
 
-1. LogMap was awarded the [SWSA Ten-Year Award](http://swsa.semanticweb.org/content/swsa-ten-year-award) that recognizes the highest impact papers from the [International Semantic Web Conference](http://swsa.semanticweb.org/content/international-semantic-web-conference-iswc) (ISWC) proceedings ten years prior. LogMap reached **>700 citations** according to [Google Scholar](https://scholar.google.com/citations?user=07ioke0AAAAJ&hl=en)!
+1. LogMap was awarded the [SWSA Ten-Year Award](http://swsa.semanticweb.org/content/swsa-ten-year-award) that recognizes the highest impact papers from the [International Semantic Web Conference](http://swsa.semanticweb.org/content/international-semantic-web-conference-iswc) (ISWC) proceedings ten years prior.
+2. LogMap reached **>750 citations** according to [Google Scholar](https://scholar.google.com/citations?user=07ioke0AAAAJ&hl=en)!
 3. Check out...
+    - New work on LogMap-LLM: ([PDF](https://arxiv.org/abs/2508.08500)) ([GitHub](https://github.com/city-artificial-intelligence/rai-ukraine-kga-llm))
     - OWL2Vec4OA embedings for Ontology Alignment ([PDF](https://arxiv.org/abs/2408.06310)) ([Slides](https://drive.google.com/file/d/1HhRqY2R1w0bz-svgTKCXEP7vYZySDVK8/view?usp=sharing)) ([GitHub](https://github.com/Sevinjt/OWL2Vec4OA))
     - The new extension based on [OWL2Vec\*](https://github.com/KRR-Oxford/OWL2Vec-Star) to integrate machine leaning techniques within the ontology alignment task [here](https://github.com/KRR-Oxford/OntoAlign).
     - The new material about the division of the ontology alignment task [here](#division-of-the-ontology-alignment-task).
@@ -95,6 +97,11 @@ or in our <a href="https://github.com/ernestojimenezruiz/logmap-matcher/issues" 
 - Ernesto Jiménez-Ruiz, Bernardo Cuenca Grau. **LogMap: Logic-based and Scalable Ontology Matching**. In the 10th International Semantic Web Confernece (ISWC 2011). ([PDF](http://www.cs.ox.ac.uk/isg/projects/LogMap/papers/paper_ISWC2011.pdf))([Slides](https://www.slideshare.net/ernestojimenezruiz/logmap-logicbased-and-scalable-ontology-matching))
 
 - Ernesto Jiménez-Ruiz et al. **LogMap family results for OAEI 2014**. 9th International Workshop on Ontology Matching (OM 2014). ([PDF](http://disi.unitn.it/~p2p/OM-2014/oaei14_paper4.pdf))
+
+
+**Combination with LLMs**
+
+- Sviatoslav Lushnei, Dmytro Shumskyi, Severyn Shykula, Ernesto Jiménez-Ruiz, Artur d'Avila Garcez. **Large Language Models as Oracles for Ontology Alignment**. [https://arxiv.org/abs/2508.08500](https://arxiv.org/abs/2508.08500)
 
 **Combination with Machine Learning**
 
