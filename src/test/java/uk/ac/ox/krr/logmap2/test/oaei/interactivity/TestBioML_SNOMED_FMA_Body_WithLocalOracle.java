@@ -7,7 +7,7 @@ public class TestBioML_SNOMED_FMA_Body_WithLocalOracle extends TestOAEITrackWith
 	protected void setUp(boolean extended_questions, boolean llm_oracle, int error_rate) {
 		
 		setIputOutputFiles("bio-ml/snomed-fma.body", "bioml-snomed-fma.body",  extended_questions, llm_oracle, error_rate);
-		SAVE_MAPPINGS = false; //overrides if saving mappings	 
+		//SAVE_MAPPINGS = false; //overrides if saving mappings	 
 
 		
 		tasks.add(
@@ -25,9 +25,9 @@ public class TestBioML_SNOMED_FMA_Body_WithLocalOracle extends TestOAEITrackWith
 	public static void main(String[] args){
 		
 		boolean extended_questions = false;
-		boolean llm_oracle = false;
+		boolean llm_oracle = true;
 		int min_err = 0;
-		int max_err = 30;
+		int max_err = 0;
 		
 		
 		for (int error_rate=min_err; error_rate<=max_err; error_rate+=10) {

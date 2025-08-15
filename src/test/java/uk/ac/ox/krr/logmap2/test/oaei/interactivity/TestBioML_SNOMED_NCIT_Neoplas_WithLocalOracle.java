@@ -27,9 +27,9 @@ public class TestBioML_SNOMED_NCIT_Neoplas_WithLocalOracle extends TestOAEITrack
 	public static void main(String[] args){
 		
 		boolean extended_questions = false;
-		boolean llm_oracle = false;
+		boolean llm_oracle = true;
 		int min_err = 0;
-		int max_err = 30;
+		int max_err = 0;
 		
 		
 		for (int error_rate=min_err; error_rate<=max_err; error_rate+=10) {

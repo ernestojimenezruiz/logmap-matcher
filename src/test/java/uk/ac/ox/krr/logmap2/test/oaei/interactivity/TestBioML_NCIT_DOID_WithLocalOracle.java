@@ -9,7 +9,7 @@ public class TestBioML_NCIT_DOID_WithLocalOracle extends TestOAEITrackWithOracle
 		
 		
 		setIputOutputFiles("bio-ml/ncit-doid", "bioml-ncit-doid",  extended_questions, llm_oracle, error_rate);
-		SAVE_MAPPINGS = false; //overrides if saving mappings
+		//SAVE_MAPPINGS = false; //overrides if saving mappings
 
 		
 		
@@ -29,9 +29,9 @@ public class TestBioML_NCIT_DOID_WithLocalOracle extends TestOAEITrackWithOracle
 		
 		
 		boolean extended_questions = false;		
-		boolean llm_oracle = false;
+		boolean llm_oracle = true;
 		int min_err = 0;
-		int max_err = 30;
+		int max_err = 0;
 		
 		
 		for (int error_rate=min_err; error_rate<=max_err; error_rate+=10) {
