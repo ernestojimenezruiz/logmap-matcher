@@ -76,6 +76,13 @@ public class MediatingOntologyExtractor {
 			bad_ontologies.add("GO-PLUS"); //Error accessing metadata
 			bad_ontologies.add("DINTO"); //Error accessing importing ontology
 			bad_ontologies.add("HHEAR"); //Error accessing importing ontology
+			bad_ontologies.add("FNS-H"); //Time-out
+			bad_ontologies.add("HRA"); //Error when processing
+			bad_ontologies.add("NIFDYS"); //Error and no composed mappings
+			bad_ontologies.add("FOVT"); //Error and no composed mappings
+			
+			
+			
 			
 			
 			this.representative_labels=representative_labels;

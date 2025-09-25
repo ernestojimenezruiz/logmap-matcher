@@ -9,7 +9,8 @@ public class TestBioML_SNOMED_NCIT_Neoplas_WithLocalOracle extends TestOAEITrack
 		
 		
 		setIputOutputFiles("bio-ml/snomed-ncit.neoplas", "bioml-snomed-ncit.neoplas",  extended_questions, llm_oracle, error_rate);
-		SAVE_MAPPINGS = false; //overrides if saving mappings	 
+		SAVE_MAPPINGS = true; //overrides if saving mappings
+		//To false when testing auto oracles 
 
 				
 		tasks.add(

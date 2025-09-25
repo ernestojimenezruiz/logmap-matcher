@@ -10,9 +10,9 @@ import uk.ac.ox.krr.logmap2.oaei.reader.RDFAlignReader;
 public class TestLogMapBio {
 	
 	
-private void getPrecisionRecall(Set<MappingObjectStr> mappingsToTest){
+private static void getPrecisionRecall(Set<MappingObjectStr> mappingsToTest){
 		
-		boolean printPR = false;
+		boolean printPR = true;
 		
 		try{
 			
@@ -41,6 +41,7 @@ private void getPrecisionRecall(Set<MappingObjectStr> mappingsToTest){
 		}
 		catch(Exception e){
 			//do nothing
+			e.printStackTrace();
 		}
 		
 	}
@@ -81,11 +82,20 @@ private void getPrecisionRecall(Set<MappingObjectStr> mappingsToTest){
 		//if (true)
 		//	return;
 		
+		String base_path = "C:/Users/Ernes/OneDrive/Documents/OAEI/";
+		String dataset = "anatomy/";
+		String path_task = base_path + dataset; 
+		String uri_path = "file:" + path_task;
 		
-		iri1= "file:/home/ernesto/Documents/OAEI_Datasets-revise/mouse/mouse2012.owl";
-		iri2= "file:/home/ernesto/Documents/OAEI_Datasets-revise/mouse/human2012.owl";
-		ref = "/home/ernesto/Documents/OAEI_Datasets-revise/mouse/reference2012.rdf"; // Reference ontology
-		file_out= "/home/ernesto/Documents/OAEI_Datasets-revise/mouse/logmapbio-test";
+		iri1 = uri_path + "mouse.owl"; //source
+		iri2 = uri_path + "human.owl";   //target
+		ref = path_task + "reference.rdf";   //reference mappings if any
+		file_out = "C:/Users/Ernes/OneDrive/Documents/OAEI/anatomy/logmap-bio/anatomy-";
+		
+		//iri1= "file:/home/ernesto/Documents/OAEI_Datasets-revise/mouse/mouse2012.owl";
+		//iri2= "file:/home/ernesto/Documents/OAEI_Datasets-revise/mouse/human2012.owl";
+		//ref = "/home/ernesto/Documents/OAEI_Datasets-revise/mouse/reference2012.rdf"; // Reference ontology
+		//file_out= "/home/ernesto/Documents/OAEI_Datasets-revise/mouse/logmapbio-test";
 		
 		/*iri1= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_FMA_small_overlapping_nci.owl";
 		iri2= "file:/home/ernesto/Documents/OAEI_datasets/oaei_2013/oaei2013_NCI_small_overlapping_fma.owl";
@@ -131,7 +141,11 @@ private void getPrecisionRecall(Set<MappingObjectStr> mappingsToTest){
 		
 		try {
 			logmap_Bio.align(iri1, iri2);
-			logmap_Bio.returnAlignmentFile(file_out);
+			//logmap_Bio.returnAlignmentFile(file_out);
+			
+			getPrecisionRecall(logmap_Bio.getLogMapBio_Mappings());
+			logmap_Bio.saveLogMapBioMappings(file_out);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

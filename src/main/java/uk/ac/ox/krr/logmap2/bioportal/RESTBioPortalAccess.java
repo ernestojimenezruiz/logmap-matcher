@@ -42,7 +42,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class RESTBioPortalAccess implements BioPortalAccess {
 
-	private final String REST_URL = "http://data.bioontology.org";
+	//private final String REST_URL = "http://data.bioontology.org";
+	private final String REST_URL = "https://data.bioontology.org"; //Moved to https in 2025
+	//https://data.bioontology.org/
+	
 
 	private final String API_KEY_Ernesto = "5b0306a7-d116-4aea-9a65-24f281599114";
 
@@ -853,7 +856,7 @@ public class RESTBioPortalAccess implements BioPortalAccess {
 		
 		
 		// Get hold of an ontology manager 
-		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();//.createOWLOntologyManager();
 		//Very important to avoid problems with ontologies
 		OWLOntologyLoaderConfiguration config = new OWLOntologyLoaderConfiguration();
 		config.setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT);
@@ -924,8 +927,15 @@ public class RESTBioPortalAccess implements BioPortalAccess {
 			
 			Set<MappingObjectStr> mapping_set = new HashSet<MappingObjectStr>();
 			
-			System.out.println("Axioms UBERON: " + bioportal.downLoadOntology("UBERON", 1).getAxiomCount());
-			System.out.println("Axioms UBERON: " + bioportal.downLoadOntology("MP", 1).getAxiomCount());
+			//OWLOntology onto_test1 = bioportal.downLoadOntology("UBERON", 1);			
+			//System.out.println("Axioms UBERON: " + onto_test1.getAxiomCount());
+			//System.out.println("Axioms HRA: " + bioportal.downLoadOntology("HRA", 1).getAxiomCount());
+			//System.out.println("Axioms CL: " + bioportal.downLoadOntology("CL", 1).getAxiomCount());
+			//System.out.println("Axioms FOVT: " + bioportal.downLoadOntology("FOVT", 1).getAxiomCount());
+			//System.out.println("Axioms BTO: " + bioportal.downLoadOntology("BTO", 1).getAxiomCount());
+			//System.out.println("Axioms AISM: " + bioportal.downLoadOntology("AISM", 1).getAxiomCount());
+			//System.out.println("Axioms NMDCO: " + bioportal.downLoadOntology("NMDCO", 1).getAxiomCount());
+			//System.out.println("Axioms FNS-H: " + bioportal.downLoadOntology("FNS-H", 1).getAxiomCount());
 			
 			
 			//bioportal.getMappingsForGivenOntologies("BP","BDO", mapping_set);

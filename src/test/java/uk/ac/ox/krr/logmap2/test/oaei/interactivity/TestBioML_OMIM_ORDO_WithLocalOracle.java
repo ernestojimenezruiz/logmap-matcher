@@ -12,7 +12,8 @@ public class TestBioML_OMIM_ORDO_WithLocalOracle extends TestOAEITrackWithOracle
 		
 		
 		setIputOutputFiles("bio-ml/omim-ordo", "bioml-omim-ordo",  extended_questions, llm_oracle, error_rate);		
-		//SAVE_MAPPINGS = false; //overrides if saving mappings	 
+		SAVE_MAPPINGS = true; //overrides if saving mappings	 
+		//To false when testing auto oracles 
 				
 		tasks.add(
 				new OAEITask(
