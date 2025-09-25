@@ -1,9 +1,9 @@
 # LogMap: An Ontology Alignment and Alignment Repair System
 
-**Highlights (Updated August 2025):**
+**Highlights (Updated September 2025):**
 
 1. LogMap was awarded the [SWSA Ten-Year Award](http://swsa.semanticweb.org/content/swsa-ten-year-award) that recognizes the highest impact papers from the [International Semantic Web Conference](http://swsa.semanticweb.org/content/international-semantic-web-conference-iswc) (ISWC) proceedings ten years prior.
-2. LogMap reached **>750 citations** according to [Google Scholar](https://scholar.google.com/citations?user=07ioke0AAAAJ&hl=en)!
+2. LogMap reached **>800 citations** according to [Google Scholar](https://scholar.google.com/citations?user=07ioke0AAAAJ&hl=en)!
 3. Check out...
     - New work on LogMap-LLM: ([PDF](https://arxiv.org/abs/2508.08500)) ([GitHub](https://github.com/city-artificial-intelligence/rai-ukraine-kga-llm))
     - OWL2Vec4OA embedings for Ontology Alignment ([PDF](https://arxiv.org/abs/2408.06310)) ([Slides](https://drive.google.com/file/d/1HhRqY2R1w0bz-svgTKCXEP7vYZySDVK8/view?usp=sharing)) ([GitHub](https://github.com/Sevinjt/OWL2Vec4OA))
