@@ -13,18 +13,20 @@ public class TestAnatomy extends TestOAEITrack{
 		
 		Parameters.readParameters();
 		
-		SAVE_MAPPINGS = true; 
-		//OUTPUT_FILE_TEMPLATE: will generate files logmap-alignment-food.owl, logmap-alignment-food.txt
-		//PATH = "/home/ernesto/Documents/Datasets/Food/logmap-alignment"; +  + "-"+task.getTaskName();
-		PATH = "C:/Users/Ernes/OneDrive/Documents/OAEI/anatomy-dataset/logmap_to_ask/";  //for output mappings
+		SAVE_MAPPINGS = true;
 		
 		//String base_path = "/home/ernesto/Documents/OAEI/";
-		String base_path = "C:/Users/Ernes/OneDrive/Documents/OAEI/";
+		//String base_path = "C:/Users/Ernes/OneDrive/Documents/OAEI/";
+		String base_path = "C:/Users/sbrn854/Documents/OAEI/";
+		
+							
 		String dataset = "anatomy-dataset/";
 
 		String path_task = base_path + dataset; 
 		String uri_path = "file:" + path_task;
-		 
+		
+		
+		PATH = path_task + "/logmap/";  //for output mappings (folder must exist)
 		
 		tasks.add(
 				new OAEITask(

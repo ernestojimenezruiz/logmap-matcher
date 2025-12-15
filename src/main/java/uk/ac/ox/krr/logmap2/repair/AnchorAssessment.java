@@ -40,7 +40,7 @@ import uk.ac.ox.krr.logmap2.utilities.PrecomputeIndexCombination;
 import uk.ac.ox.krr.logmap2.io.*;
 
 /**
- * This class will assess the validity of extracted anchors using D&G algorithm
+ * This class will assess the validity of extracted mappings using D&G algorithm
  * 
  *
  * @author Ernesto Jimenez-Ruiz
@@ -68,6 +68,8 @@ public class AnchorAssessment {
 	
 	private MappingManager mapping_extractor;
 	
+	
+	//private WriteFile writer_plans;
 	
 	
 	private Set<Integer> unSATvisited;
@@ -262,6 +264,9 @@ public class AnchorAssessment {
 		CountSatisfiabilityOfIntegration_DandG(index.getRootIdentifiers());
 		
 		
+		
+		//TODO
+		//System.out.println("\tUNSATifiabilities found with Dowling and Gallier (approximation): " + unSATvisited.size());
 		LogOutput.print("\tUNSATifiabilities found with Dowling and Gallier (approximation): " + unSATvisited.size());
 		//LogOutput.print("UNSAT found (count): " + unSATvisited.size());
 		//LogOutput.print("SAT found: " + SATvisited.size());
@@ -326,6 +331,8 @@ public class AnchorAssessment {
 							
 			}
 			else { //UNSAT
+				
+				//System.out.println("Error: " + cls + dgSat.getMappingsInvolvedInError());
 				
 				//To keep conflictiveness
 				//Based on Alessandro's code
@@ -586,6 +593,11 @@ public class AnchorAssessment {
 			}
 			else { //UNSAT
 				
+				
+				//TODO
+				System.out.println(index.getIRIStr4ConceptIndex(cls));
+				
+				
 				unSATvisited.add(cls);			
 				allUNSAT.add(cls);
 				
@@ -593,7 +605,7 @@ public class AnchorAssessment {
 				dgSat.setConflictiveMappingsAsInvolvedMappings();
 				
 				
-				//In some cases there are side effecte between mappings and we need to collect more mappings
+				//In some cases there are side effect between mappings and we need to collect more mappings
 				completeSetOfConflictiveMappings(cls, dgSat.getConflictiveMappings());  
 				
 
@@ -1058,13 +1070,20 @@ public class AnchorAssessment {
 			}
 			
 			
+			//Orders plans according to confidence and goes one by one until a plan is found.
+			//These are potential plans. One needs to check if they really solve the problem...
 			Queue<RepairmentPlan> plans = orderPlans(mappingCombinations, conflictiveMappings);
 			
 			LogOutput.print("PLANS of size " + size_plan + " for entity "+ entity + ": " + plans.size());
 			//LogOutput.print("Mappings to delete later: " + hornMappings2Remove.toString());
 			//LogOutput.print("Mappings to delete now: " + dgSat.getGeneralLink2Ignore().toString());
 			
-			while(!plans.isEmpty() && selectedPlan==null) {
+			//TODO: True only for stats
+			boolean extrac_all_plans_for_stats = true;
+			//boolean extrac_all_plans_for_stats = false;
+			int number_plans = 0;
+			
+			while(!plans.isEmpty() && (selectedPlan==null || extrac_all_plans_for_stats)) {
 				
 				RepairmentPlan plan = plans.poll();
 				
@@ -1078,13 +1097,36 @@ public class AnchorAssessment {
 						addParticularIgnoreLink(mapping.getRightHS(), mapping.getLabel(), mapping.getLeftHS1());
 					}
 				}
+				
 				if (dgSat.isSatisfiable(entity, ignoreLinks)){
-					selectedPlan = plan;
+					
+					//So that we keep first plan
+					if (selectedPlan==null)
+						selectedPlan = plan;
+					
 					LogOutput.printAlways("Plan found!");
 					//unsatClasses2repairMappingSet.get(entity).add(plan.getMappings());
+					//TODO
+					number_plans++;
+					System.out.println("\tPlan " + number_plans + " of size: " + plan.getMappings().size() + " conflict score: " + plan.getconflictiveness() + " confidence: " + plan.getConfidence());
+					
+					for (HornClause m : plan.getMappings()){
+						System.out.println("\t\t" + index.getIRIStr4ConceptIndex(m.getLeftHS1()) + "," + index.getIRIStr4ConceptIndex(m.getRightHS()) + "," + m.getDirImplication());						
+					}
+					
+					
 				}
 			}
 			//Stop while
+			
+			
+			//TODO For Stats
+			//To print plans. Do not add stop conditions and extract all plans. (remove selectedPlan==null condition)
+			//Keep selected plan by LogMap (firs in the list that works)
+			//while(!plans.isEmpty() && (selectedPlan==null || extrac_all_plans_for_stats) {
+			//Keep only first plan
+			//}
+			
 			
 			
 			
@@ -1157,6 +1199,12 @@ public class AnchorAssessment {
 	
 	
 	
+	/**
+	 * Dealing with hard cases with some stop condition when there were large number of mappings and large plans 
+	 * @param entity
+	 * @param size_plan
+	 * @return
+	 */
 	private boolean continueWithNextPlan(int entity, int size_plan){
 		
 		if (size_plan>=dgSat.getConflictiveMappings().size()){

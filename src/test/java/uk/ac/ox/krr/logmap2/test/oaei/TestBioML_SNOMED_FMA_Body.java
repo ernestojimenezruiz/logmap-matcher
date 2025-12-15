@@ -8,11 +8,24 @@ public class TestBioML_SNOMED_FMA_Body extends TestOAEITrack{
 		
 		SAVE_MAPPINGS = true;
 		
-		PATH = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-fma.body/logmap/";  //path must exist
+		//PATH = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-fma.body/logmap/";  //path must exist
+		
+		//String base_path = "C:/Users/Ernes/OneDrive/Documents/OAEI/";
+		String base_path = "C:/Users/sbrn854/Documents/OAEI/";
+						
+		
+		String dataset = "bio-ml/snomed-fma.body/";
+
+		String path_task = base_path + dataset; 
+		String uri_path = "file:" + path_task;
+						
+		
+		PATH = path_task + "/logmap/";  //for output mappings (folder must exist)	
+		
 		
 			 
-		String path_task = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-fma.body/";
-		String uri_path = "file:/" + path_task;
+		//String path_task = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/snomed-fma.body/";
+		//String uri_path = "file:/" + path_task;
 		
 		tasks.add(
 				new OAEITask(

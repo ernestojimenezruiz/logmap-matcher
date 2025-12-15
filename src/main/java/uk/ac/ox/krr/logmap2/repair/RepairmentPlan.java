@@ -75,7 +75,7 @@ public class RepairmentPlan {
 	}
 	
 	public String toString(){
-		return mappings + " (Conf: " + confidence +")";
+		return mappings + " (Confidence: " + confidence +"; conflictiveness: " + conflictiveness + ")";
 	}
 
 }

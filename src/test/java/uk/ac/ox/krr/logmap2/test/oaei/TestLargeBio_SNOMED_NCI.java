@@ -8,11 +8,25 @@ public class TestLargeBio_SNOMED_NCI extends TestOAEITrack{
 		
 		SAVE_MAPPINGS = true;
 		
-		PATH = "C:/Users/Ernes/OneDrive/Documents/OAEI/largebio/snomed-nci/logmap/";  //path must exist
+		//PATH = "C:/Users/Ernes/OneDrive/Documents/OAEI/largebio/snomed-nci/logmap/";  //path must exist
+		
+		
+		//String base_path = "C:/Users/Ernes/OneDrive/Documents/OAEI/";
+		String base_path = "C:/Users/sbrn854/Documents/OAEI/";
+						
+		
+		String dataset = "largebio/snomed-nci/";
+
+		String path_task = base_path + dataset; 
+		String uri_path = "file:" + path_task;
+						
+		
+		PATH = path_task + "/logmap/";  //for output mappings (folder must exist)	
+
 		
 			 
-		String path_task = "C:/Users/Ernes/OneDrive/Documents/OAEI/largebio/snomed-nci/";
-		String uri_path = "file:/" + path_task;
+		//String path_task = "C:/Users/Ernes/OneDrive/Documents/OAEI/largebio/snomed-nci/";
+		//String uri_path = "file:/" + path_task;
 		
 		
 		

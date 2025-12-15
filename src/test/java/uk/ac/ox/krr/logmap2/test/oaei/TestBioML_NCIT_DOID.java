@@ -8,12 +8,21 @@ public class TestBioML_NCIT_DOID extends TestOAEITrack{
 		SAVE_MAPPINGS = true; 
 		//OUTPUT_FILE_TEMPLATE: will generate files logmap-alignment-food.owl, logmap-alignment-food.txt
 		//PATH = "/home/ernesto/Documents/Datasets/Food/logmap-alignment"; +  + "-"+task.getTaskName();
-		PATH = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/ncit-doid/logmap/";
+		//PATH = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/ncit-doid/logmap/";
 		
-			 
-		String path_ncit_doid = "C:/Users/Ernes/OneDrive/Documents/OAEI/bio-ml/ncit-doid/";
-		String uri_path = "file:/" + path_ncit_doid;
+		//String base_path = "C:/Users/Ernes/OneDrive/Documents/OAEI/";
+		String base_path = "C:/Users/sbrn854/Documents/OAEI/";
 		
+		
+		String dataset = "bio-ml/ncit-doid/";
+
+		String path_task = base_path + dataset; 
+		String uri_path = "file:" + path_task;
+		
+		
+		PATH = path_task + "/logmap/";  //for output mappings (folder must exist)
+		
+				
 		tasks.add(
 				new OAEITask(
 						uri_path + "ncit.owl",  //source

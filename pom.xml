@@ -184,6 +184,7 @@
 	<artifactId>google-api-translate-java</artifactId>
 	<version>0.92</version>
 </dependency-->
+<!--Removed dependency for easier deployment and to avoid some detected issues-->
 <!--dependency>
     <groupId>com.googlecode</groupId>
     <artifactId>google-api-translate-java</artifactId>
