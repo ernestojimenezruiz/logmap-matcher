@@ -1751,8 +1751,8 @@ public class CandidateMappingManager extends MappingManager {
 						
 						//Otherwise we were asking almost nothing in interactive conference track
 						//if (OracleManager.isActive()){
-						if (OracleManager.isActive() && OracleManager.keepExtendedQuestions()){
-						//if (OracleManager.keepExtendedQuestions()){
+						//if (OracleManager.isActive() && OracleManager.keepExtendedQuestions()){
+						if (OracleManager.keepExtendedQuestions()){ //For stats, we do not need the Oracle to be active 
 							addEquivMapping2ListOfAnchors2AskUser(ide1, ide2);
 							
 							LogOutput.printAlways("New Added 2 ask: " +
@@ -2031,6 +2031,7 @@ public class CandidateMappingManager extends MappingManager {
 				if (isMappingInConflictWithFixedMappings(ident1, ident2)){
 					
 					//if ()
+					//TODO I thought this was implemented...
 					
 				}
 				

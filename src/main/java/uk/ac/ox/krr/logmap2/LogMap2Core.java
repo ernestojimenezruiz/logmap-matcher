@@ -302,6 +302,7 @@ public class LogMap2Core {
 			
 			
 			
+			
 			if (Parameters.perform_property_matching){
 				createAndAssessPropertyMappings();
 			}			
@@ -1340,7 +1341,7 @@ public class LogMap2Core {
 	
 	private void createCandidateMappingsLevel2() throws Exception{
 		
-		//System.out.println("MAPPINSG TO ASK: " + mapping_extractor.getListOfMappingsToAskUser().size());
+		//System.out.println("MAPPINGS TO ASK: " + mapping_extractor.getListOfMappingsToAskUser().size());
 		
 		LogOutput.printAlways("\nCANDIDATE DIAGNOSIS 2");
 					

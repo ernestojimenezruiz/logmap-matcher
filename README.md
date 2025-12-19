@@ -1,11 +1,11 @@
 # LogMap: An Ontology Alignment and Alignment Repair System
 
-**Highlights (Updated September 2025):**
+**Highlights (Updated December 2025):**
 
 1. LogMap was awarded the [SWSA Ten-Year Award](http://swsa.semanticweb.org/content/swsa-ten-year-award) that recognizes the highest impact papers from the [International Semantic Web Conference](http://swsa.semanticweb.org/content/international-semantic-web-conference-iswc) (ISWC) proceedings ten years prior.
 2. LogMap reached **>800 citations** according to [Google Scholar](https://scholar.google.com/citations?user=07ioke0AAAAJ&hl=en)!
 3. Check out...
-    - New work on LogMap-LLM: ([PDF](https://arxiv.org/abs/2508.08500)) ([GitHub](https://github.com/city-artificial-intelligence/rai-ukraine-kga-llm))
+    - New work on LogMapLLM: ([PDF](https://arxiv.org/abs/2508.08500)) ([GitHub](https://github.com/city-artificial-intelligence/logmap-llm/)) ([GitHub LLMs](https://github.com/city-artificial-intelligence/rai-ukraine-kga-llm))
     - OWL2Vec4OA embedings for Ontology Alignment ([PDF](https://arxiv.org/abs/2408.06310)) ([Slides](https://drive.google.com/file/d/1HhRqY2R1w0bz-svgTKCXEP7vYZySDVK8/view?usp=sharing)) ([GitHub](https://github.com/Sevinjt/OWL2Vec4OA))
     - The new extension based on [OWL2Vec\*](https://github.com/KRR-Oxford/OWL2Vec-Star) to integrate machine leaning techniques within the ontology alignment task [here](https://github.com/KRR-Oxford/OntoAlign).
     - The new material about the division of the ontology alignment task [here](#division-of-the-ontology-alignment-task).
@@ -24,7 +24,8 @@ To the best of our knowledge, LogMap is one of the few matching systems that:
 
 2. incorporates sophisticated reasoning and repair techniques to minimise the number of logical inconsistencies, and 
 
-3. provides support for user intervention during the matching process (see [Web interface](http://krrwebtools.cs.ox.ac.uk/logmap/)). 
+3. provides support for user intervention and LLM validation during the matching process.
+
 
 Please refer to the [Ontology Alignment Evaluation Initiative (OAEI)](http://oaei.ontologymatching.org/) for official results about LogMap.
 
@@ -65,6 +66,7 @@ For the OAEI campaign, since 2021, LogMap implements an interface to communicate
 **LogMap-ML:**
 Recent research to augment LogMap with semantic embeddings and distant supervision. See details [here](https://github.com/KRR-Oxford/OntoAlign) (under development).
 
+
 ### As a Mapping Debugging System
 
 LogMap can also be used as a mapping debugging system from the command line ([standalone distribution](https://github.com/ernestojimenezruiz/logmap-matcher/releases/)) or integrated in a Java application. See [wiki](https://code.google.com/archive/p/logmap-matcher/wikis) for additional information.
@@ -102,7 +104,8 @@ or in our <a href="https://github.com/ernestojimenezruiz/logmap-matcher/issues" 
 
 **Combination with LLMs**
 
-- Sviatoslav Lushnei, Dmytro Shumskyi, Severyn Shykula, Ernesto Jiménez-Ruiz, Artur d'Avila Garcez. **Large Language Models as Oracles for Ontology Alignment**. [https://arxiv.org/abs/2508.08500](https://arxiv.org/abs/2508.08500)
+- Sviatoslav Lushnei, Dmytro Shumskyi, Severyn Shykula, Ernesto Jiménez-Ruiz, Artur d'Avila Garcez. **Large Language Models as Oracles for Ontology Alignment**. [https://arxiv.org/abs/2508.08500](https://arxiv.org/abs/2508.08500) ([GitHub](https://github.com/city-artificial-intelligence/logmap-llm/)) ([GitHub LLMs](https://github.com/city-artificial-intelligence/rai-ukraine-kga-llm))
+- Ernesto Jiménez-Ruiz, Sviatoslav Lushnei, Dmytro Shumskyi, Severyn Shykula, and Artur Garcez. **LogMap Family welcomes LogMapLLM in the OAEI 2025**. OM 2025: The 20th International Workshop on Ontology Matching collocated with the 24th International Semantic Web Conference (ISWC). 2025.
 
 **Combination with Machine Learning**
 

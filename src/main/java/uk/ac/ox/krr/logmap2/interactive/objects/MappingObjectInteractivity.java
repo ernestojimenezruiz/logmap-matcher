@@ -35,6 +35,15 @@ public class MappingObjectInteractivity extends MappingObject{
 	
 	private boolean assessedDirectlyFlag=false; 
 	
+	private int typeMapping;//classes, properties, instances
+	//TYPE OF MAPPING from Utilities
+	//public static final int CLASSES=0;
+	//public static final int DATAPROPERTIES=1;
+	//public static final int OBJECTPROPERTIES=2;
+	//public static final int INSTANCES=3;
+	//public static final int UNKNOWN=4;
+	
+	
 	//private boolean disjointFlag=false; //used in automatic-interactivity only
 	//private boolean inGSFlag=false; //used in automatic-interactivity only
 	
@@ -52,28 +61,46 @@ public class MappingObjectInteractivity extends MappingObject{
 	private Set<Integer> ambiguousMappings = new HashSet<Integer>();
 	
 	
-	
 	public MappingObjectInteractivity(int ide1, int ide2){
 		
-		this(ide1, ide2, Utilities.EQ);
+		this(ide1, ide2, Utilities.EQ, Utilities.CLASSES);
 		
 	}
 	
-	public MappingObjectInteractivity(int ide1, int ide2, int dirMapping){
+	/*public MappingObjectInteractivity(int ide1, int ide2, int dirMapping){
 		
 		ident_onto1 = ide1;
 		ident_onto2 = ide2;
 		this.setDirMapping(dirMapping);
 		
-	}
+	}*/
 	
 	public MappingObjectInteractivity(int ide1, int ide2, int dirMapping, double scope, double lexSim){
+		
+		this(ide1, ide2, dirMapping, Utilities.CLASSES, scope, lexSim);
+		
+	}
+	
+	
+		
+	public MappingObjectInteractivity(int ide1, int ide2, int dirMapping, int type){
+		
+		ident_onto1 = ide1;
+		ident_onto2 = ide2;
+		this.setDirMapping(dirMapping);
+		this.typeMapping=type;
+		
+	}
+	
+	public MappingObjectInteractivity(int ide1, int ide2, int dirMapping, int type, double scope, double lexSim){
 		
 		ident_onto1 = ide1;
 		ident_onto2 = ide2;
 		this.setDirMapping(dirMapping);		
 		this.scope = scope;
 		this.lexSim = lexSim;
+		
+		this.typeMapping=type;
 		
 	}
 
@@ -205,6 +232,33 @@ public class MappingObjectInteractivity extends MappingObject{
 	
 	public void addAmbiguousMapping(int mapping_id){
 		ambiguousMappings.add(mapping_id);
+	}
+	
+	
+	public boolean isClassMapping(){
+		return getTypeOfMapping()==Utilities.CLASSES;
+	}
+	
+	public boolean isInstanceMapping(){
+		return getTypeOfMapping()==Utilities.INSTANCES;
+	}
+	
+	public boolean isDataPropertyMapping(){
+		return getTypeOfMapping()==Utilities.DATAPROPERTIES;
+	}
+	
+	public boolean isObjectPropertyMapping(){
+		return getTypeOfMapping()==Utilities.OBJECTPROPERTIES;
+	}
+	
+	public int getTypeOfMapping(){
+		return typeMapping;
+		
+	}
+	
+	public void setTypeOfMapping(int type){
+		typeMapping = type;
+		
 	}
 	
 	

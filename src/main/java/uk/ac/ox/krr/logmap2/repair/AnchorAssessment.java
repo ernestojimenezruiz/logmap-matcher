@@ -267,8 +267,7 @@ public class AnchorAssessment {
 		
 		//TODO
 		//System.out.println("\tUNSATifiabilities found with Dowling and Gallier (approximation): " + unSATvisited.size());
-		LogOutput.print("\tUNSATifiabilities found with Dowling and Gallier (approximation): " + unSATvisited.size());
-		//LogOutput.print("UNSAT found (count): " + unSATvisited.size());
+		LogOutput.print("\tUNSATifiabilities found with Dowling and Gallier (approximation): " + unSATvisited.size());		
 		//LogOutput.print("SAT found: " + SATvisited.size());
 		
 		unSATvisited.clear(); //we need to clear structure
@@ -594,8 +593,8 @@ public class AnchorAssessment {
 			else { //UNSAT
 				
 				
-				//TODO
-				System.out.println(index.getIRIStr4ConceptIndex(cls));
+				//TODO print for stats only
+				//System.out.println(index.getIRIStr4ConceptIndex(cls));
 				
 				
 				unSATvisited.add(cls);			
@@ -1079,8 +1078,8 @@ public class AnchorAssessment {
 			//LogOutput.print("Mappings to delete now: " + dgSat.getGeneralLink2Ignore().toString());
 			
 			//TODO: True only for stats
-			boolean extrac_all_plans_for_stats = true;
-			//boolean extrac_all_plans_for_stats = false;
+			//boolean extrac_all_plans_for_stats = true;
+			boolean extrac_all_plans_for_stats = false;
 			int number_plans = 0;
 			
 			while(!plans.isEmpty() && (selectedPlan==null || extrac_all_plans_for_stats)) {
@@ -1106,13 +1105,13 @@ public class AnchorAssessment {
 					
 					LogOutput.printAlways("Plan found!");
 					//unsatClasses2repairMappingSet.get(entity).add(plan.getMappings());
-					//TODO
-					number_plans++;
-					System.out.println("\tPlan " + number_plans + " of size: " + plan.getMappings().size() + " conflict score: " + plan.getconflictiveness() + " confidence: " + plan.getConfidence());
 					
-					for (HornClause m : plan.getMappings()){
-						System.out.println("\t\t" + index.getIRIStr4ConceptIndex(m.getLeftHS1()) + "," + index.getIRIStr4ConceptIndex(m.getRightHS()) + "," + m.getDirImplication());						
-					}
+					//TODO: print for stats only
+					number_plans++;
+					//System.out.println("\tPlan " + number_plans + " of size: " + plan.getMappings().size() + " conflict score: " + plan.getconflictiveness() + " confidence: " + plan.getConfidence());					
+					//for (HornClause m : plan.getMappings()){
+					//	System.out.println("\t\t" + index.getIRIStr4ConceptIndex(m.getLeftHS1()) + "," + index.getIRIStr4ConceptIndex(m.getRightHS()) + "," + m.getDirImplication());						
+					//}
 					
 					
 				}

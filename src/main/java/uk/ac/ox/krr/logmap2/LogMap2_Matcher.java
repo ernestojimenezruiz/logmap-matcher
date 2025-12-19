@@ -106,7 +106,7 @@ public class LogMap2_Matcher {
 		
 		saveMappingsFlatFormat(getLogmap2_mappings4user(), output_path, "logmap_mappings_to_ask_oracle_user_llm.txt");
 		
-		System.out.println("MAPPINSG TO ASK: " + getLogmap2_mappings4user().size());
+		System.out.println("MAPPINGS TO ASK: " + getLogmap2_mappings4user().size());
 
 		
 		//saveMappingsFlatFormat(getLogmap2_anchors(), output_path, "logmap_anchors.txt");
@@ -769,6 +769,7 @@ public class LogMap2_Matcher {
 			}//for ide1
 			
 			
+			//TODO We need to update structures with property and instance mappings
 			for (MappingObjectInteractivity mapping_interact : logmap2.getMappingsToAskUser()){
 			
 				MappingObjectStr mapping;
@@ -781,14 +782,14 @@ public class LogMap2_Matcher {
 					continue;
 				
 				
-				
-				//TODO there may be mappings to ask from properties or instances			
+				//There may be mappings to ask from properties or instances			
 				mapping = new MappingObjectStr(
 										logmap2.getIRI4ConceptIdentifier(ide1), 
 										logmap2.getIRI4ConceptIdentifier(ide2), 
 										logmap2.getConfidence4ConceptMapping(ide1, ide2),
 										mapping_interact.getDirMapping(),
-										Utilities.CLASSES); //most of them
+										mapping_interact.getTypeOfMapping());
+										//Utilities.CLASSES); //most of them
 				
 				logmap2_mappings4user.add(mapping);
 								
