@@ -1994,9 +1994,9 @@ public class CandidateMappingManager extends MappingManager {
 					
 					//Add 2 list 2 ask
 					if (isId1SmallerThanId2(ide1, ide2))
-						addMappingObject2AskUserList(ide1, ide2, Utilities.L2R);
+						addMappingObject2AskUserList(ide1, ide2, Utilities.L2R, Utilities.CLASSES);
 					else
-						addMappingObject2AskUserList(ide2, ide1, Utilities.R2L);
+						addMappingObject2AskUserList(ide2, ide1, Utilities.R2L, Utilities.CLASSES);
 				}
 			}
 		}
@@ -2752,10 +2752,16 @@ public class CandidateMappingManager extends MappingManager {
 					LogOutput.printAlways("\t" +index.getName4DataPropIndex(ident1));
 					LogOutput.printAlways("\t" +index.getName4DataPropIndex(dataPropertyMappings.get(ident1)));
 				}
-				//TODO 
+				 
     			//Ask if oracle active and properties are compatible
-				else if (OracleManager.isActive()){
-    				if (confidence_mapping>=Parameters.min_conf_pro_map){
+				else if (confidence_mapping>=Parameters.min_conf_pro_map){
+					
+					//TODO Add data prop mappings to mappings to ask user/oracle
+					addMappingObject2AskUserList(ident1, dataPropertyMappings.get(ident1), Utilities.EQ, Utilities.DATAPROPERTIES);
+					
+					
+					if (OracleManager.isActive()){
+    				
     					if (OracleManager.isMappingValid(
     							index.getIRIStr4DataPropIndex(ident1),
     							index.getIRIStr4DataPropIndex(dataPropertyMappings.get(ident1)))){
@@ -2962,8 +2968,13 @@ public class CandidateMappingManager extends MappingManager {
 				}
     			//TODO 
     			//Ask if oracle active and compatible props (we also include PROBABLY_INCOMPATIBLE_RANGE_OR_DOMAIN)
-				else if (OracleManager.isActive()){
-    				if (confidence_mapping>=Parameters.min_conf_pro_map){
+				else if (confidence_mapping>=Parameters.min_conf_pro_map){
+					
+					//TODO Add data prop mappings to mappings to ask user/oracle
+					addMappingObject2AskUserList(ident1, objPropertyMappings.get(ident1), Utilities.EQ, Utilities.OBJECTPROPERTIES);
+										
+					if (OracleManager.isActive()){
+    				
     					if (OracleManager.isMappingValid(
     							index.getIRIStr4ObjPropIndex(ident1),
     							index.getIRIStr4ObjPropIndex(objPropertyMappings.get(ident1)))){
@@ -2991,36 +3002,41 @@ public class CandidateMappingManager extends MappingManager {
     			
     		}
 			//ONLY IF oraculo active we double check those cases extended with alternative labels
-			else if (OracleManager.isActive() && (index.getAlternativeLabels4ObjectPropertyIndex(ident1).size()>1 || index.getAlternativeLabels4ObjectPropertyIndex(objPropertyMappings.get(ident1)).size()>1)){
+			else if (index.getAlternativeLabels4ObjectPropertyIndex(ident1).size()>1 || index.getAlternativeLabels4ObjectPropertyIndex(objPropertyMappings.get(ident1)).size()>1){
 				//Check isub without alternative labels
 				
 				double isub_labels = getIsubScore4ObjectPropertyLabels(ident1, objPropertyMappings.get(ident1), false);
 				
 				if (isub_labels<Parameters.min_conf_pro_map){ //bad confidence (also smaller than required_conf)
+				
+					//TODO Add data prop mappings to mappings to ask user/oracle
+					addMappingObject2AskUserList(ident1, objPropertyMappings.get(ident1), Utilities.EQ, Utilities.OBJECTPROPERTIES);					
 					
 					LogOutput.printAlways(required_confidence +  "   " +  isub_labels);
 					
+					if (OracleManager.isActive()){
 					
-					if (!OracleManager.isMappingValid(
-							index.getIRIStr4ObjPropIndex(ident1),
-							index.getIRIStr4ObjPropIndex(objPropertyMappings.get(ident1)))){
+						if (!OracleManager.isMappingValid(
+								index.getIRIStr4ObjPropIndex(ident1),
+								index.getIRIStr4ObjPropIndex(objPropertyMappings.get(ident1)))){
+							
+							todelete.add(ident1);
+							
+							LogOutput.printAlways("Good Confidence Object property mapping NOT in Oracle");
+							LogOutput.printAlways(index.getIRIStr4ObjPropIndex(ident1));
+							LogOutput.printAlways(index.getIRIStr4ObjPropIndex(objPropertyMappings.get(ident1)));
 						
-						todelete.add(ident1);
-						
-						LogOutput.printAlways("Good Confidence Object property mapping NOT in Oracle");
-						LogOutput.printAlways(index.getIRIStr4ObjPropIndex(ident1));
-						LogOutput.printAlways(index.getIRIStr4ObjPropIndex(objPropertyMappings.get(ident1)));
-					
-					}
-					else {
-						LogOutput.printAlways("Good Confidence Object property mapping In Oracle");
-						LogOutput.printAlways(index.getIRIStr4ObjPropIndex(ident1));
-						LogOutput.printAlways(index.getIRIStr4ObjPropIndex(objPropertyMappings.get(ident1)));
-						
-						//We also ask for domain and ranges
-						//Not anu more
-						//askOraculoAboutDomainsAndRange4ObjectPropertyMappings(ident1, objPropertyMappings.get(ident1));
-						
+						}
+						else {
+							LogOutput.printAlways("Good Confidence Object property mapping In Oracle");
+							LogOutput.printAlways(index.getIRIStr4ObjPropIndex(ident1));
+							LogOutput.printAlways(index.getIRIStr4ObjPropIndex(objPropertyMappings.get(ident1)));
+							
+							//We also ask for domain and ranges
+							//Not anu more
+							//askOraculoAboutDomainsAndRange4ObjectPropertyMappings(ident1, objPropertyMappings.get(ident1));
+							
+						}
 					}
 				}
 			}

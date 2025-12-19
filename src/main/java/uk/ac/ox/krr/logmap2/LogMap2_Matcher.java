@@ -467,7 +467,7 @@ public class LogMap2_Matcher {
 					if (logmap2.getIRI4DataPropIdentifier(ide1).equals(logmap2.getIRI4DataPropIdentifier(logmap2.getDataPropMappings().get(ide1))))
 						continue;
 					
-					double conf = logmap2.getConfidence4DataPropConceptMapping(ide1, logmap2.getDataPropMappings().get(ide1));
+					double conf = logmap2.getConfidence4DataPropMapping(ide1, logmap2.getDataPropMappings().get(ide1));
 					
 					MappingObjectStr mapping = 
 							new MappingObjectStr(			
@@ -492,7 +492,7 @@ public class LogMap2_Matcher {
 					if (logmap2.getIRI4ObjectPropIdentifier(ide1).equals(logmap2.getIRI4ObjectPropIdentifier(logmap2.getObjectPropMappings().get(ide1))))
 						continue;
 					
-					double conf = logmap2.getConfidence4ObjectPropConceptMapping(ide1, logmap2.getObjectPropMappings().get(ide1));
+					double conf = logmap2.getConfidence4ObjectPropMapping(ide1, logmap2.getObjectPropMappings().get(ide1));
 					
 					MappingObjectStr mapping =
 							new MappingObjectStr(
@@ -770,6 +770,7 @@ public class LogMap2_Matcher {
 			
 			
 			//TODO We need to update structures with property and instance mappings
+			
 			for (MappingObjectInteractivity mapping_interact : logmap2.getMappingsToAskUser()){
 			
 				MappingObjectStr mapping;
@@ -781,15 +782,70 @@ public class LogMap2_Matcher {
 				if (logmap2.getIRI4ConceptIdentifier(ide1).equals(logmap2.getIRI4ConceptIdentifier(ide2)))
 					continue;
 				
+				//TODO Differentiate by type of mappings
+				//There may be mappings to ask from properties or instances
+				if (mapping_interact.getTypeOfMapping()==Utilities.CLASSES) {
 				
-				//There may be mappings to ask from properties or instances			
-				mapping = new MappingObjectStr(
-										logmap2.getIRI4ConceptIdentifier(ide1), 
-										logmap2.getIRI4ConceptIdentifier(ide2), 
-										logmap2.getConfidence4ConceptMapping(ide1, ide2),
-										mapping_interact.getDirMapping(),
-										mapping_interact.getTypeOfMapping());
-										//Utilities.CLASSES); //most of them
+					mapping = new MappingObjectStr(
+											logmap2.getIRI4ConceptIdentifier(ide1), 
+											logmap2.getIRI4ConceptIdentifier(ide2), 
+											logmap2.getConfidence4ConceptMapping(ide1, ide2),
+											mapping_interact.getDirMapping(),
+											mapping_interact.getTypeOfMapping());
+					
+					mapping.setLexicalConfidenceMapping(logmap2.getLexicalScore4ConceptMapping(ide1, ide2));
+					mapping.setScopeConfidenceMapping(logmap2.getStrutcuralScore4ConceptMapping(ide1, ide2));
+					
+				}
+				else if (mapping_interact.getTypeOfMapping()==Utilities.OBJECTPROPERTIES) {
+					
+					double conf = logmap2.getConfidence4ObjectPropMapping(ide1, ide2);
+					
+					mapping = new MappingObjectStr(
+							logmap2.getIRI4ObjectPropIdentifier(ide1), 
+							logmap2.getIRI4ObjectPropIdentifier(ide2), 
+							conf,
+							mapping_interact.getDirMapping(),
+							mapping_interact.getTypeOfMapping());
+					
+					//Same confidence so far
+					mapping.setLexicalConfidenceMapping(conf);
+					mapping.setScopeConfidenceMapping(conf);
+					
+				}
+				else if (mapping_interact.getTypeOfMapping()==Utilities.DATAPROPERTIES) {
+					
+					double conf = logmap2.getConfidence4DataPropMapping(ide1, ide2);
+					
+					mapping = new MappingObjectStr(
+							logmap2.getIRI4DataPropIdentifier(ide1), 
+							logmap2.getIRI4DataPropIdentifier(ide2), 
+							conf,
+							mapping_interact.getDirMapping(),
+							mapping_interact.getTypeOfMapping());
+					
+					//Same confidence so far
+					mapping.setLexicalConfidenceMapping(conf);
+					mapping.setScopeConfidenceMapping(conf);
+					
+					
+				}
+				else { //instances
+					
+					
+					mapping =
+							new MappingObjectStr(
+							logmap2.getIRI4InstanceIdentifier(ide1), 
+							logmap2.getIRI4InstanceIdentifier(ide2), 
+							logmap2.getConfidence4InstanceMapping(ide1, ide2),
+							Utilities.EQ,
+							Utilities.INSTANCES);
+					
+					
+					mapping.setLexicalConfidenceMapping(logmap2.getLexicalScore4InstanceMapping(ide1, ide2));
+					mapping.setScopeConfidenceMapping(logmap2.getStructuralScore4InstanceMapping(ide1, ide2));
+					
+				}
 				
 				logmap2_mappings4user.add(mapping);
 								

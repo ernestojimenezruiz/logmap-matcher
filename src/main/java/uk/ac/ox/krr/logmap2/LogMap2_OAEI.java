@@ -159,7 +159,7 @@ public class LogMap2_OAEI {
 							logmap2.getIRI4DataPropIdentifier(ide1),
 							logmap2.getIRI4DataPropIdentifier(logmap2.getDataPropMappings().get(ide1)),
 							Utilities.EQ,  
-							logmap2.getConfidence4DataPropConceptMapping(ide1, logmap2.getDataPropMappings().get(ide1))//1.0
+							logmap2.getConfidence4DataPropMapping(ide1, logmap2.getDataPropMappings().get(ide1))//1.0
 							);
 			}
 			
@@ -180,7 +180,7 @@ public class LogMap2_OAEI {
 							logmap2.getIRI4ObjectPropIdentifier(ide1),
 							logmap2.getIRI4ObjectPropIdentifier(logmap2.getObjectPropMappings().get(ide1)),
 							Utilities.EQ, 
-							logmap2.getConfidence4ObjectPropConceptMapping(ide1, logmap2.getObjectPropMappings().get(ide1))//1.0
+							logmap2.getConfidence4ObjectPropMapping(ide1, logmap2.getObjectPropMappings().get(ide1))//1.0
 							);
 			}
 		}

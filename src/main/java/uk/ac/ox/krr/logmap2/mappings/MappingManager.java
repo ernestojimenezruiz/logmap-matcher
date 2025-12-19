@@ -555,6 +555,7 @@ public abstract class MappingManager {
 	}
 	
 	
+	//Assumes it is equiv and class ampping
 	public void addMappingObject2AskUserList(int index1, int index2){
 		//listMappings2askUser1N.add(new MappingObjectInteractivity(index1, index2, ambiguity));
 		listMappings2askUser1N.add(new MappingObjectInteractivity(
@@ -564,10 +565,10 @@ public abstract class MappingManager {
 	}
 	
 	
-	public void addMappingObject2AskUserList(int index1, int index2, int diMapping){
+	public void addMappingObject2AskUserList(int index1, int index2, int dirMapping, int type){
 		//listMappings2askUser1N.add(new MappingObjectInteractivity(index1, index2, ambiguity));
 		listMappings2askUser1N.add(new MappingObjectInteractivity(
-				index1, index2, diMapping, extractScopeAll4Mapping(index1, index2), extractISUB4Mapping(index1, index2)));
+				index1, index2, dirMapping, type, extractScopeAll4Mapping(index1, index2), extractISUB4Mapping(index1, index2)));
 	}
 	
 	

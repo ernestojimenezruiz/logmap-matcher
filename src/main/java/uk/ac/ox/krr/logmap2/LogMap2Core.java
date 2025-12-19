@@ -725,7 +725,7 @@ public class LogMap2Core {
 					getIRI4DataPropIdentifier(ide1),
 					getIRI4DataPropIdentifier(getDataPropMappings().get(ide1)),
 					Utilities.EQ,  
-					getConfidence4DataPropConceptMapping(ide1, getDataPropMappings().get(ide1))//1.0
+					getConfidence4DataPropMapping(ide1, getDataPropMappings().get(ide1))//1.0
 				);
 		}
 		
@@ -740,7 +740,7 @@ public class LogMap2Core {
 					getIRI4ObjectPropIdentifier(ide1),
 					getIRI4ObjectPropIdentifier(getObjectPropMappings().get(ide1)),
 					Utilities.EQ, 
-					getConfidence4ObjectPropConceptMapping(ide1, getObjectPropMappings().get(ide1))//1.0
+					getConfidence4ObjectPropMapping(ide1, getObjectPropMappings().get(ide1))//1.0
 				);
 		}
 		
@@ -1808,7 +1808,7 @@ public class LogMap2Core {
 							getIRI4DataPropIdentifier(ide1),
 							getIRI4DataPropIdentifier(getDataPropMappings().get(ide1)),
 							Utilities.EQ,  
-							getConfidence4DataPropConceptMapping(ide1, getDataPropMappings().get(ide1))//1.0
+							getConfidence4DataPropMapping(ide1, getDataPropMappings().get(ide1))//1.0
 						);
 				}
 				
@@ -1818,7 +1818,7 @@ public class LogMap2Core {
 							getIRI4ObjectPropIdentifier(ide1),
 							getIRI4ObjectPropIdentifier(getObjectPropMappings().get(ide1)),
 							Utilities.EQ, 
-							getConfidence4ObjectPropConceptMapping(ide1, getObjectPropMappings().get(ide1))//1.0
+							getConfidence4ObjectPropMapping(ide1, getObjectPropMappings().get(ide1))//1.0
 						);
 				}
 			}
@@ -2534,11 +2534,11 @@ public class LogMap2Core {
 		return mapping_extractor.getConfidence4Mapping(ide1, ide2);
 	}
 	
-	public double getConfidence4DataPropConceptMapping(int ide1, int ide2){
+	public double getConfidence4DataPropMapping(int ide1, int ide2){
 		return mapping_extractor.getConfidence4DataPropertyAnchor(ide1, ide2);
 	}
 	
-	public double getConfidence4ObjectPropConceptMapping(int ide1, int ide2){
+	public double getConfidence4ObjectPropMapping(int ide1, int ide2){
 		return mapping_extractor.getConfidence4ObjectPropertyAnchor(ide1, ide2);
 	}
 	
