@@ -106,7 +106,7 @@ public class LogMap2_Matcher {
 		
 		saveMappingsFlatFormat(getLogmap2_mappings4user(), output_path, "logmap_mappings_to_ask_oracle_user_llm.txt");
 		
-		System.out.println("MAPPINGS TO ASK: " + getLogmap2_mappings4user().size());
+		//System.out.println("MAPPINGS TO ASK: " + getLogmap2_mappings4user().size());
 
 		
 		//saveMappingsFlatFormat(getLogmap2_anchors(), output_path, "logmap_anchors.txt");

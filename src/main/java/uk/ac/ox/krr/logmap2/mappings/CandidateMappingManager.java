@@ -1759,9 +1759,9 @@ public class CandidateMappingManager extends MappingManager {
 									index.getIRIStr4ConceptIndex(ide1) + "  " +
 									index.getIRIStr4ConceptIndex(ide2));
 						
-						}
-						
-						else{
+						}						
+						//If not active then LogMap will do it
+						if (!OracleManager.isActive()){						
 							addSubMapping2Mappings2Review(ide1, ide2);
 							addSubMapping2Mappings2Review(ide2, ide1);
 						}
@@ -1776,7 +1776,7 @@ public class CandidateMappingManager extends MappingManager {
 					}
 					else{
 						//Mappings that are likely to be incorrect
-						//We give a chance to be revsiewed by the user
+						//We give a chance to be reviewed by the user
 						addEquivMapping2ListOfAnchors2AskUser(ide1, ide2);
 					}
 				}

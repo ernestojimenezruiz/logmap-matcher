@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import uk.ac.ox.krr.logmap2.io.ReadFile;
+import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 
 /**
  * with the collaboration of Diego Jimenez Carapella
@@ -218,6 +219,18 @@ public class LocalOracle extends Oraculo{
 		} 
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	public static void loadLocalOraculo(Set<MappingObjectStr> mappings_local_oracle) {
+	
+		//TODO in the future we may need to consider type and direction of the mapping, specially direction.
+		//TODO For now we assume equivalence among URIs
+		for (MappingObjectStr mapping : mappings_local_oracle) {		
+			addMapping2LocalOracle(mapping.getIRIStrEnt1(), mapping.getIRIStrEnt2());
+			addMapping2LocalOracle(mapping.getIRIStrEnt2(), mapping.getIRIStrEnt1());
 		}
 		
 	}

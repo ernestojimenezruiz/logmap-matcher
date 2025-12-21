@@ -105,7 +105,7 @@ public abstract class TestOAEITrackWithOracle {
 		
 		if (llm_oracle) //loads csv file
 			LocalOracle.loadLocalOraculoLLM(PATH_TO_ORACLE);
-		else //loads classing txt file
+		else //loads classic txt file
 			LocalOracle.loadLocalOraculo(PATH_TO_ORACLE);
 		
 		
