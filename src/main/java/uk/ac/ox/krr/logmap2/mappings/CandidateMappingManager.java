@@ -2043,6 +2043,10 @@ public class CandidateMappingManager extends MappingManager {
 	}
 	
 	
+
+	
+	
+	
 	
 	/**
 	 * We add them iff they are not already inferred and are not in conflict
@@ -2076,6 +2080,29 @@ public class CandidateMappingManager extends MappingManager {
 	}
 	
 	
+	
+	
+	
+	private void considerAdditionalFeedbackForInstanceMapping(int ident1, int ident2, boolean ambiguity){
+		
+		
+		//We keep it in the list always for stat purposes
+		addMappingObject2AskUserList(ident1, ident2, Utilities.EQ, Utilities.INSTANCES);					
+		
+		//LogOutput.printAlways(required_confidence +  "   " +  isub_labels);
+		
+		if (OracleManager.isActive()){
+		
+			if (OracleManager.isMappingValid(
+					index.getIRIStr4ObjPropIndex(ident1),
+					index.getIRIStr4ObjPropIndex(ident2))){
+		
+				addInstanceMapping(ident1, ident2, ambiguity);
+				
+			}
+		}
+		
+	}
 	
 	
 	
@@ -2151,8 +2178,13 @@ public class CandidateMappingManager extends MappingManager {
 							
 													
 			    		}
-						else{
+						else{ //Non hard discarded. As it involves intersection of IF-exact, confidence is typically high
 							type_output=1;//disc 1
+							
+							//TODO: ask user/oracle
+							considerAdditionalFeedbackForInstanceMapping(ident1, ident2, ambiguity);
+							
+							
 							//LogOutput.print("Not good individuals: " + if_entry + " " + ident1 + " " + ident2 + "  " + confidence + " " + required_confidence);
 							//LogOutput.print("\t" +index.getName4IndividualIndex(ident1) + " " + index.getAlternativeLabels4IndividualIndex(ident1));
 							//LogOutput.print("\t" +index.getName4IndividualIndex(ident2) + " " + index.getAlternativeLabels4IndividualIndex(ident2));
@@ -2270,7 +2302,14 @@ public class CandidateMappingManager extends MappingManager {
 								//for (int id : index.getIndividualClassTypes4Identifier(ident2)){
 								//	LogOutput.printAlways("\t\t"+ index.getName4ConceptIndex(id));
 								//}
-								type_output=1;								
+								type_output=1;
+								
+								//Extended questions with confidence > 0.65
+								//Non Extended confidence > 0.8
+								if (confidence>0.80 || OracleManager.keepExtendedQuestions())
+									//TODO: ask user/oracle
+									considerAdditionalFeedbackForInstanceMapping(ident1, ident2, ambiguity);
+								
 							}
 							else{
 								type_output=2;
