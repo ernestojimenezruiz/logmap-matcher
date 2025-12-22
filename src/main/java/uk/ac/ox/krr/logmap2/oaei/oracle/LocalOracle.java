@@ -243,6 +243,14 @@ public class LocalOracle extends Oraculo{
 	}
 	
 	
+	
+	/**
+	 * Resets local oracle in case it is used several times in multiple runs with different mappings
+	 */
+	public static void resetLocalOracle() {
+		oracle_mappings.clear();
+		error_rate = 0;
+	}
 
 	
 	

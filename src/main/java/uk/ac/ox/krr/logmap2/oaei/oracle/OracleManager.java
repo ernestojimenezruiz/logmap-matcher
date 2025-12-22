@@ -124,6 +124,11 @@ public class OracleManager {
 		status_oraculo=NOTSET;
 	}
 	
+	public static void disableOraculo(){
+		numQuestions=0;
+		status_oraculo=NO;
+	}
+	
 	
 	
 

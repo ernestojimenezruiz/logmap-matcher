@@ -100,14 +100,25 @@ public class LogMapLLM_Interface {
 	
 	
 	/**
-	 * Performs ontology alignment with LogMap
+	 * Performs ontology alignment with LogMap (no oracle)
 	 */
-	public void performAlignment() {
-			
+	public void performAlignment() {			
+		performAlignment(false);				
+		
+	}
+	
+	private void performAlignment(boolean withOracle) {
+		
+		//Resets/disables oracle
+		if (!withOracle) {
+			resetOracle();
+		}
+				
+				
 		//Sets things up in terms of paths and parameters
 		setUpParameters();
-		
-		
+				
+				
 		if (save_mappings){
 			String output_file_template = path_to_output_mappings + task_name + "-";			
 			//System.out.println("Saving mappings to " + path_to_output_mappings);			
@@ -117,9 +128,9 @@ public class LogMapLLM_Interface {
 		else {
 			logmap = new LogMap2_Matcher(onto_uri1, onto_uri2);
 		}
-				
 		
 	}
+		
 	
 	
 	/**
@@ -128,17 +139,12 @@ public class LogMapLLM_Interface {
 	 */
 	public void performAlignmentWithLocalOracle(Set<MappingObjectStr> mappings_local_oracle) {
 		
-		//Setting up oracle
-		OracleManager.setLocalOracle(true);
-				
+		setLocalOracle();
+						
 		//Load from objects
 		LocalOracle.loadLocalOraculo(mappings_local_oracle);
-				
-		//Error rate
-		LocalOracle.setErrorRate(0);
-		
-		
-		performAlignment();
+								
+		performAlignment(true);
 		
 		
 	}
@@ -151,21 +157,38 @@ public class LogMapLLM_Interface {
 	 */
 	public void performAlignmentWithLocalOracle(String path_to_local_oracle) {
 		
-		//Setting up oracle
-		OracleManager.setLocalOracle(true);
-				
+		setLocalOracle();
+		
 		//Load from objects
 		LocalOracle.loadLocalOraculoLLM(path_to_local_oracle);
-				
-		//Error rate
-		LocalOracle.setErrorRate(0);
-		
-		
-		performAlignment();
+						
+		performAlignment(true);
 		
 		
 	}
 	
+	
+	private void setLocalOracle() {
+		
+		//Reset previous status
+		resetOracle();
+		
+		//Setting up oracle
+		OracleManager.setLocalOracle(true);
+		
+		//Error rate
+		LocalOracle.setErrorRate(0);
+				
+				
+		
+		
+	}
+	
+	
+	private void resetOracle() {
+		LocalOracle.resetLocalOracle();
+		OracleManager.disableOraculo();
+	}
 	
 	/**
 	 * Those mapping where LogMap is uncertain
