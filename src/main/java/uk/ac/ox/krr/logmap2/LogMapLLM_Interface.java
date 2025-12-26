@@ -73,23 +73,31 @@ public class LogMapLLM_Interface {
 			Parameters.readParameters(path_to_paramaters);
 		
 		
-			
+		//Output mappings
 		if (path_to_output_mappings!=null && !path_to_output_mappings.equals("")) {
+			
+			//We make sure path finishes with "/" or "\"
+			if (!path_to_output_mappings.endsWith(File.separator))
+				path_to_output_mappings += File.separator;
+			
 			File directory = new File(path_to_output_mappings);
 			if (!directory.exists())
 				if (directory.mkdir())
 					save_mappings=true;
 				else
 					System.err.println("The directory '"+ path_to_output_mappings + "' could not be created. Output mappinsg will not be saved.");
-			//else {
-			//	System.out.println("Directory exists " + path_to_output_mappings);
-			//}
-		}
-		//else {
+			else {
+				//System.out.println("Directory exists " + path_to_output_mappings);
+				save_mappings=true;
+			}
+		}		
+		else {
 		//	System.out.println("Empty path  " + path_to_output_mappings);
-		//}
+			save_mappings=false;
+		}
 		
 		
+		//Oracle
 		OracleManager.setExtendedQuestions(extractExtendedQuestions4LLM); 
 		
 		
