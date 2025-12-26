@@ -74,6 +74,8 @@ public class LogMapLLM_Interface {
 		
 		
 		//Output mappings
+		save_mappings = false;
+		
 		if (path_to_output_mappings!=null && !path_to_output_mappings.equals("")) {
 			
 			//We make sure path finishes with "/" or "\"
