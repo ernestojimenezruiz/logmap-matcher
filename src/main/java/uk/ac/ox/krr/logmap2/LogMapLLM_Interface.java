@@ -63,6 +63,28 @@ public class LogMapLLM_Interface {
 	}
 	
 	
+	private void addFileSeparatorToMappingsPath() {
+		
+		//System.out.println(path_to_output_mappings);
+						
+		if (path_to_output_mappings.endsWith("\\") || path_to_output_mappings.endsWith("/"))
+			return;
+		
+		
+		String file_separator="";
+		
+		if (path_to_output_mappings.contains("\\"))
+			file_separator="\\";
+		else if (path_to_output_mappings.contains("/")) 
+			file_separator="/";
+		
+		
+		path_to_output_mappings += file_separator;
+		
+		//System.out.println(path_to_output_mappings);
+		
+	}
+	
 	
 	private void setUpParameters() {
 		
@@ -79,8 +101,7 @@ public class LogMapLLM_Interface {
 		if (path_to_output_mappings!=null && !path_to_output_mappings.equals("")) {
 			
 			//We make sure path finishes with "/" or "\"
-			if (!path_to_output_mappings.endsWith(File.separator))
-				path_to_output_mappings += File.separator;
+			addFileSeparatorToMappingsPath();
 			
 			File directory = new File(path_to_output_mappings);
 			if (!directory.exists())
@@ -133,10 +154,10 @@ public class LogMapLLM_Interface {
 			String output_file_template = path_to_output_mappings + task_name + "-";			
 			//System.out.println("Saving mappings to " + path_to_output_mappings);			
 			//Save all formats and also discarded: done now internally
-			logmap = new LogMap2_Matcher(onto_uri1, onto_uri2, output_file_template, false);
+			logmap = new LogMap2_Matcher(onto_uri1, onto_uri2, output_file_template, true, false);
 		}
 		else {
-			logmap = new LogMap2_Matcher(onto_uri1, onto_uri2);
+			logmap = new LogMap2_Matcher(onto_uri1, onto_uri2, true);
 		}
 		
 	}

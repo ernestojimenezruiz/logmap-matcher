@@ -35,13 +35,34 @@ public class LogMap2_Matcher {
 	
 	/**
 	 * LogMap access from command line
+	 * @param iri_onto1 Strig with IRI ontology 1 (source)
+	 * @param iri_onto2 Strig with IRI ontology 2 (target)
+	 * @param eval_impact Runs the reasoner to check unsatisfiabilities after the integration via the mappings
 	 * See uk.ac.ox.krr.logmap2.Parameters.java to adapt LogMap 2
 	 * 
 	 */
 	public LogMap2_Matcher(String iri_onto1, String iri_onto2, String output_path, boolean eval_impact){
 		
-		//LogOutput.showOutpuLog(true);
-		Parameters.readParameters();
+		this(iri_onto1, iri_onto2, output_path, false, eval_impact);
+		
+	}
+	
+	
+	/**
+	 * LogMap access from LogMapLLM
+	 * See uk.ac.ox.krr.logmap2.Parameters.java to adapt LogMap 2
+	 * @param iri_onto1 Strig with IRI ontology 1 (source)
+	 * @param iri_onto2 Strig with IRI ontology 2 (target)
+	 * @param are_parametres_alreadry_loaded If parameters were already loaded
+	 * @param eval_impact Runs the reasoner to check unsatisfiabilities after the integration via the mappings
+	 * 
+	 */
+	public LogMap2_Matcher(String iri_onto1, String iri_onto2, String output_path, boolean are_parametres_alreadry_loaded, boolean eval_impact){
+		
+		if (!are_parametres_alreadry_loaded) {
+			//LogOutput.showOutpuLog(true);
+			Parameters.readParameters();
+		}
 		
 		try {
 			logmap2 = new LogMap2Core(iri_onto1, iri_onto2, output_path, eval_impact);
@@ -179,8 +200,24 @@ public class LogMap2_Matcher {
 	 */
 	public LogMap2_Matcher(String iri_onto1, String iri_onto2){
 		
-		//LogOutput.showOutpuLog(true);
-		Parameters.readParameters();
+		this(iri_onto1, iri_onto2, false);
+		
+	}
+	
+	
+	/**
+	 * LogMap access from LogMapLLM
+	 * See uk.ac.ox.krr.logmap2.Parameters.java to adapt LogMap 2
+	 * @param iri_onto1 Strig with IRI ontology 1 (source)
+	 * @param iri_onto2 Strig with IRI ontology 2 (target)
+	 * @param are_parametres_alreadry_loaded If parameters were already loaded
+	 */
+	public LogMap2_Matcher(String iri_onto1, String iri_onto2, boolean are_parameters_alreadry_loaded){
+		
+		if (!are_parameters_alreadry_loaded) {
+			//LogOutput.showOutpuLog(true);
+			Parameters.readParameters();
+		}
 		
 		try {
 			logmap2 = new LogMap2Core(iri_onto1, iri_onto2);
@@ -191,6 +228,8 @@ public class LogMap2_Matcher {
 		}
 		
 	}
+	
+	
 	
 	
 	/**
