@@ -629,6 +629,41 @@ public class LogMap2_OAEI_BioPortal {
 	}
 	
 	
+	/**
+	 * Involve an Oracle or LLM to validate composed mappings.
+	 * @return
+	 */
+	private Set<MappingObjectStr> getComposedMappings5(){
+		
+		Set<MappingObjectStr> composed_mappings = new HashSet<MappingObjectStr>();
+		
+		for (MappingObjectStr mapping : mappings2votes.keySet()){
+			
+			if (logmap2.getLogmap2_Mappings().contains(mapping))
+				continue;
+			
+			
+			//TODO Change this, keep only those that are safe. Eval. Precision and Recall in Anatomy
+			//Use LLM as Oracles
+			//To speed-up tests and compare results: download ontologies?
+			//Get stats about the process. Mediating ontologies, composed mappings, quality of the composition, quality by votes.
+			
+			if (mappings2votes.get(mapping).intValue()>=MIN_VOTES && mapping.getConfidence()>Parameters.confidence_composed_mappings2){
+				composed_mappings.add(mapping);
+			}
+			else if (mappings2votes.get(mapping).intValue()>=1 && mapping.getConfidence()>Parameters.confidence_composed_mappings1){
+				composed_mappings.add(mapping);
+			}
+			
+		}
+		
+		//getPrecisionRecall(composed_mappings);
+		
+		return composed_mappings;
+	}
+	
+	
+	
 	private Set<MappingObjectStr> getComposedMappings(int min_votes){
 		
 		Set<MappingObjectStr> composed_mappings = new HashSet<MappingObjectStr>();

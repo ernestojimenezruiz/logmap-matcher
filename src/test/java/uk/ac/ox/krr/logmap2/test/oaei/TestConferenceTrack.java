@@ -31,6 +31,10 @@ public class TestConferenceTrack extends TestOAEITrackEnhanced{
 		setBasePathForOutputMappings(base_path_output_mappings); //partial path, the task name will be added as an extra folder.
 		setPathToLogMapParameters("");  //default location
 		
+		//TODO
+		//setMappingsLocalOracle(mappings_local_oracle);
+		//or
+		//setMappingsLocalOracle(base_path_output_mappings);
 		
 		
 		for(int i=0; i<filenames.length; i++){

@@ -140,7 +140,7 @@ public class LogMapLLM_Interface {
 	
 	private void performAlignment(boolean withOracle) {
 		
-		//Resets/disables oracle
+		//Resets/disables oracle (here only when regular LogMap with no Oracle)
 		if (!withOracle) {
 			resetOracle();
 		}

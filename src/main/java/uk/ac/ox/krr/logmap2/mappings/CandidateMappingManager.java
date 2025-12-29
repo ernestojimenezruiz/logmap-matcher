@@ -1748,11 +1748,11 @@ public class CandidateMappingManager extends MappingManager {
 							){ 
 						
 						
-						
+						//TODO PROBLEM HERE!!!!
 						//Otherwise we were asking almost nothing in interactive conference track
 						//if (OracleManager.isActive()){
-						//if (OracleManager.isActive() && OracleManager.keepExtendedQuestions()){
-						if (OracleManager.keepExtendedQuestions()){ //For stats, we do not need the Oracle to be active 
+						//if (OracleManager.isActive() && OracleManager.keepExtendedQuestions()){  //as in paper
+						if (OracleManager.keepExtendedQuestions()){ // new For stats, we do not need the Oracle to be active 
 							addEquivMapping2ListOfAnchors2AskUser(ide1, ide2);
 							
 							LogOutput.printAlways("New Added 2 ask: " +
@@ -1761,7 +1761,9 @@ public class CandidateMappingManager extends MappingManager {
 						
 						}						
 						//If not active then LogMap will do it
-						if (!OracleManager.isActive()){						
+						else { //as in paper
+						//if (!OracleManager.isActive()){ //new
+							//LogMap does well in this case. Only as the oracle if extended questions
 							addSubMapping2Mappings2Review(ide1, ide2);
 							addSubMapping2Mappings2Review(ide2, ide1);
 						}

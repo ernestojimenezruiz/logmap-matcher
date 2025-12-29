@@ -28,7 +28,7 @@ public class TestBioML_NCIT_DOID_WithLocalOracle extends TestOAEITrackWithOracle
 	public static void main(String[] args){
 		
 		
-		boolean extended_questions = false;		
+		boolean extended_questions = true;
 		boolean llm_oracle = true;
 		int min_err = 0;
 		int max_err = 0;
