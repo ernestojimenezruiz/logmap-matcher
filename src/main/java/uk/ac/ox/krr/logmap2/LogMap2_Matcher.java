@@ -808,6 +808,8 @@ public class LogMap2_Matcher {
 			}//for ide1
 			
 			
+			
+			
 			//TODO We need to update structures with property and instance mappings
 			
 			for (MappingObjectInteractivity mapping_interact : logmap2.getMappingsToAskUser()){
@@ -817,9 +819,6 @@ public class LogMap2_Matcher {
 				int ide1 = mapping_interact.getIdentifierOnto1();
 				int ide2 = mapping_interact.getIdentifierOnto2();
 				
-				//Avoid same URI mappings
-				if (logmap2.getIRI4ConceptIdentifier(ide1).equals(logmap2.getIRI4ConceptIdentifier(ide2)))
-					continue;
 				
 				//TODO Differentiate by type of mappings
 				//There may be mappings to ask from properties or instances
@@ -886,7 +885,14 @@ public class LogMap2_Matcher {
 					
 				}
 				
+				
+				//Avoid same URI mappings
+				if (mapping.getIRIStrEnt1().equals(mapping.getIRIStrEnt2()))			
+					continue;
+				
+				
 				logmap2_mappings4user.add(mapping);
+				
 								
 			}
 			
@@ -898,8 +904,8 @@ public class LogMap2_Matcher {
 			
 		}
 		catch (Exception e){
-			System.err.println("Error creating object mappings");
-			//e.printStackTrace();
+			System.err.println("Error creating object mappings: " + e.getLocalizedMessage());
+			e.printStackTrace();
 		}
 		
 		

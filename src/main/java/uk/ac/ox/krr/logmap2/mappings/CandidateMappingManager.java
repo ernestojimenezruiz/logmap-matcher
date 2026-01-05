@@ -2089,7 +2089,7 @@ public class CandidateMappingManager extends MappingManager {
 		
 		
 		//We keep it in the list always for stat purposes
-		addMappingObject2AskUserList(ident1, ident2, Utilities.EQ, Utilities.INSTANCES);					
+		addInstanceMappingObject2AskUserList(ident1, ident2, Utilities.EQ, Utilities.INSTANCES);					
 		
 		//LogOutput.printAlways(required_confidence +  "   " +  isub_labels);
 		
@@ -2171,6 +2171,7 @@ public class CandidateMappingManager extends MappingManager {
 						
 						
 						
+	
 						if (confidence>=required_confidence){
 																		
 							addInstanceMapping(ident1, ident2, ambiguity);
@@ -2289,9 +2290,13 @@ public class CandidateMappingManager extends MappingManager {
 							//addSubInstanceMapping(ident2, ident1); we only add one side
 							
 							type_output=0;
+							
+							//TODO add questions here too?
+							//Depending on Precision and Recall.
 													
 			    		}
-						else{							
+						else{
+							//TODO Adjust this for number for questions
 							if (confidence>0.65){
 								//LogOutput.print("Not good individuals: " + if_entry + " " + ident1 + " " + ident2 + "  " + confidence + " " + required_confidence);
 								//LogOutput.print("\t" +index.getName4IndividualIndex(ident1) + " " + index.getAlternativeLabels4IndividualIndex(ident1));
@@ -2798,7 +2803,7 @@ public class CandidateMappingManager extends MappingManager {
 				else if (confidence_mapping>=Parameters.min_conf_pro_map){
 					
 					//TODO Add data prop mappings to mappings to ask user/oracle
-					addMappingObject2AskUserList(ident1, dataPropertyMappings.get(ident1), Utilities.EQ, Utilities.DATAPROPERTIES);
+					addDataPropertyMappingObject2AskUserList(ident1, dataPropertyMappings.get(ident1), Utilities.EQ, Utilities.DATAPROPERTIES);
 					
 					
 					if (OracleManager.isActive()){
@@ -3012,7 +3017,7 @@ public class CandidateMappingManager extends MappingManager {
 				else if (confidence_mapping>=Parameters.min_conf_pro_map){
 					
 					//TODO Add data prop mappings to mappings to ask user/oracle
-					addMappingObject2AskUserList(ident1, objPropertyMappings.get(ident1), Utilities.EQ, Utilities.OBJECTPROPERTIES);
+					addObjectPropertyMappingObject2AskUserList(ident1, objPropertyMappings.get(ident1), Utilities.EQ, Utilities.OBJECTPROPERTIES);
 										
 					if (OracleManager.isActive()){
     				
@@ -3051,7 +3056,7 @@ public class CandidateMappingManager extends MappingManager {
 				if (isub_labels<Parameters.min_conf_pro_map){ //bad confidence (also smaller than required_conf)
 				
 					//TODO Add data prop mappings to mappings to ask user/oracle
-					addMappingObject2AskUserList(ident1, objPropertyMappings.get(ident1), Utilities.EQ, Utilities.OBJECTPROPERTIES);					
+					addObjectPropertyMappingObject2AskUserList(ident1, objPropertyMappings.get(ident1), Utilities.EQ, Utilities.OBJECTPROPERTIES);					
 					
 					LogOutput.printAlways(required_confidence +  "   " +  isub_labels);
 					

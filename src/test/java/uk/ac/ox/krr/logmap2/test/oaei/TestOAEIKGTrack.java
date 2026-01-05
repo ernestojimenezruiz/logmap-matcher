@@ -2,40 +2,54 @@ package uk.ac.ox.krr.logmap2.test.oaei;
 
 import java.io.File;
 
+public class TestOAEIKGTrack extends TestOAEITrackEnhanced{
 
+	public TestOAEIKGTrack(){
+		super();
+	}
 
-public class TestConferenceTrack extends TestOAEITrackEnhanced{
-	
-		
 	@Override
 	protected void setUp() {
 		
-		//Task specific details
-		String base_path = "C:/Users/Ernes/OneDrive/Documents/OAEI/conference/";
-		String uri_base_path = "file:/" + base_path;
-		String iri_path_ontologies = uri_base_path + "ontologies/";		
-		String pattern=".rdf";
-		String base_path_output_mappings = base_path + "logmap-conference-oaei/";  //for output mappings (if folder does not exist if will be created)
-		//end task specific
+
+		//Task specific details		
+		String base_path = "C:/Users/Ernes/OneDrive/Documents/OAEI/knowledge-graph/";
+		//String base_path = "C:/Users/sbrn854/Documents/OAEI/anatomy-dataset/";
+		String uri_base_path = "file:/" + base_path;		
 		
+		String iri_path_ontologies = uri_base_path + "ontologies/";		
+		String pattern=".rdf";		
+		String base_path_output_mappings = base_path + "logmap-mappings-kg/";  //for output mappings (if folder does not exist if will be created)
+		//end task specific
 				
+						
+		
+		//setExtendedQuestions4LLM(false);
+		setExtendedQuestions4LLM(true);
+		setBasePathForOutputMappings(base_path_output_mappings); //partial path, the task name will be added as an extra folder.
+		setPathToLogMapParameters("");  //default location
+		
+		
+		
+		//TODO if oracle available
+		//setMappingsLocalOracle(mappings_local_oracle);
+		//or
+		//setMappingsLocalOracle(base_path_output_mappings); //Reads any .csv file with the right format in the given folder
+		
+		
+		
 		File directory = new File(base_path);
 		String filenames[] = directory.list();
 		
 		String[] elements;
 		
-			 
-				
-		setExtendedQuestions4LLM(false);
-		//setExtendedQuestions4LLM(true);
-		setBasePathForOutputMappings(base_path_output_mappings); //partial path, the task name will be added as an extra folder.
-		setPathToLogMapParameters("");  //default location
-		
-		//TODO if oracle available
-		//setMappingsLocalOracle(mappings_local_oracle);
-		//or
-		//setMappingsLocalOracle(base_path_output_mappings);
-		
+	
+		//Tasks:
+		//starwars-swg
+		//starwars-swtor
+		//marvelcinematicuniverse-marvel
+		//memoryalpha-memorybeta
+		//memoryalpha-stexpanded
 		
 		for(int i=0; i<filenames.length; i++){
 			
@@ -61,17 +75,14 @@ public class TestConferenceTrack extends TestOAEITrackEnhanced{
 		}
 		
 	}
+	
+	
+	public static void main(String[] args){
 		
-	
-
-	
-
-	
-	
-	public static void main(String[] args) {
+		TestOAEIKGTrack test = new TestOAEIKGTrack();
+		
 		
 		try {
-			TestConferenceTrack test = new TestConferenceTrack();
 			test.evaluateTasks();
 			
 			
@@ -80,8 +91,9 @@ public class TestConferenceTrack extends TestOAEITrackEnhanced{
 			e.printStackTrace();
 		}
 		
+		
 	}
-			
-	
-	
+
+
+
 }

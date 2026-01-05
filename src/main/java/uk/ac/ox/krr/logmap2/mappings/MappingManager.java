@@ -565,10 +565,51 @@ public abstract class MappingManager {
 	}
 	
 	
+	/**
+	 * For Class mappinghs
+	 * @param index1
+	 * @param index2
+	 * @param dirMapping
+	 * @param type
+	 */
 	public void addMappingObject2AskUserList(int index1, int index2, int dirMapping, int type){
 		//listMappings2askUser1N.add(new MappingObjectInteractivity(index1, index2, ambiguity));
 		listMappings2askUser1N.add(new MappingObjectInteractivity(
 				index1, index2, dirMapping, type, extractScopeAll4Mapping(index1, index2), extractISUB4Mapping(index1, index2)));
+	}
+	
+	
+	
+	
+	
+	public void addDataPropertyMappingObject2AskUserList(int index1, int index2, int dirMapping, int type){
+		//listMappings2askUser1N.add(new MappingObjectInteractivity(index1, index2, ambiguity));
+		listMappings2askUser1N.add(new MappingObjectInteractivity(
+				index1, index2, dirMapping, type, 0, getIsubScore4DataPropertyLabels(index1, index2)));
+	}
+	
+	
+	
+	public void addObjectPropertyMappingObject2AskUserList(int index1, int index2, int dirMapping, int type){
+		//listMappings2askUser1N.add(new MappingObjectInteractivity(index1, index2, ambiguity));
+		listMappings2askUser1N.add(new MappingObjectInteractivity(
+				index1, index2, dirMapping, type, 0, getIsubScore4ObjectPropertyLabels(index1, index2)));
+	}
+	
+	
+	
+	
+	/**
+	 * For instance mappings
+	 * @param index1
+	 * @param index2
+	 * @param dirMapping
+	 * @param type
+	 */
+	public void addInstanceMappingObject2AskUserList(int index1, int index2, int dirMapping, int type){
+
+		listMappings2askUser1N.add(new MappingObjectInteractivity(
+				index1, index2, dirMapping, type, extractScope4InstanceMapping(index1, index2), extractISUB4InstanceMapping(index1, index2)));
 	}
 	
 	
