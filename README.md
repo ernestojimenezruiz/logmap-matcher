@@ -104,7 +104,7 @@ or in our <a href="https://github.com/ernestojimenezruiz/logmap-matcher/issues" 
 
 **Combination with LLMs**
 
-- Sviatoslav Lushnei, Dmytro Shumskyi, Severyn Shykula, Ernesto Jiménez-Ruiz, Artur d'Avila Garcez. **Large Language Models as Oracles for Ontology Alignment**. [https://arxiv.org/abs/2508.08500](https://arxiv.org/abs/2508.08500) ([GitHub](https://github.com/city-artificial-intelligence/logmap-llm/)) ([GitHub LLMs](https://github.com/city-artificial-intelligence/rai-ukraine-kga-llm))
+- Sviatoslav Lushnei, Dmytro Shumskyi, Severyn Shykula, Ernesto Jiménez-Ruiz, Artur d'Avila Garcez. **Large Language Models as Oracles for Ontology Alignment**. Accepted to EACL 2026 (main conference), [https://arxiv.org/abs/2508.08500](https://arxiv.org/abs/2508.08500) ([GitHub](https://github.com/city-artificial-intelligence/logmap-llm/)) ([GitHub LLMs](https://github.com/city-artificial-intelligence/rai-ukraine-kga-llm))
 - Ernesto Jiménez-Ruiz, Sviatoslav Lushnei, Dmytro Shumskyi, Severyn Shykula, and Artur Garcez. **LogMap Family welcomes LogMapLLM in the OAEI 2025**. OM 2025: The 20th International Workshop on Ontology Matching collocated with the 24th International Semantic Web Conference (ISWC). 2025. [[PDF](https://ceur-ws.org/Vol-4144/om2025-oaei-paper7.pdf)]
 
 **Combination with Machine Learning**
