@@ -152,8 +152,9 @@ public class LocalOracle extends Oraculo{
 	
 	
 	/**
-	 * Load Oracle from LLM input
-	 * Format: 
+	 * Load Oracle from LLM input CSV files
+	 * The method expects a path where there may be one or many CSV files with local Oracle mappings
+	 * Format of the file(s): 
 	 * Source,Target,Prediction,Confidence
 	 * http://human.owl#NCI_C49191,http://mouse.owl#MA_0000702,False,0.9399113610439951
 	 * @param base_path

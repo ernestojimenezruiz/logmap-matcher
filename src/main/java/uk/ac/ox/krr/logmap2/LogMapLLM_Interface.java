@@ -183,14 +183,16 @@ public class LogMapLLM_Interface {
 	
 	
 	/**
-	 * Perform alignment using a local oracle. For example, a set of mapping annotated/validated by an LLM given as a File.
-	 * @param mappings_local_oracle
+	 * Perform alignment using a local oracle. For example, 
+	 * a set of mapping annotated/validated by an LLM given as a CSV file.
+	 * The method expects a path where there may be one or many CSV files with local Oracle mappings
+	 * @param path_to_local_oracle
 	 */
 	public void performAlignmentWithLocalOracle(String path_to_local_oracle) {
 		
 		setLocalOracle();
 		
-		//Load from objects
+		//Load from set of CSV files in the given path
 		LocalOracle.loadLocalOraculoLLM(path_to_local_oracle);
 						
 		performAlignment(true);
