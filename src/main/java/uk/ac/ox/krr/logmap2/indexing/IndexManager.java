@@ -1053,22 +1053,26 @@ public abstract class IndexManager {
 	
 	private Set<Integer> getDirectSubClassesOnto4Identifier(int conceptIdentifier){
 		
+		if (identifier2ClassIndex.containsKey(conceptIdentifier)) {
 		
-		if (identifier2ClassIndex.get(conceptIdentifier).hasDirectSubClasses()){
-			return identifier2ClassIndex.get(conceptIdentifier).getDirectSubclasses();
+			if (identifier2ClassIndex.get(conceptIdentifier).hasDirectSubClasses()){
+				return identifier2ClassIndex.get(conceptIdentifier).getDirectSubclasses();
+			}
 		}
-		else			
-			return Collections.emptySet();
+					
+		return Collections.emptySet();
 	}
 	
 	
 	private Set<Integer> getDirectSuperClassesOnto4Identifier(int conceptIdentifier){
 		
-		if (identifier2ClassIndex.get(conceptIdentifier).hasDirectSuperClasses()){
-			return identifier2ClassIndex.get(conceptIdentifier).getDirectSuperclasses();
+		if (identifier2ClassIndex.containsKey(conceptIdentifier)) {
+			if (identifier2ClassIndex.get(conceptIdentifier).hasDirectSuperClasses()){
+				return identifier2ClassIndex.get(conceptIdentifier).getDirectSuperclasses();
+			}
 		}
-		else
-			return Collections.emptySet();
+		
+		return Collections.emptySet();
 	}
 	
 	
