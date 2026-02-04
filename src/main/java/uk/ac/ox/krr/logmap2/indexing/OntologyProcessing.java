@@ -3086,27 +3086,39 @@ public class OntologyProcessing {
 				//LogOutput.print(nodeClasses[0]);
 				
 				for (int i=0; i<nodeClasses.length; i++){
-					ident1=class2identifier.get(nodeClasses[i]);
-					index.getClassIndex(ident1).setEmptyEquivalentClasses();
-					equiv++;
+					
+					try {
+						ident1=class2identifier.get(nodeClasses[i]);
+						index.getClassIndex(ident1).setEmptyEquivalentClasses();
+						equiv++;
+					}
+					catch (Exception e) { //Some Null pointer exceptions captures in some DISO ontologies.
+						continue;
+					}
 					
 					for (int j=0; j<nodeClasses.length; j++){
 						if (i==j)
 							continue;
 						
-						ident2=class2identifier.get(nodeClasses[j]);
-						
-						index.getClassIndex(ident1).addEquivalentClass(ident2);
-						
-						//Propagation of disjointness
-						if (index.getClassIndex(ident1).hasDirectDisjointClasses()){
+						try {
+							ident2=class2identifier.get(nodeClasses[j]);
 							
-							if (!index.getClassIndex(ident2).hasDirectDisjointClasses()){
-								index.getClassIndex(ident2).setEmptyDisjointClasses();
+							index.getClassIndex(ident1).addEquivalentClass(ident2);
+							
+							//Propagation of disjointness
+							if (index.getClassIndex(ident1).hasDirectDisjointClasses()){
+								
+								if (!index.getClassIndex(ident2).hasDirectDisjointClasses()){
+									index.getClassIndex(ident2).setEmptyDisjointClasses();
+								}
+								
+								index.getClassIndex(ident2).addAllDisjointClasses(index.getClassIndex(ident1).getDisjointClasses());
 							}
-							
-							index.getClassIndex(ident2).addAllDisjointClasses(index.getClassIndex(ident1).getDisjointClasses());
 						}
+						catch (Exception e) { //Some Null pointer exceptions captures in some DISO ontologies.
+							continue;
+						}
+							
 						
 					}
 				}

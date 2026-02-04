@@ -2,7 +2,7 @@ package uk.ac.ox.krr.logmap2.test.oaei;
 
 import java.io.File;
 
-public class Tes_DISO_guard  extends TestOAEITrackEnhanced{
+public class Test_DISO_guard  extends TestOAEITrackEnhanced{
 
 	
 	@Override
@@ -21,8 +21,8 @@ public class Tes_DISO_guard  extends TestOAEITrackEnhanced{
 						
 				 
 					
-		setExtendedQuestions4LLM(false);
-		//setExtendedQuestions4LLM(true);
+		//setExtendedQuestions4LLM(false);
+		setExtendedQuestions4LLM(true);
 		setBasePathForOutputMappings(base_path_output_mappings); //partial path, the task name will be added as an extra folder.
 		setPathToLogMapParameters("");  //default location
 		
@@ -32,15 +32,15 @@ public class Tes_DISO_guard  extends TestOAEITrackEnhanced{
 		//setMappingsLocalOracle(base_path_output_mappings);
 			
 		
-		for(int i=0; i<filenames.length; i++){ //all against all
-		//for(int i=0; i<filenames.length-1; i++){ //different ontos
+		//for(int i=0; i<filenames.length; i++){ //all against all
+		for(int i=0; i<filenames.length-1; i++){ //different ontos
 		//for(int i=filenames.length-1; i>0; i--){ //different ontos reversed
 			
 			if (!filenames[i].contains(".owl") && !filenames[i].contains(".rdf") && !filenames[i].contains(".ttl")) 
 				continue;
 			
-			for(int j=0; j<filenames.length; j++){ //all against all
-			//for(int j=i+1; j<filenames.length; j++){ //different ontos
+			//for(int j=0; j<filenames.length; j++){ //all against all
+			for(int j=i+1; j<filenames.length; j++){ //different ontos
 			//for(int j=i-1; j>=0; j--){ //different ontos reversed
 				
 				if (!filenames[j].contains(".owl") && !filenames[j].contains(".rdf") && !filenames[j].contains(".ttl")) 
@@ -75,7 +75,7 @@ public class Tes_DISO_guard  extends TestOAEITrackEnhanced{
 	public static void main(String[] args) {
 		
 		try {
-			Tes_DISO_guard test = new Tes_DISO_guard();
+			Test_DISO_guard test = new Test_DISO_guard();
 			test.evaluateTasks();
 			
 			
