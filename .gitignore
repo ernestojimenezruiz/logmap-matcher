@@ -3,3 +3,8 @@ logmap-log.out
 .settings/
 /target/
 /test-classes/
+/classes/
+.classpath
+
+
+.classpath

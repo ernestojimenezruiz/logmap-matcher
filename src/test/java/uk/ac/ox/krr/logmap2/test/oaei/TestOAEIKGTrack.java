@@ -51,6 +51,15 @@ public class TestOAEIKGTrack extends TestOAEITrackEnhanced{
 		//memoryalpha-memorybeta
 		//memoryalpha-stexpanded
 		
+		
+		//TODO
+		//Check if we need to add additional object and data properties relevant for the matching
+		//Check if we need to modify questions to ask. Now we may only include discarded mappings...
+		//Evaluate P/R of mappings to ask and others. 
+		//Calculate upper limit using ground truth to see the potential improvement.
+		//Calculate performance of LogMap over Mappings to ask.
+		
+		
 		for(int i=0; i<filenames.length; i++){
 			
 			if (!filenames[i].contains(pattern)) 
