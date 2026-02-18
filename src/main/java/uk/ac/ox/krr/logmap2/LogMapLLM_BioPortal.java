@@ -11,6 +11,7 @@ public class LogMapLLM_BioPortal {
 	 * Algorithm idea:
 	 * 
 	 * 1. Run LogMapLLm on input ontologies + input from Oracle/LLM    (LLM Input)
+	 * 
 	 * 2. Mediating ontology matching
 	 * - Extraction of MOs
 	 * 		- Local pipeline option with pre-downloaded ontologies (top-10, top-15)
@@ -20,6 +21,22 @@ public class LogMapLLM_BioPortal {
 	 * - Perform final repair
 	 * 3. Extract statistics of contribution per MO, and mapping with different votes and similarity. Sensitivity/Specificity on composed mappings to ask
 	 * 4. Compute final P&R
+	 * 
+	 * 
+	 * 
+	 * Stats (not integrated pipeline):
+	 * For each of the bio tracks (Anatomy + 5 x bio-ml)
+	 * 	  - Extract mediating ontologies (report ontos) and store them!
+	 * 	  - Get Composed mappings.
+	 *    - All composed mappings to ask? Only those not in LogMap-LLM already (this may depend on selected LLM, 
+	 *    for now we cab use Gemini 2.5 flash results or with Qwen results from Jon)
+	 *    - Stats: get Sensitivity and Specificity for LogMap techniques and LogMapBioLLM ones, get proportion of mappings in GT (number of real yes and no)!   
+	 * 
+	 * 
+	 * The integrated pipeline will need to be tested as for the LogMapLLM interface, and double check that it does work.
+	 * 
+	 * 
+	 * Start with Anatomy!
 	 * 
 	 */
 	

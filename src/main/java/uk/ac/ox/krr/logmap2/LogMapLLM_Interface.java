@@ -241,5 +241,10 @@ public class LogMapLLM_Interface {
 	}
 	
 	
+	//public void getOntologyProcessing() {
+		//logmap.getRepresentativeLabelsForMappings()		
+	//}
+	
+	
 
 }
