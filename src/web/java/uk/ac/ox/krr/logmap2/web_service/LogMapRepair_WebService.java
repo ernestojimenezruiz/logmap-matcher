@@ -838,7 +838,7 @@ public class LogMapRepair_WebService {
 		for (MappingObjectStr mapping : mappings){
 			
 			
-			if (mapping.getTypeOfMapping() == Utilities.INSTANCE){
+			if (mapping.getTypeOfMapping() == Utilities.INSTANCETASK){
 				
 				owlformat.addInstanceMapping2Output(
 						mapping.getIRIStrEnt1(),

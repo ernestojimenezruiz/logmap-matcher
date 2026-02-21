@@ -641,7 +641,7 @@ public class OntologyProcessing {
 		ns_ent=Utilities.getNameSpaceFromURI(cls.getIRI().toString());
 		
 		
-		ident = index.addNewClassEntry();
+		ident = index.addNewClassEntry(cls.getIRI().toString());
 		
 		index.setOntologyId4Class(ident, id_onto);
 		
@@ -708,7 +708,7 @@ public class OntologyProcessing {
 			ns_ent=Utilities.getNameSpaceFromURI(dProp.getIRI().toString());
 			
 					
-			ident = index.addNewDataPropertyEntry();	
+			ident = index.addNewDataPropertyEntry(dProp.getIRI().toString());	
 			
 			index.setOntologyId4DataProp(ident, id_onto);
 				
@@ -898,7 +898,7 @@ public class OntologyProcessing {
 						
 				
 			
-			ident = index.addNewObjectPropertyEntry();
+			ident = index.addNewObjectPropertyEntry(oProp.getIRI().toString());
 			
 			index.setOntologyId4ObjectProp(ident, id_onto);
 				
@@ -1122,7 +1122,7 @@ public class OntologyProcessing {
 			
 			ns_ent=Utilities.getNameSpaceFromURI(indiv.getIRI().toString());
 			
-			ident = index.addNewIndividualEntry();
+			ident = index.addNewIndividualEntry(indiv.getIRI().toString());
 			
 			index.setOntologyId4Individual(ident, id_onto);
 			

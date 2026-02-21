@@ -105,7 +105,7 @@ public class Utilities {
 	public static final int FMA2LUCADA=9;
 	public static final int LIBRARY=10;
 	public static final int CONFERENCE=11;
-	public static final int INSTANCE=12;
+	public static final int INSTANCETASK=12;
 	public static final int MULTILINGUAL=13;
 	
 	

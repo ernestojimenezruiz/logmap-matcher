@@ -332,7 +332,7 @@ public class FromRDFAlign2OWL {
 			
 			
 			
-			if (type_mapping == Utilities.INSTANCE){
+			if (type_mapping == Utilities.INSTANCETASK){
 													
 			
 				//We only consider a kind of axioms between instances

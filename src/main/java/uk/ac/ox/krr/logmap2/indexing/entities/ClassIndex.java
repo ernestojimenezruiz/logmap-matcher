@@ -473,7 +473,7 @@ public class ClassIndex extends EntityIndex{
 	{
 		if (stemmedAltLabels == null)
 		{
-			Lib.debuginfo("The class named " + name4Entitity + " has no stemmed alt labels.");
+			Lib.debuginfo("The class named " + name4Entity + " has no stemmed alt labels.");
 			return null;
 		}
 			

@@ -40,6 +40,14 @@ public abstract class IndexManager {
 	protected Map<String, Set<Integer>> singleWordInvertedIndex = new HashMap<String, Set<Integer>>();
 	//protected Map<String, Integer> frequency4words = new HashMap<String, Integer>();
 	
+	//Required as external entry point for the index (Ernesto: 19 Feb 2026)
+	private Map<String, Integer> classIri2identifier = new HashMap<String, Integer>();
+	private Map<String, Integer> dpropIri2identifier = new HashMap<String, Integer>();
+	private Map<String, Integer> opropIri2identifier = new HashMap<String, Integer>();
+	private Map<String, Integer> indivIri2identifier = new HashMap<String, Integer>();
+	
+	
+	
 	protected int calls_tax_question=0;
 	protected int calls_disj_question=0;
 	protected int unknown_disj_question=0;
@@ -48,6 +56,66 @@ public abstract class IndexManager {
 	protected double time_disj_question=0.0;
 	
 	protected long init, fin;
+	
+	
+	
+	
+	/**
+	 * For a given IRI check if it is a class, data proper, object proper or instance according to the index
+	 * @param uri
+	 * @return
+	 */
+	public int getTypeOfEntity4IRI(String uri) {
+		if (classIri2identifier.containsKey(uri))
+			return Utilities.CLASSES;
+		else if (dpropIri2identifier.containsKey(uri))
+			return Utilities.DATAPROPERTIES;
+		else if (opropIri2identifier.containsKey(uri))
+			return Utilities.OBJECTPROPERTIES;
+		else if (indivIri2identifier.containsKey(uri))
+			return Utilities.INSTANCES;
+		else
+			return Utilities.UNKNOWN;
+		
+	}
+	
+	
+	
+	public int getClassIdentifier4IRI(String uri){
+		if (classIri2identifier.containsKey(uri)) 
+			return classIri2identifier.get(uri);
+		
+		LogOutput.printError("The following class URI does not have an internal index in LogMap: " + uri);
+		return 0;
+	}
+	
+	public int getDataPropIdentifier4IRI(String uri){
+		if (dpropIri2identifier.containsKey(uri)) 
+			return dpropIri2identifier.get(uri);
+		
+		LogOutput.printError("The following data property URI does not have an internal index in LogMap: " + uri);
+		return 0;
+	}
+	
+	public int getObjectPropIdentifier4IRI(String uri){
+		if (opropIri2identifier.containsKey(uri)) 
+			return opropIri2identifier.get(uri);
+		
+		LogOutput.printError("The following object property URI does not have an internal index in LogMap: " + uri);
+		return 0;
+	}
+	
+	public int getIndividualIdentifier4IRI(String uri){
+		if (indivIri2identifier.containsKey(uri)) 
+			return indivIri2identifier.get(uri);
+		
+		LogOutput.printError("The following individual URI does not have an internal index in LogMap: " + uri);
+		return 0;
+	}
+	
+	
+	
+	
 	
 	
 	public int getNumberOfTaxCalls(){
@@ -416,9 +484,13 @@ public abstract class IndexManager {
 	}
 	
 	
-	public int addNewClassEntry(){
+	public int addNewClassEntry(String uri){
 		identifier2ClassIndex.put(class_indiv_ident, new ClassIndex(class_indiv_ident));
 		class_indiv_ident++;
+		
+		//Required as external entry point for the index (Ernesto: 19 Feb 2026)
+		classIri2identifier.put(uri, class_indiv_ident-1);
+		
 		return (class_indiv_ident-1);
 	}
 	
@@ -483,9 +555,13 @@ public abstract class IndexManager {
 	
 	
 	
-	public int addNewIndividualEntry(){
+	public int addNewIndividualEntry(String uri){
 		identifier2IndividualIndex.put(class_indiv_ident, new IndividualIndex(class_indiv_ident));
 		class_indiv_ident++;
+		
+		//Required as external entry point for the index (Ernesto: 19 Feb 2026)
+		indivIri2identifier.put(uri, class_indiv_ident-1);
+		
 		return (class_indiv_ident-1);
 	}
 	
@@ -519,9 +595,13 @@ public abstract class IndexManager {
 	
 	
 	
-	public int addNewDataPropertyEntry(){
+	public int addNewDataPropertyEntry(String uri){
 		identifier2DataPropIndex.put(dprop_ident, new DataPropertyIndex(dprop_ident));
 		dprop_ident++;
+		
+		//Required as external entry point for the index (Ernesto: 19 Feb 2026)
+		dpropIri2identifier.put(uri, dprop_ident-1);
+		
 		return (dprop_ident-1);
 	}
 	
@@ -601,9 +681,13 @@ public abstract class IndexManager {
 	
 	
 	
-	public int addNewObjectPropertyEntry(){
+	public int addNewObjectPropertyEntry(String uri){
 		identifier2ObjPropIndex.put(oprop_ident, new ObjectPropertyIndex(oprop_ident));
 		oprop_ident++;
+		
+		//Required as external entry point for the index (Ernesto: 19 Feb 2026)
+		opropIri2identifier.put(uri, oprop_ident-1);
+		
 		return (oprop_ident-1);
 	}
 	

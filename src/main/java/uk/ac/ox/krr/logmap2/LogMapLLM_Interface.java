@@ -161,7 +161,17 @@ public class LogMapLLM_Interface {
 		}
 		
 	}
-		
+	
+	
+	
+	/**
+	 * To be invoked to free up some space if necessary
+	 */
+	public void clearIndexStructures() {
+		logmap.clearIndexStructures();
+	}
+	
+	
 	
 	
 	/**

@@ -34,7 +34,7 @@ public abstract class EntityIndex {
 	
 	
 	//Lexical Indexation
-	protected String name4Entitity;	
+	protected String name4Entity;	
 	protected String label4Entity;
 	
 	
@@ -52,11 +52,11 @@ public abstract class EntityIndex {
 	
 	public boolean equals(String entityname)
 	{
-		return name4Entitity.equals(entityname);
+		return name4Entity.equals(entityname);
 	}
 	
 	public void setEntityName(String entityName){
-		name4Entitity=entityName;
+		name4Entity=entityName;
 	}
 	
 	/**
@@ -64,7 +64,7 @@ public abstract class EntityIndex {
 	 * @return
 	 */
 	public String getEntityName(){
-		return name4Entitity;
+		return name4Entity;
 	}
 	
 	
@@ -88,23 +88,23 @@ public abstract class EntityIndex {
 	 */
 	public String getIRI(String baseIRI){
 		if (hasDifferentNamespace()){
-			if (namespace.equals(name4Entitity)){
+			if (namespace.equals(name4Entity)){
 				return namespace; //Cases in which uri has not '#'
 			}
 			else {
 				//For URIS like http://ontology.dumontierlab.com/hasReference
 				if (namespace.endsWith("/"))
-					return namespace + name4Entitity;
+					return namespace + name4Entity;
 				else
-					return namespace + "#" + name4Entitity;
+					return namespace + "#" + name4Entity;
 			}
 		}
 		//
 		if (baseIRI.endsWith("/")){
-			return baseIRI +  name4Entitity;
+			return baseIRI +  name4Entity;
 		}
 		else {
-			return baseIRI + "#" + name4Entitity;
+			return baseIRI + "#" + name4Entity;
 		}
 	}
 	

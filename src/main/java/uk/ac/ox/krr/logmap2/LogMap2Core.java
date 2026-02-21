@@ -2591,6 +2591,14 @@ public class LogMap2Core {
 	
 	
 	
+	/**
+	 * Object containing the indexed ontology
+	 * @return
+	 */
+	public IndexManager getLogMapIndex() {
+		return index;
+	}
+	
 	
 	
 	

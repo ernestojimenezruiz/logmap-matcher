@@ -5,9 +5,11 @@ import java.util.HashSet;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import uk.ac.ox.krr.logmap2.interactive.objects.MappingObjectInteractivity;
 import uk.ac.ox.krr.logmap2.io.FlatAlignmentFormat;
+import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.io.OutPutFilesManagerStatic;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 import uk.ac.ox.krr.logmap2.oaei.reader.MappingsReaderManager;
@@ -896,11 +898,10 @@ public class LogMap2_Matcher {
 								
 			}
 			
+			//TODO
+			//Clear index structures needs to be invoked from outside this method
 			
 			
-			
-			
-			logmap2.clearIndexStructures();
 			
 		}
 		catch (Exception e){
@@ -909,6 +910,13 @@ public class LogMap2_Matcher {
 		}
 		
 		
+	}
+	
+	
+	
+	
+	public void clearIndexStructures() {
+		logmap2.clearIndexStructures();
 	}
 	
 	
@@ -987,6 +995,272 @@ public class LogMap2_Matcher {
 		return overEstimationMappings;
 		
 	}
+	
+	
+	
+	
+	public String getLabelForURI(String uri) {
+		
+		int entity_type = logmap2.getLogMapIndex().getTypeOfEntity4IRI(uri);
+		int ident;
+		
+		
+		if (entity_type==Utilities.CLASSES) {
+			ident = logmap2.getLogMapIndex().getClassIdentifier4IRI(uri);
+		
+			return logmap2.getLogMapIndex().getClassIndex(ident).getLabel();
+			
+			
+		}
+		else if (entity_type==Utilities.DATAPROPERTIES) {
+			
+			ident = logmap2.getLogMapIndex().getDataPropIdentifier4IRI(uri);
+			
+			return logmap2.getLogMapIndex().getDataPropertyIndex(ident).getLabel();
+			
+			
+		}
+		else if (entity_type==Utilities.OBJECTPROPERTIES) {
+			ident = logmap2.getLogMapIndex().getObjectPropIdentifier4IRI(uri);
+			
+			return logmap2.getLogMapIndex().getObjectPropertyIndex(ident).getLabel();
+		
+		}
+		else if (entity_type==Utilities.INSTANCES) {
+			ident = logmap2.getLogMapIndex().getIndividualIdentifier4IRI(uri);
+			
+			return logmap2.getLogMapIndex().getIndividualIndex(ident).getLabel();
+		}
+		else {
+			LogOutput.printError("Unknown type for URI in mappings to ask: " + uri);
+			return "";
+		}
+	}
+	
+	
+	public Set<String> getAlternativeLabelsForURI(String uri) {
+		
+		int entity_type = logmap2.getLogMapIndex().getTypeOfEntity4IRI(uri);
+		int ident;
+		
+		
+		if (entity_type==Utilities.CLASSES) {
+			ident = logmap2.getLogMapIndex().getClassIdentifier4IRI(uri);
+		
+			return logmap2.getLogMapIndex().getClassIndex(ident).getAlternativeLabels();
+			
+			
+		}
+		else if (entity_type==Utilities.DATAPROPERTIES) {
+			
+			ident = logmap2.getLogMapIndex().getDataPropIdentifier4IRI(uri);
+			
+			return logmap2.getLogMapIndex().getDataPropertyIndex(ident).getAlternativeLabels();
+			
+			
+		}
+		else if (entity_type==Utilities.OBJECTPROPERTIES) {
+			ident = logmap2.getLogMapIndex().getObjectPropIdentifier4IRI(uri);
+			
+			return logmap2.getLogMapIndex().getObjectPropertyIndex(ident).getAlternativeLabels();
+		
+		}
+		else if (entity_type==Utilities.INSTANCES) {
+			ident = logmap2.getLogMapIndex().getIndividualIdentifier4IRI(uri);
+			
+			return logmap2.getLogMapIndex().getIndividualIndex(ident).getAlternativeLabels();
+		}
+		else {
+			LogOutput.printError("Unknown type for URI in mappings to ask: " + uri);
+			return Collections.emptySet();
+		}
+		
+		
+		//For a given class URI, we need
+		//1. Labels
+		//2. Labels of direct parents
+		//3. Labels of all parents?
+		
+		//For a give property
+		//1. Labels
+		//2. Labels of direct parents
+		//3. Labels of all parents?
+		//4. 
+	}
+	
+	
+	
+	
+	/**
+	 * Only for classes and instances
+	 * @param uri
+	 * @return
+	 */
+	public Set<String> getDirectParentClassesLabelsForURI(String uri) {
+		
+		Set<String> labels_parents = new HashSet<String>();
+		
+		for (int ident : getDirectParentClassesForURI(uri)) {
+			labels_parents.add(logmap2.getLogMapIndex().getLabel4ConceptIndex(ident));
+		}
+		
+		return labels_parents;
+		
+	}
+	
+	
+	
+	/**
+	 * Only for classes and instances
+	 * @param uri
+	 * @return
+	 */
+	private Set<Integer> getDirectParentClassesForURI(String uri) {
+		
+		int entity_type = logmap2.getLogMapIndex().getTypeOfEntity4IRI(uri);
+		int ident;
+		
+		
+		if (entity_type==Utilities.CLASSES) {
+			ident = logmap2.getLogMapIndex().getClassIdentifier4IRI(uri);
+		
+			return logmap2.getLogMapIndex().getClassIndex(ident).getDirectSuperclasses();
+			
+			
+		}
+		else if (entity_type==Utilities.INSTANCES) {
+			ident = logmap2.getLogMapIndex().getIndividualIdentifier4IRI(uri);
+			
+			return logmap2.getLogMapIndex().getIndividualIndex(ident).getClassTypes();
+		}
+		else {
+			return Collections.emptySet();
+		}
+		
+		 
+	}
+	
+	
+	//TODO
+	//Get extended parent labels: instances and classes. A list of them?
+	
+	//Get domain and ranges...
+	
+	
+	
+	/**
+	 * Only for object and data properties
+	 * @param uri
+	 * @return
+	 */
+	public Set<String> getDomainClassesLabelsForURI(String uri) {
+		
+		Set<String> labels_domains = new HashSet<String>();
+		
+		for (int ident : getDomainClassesForURI(uri)) {
+			labels_domains.add(logmap2.getLogMapIndex().getLabel4ConceptIndex(ident));
+		}
+		
+		return labels_domains;
+		
+	}
+	
+	
+	private Set<Integer> getDomainClassesForURI(String uri) {
+		
+		int entity_type = logmap2.getLogMapIndex().getTypeOfEntity4IRI(uri);
+		int ident;
+		
+		
+		if (entity_type==Utilities.DATAPROPERTIES) {
+			
+			ident = logmap2.getLogMapIndex().getDataPropIdentifier4IRI(uri);
+			
+			return logmap2.getLogMapIndex().getDataPropertyIndex(ident).getDomainClassIndexes();
+			
+			
+		}
+		else if (entity_type==Utilities.OBJECTPROPERTIES) {
+			ident = logmap2.getLogMapIndex().getObjectPropIdentifier4IRI(uri);
+			
+			return logmap2.getLogMapIndex().getObjectPropertyIndex(ident).getDomainClassIndexes();
+		
+		}
+		else {
+			return Collections.emptySet();
+		}	
+		
+		
+		
+	}
+	
+	
+	
+	
+	/**
+	 * Only for object properties
+	 * @param uri
+	 * @return
+	 */
+	public Set<String> getRangeClassesLabelsForURI(String uri) {
+		
+		Set<String> labels_ranges = new HashSet<String>();
+		
+		for (int ident : getRangeClassesForURI(uri)) {
+			labels_ranges.add(logmap2.getLogMapIndex().getLabel4ConceptIndex(ident));
+		}
+		
+		return labels_ranges;
+		
+	}
+	
+	
+	private Set<Integer> getRangeClassesForURI(String uri) {
+		
+		int entity_type = logmap2.getLogMapIndex().getTypeOfEntity4IRI(uri);
+		int ident;
+		
+		
+		if (entity_type==Utilities.OBJECTPROPERTIES) {
+			ident = logmap2.getLogMapIndex().getObjectPropIdentifier4IRI(uri);
+			
+			return logmap2.getLogMapIndex().getObjectPropertyIndex(ident).getRangeClassIndexes();
+		
+		}
+		else {
+			return Collections.emptySet();
+		}	
+		
+		
+		
+	}
+	
+	
+	/**
+	 * Only for data properties
+	 * @param uri
+	 * @return
+	 */
+	public Set<String> getDatatypeRangesForURI(String uri) {
+		
+		int entity_type = logmap2.getLogMapIndex().getTypeOfEntity4IRI(uri);
+		int ident;
+		
+		
+		if (entity_type==Utilities.DATAPROPERTIES) {
+			ident = logmap2.getLogMapIndex().getDataPropIdentifier4IRI(uri);
+			return logmap2.getLogMapIndex().getDataPropertyIndex(ident).getRangeTypes();
+			
+		}
+		else {
+			return Collections.emptySet();
+		}	
+		
+		
+		
+	}
+	
+	
 	
 	
 	

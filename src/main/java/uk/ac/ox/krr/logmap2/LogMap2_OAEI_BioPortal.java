@@ -737,7 +737,7 @@ public class LogMap2_OAEI_BioPortal {
 		for (MappingObjectStr mapping : mappings){
 			
 			
-			if (mapping.getTypeOfMapping() == Utilities.INSTANCE){
+			if (mapping.getTypeOfMapping() == Utilities.INSTANCETASK){
 				
 				owlformat.addInstanceMapping2Output(
 						mapping.getIRIStrEnt1(),
