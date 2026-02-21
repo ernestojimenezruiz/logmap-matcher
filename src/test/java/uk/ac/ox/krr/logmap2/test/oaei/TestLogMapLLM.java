@@ -40,6 +40,30 @@ public class TestLogMapLLM {
 		System.out.println("Mappings to ask: " + logmapllm.getLogMapMappingsForLLM().size());
 		System.out.println("Output Mappings LogMap: " + logmapllm.getLogMapMappings().size());
 		
+		
+		
+		for (MappingObjectStr mapping : logmapllm.getLogMapMappingsForLLM()) {
+			System.out.println(mapping.getIRIStrEnt1());
+			System.out.println("\t" + logmapllm.getLabelForURI(mapping.getIRIStrEnt1()));
+			System.out.println("\t" + logmapllm.getAlternativeLabelsForURI(mapping.getIRIStrEnt1()));
+			System.out.println("\t" + logmapllm.getDirectParentClassesLabelsForURI(mapping.getIRIStrEnt1()));
+			System.out.println("\t" + logmapllm.getSecondLevelParentClassesLabelsForURI(mapping.getIRIStrEnt1()));
+			System.out.println("\t" + logmapllm.getDomainClassesLabelsForURI(mapping.getIRIStrEnt1()));
+			System.out.println("\t" + logmapllm.getRangeClassesLabelsForURI(mapping.getIRIStrEnt1()));
+			System.out.println("\t" + logmapllm.getDatatypeRangesForURI(mapping.getIRIStrEnt1()));
+			
+			System.out.println(mapping.getIRIStrEnt2());
+			System.out.println("\t" + logmapllm.getLabelForURI(mapping.getIRIStrEnt2()));
+			System.out.println("\t" + logmapllm.getAlternativeLabelsForURI(mapping.getIRIStrEnt2()));
+			System.out.println("\t" + logmapllm.getDirectParentClassesLabelsForURI(mapping.getIRIStrEnt2()));
+			System.out.println("\t" + logmapllm.getSecondLevelParentClassesLabelsForURI(mapping.getIRIStrEnt2()));
+			System.out.println("\t" + logmapllm.getDomainClassesLabelsForURI(mapping.getIRIStrEnt2()));
+			System.out.println("\t" + logmapllm.getRangeClassesLabelsForURI(mapping.getIRIStrEnt2()));
+			System.out.println("\t" + logmapllm.getDatatypeRangesForURI(mapping.getIRIStrEnt2()));
+		}
+		
+		
+		
 
 		//		
 		//Reads any .csv file with the right format in the given folder

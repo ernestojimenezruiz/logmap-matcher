@@ -999,6 +999,11 @@ public class LogMap2_Matcher {
 	
 	
 	
+	/**
+	 * Gets the label for a given entity URI
+	 * @param uri
+	 * @return
+	 */
 	public String getLabelForURI(String uri) {
 		
 		int entity_type = logmap2.getLogMapIndex().getTypeOfEntity4IRI(uri);
@@ -1038,6 +1043,11 @@ public class LogMap2_Matcher {
 	}
 	
 	
+	/**
+	 * Gets alternative labels for a given entity URI			
+	 * @param uri
+	 * @return
+	 */
 	public Set<String> getAlternativeLabelsForURI(String uri) {
 		
 		int entity_type = logmap2.getLogMapIndex().getTypeOfEntity4IRI(uri);
@@ -1076,23 +1086,14 @@ public class LogMap2_Matcher {
 		}
 		
 		
-		//For a given class URI, we need
-		//1. Labels
-		//2. Labels of direct parents
-		//3. Labels of all parents?
 		
-		//For a give property
-		//1. Labels
-		//2. Labels of direct parents
-		//3. Labels of all parents?
-		//4. 
 	}
 	
 	
 	
 	
 	/**
-	 * Only for classes and instances
+	 * DirectParentClassesLabelsForURI: Only for classes and instances
 	 * @param uri
 	 * @return
 	 */
@@ -1101,7 +1102,7 @@ public class LogMap2_Matcher {
 		Set<String> labels_parents = new HashSet<String>();
 		
 		for (int ident : getDirectParentClassesForURI(uri)) {
-			labels_parents.add(logmap2.getLogMapIndex().getLabel4ConceptIndex(ident));
+			labels_parents.add(logmap2.getLogMapIndex().getLabel4ConceptIndex(ident)); //direct super class or direct type for instances 
 		}
 		
 		return labels_parents;
@@ -1141,15 +1142,38 @@ public class LogMap2_Matcher {
 	}
 	
 	
-	//TODO
-	//Get extended parent labels: instances and classes. A list of them?
-	
-	//Get domain and ranges...
-	
-	
 	
 	/**
-	 * Only for object and data properties
+	 * SecondLevelParentClassesLabelsForURI: Only for classes and instances
+	 * @param uri
+	 * @return
+	 */
+	public Set<String> getSecondLevelParentClassesLabelsForURI(String uri) {
+		
+		Set<String> labels_grandparents = new HashSet<String>();
+		
+		for (int ident : getDirectParentClassesForURI(uri)) {
+			
+			//Grandparents: Parents of direct parents or direct types
+			for (int ident2 : logmap2.getLogMapIndex().getClassIndex(ident).getDirectSuperclasses()) {
+				labels_grandparents.add(logmap2.getLogMapIndex().getLabel4ConceptIndex(ident2));				
+			}
+			
+			 
+		}
+		
+		return labels_grandparents;
+		
+	}
+	
+	
+	
+	
+	
+		
+	
+	/**
+	 * DomainClassesLabelsForURI: Only for object and data properties
 	 * @param uri
 	 * @return
 	 */
@@ -1198,7 +1222,7 @@ public class LogMap2_Matcher {
 	
 	
 	/**
-	 * Only for object properties
+	 * RangeClassesLabelsForURI: Only for object properties
 	 * @param uri
 	 * @return
 	 */
@@ -1237,7 +1261,7 @@ public class LogMap2_Matcher {
 	
 	
 	/**
-	 * Only for data properties
+	 * DatatypeRangesForURI: Only for data properties
 	 * @param uri
 	 * @return
 	 */

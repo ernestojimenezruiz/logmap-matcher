@@ -251,9 +251,89 @@ public class LogMapLLM_Interface {
 	}
 	
 	
-	//public void getOntologyProcessing() {
-		//logmap.getRepresentativeLabelsForMappings()		
-	//}
+	
+	
+	/**
+	 * Label for an entity URI
+	 * @param entity_uri
+	 * @return
+	 */
+	public String getLabelForURI(String entity_uri) {
+		return logmap.getLabelForURI(entity_uri);
+		
+	}
+	
+	
+	
+	
+	/**
+	 * Gets alternative labels for a given entity URI			
+	 * @param uri
+	 * @return
+	 */
+	public Set<String> getAlternativeLabelsForURI(String uri) {
+		return logmap.getAlternativeLabelsForURI(uri);
+	}
+	
+	
+	
+	
+	/**
+	 * DirectParentClassesLabelsForURI: Only for classes and instances
+	 * @param uri
+	 * @return
+	 */
+	public Set<String> getDirectParentClassesLabelsForURI(String uri) {
+		return logmap.getDirectParentClassesLabelsForURI(uri);
+	}
+	
+	
+	/**
+	 * SecondLevelParentClassesLabelsForURI: Only for classes and instances
+	 * @param uri
+	 * @return
+	 */
+	public Set<String> getSecondLevelParentClassesLabelsForURI(String uri) {
+		return logmap.getSecondLevelParentClassesLabelsForURI(uri);
+	}
+	
+	
+	
+	
+	/**
+	 * DomainClassesLabelsForURI: Only for object and data properties
+	 * @param uri
+	 * @return
+	 */
+	public Set<String> getDomainClassesLabelsForURI(String uri) {
+		return logmap.getDomainClassesLabelsForURI(uri);
+	}
+	
+	
+	
+	
+	/**
+	 * RangeClassesLabelsForURI: Only for object properties
+	 * @param uri
+	 * @return
+	 */
+	public Set<String> getRangeClassesLabelsForURI(String uri) {
+		return logmap.getRangeClassesLabelsForURI(uri);		
+	}
+	
+	
+	
+	
+	/**
+	 * DatatypeRangesForURI: Only for data properties
+	 * @param uri
+	 * @return
+	 */
+	public Set<String> getDatatypeRangesForURI(String uri) {
+		return logmap.getDatatypeRangesForURI(uri);
+	}
+	
+	
 	
 	
 
