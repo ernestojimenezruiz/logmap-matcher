@@ -254,11 +254,11 @@ public class LogMapLLM_Interface {
 	
 	
 	/**
-	 * Label for an entity URI
+	 * Main Label for an entity URI
 	 * @param entity_uri
 	 * @return
 	 */
-	public String getLabelForURI(String entity_uri) {
+	public String getMainLabelForURI(String entity_uri) {
 		return logmap.getLabelForURI(entity_uri);
 		
 	}

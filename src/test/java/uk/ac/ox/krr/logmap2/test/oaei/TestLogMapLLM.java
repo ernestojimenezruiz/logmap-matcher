@@ -44,7 +44,7 @@ public class TestLogMapLLM {
 		
 		for (MappingObjectStr mapping : logmapllm.getLogMapMappingsForLLM()) {
 			System.out.println(mapping.getIRIStrEnt1());
-			System.out.println("\t" + logmapllm.getLabelForURI(mapping.getIRIStrEnt1()));
+			System.out.println("\t" + logmapllm.getMainLabelForURI(mapping.getIRIStrEnt1()));
 			System.out.println("\t" + logmapllm.getAlternativeLabelsForURI(mapping.getIRIStrEnt1()));
 			System.out.println("\t" + logmapllm.getDirectParentClassesLabelsForURI(mapping.getIRIStrEnt1()));
 			System.out.println("\t" + logmapllm.getSecondLevelParentClassesLabelsForURI(mapping.getIRIStrEnt1()));
@@ -53,7 +53,7 @@ public class TestLogMapLLM {
 			System.out.println("\t" + logmapllm.getDatatypeRangesForURI(mapping.getIRIStrEnt1()));
 			
 			System.out.println(mapping.getIRIStrEnt2());
-			System.out.println("\t" + logmapllm.getLabelForURI(mapping.getIRIStrEnt2()));
+			System.out.println("\t" + logmapllm.getMainLabelForURI(mapping.getIRIStrEnt2()));
 			System.out.println("\t" + logmapllm.getAlternativeLabelsForURI(mapping.getIRIStrEnt2()));
 			System.out.println("\t" + logmapllm.getDirectParentClassesLabelsForURI(mapping.getIRIStrEnt2()));
 			System.out.println("\t" + logmapllm.getSecondLevelParentClassesLabelsForURI(mapping.getIRIStrEnt2()));
