@@ -1752,7 +1752,7 @@ public class CandidateMappingManager extends MappingManager {
 						//Otherwise we were asking almost nothing in interactive conference track
 						//if (OracleManager.isActive()){
 						//if (OracleManager.isActive() && OracleManager.keepExtendedQuestions()){  //as in paper
-						if (OracleManager.keepExtendedQuestions()){ // new For stats, we do not need the Oracle to be active 
+						if (OracleManager.keepExtendedQuestions()){ // new for stats and to extract mappings to ask, we do not need the Oracle to be active 
 							addEquivMapping2ListOfAnchors2AskUser(ide1, ide2);
 							
 							LogOutput.printAlways("New Added 2 ask: " +
@@ -2788,8 +2788,9 @@ public class CandidateMappingManager extends MappingManager {
 			
 			confidence_mapping = getConfidence4DataPropertyAnchor(ident1, dataPropertyMappings.get(ident1));
 			
-			if (confidence_mapping<required_confidence){
-    			
+					
+			
+			if (confidence_mapping<required_confidence){    			
 				
 				LogOutput.printAlways(required_confidence +  "   " +  dataPropertyMappings2confidence.get(ident1));
 				
@@ -2799,13 +2800,13 @@ public class CandidateMappingManager extends MappingManager {
 					LogOutput.printAlways("\t" +index.getName4DataPropIndex(dataPropertyMappings.get(ident1)));
 				}
 				 
-    			//Ask if oracle active and properties are compatible
+    			//Ask if oracle active and properties are compatible, otherwise it is discarded
 				else if (confidence_mapping>=Parameters.min_conf_pro_map){
 					
 					//TODO Add data prop mappings to mappings to ask user/oracle
 					addDataPropertyMappingObject2AskUserList(ident1, dataPropertyMappings.get(ident1), Utilities.EQ, Utilities.DATAPROPERTIES);
 					
-					
+										
 					if (OracleManager.isActive()){
     				
     					if (OracleManager.isMappingValid(
@@ -2840,8 +2841,10 @@ public class CandidateMappingManager extends MappingManager {
 				//LogOutput.printAlways(index.getIRIStr4DataPropIndex(dataPropertyMappings.get(ident1)));
     		}
 			//ONLY IF oraculo active we double check those cases extended with alternative labels
-			else if (OracleManager.isActive() && (index.getAlternativeLabels4DataPropertyIndex(ident1).size()>1 || index.getAlternativeLabels4DataPropertyIndex(dataPropertyMappings.get(ident1)).size()>1)){
+			else if (index.getAlternativeLabels4DataPropertyIndex(ident1).size()>1 || index.getAlternativeLabels4DataPropertyIndex(dataPropertyMappings.get(ident1)).size()>1){
 				
+				//TODO Add data prop mappings to mappings to ask user/oracle				
+				addDataPropertyMappingObject2AskUserList(ident1, dataPropertyMappings.get(ident1), Utilities.EQ, Utilities.DATAPROPERTIES);
 				
 				double isub_labels = getIsubScore4DataPropertyLabels(ident1, dataPropertyMappings.get(ident1), false);
 				
@@ -2850,26 +2853,29 @@ public class CandidateMappingManager extends MappingManager {
 				
 					LogOutput.printAlways(required_confidence +  "   " +  isub_labels);
 					
-					if (!OracleManager.isMappingValid(
-							index.getIRIStr4DataPropIndex(ident1),
-							index.getIRIStr4DataPropIndex(dataPropertyMappings.get(ident1)))){
-						
-						LogOutput.printAlways("Good Confidence Data property mapping NOT in Oracle");
-						LogOutput.printAlways("\t" +index.getName4DataPropIndex(ident1));
-						LogOutput.printAlways("\t" +index.getName4DataPropIndex(dataPropertyMappings.get(ident1)));
-						
-						todelete.add(ident1);
+					if (OracleManager.isActive()){
 					
-					}
-					else {
-						LogOutput.printAlways("Good Confidence Data property mapping In Oracle");
-						LogOutput.printAlways("\t" +index.getName4DataPropIndex(ident1));
-						LogOutput.printAlways("\t" +index.getName4DataPropIndex(dataPropertyMappings.get(ident1)));
+						if (!OracleManager.isMappingValid(
+								index.getIRIStr4DataPropIndex(ident1),
+								index.getIRIStr4DataPropIndex(dataPropertyMappings.get(ident1)))){
+							
+							LogOutput.printAlways("Good Confidence Data property mapping NOT in Oracle");
+							LogOutput.printAlways("\t" +index.getName4DataPropIndex(ident1));
+							LogOutput.printAlways("\t" +index.getName4DataPropIndex(dataPropertyMappings.get(ident1)));
+							
+							todelete.add(ident1);
 						
-						//We also ask for domains
-						//NOt anymore
-						//askOraculoAboutDomains4DataPropertyMappings(ident1, dataPropertyMappings.get(ident1));
-						
+						}
+						else {
+							LogOutput.printAlways("Good Confidence Data property mapping In Oracle");
+							LogOutput.printAlways("\t" +index.getName4DataPropIndex(ident1));
+							LogOutput.printAlways("\t" +index.getName4DataPropIndex(dataPropertyMappings.get(ident1)));
+							
+							//We also ask for domains
+							//NOt anymore
+							//askOraculoAboutDomains4DataPropertyMappings(ident1, dataPropertyMappings.get(ident1));
+							
+						}
 					}
 				}
 			}
@@ -3047,7 +3053,7 @@ public class CandidateMappingManager extends MappingManager {
 				//deleteObjectPropertyAnchor(ident1);
     			
     		}
-			//ONLY IF oraculo active we double check those cases extended with alternative labels
+			//ONLY IF oraculo active/extended questions we double check those cases extended with alternative labels
 			else if (index.getAlternativeLabels4ObjectPropertyIndex(ident1).size()>1 || index.getAlternativeLabels4ObjectPropertyIndex(objPropertyMappings.get(ident1)).size()>1){
 				//Check isub without alternative labels
 				
