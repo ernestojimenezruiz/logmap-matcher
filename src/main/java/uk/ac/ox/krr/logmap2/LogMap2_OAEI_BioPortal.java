@@ -28,6 +28,7 @@ import uk.ac.ox.krr.logmap2.io.LogOutput;
 import uk.ac.ox.krr.logmap2.io.OAEIAlignmentOutput;
 import uk.ac.ox.krr.logmap2.io.OWLAlignmentFormat;
 import uk.ac.ox.krr.logmap2.io.OutPutFilesManagerStatic;
+import uk.ac.ox.krr.logmap2.io.WriteFile;
 
 /**
  * This classes manages the required wrapper of LogMap 2 in order to be accept and provide 
@@ -178,7 +179,7 @@ public class LogMap2_OAEI_BioPortal {
 			//getPrecisionRecall(composed_mappings);
 			//getPrecisionRecall(mappings2votes.keySet());
 			
-			//We perform MO matching with a asubset of the selected ontologies and for those contribute to the composed mappings
+			//We perform MO matching with a subset of the selected ontologies and for those contribute to the composed mappings
 			if (composed_mappings.size()>0)
 				num_used_MO++;
 			if (num_used_MO>=MO_extractor.MAX_MO_FOR_MATCHING)
@@ -217,10 +218,16 @@ public class LogMap2_OAEI_BioPortal {
 		StatisticsTimeMappings.setCurrentInitTime();		
 		//LogMap2_RepairFacility logmap_repair = new LogMap2_RepairFacility(O1, O2, getComposedMappings2(), true);
 		//LogMap2_RepairFacility logmap_repair = new LogMap2_RepairFacility(O1, O2, logmap2.getLogmap2_Mappings(), getComposedMappings2());
+		
+		//Used in LogMapBio at OAEI
 		LogMap3_RepairFacility logmap_repair = new LogMap3_RepairFacility(O1, O2, logmap2.getLogmap2_Mappings(), getComposedMappings4());
 		
+		//For tests/stats with LLM: temporary method
+		//LogMap3_RepairFacility logmap_repair = new LogMap3_RepairFacility(O1, O2, logmap2.getLogmap2_Mappings(), getComposedMappings5());
+		
+		
 		mappings.addAll(logmap_repair.getCleanMappings());
-		print("\nTime performing mapping repir (s): " + StatisticsTimeMappings.getRunningTime());
+		print("\nTime performing mapping repair (s): " + StatisticsTimeMappings.getRunningTime());
 		
 
 		//5. Check unsatisfiability
@@ -620,8 +627,10 @@ public class LogMap2_OAEI_BioPortal {
 			else if (mappings2votes.get(mapping).intValue()>=1 && mapping.getConfidence()>Parameters.confidence_composed_mappings1){
 				composed_mappings.add(mapping);
 			}
+			//TODO check with Oracle
 			
 		}
+			
 		
 		//getPrecisionRecall(composed_mappings);
 		
@@ -637,27 +646,45 @@ public class LogMap2_OAEI_BioPortal {
 		
 		Set<MappingObjectStr> composed_mappings = new HashSet<MappingObjectStr>();
 		
+		//For stats
+		WriteFile writerAll = new WriteFile("C:/Users/Ernes/OneDrive/Documents/OAEI/anatomy/logmap-bio/anatomy-all-composed-mappings.txt");
+		WriteFile writerSelection = new WriteFile("C:/Users/Ernes/OneDrive/Documents/OAEI/anatomy/logmap-bio/anatomy-logmapbio-selected-composed-mappings.txt");
+		
 		for (MappingObjectStr mapping : mappings2votes.keySet()){
 			
 			if (logmap2.getLogmap2_Mappings().contains(mapping))
 				continue;
 			
 			
+			//For stats
+			//Save mappings and vote
+			writerAll.writeLine(mapping.getIRIStrEnt1()+","+mapping.getIRIStrEnt2()+","+mappings2votes.get(mapping).toString());
+			
+			
 			//TODO Change this, keep only those that are safe. Eval. Precision and Recall in Anatomy
 			//Use LLM as Oracles
 			//To speed-up tests and compare results: download ontologies?
 			//Get stats about the process. Mediating ontologies, composed mappings, quality of the composition, quality by votes.
+			//TODO Check additional annotations from UBERON
 			
+			//Current filter vote 2 or more and confidence > 0.7
 			if (mappings2votes.get(mapping).intValue()>=MIN_VOTES && mapping.getConfidence()>Parameters.confidence_composed_mappings2){
 				composed_mappings.add(mapping);
+				writerSelection.writeLine(mapping.getIRIStrEnt1()+","+mapping.getIRIStrEnt2()+","+mappings2votes.get(mapping).toString());
 			}
+			//Votes 1 or more and confidence > 0.8
 			else if (mappings2votes.get(mapping).intValue()>=1 && mapping.getConfidence()>Parameters.confidence_composed_mappings1){
 				composed_mappings.add(mapping);
+				writerSelection.writeLine(mapping.getIRIStrEnt1()+","+mapping.getIRIStrEnt2()+","+mappings2votes.get(mapping).toString());
 			}
 			
 		}
 		
 		//getPrecisionRecall(composed_mappings);
+		
+		
+		writerAll.closeBuffer();
+		writerSelection.closeBuffer();
 		
 		return composed_mappings;
 	}
