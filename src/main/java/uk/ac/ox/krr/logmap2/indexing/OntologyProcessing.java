@@ -512,7 +512,7 @@ public class OntologyProcessing {
 			}
 
 			if (!entity_namespace.equals("") && !entity_namespace.equals(iri_onto)) {
-				index.setObjectPropName(ident, entity_namespace);
+				index.setObjectPropNamespace(ident, entity_namespace);
 			}
 
 			if (extractLabels && !invertedFileExactObjProp.containsKey(if_key)) {
