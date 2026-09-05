@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.TreeMap;
 
 //import org.apache.commons.lang3.StringUtils;
 
@@ -319,9 +320,225 @@ public class OntologyProcessing {
 		reasoner.dispose();
 		reasoner=null;
 	}
-	
-	
-	
+
+
+
+
+	/**
+	 * START: UNDECLARED ABOX PREDICATES.
+	 * Handles predicates used in ABox assertions w/o an OPROP/DPROP declaration.
+	 * OFF BY DEFAULT. Toggle on by including `index_undeclared_abox_predicates|true` in `parameters.txt`.
+	 */
+
+
+	/**
+	 * Generic annotation metadata should not be indexed as matchable properties.
+	 * Any prefixes listed under 'filter_entity' in `parameters.txt` are also excluded.
+	 */
+	private static final String[] UNDECLARED_PREDICATE_EXCLUDED_NAMESPACES = {
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+		"http://www.w3.org/2000/01/rdf-schema#",
+		"http://www.w3.org/2002/07/owl#",
+		"http://www.w3.org/2001/XMLSchema#",
+		"http://www.w3.org/2004/02/skos/core#",
+		"http://purl.org/dc/elements/1.1/",
+		"http://purl.org/dc/terms/",
+		"http://xmlns.com/foaf/0.1/",
+		"http://www.w3.org/ns/prov#"
+	};
+
+
+	/**
+	 * Predicates used in ABox assertions without OPROP/DPROP declaration can also be indexed.
+	 * This is useful in cases such as the OAEI knowledge graph track.
+	 * The OWL API parases such cases as annotation assertions; so, we scan these.
+	 * Predicates with at least one literal value are indexed as data properties.
+	 * Otherwise, predicates used with IRI values are indexed as object properties.
+	 * This method is only called when Parameters.index_undeclared_abox_predicates is set to true.
+	 */
+	private void processLexiconUndeclaredAboxPredicates(boolean extractLabels) {
+
+		Set<String> declaredProperties = new HashSet<String>();
+
+		for (OWLObjectProperty oProp : onto.getObjectPropertiesInSignature(Imports.INCLUDED)) {
+			declaredProperties.add(oProp.getIRI().toString());
+		}
+
+		for (OWLDataProperty dProp : onto.getDataPropertiesInSignature(Imports.INCLUDED)) {
+			declaredProperties.add(dProp.getIRI().toString());
+		}
+
+		Map<String, Boolean> undeclaredPredicates = new TreeMap<String, Boolean>();
+
+		for(OWLAnnotationAssertionAxiom ax : onto.getAxioms(AxiomType.ANNOTATION_ASSERTION, Imports.INCLUDED)) {
+
+			if (!(ax.getSubject() instanceof IRI) || !isAboxSubject((IRI) ax.getSubject())) {
+				continue; // skip: anonymous subject or TBox metadata
+			}
+
+			String predicate_iri = ax.getProperty().getIRI().toString();
+			if (declaredProperties.contains(predicate_iri) || isExcludedUndeclaredPredicate(predicate_iri)) {
+				continue; // skip: is already a declared property or should be explicitly excluded
+			}
+
+			boolean is_literal = (ax.getValue() instanceof OWLLiteral);
+			if (!is_literal && !(ax.getValue() instanceof IRI)) {
+				continue; // skip: anonymous non-literal
+			}
+
+			Boolean has_literal = undeclaredPredicates.get(predicate_iri);
+			undeclaredPredicates.put(predicate_iri, is_literal || (has_literal != null && has_literal));
+		}
+
+		int data_count = 0;
+		int object_count = 0;
+
+		for(Map.Entry<String, Boolean> entry : undeclaredPredicates.entrySet()) {
+			if (registerUndeclaredAboxPredicate(entry.getKey(), entry.getValue(), extractLabels)) {
+				if (entry.getValue()) {
+					data_count++;
+				} else {
+					object_count++;
+				}
+			}
+		}
+
+		LogOutput.print("Undeclared ABox predicates in " + iri_onto + ":" + undeclaredPredicates.size());
+		LogOutput.print("Data properties indexed: " + data_count);
+		LogOutput.print("Object Properties indexed: " + object_count);
+
+	}
+
+
+
+	/**
+	 * ABox resource. A named individual or an untyped resource.
+	 * where an untyped resource is anything that is not a class, property or datatype of the ontology.
+	 */
+	private boolean isAboxSubject(IRI subject) {
+		return onto.containsIndividualInSignature(subject, Imports.INCLUDED)
+			|| !(onto.containsClassInSignature(subject, Imports.INCLUDED)
+			||   onto.containsObjectPropertyInSignature(subject, Imports.INCLUDED)
+			||   onto.containsDataPropertyInSignature(subject, Imports.INCLUDED)
+			||   onto.containsAnnotationPropertyInSignature(subject, Imports.INCLUDED)
+			||   onto.containsDatatypeInSignature(subject, Imports.INCLUDED));
+	}
+
+
+
+	/**
+	 * Does the provided 'predicate IRI' match any element within the exclusion set?
+	 */
+	private boolean isExcludedUndeclaredPredicate(String predicate_iri) {
+		for (String ex_namespace : UNDECLARED_PREDICATE_EXCLUDED_NAMESPACES) {
+			if (predicate_iri.startsWith(ex_namespace)) {
+				return true;
+			}
+		}
+		for (String prefix : Parameters.filter_entities) {
+			if (predicate_iri.startsWith(prefix)) {
+				return true;
+			}
+		}
+		// else:
+		return false;
+	}
+
+
+
+	/**
+	 * Register undeclared ABox predicate within the data or object property index.
+	 * Uses the same procedure/steps as `processLexiconDataProperties` / `processLexiconObjectProperties`.
+	 */
+	private  boolean registerUndeclaredAboxPredicate(String predicate_iri, boolean asDataProperty, boolean extractLabels) {
+
+		String entity_name = Utilities.getEntityLabelFromURI(predicate_iri);
+		String entity_namespace = Utilities.getNameSpaceFromURI(predicate_iri);
+
+		List<String> cleanWords = processLabel(entity_name);
+		if (cleanWords.isEmpty()) {
+			return false;
+		}
+
+		Set<String> if_key = new HashSet<String>(cleanWords);
+
+		String label = "";
+		for (String word : cleanWords) {
+			label = label + word;
+		}
+
+		String label_alternative = "";
+		for (String word : createAlternativeLabel(entity_name)) {
+			label_alternative = label_alternative + word;
+		}
+
+		int ident;
+
+		if (asDataProperty) {
+
+			ident = index.addNewDataPropertyEntry(predicate_iri);
+			index.setOntologyId4DataProp(ident, id_onto);
+			index.setDataPropName(ident, entity_name);
+
+			if (!dataPropName2Identifier.containsKey(entity_name)) {
+				dataPropName2Identifier.put(entity_name, ident);
+			}
+
+			if (!entity_namespace.equals("") && !entity_namespace.equals(iri_onto)) {
+				index.setDataPropNamespace(ident, entity_namespace);
+			}
+
+			if (extractLabels && !invertedFileExactDataProp.containsKey(if_key)) {
+				invertedFileExactDataProp.put(if_key, ident);
+			}
+
+			index.setDataPropLabel(ident, label);
+			index.addAlternativeDataPropertyLabel(ident, label);
+
+			if (label_alternative.length() > 0) {
+				index.addAlternativeDataPropertyLabel(ident, label_alternative);
+			}
+
+		}
+		else
+		{
+
+			ident = index.addNewObjectPropertyEntry(predicate_iri);
+			index.setOntologyId4ObjectProp(ident, id_onto);
+			index.setObjectPropName(ident, entity_name);
+
+			if (!objectPropName2Identifier.containsKey(entity_name)) {
+				objectPropName2Identifier.put(entity_name, ident);
+			}
+
+			if (!entity_namespace.equals("") && !entity_namespace.equals(iri_onto)) {
+				index.setObjectPropName(ident, entity_namespace);
+			}
+
+			if (extractLabels && !invertedFileExactObjProp.containsKey(if_key)) {
+				invertedFileExactObjProp.put(if_key, ident);
+			}
+
+			index.setObjectPropLabel(ident, label);
+			index.addAlternativeObjectPropertyLabel(ident, label);
+
+			if (label_alternative.length() > 0) {
+				index.addAlternativeObjectPropertyLabel(ident, label_alternative);
+			}
+
+		}
+
+		return true;
+
+	}
+
+	/**
+	 * END: UNDECLARED ABOX PREDICATES.
+	 */
+
+
+
+
 	public void precessLexicon() {
 		precessLexicon(true);
 	}
@@ -428,9 +645,16 @@ public class OntologyProcessing {
 		
 		//OBJECT PROPERTIES
 		processLexiconObjectProperties(extractLabels);
-		
-		
-		
+
+
+
+		//UNDECLARED ABOX PREDICATES (off by default)
+		if (Parameters.index_undeclared_abox_predicates) {
+			processLexiconUndeclaredAboxPredicates(extractLabels);
+		}
+
+
+
 		//INDIVIDUALS
 		if (Parameters.perform_instance_matching){
 			processNamedIndividuals(extractLabels);

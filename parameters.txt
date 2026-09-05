@@ -151,3 +151,8 @@ filter_entity|http://www.w3.org/1999/02/22-rdf-syntax-ns
 filter_entity|http://purl.org/dc/elements/
 filter_entity|http://mouse.owl#UNDEFINED_part_of
 filter_entity|http://human.owl#UNDEFINED_part_of
+
+# Register Undeclared ABox Predicates: predicates used in ABox assertions without an object/data property declaration
+# are indexed for property matching (e.g., in OAEI KG track); predicates that resolve to literals are registered as data
+# properties, else predicates are registered as object properties. This setting is set to off by default.
+index_undeclared_abox_predicates|false

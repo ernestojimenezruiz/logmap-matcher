@@ -160,6 +160,9 @@ public class Parameters {
 	public static boolean output_class_mappings = true;
 	public static boolean output_prop_mappings = true;
 	
+
+	public static boolean index_undeclared_abox_predicates = false;
+
 	//TODO Now with ignore types it may be solved this issue!
 	public static boolean reason_datatypes = true; //with OM client gives error if true
 	
@@ -276,6 +279,8 @@ public class Parameters {
 	private static final String annotation_URI_str = "annotation_URI";
 	
 	private static final String category_URI_str = "category_URI";
+
+	private static final String index_undeclared_abox_predicates_str = "index_undeclared_abox_predicates";
 	
 	
 	private static final String data_assertion_URI_Indiv_str = "data_assertion_URI_Indiv";
@@ -491,6 +496,8 @@ public class Parameters {
 			accepted_data_assertion_URIs_for_individuals.clear();
 			allowed_instance_types.clear();
 			filter_entities.clear();
+
+			index_undeclared_abox_predicates = false; // by default (omissions of the key -> default: off)
 			
 			ReadFile reader = new ReadFile(path + "parameters.txt");
 			//ReadFile reader = new ReadFile("/home/ernesto/OM_OAEI/logmap2_package/conf/thresholds.txt");
@@ -559,6 +566,10 @@ public class Parameters {
 				
 				else if (elements[0].equals(property_matching_str)){
 					perform_property_matching = Boolean.valueOf(elements[1]);
+				}
+
+				else if (elements[0].equals(index_undeclared_abox_predicates_str)){
+					index_undeclared_abox_predicates = Boolean.valueOf(elements[1].trim());
 				}
 				
 				
