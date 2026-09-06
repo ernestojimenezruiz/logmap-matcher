@@ -162,6 +162,8 @@ public class Parameters {
 	
 
 	public static boolean index_undeclared_abox_predicates = false;
+	// mixed-use predicates (literal and IRI values): true -> indexed in both lanes, false -> data lane only
+	public static boolean index_undeclared_abox_use_both_props = true;
 
 	//TODO Now with ignore types it may be solved this issue!
 	public static boolean reason_datatypes = true; //with OM client gives error if true
@@ -281,6 +283,7 @@ public class Parameters {
 	private static final String category_URI_str = "category_URI";
 
 	private static final String index_undeclared_abox_predicates_str = "index_undeclared_abox_predicates";
+	private static final String index_undeclared_abox_use_both_props_str = "index_undeclared_abox_use_both_props";
 	
 	
 	private static final String data_assertion_URI_Indiv_str = "data_assertion_URI_Indiv";
@@ -498,6 +501,7 @@ public class Parameters {
 			filter_entities.clear();
 
 			index_undeclared_abox_predicates = false; // by default (omissions of the key -> default: off)
+			index_undeclared_abox_use_both_props = true; // by default (omission of the key -> both props)
 			
 			ReadFile reader = new ReadFile(path + "parameters.txt");
 			//ReadFile reader = new ReadFile("/home/ernesto/OM_OAEI/logmap2_package/conf/thresholds.txt");
@@ -570,6 +574,9 @@ public class Parameters {
 
 				else if (elements[0].equals(index_undeclared_abox_predicates_str)){
 					index_undeclared_abox_predicates = Boolean.valueOf(elements[1].trim());
+				}
+				else if (elements[0].equals(index_undeclared_abox_use_both_props_str)){
+					index_undeclared_abox_use_both_props = Boolean.valueOf(elements[1].trim());
 				}
 				
 				

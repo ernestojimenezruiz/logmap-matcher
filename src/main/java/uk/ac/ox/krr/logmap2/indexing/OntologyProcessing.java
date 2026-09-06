@@ -352,8 +352,10 @@ public class OntologyProcessing {
 	 * Predicates used in ABox assertions without OPROP/DPROP declaration can also be indexed.
 	 * This is useful in cases such as the OAEI knowledge graph track.
 	 * The OWL API parases such cases as annotation assertions; so, we scan these.
-	 * Predicates with at least one literal value are indexed as data properties.
-	 * Otherwise, predicates used with IRI values are indexed as object properties.
+	 * Predicates used with literal values are indexed as data properties and predicates used with IRI
+	 * values as object properties. A predicate used both ways is indexed under both if
+	 * Parameters.index_undeclared_abox_use_both_props is true (considers both hypotheses); 
+	 * or as a data property only if Parameters.index_undeclared_abox_use_both_props is false.
 	 * This method is only called when Parameters.index_undeclared_abox_predicates is set to true.
 	 */
 	private void processLexiconUndeclaredAboxPredicates(boolean extractLabels) {
@@ -368,7 +370,9 @@ public class OntologyProcessing {
 			declaredProperties.add(dProp.getIRI().toString());
 		}
 
-		Map<String, Boolean> undeclaredPredicates = new TreeMap<String, Boolean>();
+		// map : predicate_iri -> { lit:bool , iri:bool }
+
+		Map<String, boolean[]> undeclaredPredicates = new TreeMap<String, boolean[]>();
 
 		for(OWLAnnotationAssertionAxiom ax : onto.getAxioms(AxiomType.ANNOTATION_ASSERTION, Imports.INCLUDED)) {
 
@@ -376,8 +380,8 @@ public class OntologyProcessing {
 				continue; // skip: anonymous subject or TBox metadata
 			}
 
-			String predicate_iri = ax.getProperty().getIRI().toString();
-			if (declaredProperties.contains(predicate_iri) || isExcludedUndeclaredPredicate(predicate_iri)) {
+			String assumed_predicate_iri = ax.getProperty().getIRI().toString();
+			if (declaredProperties.contains(assumed_predicate_iri) || isExcludedUndeclaredPredicate(assumed_predicate_iri)) {
 				continue; // skip: is already a declared property or should be explicitly excluded
 			}
 
@@ -386,26 +390,58 @@ public class OntologyProcessing {
 				continue; // skip: anonymous non-literal
 			}
 
-			Boolean has_literal = undeclaredPredicates.get(predicate_iri);
-			undeclaredPredicates.put(predicate_iri, is_literal || (has_literal != null && has_literal));
+			boolean[] assumed_predicate_character = undeclaredPredicates.get(assumed_predicate_iri);
+
+			if (assumed_predicate_character == null) {
+				assumed_predicate_character = new boolean[2];
+				undeclaredPredicates.put(assumed_predicate_iri, assumed_predicate_character);
+			}
+
+			if (is_literal) {
+				assumed_predicate_character[0] = true; // predicate is characterised as a literal
+			} else {
+				assumed_predicate_character[1] = true; // predicated is characterised as object property (IRI)
+			}
 		}
 
-		int data_count = 0;
-		int object_count = 0;
+		int data_property_count = 0;
+		int object_property_count = 0;
+		int dual_hypothesis_count = 0;
 
-		for(Map.Entry<String, Boolean> entry : undeclaredPredicates.entrySet()) {
-			if (registerUndeclaredAboxPredicate(entry.getKey(), entry.getValue(), extractLabels)) {
-				if (entry.getValue()) {
-					data_count++;
-				} else {
-					object_count++;
-				}
+		// lit -> index as DPROP; IRI -> index as OPROP; both -> dual_hypotheiss (i.e., index as both OPROP & DPROP)
+
+		for(Map.Entry<String, boolean[]> entry : undeclaredPredicates.entrySet()) {
+
+			boolean used_with_literal = entry.getValue()[0]; // true for any predicate whose object is a literal
+			boolean used_with_iri = entry.getValue()[1]; // true for any predicate whose object is an IRI (i.e., not a literal)
+
+			// Note: both 'used_with_literal' and 'used_with_iri' can be true simultaneously for a single entry (for a KG)
+
+			// literal use -> index as a data property; IRI use -> index as an object property; 
+			// a predicate used both ways is indexed as both (or only as a data property when index_undeclared_abox_use_both_props is false)
+
+			boolean register_as_object = used_with_iri && (!used_with_literal || Parameters.index_undeclared_abox_use_both_props);
+
+			boolean as_data = used_with_literal && registerUndeclaredAboxPredicate(entry.getKey(), true, extractLabels);
+			boolean as_object = register_as_object && registerUndeclaredAboxPredicate(entry.getKey(), false, extractLabels);
+
+			if (as_data) {
+				data_property_count++;
+			}
+
+			if (as_object) {
+				object_property_count++;
+			}
+
+			if (as_data && as_object) {
+				dual_hypothesis_count++;
 			}
 		}
 
 		LogOutput.print("Undeclared ABox predicates in " + iri_onto + ":" + undeclaredPredicates.size());
-		LogOutput.print("Data properties indexed: " + data_count);
-		LogOutput.print("Object Properties indexed: " + object_count);
+		LogOutput.print("Data properties indexed: " + data_property_count);
+		LogOutput.print("Object Properties indexed: " + object_property_count);
+		LogOutput.print("Indexed in both lanes (used with literals and IRIs): " + dual_hypothesis_count);
 
 	}
 
