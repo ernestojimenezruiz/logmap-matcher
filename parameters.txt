@@ -151,12 +151,10 @@ filter_entity|http://www.w3.org/1999/02/22-rdf-syntax-ns
 filter_entity|http://purl.org/dc/elements/
 filter_entity|http://mouse.owl#UNDEFINED_part_of
 filter_entity|http://human.owl#UNDEFINED_part_of
-
 # Register Undeclared ABox Predicates: predicates used in ABox assertions without an object/data property declaration
 # are indexed for property matching (e.g., in OAEI KG track); predicates used with literal values are registered as data
 # properties, predicates used with IRI values as object properties. Off by default.
-index_undeclared_abox_predicates|false
-
+index_undeclared_abox_predicates|true
 # Toggle to index undeclared ABox predicates used with both literal and IRI values under both data and object properties 
 # i.e., consider both hypotheses (when set to true), else (when set to false) indexed as data properties only.
 # This setting only takes effect when index_undeclared_abox_predicates is set to true.
