@@ -2094,13 +2094,19 @@ public class CandidateMappingManager extends MappingManager {
 		//LogOutput.printAlways(required_confidence +  "   " +  isub_labels);
 		
 		if (OracleManager.isActive()){
-		
-			if (OracleManager.isMappingValid(
-					index.getIRIStr4ObjPropIndex(ident1),
-					index.getIRIStr4ObjPropIndex(ident2))){
-		
+
+			/**
+			 * JD. I thought we had already fixed this already?
+			 * additionalFeedbackForInstanceMapping should check 'getIRIStr4IndividualIndex' not 'getIRIStr4ObjPropIndex'
+			 * In this case, `ident1` and `ident2` are 'individual' (i.e., instance) identifiers, not OPROP/DPROP.
+			 */
+
+			// if (OracleManager.isMappingValid(
+			// 		index.getIRIStr4ObjPropIndex(ident1),
+			// 		index.getIRIStr4ObjPropIndex(ident2))){
+
+			if (OracleManager.isMappingValid(index.getIRIStr4IndividualIndex(ident1), index.getIRIStr4IndividualIndex(ident2))) {
 				addInstanceMapping(ident1, ident2, ambiguity);
-				
 			}
 		}
 		
