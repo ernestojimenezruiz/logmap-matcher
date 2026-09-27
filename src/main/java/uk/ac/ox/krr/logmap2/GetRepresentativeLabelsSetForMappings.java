@@ -267,6 +267,9 @@ public class GetRepresentativeLabelsSetForMappings {
 		LogOutput.printAlways("\tNum mixed mappings: " + num_mixed_mappings);
 		
 		
+		LogOutput.printAlways("Counter: " + counter_labels);
+		
+		
 		
 	}
 	

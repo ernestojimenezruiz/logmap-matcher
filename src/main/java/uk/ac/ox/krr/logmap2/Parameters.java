@@ -120,7 +120,7 @@ public class Parameters {
 	
 	public static double good_confidence = 0.50;
 	
-	public static double min_conf_pro_map = 0.75;
+	public static double min_conf_pro_map = 0.75;  //in parameters.txt is 0.80
 	
 		
 	public static double min_isub_instances = 0.80; //Updted 2021
@@ -172,9 +172,9 @@ public class Parameters {
 	public static String hermit = "HermiT";
 	//public static String more = "MORe";
 	public static String elk = "ELK";
-	//public static String reasoner = hermit;
+	public static String reasoner = hermit;
 	//public static String reasoner = more;
-	public static String reasoner = structural;
+	//public static String reasoner = structural;  //it was the default
 	//public static String reasoner = elk;
 	
 	//Timeout reasoner
@@ -192,7 +192,7 @@ public class Parameters {
 	public static boolean allow_multilingual = true;
 	public static boolean is_test_mode_multilingual = false;  //for testing, we only simulate translation
 	public static boolean use_local_dict = true;
-	public static boolean call_online_translator = true;
+	public static boolean call_online_translator = false;
 	//TODO default target language is english
 	public static String target_lang = "en";
 	//0= Google, 1= Microsoft, >=2 all
@@ -302,6 +302,7 @@ public class Parameters {
 	private static final String output_instance_mapping_files_str = "output_instance_mapping_files";
 	
 	
+	private static final String cleanD_G_str = "perform_repair";
 	private static final String glogal_info_str = "glogal_info";	
 	
 	
@@ -699,7 +700,11 @@ public class Parameters {
 				else if (elements[0].equals(filter_entity_str)){
 					filter_entities.add(elements[1]);
 				}
-								
+				
+				else if (elements[0].equals(cleanD_G_str)){
+					cleanD_G = Boolean.valueOf(elements[1]);
+				}
+				
 				else if (elements[0].equals(glogal_info_str)){
 					extractGlobal_D_G_Info = Boolean.valueOf(elements[1]);
 				}
