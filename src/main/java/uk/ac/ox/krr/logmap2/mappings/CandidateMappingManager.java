@@ -1067,6 +1067,16 @@ public class CandidateMappingManager extends MappingManager {
 		
 		int candidates=0;
 		
+		LogOutput.print("Size weakCandidateMappings1N: " + weakCandidateMappings1N.size());
+		
+		int total_weak_candidates=0;
+		for (Set<Integer> set : weakCandidateMappings1N.values()) {
+            if (set != null) {
+                total_weak_candidates += set.size();
+            }
+        }
+		LogOutput.print("Total weak candidates: " + total_weak_candidates);
+		
 		//for (int ide1 : weakMappings1N.keySet()){
 		for (int ide1 : weakCandidateMappings1N.keySet()){
 			
@@ -1089,6 +1099,10 @@ public class CandidateMappingManager extends MappingManager {
 				
 				
 				candidates++;
+				if (candidates%100 == 0) {
+					LogOutput.print("Candidate number: " + candidates);
+					
+				}
 				
 			}
 			
