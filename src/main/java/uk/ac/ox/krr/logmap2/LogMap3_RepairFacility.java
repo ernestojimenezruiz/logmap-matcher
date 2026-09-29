@@ -683,7 +683,7 @@ public class LogMap3_RepairFacility {
 	
 	
 	/**
-	 * Returns the set of mappings that have been repaired using LogMap's repair facility
+	 * Returns the set of mappings that have been repaired using LogMap's repair facility (over the non fixed set, i.e. mappings2review)
 	 * @return
 	 */
 	public Set<MappingObjectStr> getCleanMappings(){

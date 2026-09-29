@@ -1588,6 +1588,7 @@ public class LogMap2_RepairFacility {
 				overlapping=Boolean.valueOf(args[5]);
 				satisfiability_check=Boolean.valueOf(args[6]);
 				
+				
 			}
 			
 			//Comment
