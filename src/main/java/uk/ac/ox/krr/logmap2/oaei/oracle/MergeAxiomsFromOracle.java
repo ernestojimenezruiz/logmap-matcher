@@ -33,6 +33,10 @@ public class MergeAxiomsFromOracle {
 		OutPutFilesManager mapping_manager = new OutPutFilesManager();
 		
 		
+		boolean two_steps_repair;
+		//two_steps_repair = true;
+		two_steps_repair = false;
+		
 		
 		//Loads ontos
 		LogOutput.printAlways("Loading ontologies...");
@@ -51,27 +55,33 @@ public class MergeAxiomsFromOracle {
 		composed_mappings.addAll(readAnnotatedMappingsFromTSV(path_oracle_annotations));
 		
 		System.out.println("Original LogMapLLM mappings: " + logmapllm_mappings.size());
-				
 		
-		//We fix logmap-llm mappings and try to fix composed mappings
-		LogMap3_RepairFacility logmap3repair = new LogMap3_RepairFacility(
-						loader1.getOWLOntology(), 
-						loader2.getOWLOntology(),
-						logmapllm_mappings,
-						composed_mappings);
+		if (two_steps_repair) {
 		
-		
-		
-		//Clean mappings only contains the repaired subset from the composition
-		System.out.println("Repaired composed mappings (logmap3): " + logmap3repair.getCleanMappings().size());
-		
-		
-		
-		//Add repaired ones
-		logmapllm_mappings.addAll(logmap3repair.getCleanMappings());
-		System.out.println("LogMapLLM Including repaired composed mappings: " + logmapllm_mappings.size());
-		System.out.println("\n");
-		
+			//We fix logmap-llm mappings and try to fix composed mappings
+			LogMap3_RepairFacility logmap3repair = new LogMap3_RepairFacility(
+							loader1.getOWLOntology(), 
+							loader2.getOWLOntology(),
+							logmapllm_mappings,
+							composed_mappings);
+			
+			
+			
+			//Clean mappings only contains the repaired subset from the composition
+			System.out.println("Repaired composed mappings (logmap3): " + logmap3repair.getCleanMappings().size());
+			
+			
+			
+			//Add repaired ones
+			logmapllm_mappings.addAll(logmap3repair.getCleanMappings());
+			System.out.println("LogMapLLM Including repaired composed mappings: " + logmapllm_mappings.size());
+			System.out.println("\n");
+		}
+		else {
+			logmapllm_mappings.addAll(composed_mappings);
+			System.out.println("LogMapLLM Including composed mappings (no repair): " + logmapllm_mappings.size());
+			System.out.println("\n");
+		}
 		
 		
 		
@@ -192,8 +202,8 @@ public class MergeAxiomsFromOracle {
 		
 		int test; 
 		//test=1;
-		test=2;
-		//test=3;
+		//test=2;
+		test=3;
 		
 		
 		
