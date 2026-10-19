@@ -47,9 +47,9 @@ public class MediatingOntologyExtractor {
 	
 	private final int SIZE_SELECTED_ONTOS=Parameters.max_mediating_ontologies; //10	
 	public final int MAX_MO_FOR_MATCHING=Parameters.max_mediating_ontologies; //5 or 10
-	
 	private int num_calls=0;
 	
+		
 	
 	/**
 	 * This class extracts the set of most suitable mediating ontologies 
