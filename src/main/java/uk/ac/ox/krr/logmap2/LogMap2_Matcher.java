@@ -255,6 +255,22 @@ public class LogMap2_Matcher {
 		
 	}
 	
+	public LogMap2_Matcher(OWLOntology onto1, OWLOntology onto2, int max_mediating_ontologies){
+		
+		//LogOutput.showOutpuLog(true);
+		Parameters.readParameters();
+		Parameters.setMaxMediatingOntologies(max_mediating_ontologies);
+		
+		try {
+			logmap2 = new LogMap2Core(onto1, onto2);
+			createObjectMappings();
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	/**
 	 * LogMap access from MELT

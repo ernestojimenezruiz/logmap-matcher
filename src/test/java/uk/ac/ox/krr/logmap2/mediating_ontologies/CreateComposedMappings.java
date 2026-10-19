@@ -1,74 +1,104 @@
 package uk.ac.ox.krr.logmap2.mediating_ontologies;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 // import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.MissingImportHandlingStrategy;
-import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyLoaderConfiguration;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
-import uk.ac.ox.krr.logmap2.LogMap2_Matcher;
-import uk.ac.ox.krr.logmap2.io.OutPutFilesManager;
 // import uk.ac.ox.krr.logmap2.LogMap2_OAEI_BioPortal;
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
+import uk.ac.ox.krr.logmap2.oaei.reader.FlatAlignmentReader;
 
+
+
+/**
+ * Takes source and target ontology and their list of mediating ontologies
+ * and creates lists of all mappings logmap can recover via these ontologies. Running this code is quite
+ * memory intensive, make sure you use the correct system arguments to prevent crash.
+ * Program argument  must be full path to the parent folder. 
+ */
 public class CreateComposedMappings{
-	// private final Set<MappingObjectStr>  s2mMaps;
+	String onto1_iri;
+	String onto2_iri;
+
+
 	// private final Set<MappingObjectStr>  m2tMaps;
 
 	public CreateComposedMappings() {
-		// this.s2mMaps = null;
-		// this.m2tMaps = null;
 	}
 	
-//	private CreateComposedMappings(Set<MappingObjectStr>  s2mMaps, Set<MappingObjectStr>  m2tMaps ) {
-//		this.s2mMaps = s2mMaps;
-//		this.m2tMaps = m2tMaps;
-//	}
-//	
-//	
-//	public Set<MappingObjectStr> getSource2MediumMappings(){
-//		return s2mMaps;
-//	}
-//	
-//	public Set<MappingObjectStr> getMedium2TargetMappings(){
-//		return m2tMaps;
-//	}
+	public void setOnto1_IRI(String ontoIRI) {
+		this.onto1_iri = "file:" + ontoIRI;
+	}
+	public void setOnto2_IRI(String ontoIRI) {
+		this.onto2_iri = "file:" + ontoIRI;
+	}
+
+
+
+
+	public String getOntologyNameFromFile(String pathString){
+
+        Path path = Paths.get(pathString);
+        String lastSegment = path.getName(path.getNameCount() - 1).toString();	
+        if (lastSegment.endsWith(".owl")) {
+        	String ontoName = lastSegment.substring(0, lastSegment.length() - 4);
+        	return ontoName;
+        }
+        else {
+        	String ontoName = null;
+        	return ontoName;
+        }
+	}
+	
+
+	
+	/**
+	 * Reads 2 sets of mappings from file and aggregates them into a single composed mapping file
+	 * @param source2mediumPath String	full path to mapping file for source-mediating ontology 
+	 * @param medium2targetPath String	full path to mapping file for mediating-target ontology
+	 * @return
+	 */
+	public Set<MappingObjectStr> composeOntologyMappingsFromFile(String source2mediumPath, String medium2targetPath) {
+		System.out.println("Reading mappings from file " + source2mediumPath);
+		
+		try {
+		FlatAlignmentReader mappingReader1 = new FlatAlignmentReader(source2mediumPath);
+		Set<MappingObjectStr> mapSource2Medium = mappingReader1.getMappingObjects();
+		
+		System.out.println("Reading mappings from file " + medium2targetPath);
+		FlatAlignmentReader mappingReader2 = new FlatAlignmentReader(medium2targetPath);
+		Set<MappingObjectStr> mapMedium2Target = mappingReader2.getMappingObjects();
+			   
+		System.out.println("Aggregating into composed mappings source-target via mediating ontology.");
+		Set<MappingObjectStr>   composedMappings =  aggregateComposedMapping(mapSource2Medium, mapMedium2Target);
+		// return new CreateComposedMappings(s2mMaps, m2tMaps);
+			return composedMappings;
+		}
+		catch (Exception e){
+			//e.printStackTrace();
+			System.out.println("Something went wrong, skipping this pair.")	;
+			return null;
+			}
+	}
 	
 	
 	/**
-	 * Takes source, target and one mediating ontologies and finds all mappings
-	 * for (source, medium) and (medium, target)
-	 * @param source OWLOntology the source ontology
-	 * @param target OWLOntology the target ontology
-	 * @param medium OWLOntology the mediating ontology
-	 * @return CreateCompoSedMappings new instance of CreateComposedMappings
+	 * Goes through each mapping in one set and checks if it is also present in the other set. Only then, it is added to the list.
+	 * Please note, it only focuses on Class mappings.
+	 * @param source2mo Set<MappingObjectStr> mappings between source and mediating ontology
+	 * @param mo2target Set<MappingObjectStr> mappings between mediating and target ontology
+	 * @return
 	 */
-	public Set<MappingObjectStr> triangulateOntologies(OWLOntology source, OWLOntology target, OWLOntology medium) {
-		
-	   System.out.println("Starting the matching task (source, medium)");
-		LogMap2_Matcher sourceMapMedium= new LogMap2_Matcher(source, medium);
-		Set<MappingObjectStr>  s2mMaps = sourceMapMedium.getLogmap2_Mappings();
-		// sourceMapMedium.clearIndexStructures();
-		sourceMapMedium = null;
-		System.out.println("Completing the matching task (source, medium). Mappipngs count " +s2mMaps.size());
-
-		System.out.println("Starting the matching task ( mo_i, target)");
-		LogMap2_Matcher mediumMapTarget = new LogMap2_Matcher(medium, target);
-		Set<MappingObjectStr>  m2tMaps = mediumMapTarget.getLogmap2_Mappings();
-		// mediumMapTarget.clearIndexStructures();
-		mediumMapTarget = null;
-		System.out.println("Completing the matching task ( medium, target). Mappings count " + m2tMaps.size());
-		Set<MappingObjectStr>   composedMappings =  aggregateComposedMapping(s2mMaps, m2tMaps);
-		// return new CreateComposedMappings(s2mMaps, m2tMaps);
-		return composedMappings;
-	}
-	
-	public Set<MappingObjectStr>  aggregateComposedMapping(Set<MappingObjectStr> source2mo, Set<MappingObjectStr> mo2target){
+	private Set<MappingObjectStr>  aggregateComposedMapping(Set<MappingObjectStr> source2mo, Set<MappingObjectStr> mo2target){
 		
 		Set<MappingObjectStr>   composedMappings = new HashSet<MappingObjectStr>();
 		
@@ -83,7 +113,6 @@ public class CreateComposedMappings{
 				
 				if (map_mo1.getIRIStrEnt2().equals(map_mo2.getIRIStrEnt1())){
 		
-					
 					MappingObjectStr mapping = new MappingObjectStr(
 							map_mo1.getIRIStrEnt1(), 
 							map_mo2.getIRIStrEnt2(), 
@@ -95,122 +124,101 @@ public class CreateComposedMappings{
 				}					
 		} 
 		
-		
 		return composedMappings;
 	}
 	
 	
-	public static void main(String[] args) {
-		RunMediatingOntologiesPipeline configReader = new RunMediatingOntologiesPipeline();
-		configReader.getParentFolder(args);
-		configReader.readConfigJSON();
+	public static void main(String[] args) throws IOException {
+		MediatingOntologiesUtils moUtils = new MediatingOntologiesUtils();
+		moUtils.getParentFolder(args);
+		moUtils.createSubDirectoriesFromParent();
+		moUtils.readConfigJSON();
 		
+		CreateComposedMappings compMapper = new CreateComposedMappings();
+		compMapper.setOnto1_IRI(moUtils.sourceOntoPath);
+		compMapper.setOnto2_IRI(moUtils.targetOntoPath);
+		String o1Name = compMapper.getOntologyNameFromFile(moUtils.sourceOntoPath);
+		String o2Name = compMapper.getOntologyNameFromFile(moUtils.targetOntoPath);
+		// The following only works in linux
+		//String o1Name = compMapper.getOntologyNameFromFile(compMapper.onto1_iri);
+		//String o2Name = compMapper.getOntologyNameFromFile(compMapper.onto2_iri);
 
-		String parentPath = configReader.parentPath;
-		String onto1_iri = "file:" + configReader.sourceOntoPath;
-		String onto2_iri = "file:" + configReader.targetOntoPath;
-		
-		//String onto1_iri = "file:/home/valentina/git-repos/test-data/test_onto_input/human.owl";
-		//String onto2_iri = "file:/home/valentina//git-repos/test-data/test_onto_input/mouse.owl";
-		String basePath = parentPath + "store-mediating-ontologies/";
-		String outPath = parentPath + "test-mappings/";
-		String listFile = parentPath + "/logmap_top10_mediating_ontologies.txt";
-
-		
-		// String mo_i_iri = "file:" + "/home/valentina/git-repos/test-data/test_onto_output/test-mediating-store/MIO.owl";
-		// String parentPath = "/home/valentina/git-repos/test-data/test_onto_output/test-mediating-store/";
-		// String filePath = parentPath + "logmap_top10_mediating_ontologies.txt";
 		/*
-		 * 1. Get  the two original ontologies and at least one mediating ontology
+		 * Set up the ontology manager
 		 */
+		
 		OWLOntologyManager onto_manager = OWLManager.createOWLOntologyManager();
-
 		// In case an import is broken
 		OWLOntologyLoaderConfiguration config = new OWLOntologyLoaderConfiguration();
-
 		// Important to reassign value, see https://github.com/owlcs/owlapi/issues/503
 		config = config.setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT);
 		onto_manager.setOntologyLoaderConfiguration(config);
 		
+		StoreMediatingOntologies moStorer = new StoreMediatingOntologies();
+		CreateMappingsBetweenTwoOntologies simpleMapper = new CreateMappingsBetweenTwoOntologies();
 		
-		
-//		String ontoLabel = "MIO";
-			StoreMediatingOntologies moStorer = new StoreMediatingOntologies();
-//		OWLOntology moDownload = moStorer.CallBioPortal(ontoLabel, basePath);
-//		moStorer.saveOntology(ontoLabel, moDownload, basePath);
-		
-			
 		/*
-		 * Loop through the list of ontologies and load them one by one to then perform composed mapping	
+		 * Find the list of mediating ontologies
 		 */
-		try {
+		
+		moUtils.readListMediatingOntologiesPathFromJSON();
+		List<String> moList = moStorer.getOntologyListFromFile(moUtils.listMediatingOntologiesPath);
+		int countOnto = moList.size();
+		System.out.println("There are " + countOnto + "mediating ontologies in the list");
+		
+		int counter = 0;
+		for (String ontoStr: moList) {
 			
-			// Load source and target
-			System.out.println("Loading the first ontology " + onto1_iri);
-			OWLOntology onto1 = onto_manager.loadOntology(IRI.create(onto1_iri));
-			System.out.println("Loading the second ontology " + onto2_iri);
-			OWLOntology onto2 = onto_manager.loadOntology(IRI.create(onto2_iri));
+			counter++;
+			System.out.println("Fetching ontology No.  " + counter + " label:  " +  ontoStr);
+			// if the mediating ontology is missing or the mapping file exists, skip
 			
-			// Load mediating ontologies
-			List<String> moList = moStorer.getOntologyListFromFile(listFile);
-			int countOnto = moList.size();
-			System.out.println("There are " + countOnto + "mediating ontologies in the list");
+			boolean isOntoThere = moStorer.checkOntoPath(ontoStr, moUtils.localOntoRepoPath, ".owl");
+			boolean isMappingThere = moStorer.checkOntoPath(ontoStr, moUtils.composedMappingsPath,".txt");
 			
-			int counter = 1;
-			for (String ontoStr: moList) {
-				OWLOntology mo_i = null;
-				System.out.println("Fetching ontology No.  " + counter + " label:  " +  ontoStr);
-
-				// TODO if file exists, skip
-				System.out.println(basePath + ontoStr + ".owl");
-				boolean isOntoThere = moStorer.checkOntoPath(ontoStr, basePath, ".owl");
-				boolean isMappingThere = moStorer.checkOntoPath(ontoStr, outPath,".txt");
-				if (isOntoThere == true && isMappingThere== false) {
-					String ontoPath = "file:" + basePath + ontoStr + ".owl";
-					System.out.println("Loading the mediating ontology " + ontoPath);
-					mo_i = onto_manager.loadOntology(IRI.create(ontoPath));
-					
-				}else {
-					System.out.println("Ontology " +  ontoStr + " not found, skipping");
-					
-					continue;
-				}
-				// Create composed mapping for mediating ontology mo_i
+			if (isOntoThere == true && isMappingThere== false) {
+				String mediOntoIRI = "file:" + moUtils.localOntoRepoPath + ontoStr + ".owl";
+				String moName = compMapper.getOntologyNameFromFile(mediOntoIRI);
+				System.out.println("Loading the mediating ontology " + mediOntoIRI);
+				Set<MappingObjectStr> s2mMappings = simpleMapper.createMappings(compMapper.onto1_iri, mediOntoIRI);
+				String mapFilePath1 = moUtils.simpleMappingsPath + o1Name + "_" + moName;
+				moUtils.saveOntologyMappings(s2mMappings, mapFilePath1,compMapper.onto1_iri, mediOntoIRI);
+				System.out.println("Saved mappings between source " + o1Name + " and medium " + moName);
 				
+				Set<MappingObjectStr> m2tMappings = simpleMapper.createMappings(mediOntoIRI,compMapper.onto2_iri);
+				String mapFilePath2 = moUtils.simpleMappingsPath + moName + "_" + o2Name;
+				moUtils.saveOntologyMappings(m2tMappings, mapFilePath2,mediOntoIRI, compMapper.onto2_iri);
+				System.out.println("Saved mappings between medium " + moName + " and target " + o2Name);
+				//TimeUnit.SECONDS.sleep(5);
 
-			
-				CreateComposedMappings mapComposer = new CreateComposedMappings();
-				Set<MappingObjectStr>   composedMappings = mapComposer.triangulateOntologies(onto1, onto2, mo_i);
-				// Set<MappingObjectStr> s2m = mapComposer.s2mMaps;
-				// Set<MappingObjectStr> m2t = mapComposer.m2tMaps;
-				// Set<MappingObjectStr>   composedMappings =  mapComposer.aggregateComposedMapping(s2m, m2t);
+				//CreateComposedMappings mapComposer = new CreateComposedMappings();
+				Set<MappingObjectStr> composedMappings = compMapper.composeOntologyMappingsFromFile(mapFilePath1 + ".txt", mapFilePath2 + ".txt");
 				System.out.println("There are " + composedMappings.size() + " composed mappings");
-				// Save these mappings somewhere
-				OutPutFilesManager mapSaver = new OutPutFilesManager();
-				// 5 = AllFlatFormats
-				mapSaver.createOutFiles(outPath + ontoStr, 5, onto1_iri, onto2_iri);
-				mapSaver.addMappings(composedMappings);
-				mapSaver.closeAndSaveFiles();
+				String outFilePath = new File(moUtils.composedMappingsPath, moName).toString();
+				moUtils.saveOntologyMappings(composedMappings, outFilePath, compMapper.onto1_iri, compMapper.onto2_iri);
+
+				// flush memory?
 				composedMappings = null;
-				counter+=1;
+				
+			}else {
+				if(isOntoThere == false) {
+				System.out.println("Ontology " +  ontoStr + " not found, skipping");
+				}
+				if(isMappingThere == true) {
+				System.out.println("Mapping file already existed for " +  ontoStr + " skipping");
+
+				}
+				
+				continue;
 			}
-			
-		}catch( Exception e) {
-			e.printStackTrace();
+
 		}
 		
-		System.out.println("All complete");
-		/*
-		 * 2. Run logmap to get mappings
-		 * 3. Compose mappings
-		 * 4. Store mappings
-		 * 
-		 * 
-		 */
-		
-		
+	
+		System.out.println("All storing of composed mappings is now complete");
+
+		}
 	}
 		
 		
-	}
 	

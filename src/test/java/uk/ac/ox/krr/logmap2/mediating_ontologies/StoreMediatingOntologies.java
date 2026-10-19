@@ -14,6 +14,8 @@ import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+
+import uk.ac.ox.krr.logmap2.Parameters;
 import uk.ac.ox.krr.logmap2.bioportal.RESTBioPortalAccess;
 
 public class StoreMediatingOntologies {
@@ -34,8 +36,16 @@ public class StoreMediatingOntologies {
       
         // checking for end of file
         while (line != null) {
+        	if(line.startsWith("#")) {
+        		System.out.println("Skipping MO " + line + "from list of ontologies.");
+                line = bf.readLine();
+
+        	}
+        	else {
             listOfStrings.add(line);
             line = bf.readLine();
+
+        	}
         }
       
         // closing bufferreader object
@@ -100,6 +110,9 @@ public class StoreMediatingOntologies {
 		
 	
 	public static void main(String[] args) {
+		
+	
+		
 		String basePath ="/home/valentina/git-repos/test-data/test_onto_output/test-mediating-store/";
 //		String ontoLabel = "MIO";
 			StoreMediatingOntologies moStorer = new StoreMediatingOntologies();

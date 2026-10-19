@@ -201,7 +201,7 @@ public class Parameters {
 		
 	
 	public static boolean allow_bioportal = false;
-	public static int max_mediating_ontologies =10;
+	public static int max_mediating_ontologies =12;
 	public static double confidence_composed_mappings1 = 0.8;
 	public static double confidence_composed_mappings2 = 0.7;
 	
@@ -471,6 +471,9 @@ public class Parameters {
 		min_size_overlapping = size;
 	}
 	
+	public static void setMaxMediatingOntologies(int number) {
+		max_mediating_ontologies = number;
+	}
 	
 	public static void readParameters(){
 		readParameters("");

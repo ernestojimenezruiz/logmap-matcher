@@ -1,0 +1,6 @@
+2026-08-31 15:16 UTC
+*BioPortal is active: 
+*Downloading ontology NATPRO. Attempt: 3
+*Error: org.semanticweb.owlapi.model.UnloadableImportException: Could not load imported ontology: <http://protege.stanford.edu/plugins/owl/protege> Cause: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at uk.ac.manchester.cs.owl.owlapi.OWLOntologyManagerImpl.makeLoadImportRequest(OWLOntologyManagerImpl.java:1605)
+	
