@@ -74,6 +74,9 @@ public class FlatTSVAlignmentFormat extends OutputMappingsFormat {
 		else if (dir_mapping==Utilities.L2R){
 			rel="<";
 		}
+		else if (dir_mapping==Utilities.Flagged){
+			rel="?";
+		}
 		else{ //if (dir_mapping==Utilities.R2L){
 			rel=">";
 		}

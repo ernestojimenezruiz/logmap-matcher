@@ -69,6 +69,9 @@ public class ExtendedFlatTSVAlignmentFormat extends OutputMappingsFormat {
 			else if (dir_mapping==Utilities.L2R){
 				line=line+"\t<";
 			}
+			else if (dir_mapping==Utilities.Flagged){
+				line=line+"\t?";
+			}
 			else{ //if (dir_mapping==Utilities.R2L){
 				line=line+"\t>";
 			}
@@ -96,6 +99,9 @@ public class ExtendedFlatTSVAlignmentFormat extends OutputMappingsFormat {
 			}
 			else if (dir_mapping==Utilities.L2R){
 				line=line+"\t<";
+			}
+			else if (dir_mapping==Utilities.Flagged){
+				line=line+"\t?";
 			}
 			else{ //if (dir_mapping==Utilities.R2L){
 				line=line+"\t>";

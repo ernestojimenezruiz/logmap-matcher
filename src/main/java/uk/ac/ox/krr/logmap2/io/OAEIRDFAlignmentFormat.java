@@ -119,6 +119,10 @@ public class OAEIRDFAlignmentFormat extends OutputMappingsFormat {
 			
 			writer.writeLine("\t\t<relation>&lt;</relation>");
 		}
+		else if (dir_mapping==Utilities.Flagged){ //Flagged
+			
+			writer.writeLine("\t\t<relation>?</relation>");
+		}
 		
 		else{ //if (dir_mapping==Utilities.R2L){ //Superclass
 			

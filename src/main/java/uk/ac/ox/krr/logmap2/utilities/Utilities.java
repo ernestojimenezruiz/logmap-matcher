@@ -61,7 +61,7 @@ public class Utilities {
 	public static final int R2L=-1; //P<-Q
 	public static final int EQ=-2; //P<->Qversion = Utilities.LOGMAPMENDUM;
 	public static final int NoMap=-3; 
-	public static final int Flagged=-4; //Flagged mappinsg in Largebio 
+	public static final int Flagged=-4; //Flagged mappings in Largebio 
 	
 	
 	//TYPE OF MAPPING
@@ -129,6 +129,9 @@ public class Utilities {
 		else if (dir == L2R){
 			return "<";
 		}
+		else if (dir == Flagged){
+			return "?";
+		}
 		else{
 			return ">";
 		}
@@ -143,6 +146,9 @@ public class Utilities {
 		}
 		else if (dir.equals("<")){
 			return L2R;
+		}
+		else if (dir.equals("?")){
+			return Flagged;
 		}
 		else{
 			return R2L;

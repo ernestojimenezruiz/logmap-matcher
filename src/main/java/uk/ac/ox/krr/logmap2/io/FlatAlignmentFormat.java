@@ -74,6 +74,9 @@ public class FlatAlignmentFormat extends OutputMappingsFormat {
 				else if (dir_mapping==Utilities.L2R){
 					line=line+"|<";
 				}
+				else if (dir_mapping==Utilities.Flagged){
+					line=line+"|?";
+				}
 				else{ //if (dir_mapping==Utilities.R2L){
 					line=line+"|>";
 				}
@@ -113,6 +116,9 @@ public class FlatAlignmentFormat extends OutputMappingsFormat {
 		}
 		else if (dir_mapping==Utilities.L2R){
 			line=line+"|<";
+		}
+		else if (dir_mapping==Utilities.Flagged){
+			line=line+"|?";
 		}
 		else{ //if (dir_mapping==Utilities.R2L){
 			line=line+"|>";

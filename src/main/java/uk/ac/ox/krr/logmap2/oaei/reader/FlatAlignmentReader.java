@@ -85,6 +85,9 @@ public class FlatAlignmentReader extends MappingsReader {
 					else if (elements[2].equals("<")){
 						dir = Utilities.L2R;
 					}
+					else if (elements[2].equals("?")){
+						dir = Utilities.Flagged;
+					}
 					else {
 						dir = Utilities.EQ;
 					}				

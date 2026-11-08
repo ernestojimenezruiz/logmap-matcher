@@ -130,6 +130,10 @@ public class OAEIAlignmentOutput extends OutputMappingsFormat {
 			
 			fw.write("\t\t<relation>&lt;</relation>\n");
 		}
+		else if (dir_mapping==Utilities.Flagged){ 
+			
+			fw.write("\t\t<relation>?</relation>\n");
+		}
 		
 		else{ //if (dir_mapping==Utilities.R2L){ //Superclass
 			

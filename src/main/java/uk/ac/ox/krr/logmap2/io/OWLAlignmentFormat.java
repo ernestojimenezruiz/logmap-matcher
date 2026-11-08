@@ -264,6 +264,14 @@ public class OWLAlignmentFormat extends OutputMappingsFormat {
 							factory.getOWLDataProperty(IRI.create(iri2)),
 							getAnnotations4Axiom(iri1, iri2, conf, "<"))));
 		}
+		else if (dir_mapping==Utilities.Flagged){
+			listAxioms2Add.add(new AddAxiom(
+					mappingsOnto,
+					createSubDataPropertyMapping(
+							factory.getOWLDataProperty(IRI.create(iri1)),
+							factory.getOWLDataProperty(IRI.create(iri2)),
+							getAnnotations4Axiom(iri1, iri2, conf, "?"))));
+		}
 		else{ //if (dir_mapping==Utilities.R2L){
 			listAxioms2Add.add(new AddAxiom(
 					mappingsOnto,

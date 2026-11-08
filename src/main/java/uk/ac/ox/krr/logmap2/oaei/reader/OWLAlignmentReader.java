@@ -298,7 +298,7 @@ public class OWLAlignmentReader extends MappingsReader {
 			if (literal.isDouble()){
 				owlMappingAxiomVisitor.setMeasure(literal.parseDouble());
 			}
-			else {
+			else {				
 				if (literal_str.equals("=")){
 					owlMappingAxiomVisitor.setRelation(Utilities.EQ);
 				}
@@ -308,6 +308,12 @@ public class OWLAlignmentReader extends MappingsReader {
 				else if (literal_str.equals("<")){
 					owlMappingAxiomVisitor.setRelation(Utilities.L2R);
 				}
+				else if (literal_str.equals("?")){
+					owlMappingAxiomVisitor.setRelation(Utilities.Flagged);
+				}
+				
+				//else
+				owlMappingAxiomVisitor.setRelation(Utilities.EQ);
 				
 				
 			}

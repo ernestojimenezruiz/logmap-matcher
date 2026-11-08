@@ -7,14 +7,18 @@
 package uk.ac.ox.krr.logmap2.utilities;
 
 
+import java.util.HashSet;
 import java.util.Set;
 
 import uk.ac.ox.krr.logmap2.mappings.objects.MappingObjectStr;
 
 /**
  *
+ * It reuses HasAlignment created by Daniel Faria so that it does take into account mappings with "?" or those that are unknown.
+ *
  * @author ernesto
  * Created on 17 Oct 2017
+ * Modified on 08 Nov 2026
  *
  */
 public class StandardMeasures {
@@ -42,6 +46,31 @@ public class StandardMeasures {
 	 */
 	public static double getFscore() {
 		return fscore;
+	}		
+	
+	
+	/**
+	 * Used in BioML 2025
+	 * @param system
+	 * @param reference
+	 * @param entities_to_ignore
+	 */
+	public static void computeStandardMeasures(Set<MappingObjectStr> system, Set<MappingObjectStr> reference, Set<String> entities_to_ignore){
+		
+		Set<MappingObjectStr> system_reduced = new HashSet<MappingObjectStr>(); 
+		
+		for (MappingObjectStr mapping : system) {
+			if (entities_to_ignore.contains(mapping.getIRIStrEnt1()) || entities_to_ignore.contains(mapping.getIRIStrEnt2()))
+				continue;
+			
+			system_reduced.add(mapping);
+		}
+				
+		
+		computeStandardMeasures(system_reduced, reference);
+		
+		
+		
 	}
 	
 	
@@ -50,16 +79,14 @@ public class StandardMeasures {
 		HashAlignment system_aligment = new HashAlignment(system);
 		HashAlignment reference_aligment = new HashAlignment(reference);
 		
-		computeStandardMeasures(system_aligment, reference_aligment);
-		
+		computeStandardMeasures(system_aligment, reference_aligment);		
 		
 	}
 	
 	
 	public static void computeStandardMeasures(HashAlignment system, HashAlignment reference){
 		
-		evaluationParameters(reference.evaluation(system));
-		
+		evaluationParameters(reference.evaluation(system));		
 		
 	}
 	
@@ -72,6 +99,7 @@ public class StandardMeasures {
 			return;
 		}
 		
+		//As TP, FP, FN, FN
 		//Precision
 		precision = Math.min(Math.round(classif[0] * 1000.0 / (classif[0]+classif[1]))/1000.0, 1.0);
 		//Recall
